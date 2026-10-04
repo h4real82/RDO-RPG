@@ -9,18 +9,42 @@ import {
   TILE_SIZE,
   TICK_INTERVAL_MS,
   PLAYER_WALK_SPEED,
+  PLAYER_JOG_SPEED,
   PLAYER_SPRINT_SPEED,
   PLAYER_COLLISION_RADIUS,
   WORLD_MAP_WIDTH,
-  WORLD_MAP_HEIGHT
+  WORLD_MAP_HEIGHT,
+  GaitMode
 } from '@nes-rdo/shared';
 import { getMapById } from '@nes-rdo/content';
 import { UserProfile } from '../discord';
+import { rpgMenuManager } from '../menu';
 
 interface NavTarget {
   x: number;
   y: number;
   marker: Phaser.GameObjects.Container;
+}
+
+interface PointLightData {
+  x: number;
+  y: number;
+  sprite: Phaser.GameObjects.Image;
+  baseScale: number;
+  baseAlpha: number;
+  flickerSpeed: number;
+  phase: number;
+}
+
+interface AmbientParticle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  alpha: number;
+  color: number;
+  phase: number;
 }
 
 export class WorldScene extends Phaser.Scene {
@@ -35,7 +59,13 @@ export class WorldScene extends Phaser.Scene {
   private localVy: number = 0;
   private localHeading: number = Math.PI / 2;
   private isMoving: boolean = false;
+
+  // Gait & Stamina System
+  private currentGait: GaitMode = GaitMode.JOG; // Walk or Jog as base pace
   private isSprinting: boolean = false;
+  private stamina: number = 100;
+  private maxStamina: number = 100;
+  private gaitTimer: number = 0;
 
   // Point-and-Click Navigation
   private navTarget: NavTarget | null = null;
@@ -43,6 +73,13 @@ export class WorldScene extends Phaser.Scene {
   // Visual Entities
   private playerContainers: Map<string, Phaser.GameObjects.Container> = new Map();
   private playerSprites: Map<string, Phaser.GameObjects.Image> = new Map();
+  private localPlayerShadow: Phaser.GameObjects.Ellipse | null = null;
+
+  // Lighting & Atmosphere
+  private pointLights: PointLightData[] = [];
+  private particles: AmbientParticle[] = [];
+  private particleGraphics!: Phaser.GameObjects.Graphics;
+  private ambientOverlay!: Phaser.GameObjects.Rectangle;
 
   // Inputs
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -52,7 +89,10 @@ export class WorldScene extends Phaser.Scene {
     left: Phaser.Input.Keyboard.Key;
     right: Phaser.Input.Keyboard.Key;
     shift: Phaser.Input.Keyboard.Key;
+    gKey: Phaser.Input.Keyboard.Key;
+    capsLock: Phaser.Input.Keyboard.Key;
     cKey: Phaser.Input.Keyboard.Key;
+    tabKey: Phaser.Input.Keyboard.Key;
   };
 
   private lastMoveSent: number = 0;
@@ -80,16 +120,32 @@ export class WorldScene extends Phaser.Scene {
   }
 
   create() {
-    // 1. HD Background Map (1376x768)
+    // 1. Generate Warm Radial Point Light Texture
+    this.createRadialLightTexture();
+
+    // 2. HD Background Map (1376x768)
     const map = this.add.image(0, 0, 'western_map').setOrigin(0, 0);
     map.setDisplaySize(WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT);
 
-    // 2. Collision Debug Layer (toggle with 'C')
+    // 3. Ambient Dusk / Game of Thrones Cinematic Lighting Overlay
+    this.ambientOverlay = this.add.rectangle(0, 0, WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT, 0x0f0b08, 0.45);
+    this.ambientOverlay.setOrigin(0, 0);
+    this.ambientOverlay.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    this.ambientOverlay.setDepth(10);
+
+    // 4. Warm Point Lights (Lanterns & Torches) at Buildings
+    this.setupWarmPointLights();
+
+    // 5. Ambient Atmospheric Dust & Spark Particles
+    this.setupAtmosphericParticles();
+
+    // 6. Collision Debug Layer (Default: INVISIBLE, toggle with 'C')
     this.collisionGraphics = this.add.graphics();
     this.collisionGraphics.setVisible(false);
+    this.collisionGraphics.setDepth(2000);
     this.renderCollisionGrid('world_map_01');
 
-    // 3. Keyboard Inputs
+    // 7. Keyboard Inputs
     if (this.input.keyboard) {
       this.cursors = this.input.keyboard.createCursorKeys();
       this.wasdKeys = {
@@ -98,30 +154,43 @@ export class WorldScene extends Phaser.Scene {
         left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
         right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
         shift: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT),
-        cKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+        gKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G),
+        capsLock: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CAPS_LOCK),
+        cKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C),
+        tabKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB)
       };
 
+      // Toggle collision grid with 'C'
       this.wasdKeys.cKey.on('down', () => {
         this.showCollisionGrid = !this.showCollisionGrid;
         this.collisionGraphics.setVisible(this.showCollisionGrid);
       });
+
+      // Toggle gait mode between WALK and JOG with 'G' or 'CapsLock'
+      const toggleGait = () => {
+        this.currentGait = this.currentGait === GaitMode.WALK ? GaitMode.JOG : GaitMode.WALK;
+        this.updateGaitHUD();
+      };
+      this.wasdKeys.gKey.on('down', toggleGait);
+      this.wasdKeys.capsLock.on('down', toggleGait);
     }
 
-    // 4. Point-and-Click (Click to Walk)
+    // 8. Point-and-Click (Click to Walk)
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      // Only handle left click on the game world
+      // Don't click to move if menu is open
+      if (rpgMenuManager.isMenuOpen()) return;
       if (pointer.button !== 0) return;
 
       const worldPoint = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
       this.setClickWaypoint(worldPoint.x, worldPoint.y);
     });
 
-    // 5. Camera Setup with Smooth Lerp Follow
+    // 9. Camera Setup with Smooth Lerp Follow & Cinematic Deadzone
     this.cameras.main.setBounds(0, 0, WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT);
     this.cameras.main.setZoom(2.2);
-    this.cameras.main.setBackgroundColor('#14100c');
+    this.cameras.main.setBackgroundColor('#0e0a07');
 
-    // 6. Connect to DOM Minimap Radar
+    // 10. Connect to DOM Minimap Radar
     this.minimapCanvas = document.getElementById('rdr-minimap-canvas') as HTMLCanvasElement;
     if (this.minimapCanvas) {
       this.minimapCtx = this.minimapCanvas.getContext('2d');
@@ -132,47 +201,122 @@ export class WorldScene extends Phaser.Scene {
       this.mapImageSource = mapTexture;
     }
 
-    // 7. Colyseus State Listeners
+    // 11. Colyseus State Listeners
     this.setupRoomListeners();
+    this.updateGaitHUD();
+  }
+
+  /**
+   * Procedural warm radial point light texture generator
+   */
+  private createRadialLightTexture() {
+    if (this.textures.exists('lantern_glow')) return;
+
+    const size = 256;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const center = size / 2;
+    const grad = ctx.createRadialGradient(center, center, 4, center, center, center);
+    grad.addColorStop(0, 'rgba(255, 245, 210, 0.95)'); // Core golden white
+    grad.addColorStop(0.2, 'rgba(255, 175, 45, 0.65)');  // Warm amber gold
+    grad.addColorStop(0.5, 'rgba(225, 105, 15, 0.25)');  // Fire glow
+    grad.addColorStop(0.8, 'rgba(180, 60, 5, 0.08)');   // Ambient falloff
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+
+    this.textures.addCanvas('lantern_glow', canvas);
+  }
+
+  /**
+   * Instantiates warm lanterns with organic flicker tweens
+   */
+  private setupWarmPointLights() {
+    const lampPositions = [
+      { x: 380, y: 405, scale: 1.15, alpha: 0.9, speed: 1.4 },  // Saloon Porch
+      { x: 785, y: 405, scale: 0.95, alpha: 0.85, speed: 1.1 }, // Sheriff's Office
+      { x: 630, y: 215, scale: 1.05, alpha: 0.85, speed: 0.9 }, // Livery Stable
+      { x: 955, y: 405, scale: 0.95, alpha: 0.8, speed: 1.3 },  // Valentine Bank
+      { x: 610, y: 405, scale: 0.9, alpha: 0.8, speed: 1.0 },   // General Store
+      { x: 1140, y: 210, scale: 1.25, alpha: 0.95, speed: 1.8 },// Blacksmith Forge Fire
+      { x: 1080, y: 410, scale: 0.85, alpha: 0.75, speed: 1.2 },// Barber
+      { x: 1260, y: 415, scale: 0.85, alpha: 0.75, speed: 1.1 } // Gunsmith
+    ];
+
+    lampPositions.forEach((pos, idx) => {
+      const sprite = this.add.image(pos.x, pos.y, 'lantern_glow');
+      sprite.setScale(pos.scale);
+      sprite.setAlpha(pos.alpha);
+      sprite.setBlendMode(Phaser.BlendModes.ADD);
+      sprite.setDepth(pos.y + 10);
+
+      this.pointLights.push({
+        x: pos.x,
+        y: pos.y,
+        sprite,
+        baseScale: pos.scale,
+        baseAlpha: pos.alpha,
+        flickerSpeed: pos.speed,
+        phase: idx * 1.7
+      });
+    });
+  }
+
+  /**
+   * Atmospheric floating dust motes & warm embers
+   */
+  private setupAtmosphericParticles() {
+    this.particleGraphics = this.add.graphics();
+    this.particleGraphics.setDepth(1500);
+
+    const count = 45;
+    for (let i = 0; i < count; i++) {
+      this.particles.push({
+        x: Phaser.Math.Between(0, WORLD_MAP_WIDTH),
+        y: Phaser.Math.Between(0, WORLD_MAP_HEIGHT),
+        vx: Phaser.Math.FloatBetween(8, 28),
+        vy: Phaser.Math.FloatBetween(-6, 6),
+        size: Phaser.Math.FloatBetween(1, 2.8),
+        alpha: Phaser.Math.FloatBetween(0.2, 0.65),
+        color: Math.random() > 0.4 ? 0xf59e0b : 0xe5ded2,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
   }
 
   /**
    * Sets point-and-click navigation waypoint with animated marker
    */
   private setClickWaypoint(targetX: number, targetY: number) {
-    // Clamp to map boundaries
     const clampedX = Math.max(PLAYER_COLLISION_RADIUS, Math.min(WORLD_MAP_WIDTH - PLAYER_COLLISION_RADIUS, targetX));
     const clampedY = Math.max(PLAYER_COLLISION_RADIUS, Math.min(WORLD_MAP_HEIGHT - PLAYER_COLLISION_RADIUS, targetY));
 
-    // Check if target itself is walkable
-    if (!this.isPositionWalkable(clampedX, clampedY)) {
-      return;
-    }
+    if (!this.isPositionWalkable(clampedX, clampedY)) return;
 
-    // Remove previous waypoint marker if active
     if (this.navTarget) {
       this.navTarget.marker.destroy();
       this.navTarget = null;
     }
 
-    // Create animated golden waypoint ring
     const markerContainer = this.add.container(clampedX, clampedY);
-
     const outerRing = this.add.circle(0, 0, 14);
     outerRing.setStrokeStyle(2, 0xd4af37, 0.9);
 
     const innerDot = this.add.circle(0, 0, 4, 0xd4af37, 1);
-
     markerContainer.add([outerRing, innerDot]);
     markerContainer.setDepth(1);
 
-    // Pulse animation
     this.tweens.add({
       targets: outerRing,
-      scaleX: 1.5,
-      scaleY: 1.5,
+      scaleX: 1.6,
+      scaleY: 1.6,
       alpha: 0.1,
-      duration: 800,
+      duration: 750,
       repeat: -1
     });
 
@@ -190,6 +334,9 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * Renders 16x16 fine collision grid
+   */
   private renderCollisionGrid(mapId: string) {
     const map = getMapById(mapId);
     if (!map) return;
@@ -202,12 +349,12 @@ export class WorldScene extends Phaser.Scene {
         const isSolid = map.collisionLayer && map.collisionLayer[index] === 1;
 
         if (isSolid) {
-          this.collisionGraphics.fillStyle(0xdc2626, 0.35);
+          this.collisionGraphics.fillStyle(0xdc2626, 0.4);
           this.collisionGraphics.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-          this.collisionGraphics.lineStyle(1, 0xef4444, 0.6);
+          this.collisionGraphics.lineStyle(1, 0xef4444, 0.7);
           this.collisionGraphics.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         } else {
-          this.collisionGraphics.lineStyle(1, 0x22c55e, 0.12);
+          this.collisionGraphics.lineStyle(1, 0x22c55e, 0.08);
           this.collisionGraphics.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
       }
@@ -215,7 +362,6 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private setupRoomListeners() {
-    // When a player joins
     this.room.state.players.onAdd((player: Player, sessionId: string) => {
       this.createPlayerVisual(player, sessionId);
 
@@ -225,14 +371,12 @@ export class WorldScene extends Phaser.Scene {
       }
 
       player.position.onChange(() => {
-        // Only interpolate remote players from server broadcasts
         if (sessionId !== this.room.sessionId) {
           this.updateRemotePlayerVisual(player, sessionId);
         }
       });
     });
 
-    // When a player leaves
     this.room.state.players.onRemove((player: Player, sessionId: string) => {
       const container = this.playerContainers.get(sessionId);
       if (container) {
@@ -242,10 +386,8 @@ export class WorldScene extends Phaser.Scene {
       }
     });
 
-    // Server-side move correction / rejection handler
     this.room.onMessage(RoomMessage.MOVE, (data: { success: boolean; x: number; y: number }) => {
       if (!data.success) {
-        // Snap local position back to server authorized position
         this.localX = data.x;
         this.localY = data.y;
         this.localVx = 0;
@@ -262,7 +404,7 @@ export class WorldScene extends Phaser.Scene {
 
     const container = this.add.container(startX, startY);
 
-    // 1. Soft Oval Ground Shadow
+    // 1. Soft Oval Ground Shadow anchored under boots
     const shadow = this.add.ellipse(0, 22, 34, 12, 0x000000, 0.45);
 
     // 2. High-Resolution Cowboy Outlaw Sprite
@@ -270,17 +412,17 @@ export class WorldScene extends Phaser.Scene {
     cowboySprite.setDisplaySize(48, 54);
     cowboySprite.setOrigin(0.5, 0.5);
 
-    // 3. Name Label with Crisp Anti-Aliased High-Res Text
+    // 3. Anti-Aliased High-Res Name Label
     const nameLabelText = isLocal ? `★ ${player.username}` : player.username || 'Outlaw';
-    const nameBg = this.add.rectangle(0, -32, nameLabelText.length * 7 + 14, 16, 0x14100c, 0.75);
-    nameBg.setStrokeStyle(1, isLocal ? 0xd4af37 : 0x8c734b, 0.8);
+    const nameBg = this.add.rectangle(0, -32, nameLabelText.length * 7 + 14, 16, 0x14100c, 0.8);
+    nameBg.setStrokeStyle(1, isLocal ? 0xd4af37 : 0x8c734b, 0.85);
 
     const nameText = this.add.text(0, -32, nameLabelText, {
       fontSize: '10px',
       color: isLocal ? '#fef08a' : '#f5ebe0',
       fontFamily: 'Inter, Cinzel, serif',
       fontStyle: 'bold',
-      resolution: 2 // High-DPI sharpness
+      resolution: 2
     }).setOrigin(0.5);
 
     container.add([shadow, cowboySprite, nameBg, nameText]);
@@ -289,19 +431,10 @@ export class WorldScene extends Phaser.Scene {
     this.playerContainers.set(sessionId, container);
     this.playerSprites.set(sessionId, cowboySprite);
 
-    // Subtle Breathing Idle Tween
-    this.tweens.add({
-      targets: cowboySprite,
-      scaleY: cowboySprite.scaleY * 1.015,
-      duration: 1200,
-      yoyo: true,
-      repeat: -1,
-      ease: 'Sine.easeInOut'
-    });
-
     if (isLocal) {
-      // Cinematic Camera Follow with Smooth Lerp & Deadzone
-      this.cameras.main.startFollow(container, true, 0.06, 0.06);
+      this.localPlayerShadow = shadow;
+      // Smooth Cinematic Camera Follow with Deadzone
+      this.cameras.main.startFollow(container, true, 0.05, 0.05);
       this.cameras.main.setDeadzone(30, 20);
 
       const playerInfoEl = document.getElementById('player-info');
@@ -314,24 +447,17 @@ export class WorldScene extends Phaser.Scene {
     const sprite = this.playerSprites.get(sessionId);
     if (!container || !sprite) return;
 
-    // Flip horizontal based on heading
     if (Math.abs(Math.cos(player.position.heading)) > 0.1) {
       sprite.setFlipX(Math.cos(player.position.heading) < 0);
     }
 
-    // Walking stride tilt
     if (player.position.isMoving) {
-      this.tweens.add({
-        targets: sprite,
-        angle: Math.sin(this.time.now / 100) * 3,
-        duration: TICK_INTERVAL_MS * 0.8,
-        ease: 'Linear'
-      });
+      const walkFreq = player.position.isSprinting ? 22 : 14;
+      sprite.setAngle(Math.sin(this.time.now / (1000 / walkFreq)) * 3.5);
     } else {
       sprite.setAngle(0);
     }
 
-    // Smooth lerp to server broadcast position
     this.tweens.add({
       targets: container,
       x: player.position.x,
@@ -347,12 +473,21 @@ export class WorldScene extends Phaser.Scene {
   update(time: number, delta: number) {
     if (!this.room) return;
 
-    const dt = delta / 1000; // seconds
+    const dt = delta / 1000;
 
-    // 1. Process Local Movement Inputs
+    // 1. Process Local Movement Inputs & Gait
     this.handleLocalMovement(dt);
 
-    // 2. Broadcast continuous move intent at 20Hz
+    // 2. Update Stamina Bar & Regeneration
+    this.handleStaminaSystem(dt);
+
+    // 3. Animate Dynamic Lantern Flickers
+    this.updateLanternFlickers(time);
+
+    // 4. Animate Atmospheric Dust Particles
+    this.updateAtmosphericParticles(dt);
+
+    // 5. Broadcast Continuous Move Intent at 20Hz
     if (time - this.lastMoveSent >= TICK_INTERVAL_MS) {
       const payload: MoveIntentMessage = {
         x: Math.round(this.localX * 10) / 10,
@@ -371,18 +506,25 @@ export class WorldScene extends Phaser.Scene {
       this.lastMoveSent = time;
     }
 
-    // 3. Render Circular RDR Minimap Radar
+    // 6. Render Circular RDR Minimap Radar
     this.renderMinimapRadar();
   }
 
   /**
-   * Free continuous movement with obstacle sliding and click-to-walk navigation
+   * Free continuous movement with 3 RDO gaits (Walk, Jog, Sprint) and obstacle sliding
    */
   private handleLocalMovement(dt: number) {
+    // If RPG menu is open, halt movement input
+    if (rpgMenuManager.isMenuOpen()) {
+      this.localVx = 0;
+      this.localVy = 0;
+      this.isMoving = false;
+      return;
+    }
+
     let inputX = 0;
     let inputY = 0;
 
-    // Check Keyboard Inputs
     const isUp = this.cursors.up.isDown || this.wasdKeys.up.isDown;
     const isDown = this.cursors.down.isDown || this.wasdKeys.down.isDown;
     const isLeft = this.cursors.left.isDown || this.wasdKeys.left.isDown;
@@ -390,7 +532,6 @@ export class WorldScene extends Phaser.Scene {
     const isKeyboardActive = isUp || isDown || isLeft || isRight;
 
     if (isKeyboardActive) {
-      // Keyboard input immediately cancels any mouse waypoint
       this.clearClickWaypoint();
 
       if (isUp) inputY -= 1;
@@ -398,13 +539,11 @@ export class WorldScene extends Phaser.Scene {
       if (isLeft) inputX -= 1;
       if (isRight) inputX += 1;
     } else if (this.navTarget) {
-      // Point-and-Click waypoint navigation
       const dx = this.navTarget.x - this.localX;
       const dy = this.navTarget.y - this.localY;
       const dist = Math.hypot(dx, dy);
 
       if (dist < 4) {
-        // Reached destination!
         this.clearClickWaypoint();
         inputX = 0;
         inputY = 0;
@@ -414,32 +553,46 @@ export class WorldScene extends Phaser.Scene {
       }
     }
 
-    // Normalize diagonal velocity
     const inputMagnitude = Math.hypot(inputX, inputY);
     let targetVx = 0;
     let targetVy = 0;
 
-    this.isSprinting = this.wasdKeys.shift.isDown && inputMagnitude > 0;
-    const currentSpeed = this.isSprinting ? PLAYER_SPRINT_SPEED : PLAYER_WALK_SPEED;
+    // Check Sprinting status (Shift key held AND stamina > 0)
+    const wantsSprint = this.wasdKeys.shift.isDown && inputMagnitude > 0;
+    if (wantsSprint && this.stamina > 5) {
+      this.isSprinting = true;
+    } else {
+      this.isSprinting = false;
+    }
+
+    // Determine current speed based on gait
+    let activeSpeed = PLAYER_JOG_SPEED;
+    if (this.isSprinting) {
+      activeSpeed = PLAYER_SPRINT_SPEED;
+    } else if (this.currentGait === GaitMode.WALK) {
+      activeSpeed = PLAYER_WALK_SPEED;
+    } else {
+      activeSpeed = PLAYER_JOG_SPEED;
+    }
 
     if (inputMagnitude > 0) {
-      targetVx = (inputX / inputMagnitude) * currentSpeed;
-      targetVy = (inputY / inputMagnitude) * currentSpeed;
+      targetVx = (inputX / inputMagnitude) * activeSpeed;
+      targetVy = (inputY / inputMagnitude) * activeSpeed;
       this.isMoving = true;
       this.localHeading = Math.atan2(inputY, inputX);
     } else {
       this.isMoving = false;
     }
 
-    // Soft Acceleration / Deceleration
-    const accelRate = 18;
+    // Smooth Acceleration / Deceleration
+    const accelRate = this.isSprinting ? 22 : 16;
     this.localVx += (targetVx - this.localVx) * Math.min(1, accelRate * dt);
     this.localVy += (targetVy - this.localVy) * Math.min(1, accelRate * dt);
 
     if (Math.abs(this.localVx) < 1 && targetVx === 0) this.localVx = 0;
     if (Math.abs(this.localVy) < 1 && targetVy === 0) this.localVy = 0;
 
-    // Continuous Collision Detection with Obstacle Sliding
+    // Obstacle Sliding Collision
     const dx = this.localVx * dt;
     const dy = this.localVy * dt;
 
@@ -448,20 +601,18 @@ export class WorldScene extends Phaser.Scene {
       const nextY = this.localY + dy;
 
       if (this.isPositionWalkable(nextX, nextY)) {
-        // Full movement valid
         this.localX = nextX;
         this.localY = nextY;
       } else {
-        // Try horizontal slide
+        // Horizontal slide
         if (this.isPositionWalkable(nextX, this.localY)) {
           this.localX = nextX;
         }
-        // Try vertical slide
+        // Vertical slide
         if (this.isPositionWalkable(this.localX, nextY)) {
           this.localY = nextY;
         }
 
-        // If completely blocked during click-navigation, cancel waypoint
         if (this.navTarget && !this.isPositionWalkable(nextX, this.localY) && !this.isPositionWalkable(this.localX, nextY)) {
           this.clearClickWaypoint();
         }
@@ -476,19 +627,32 @@ export class WorldScene extends Phaser.Scene {
       container.setPosition(this.localX, this.localY);
       container.setDepth(this.localY);
 
-      // Facing Direction (smooth flip)
-      if (Math.abs(Math.cos(this.localHeading)) > 0.1) {
+      // Facing Direction
+      if (Math.abs(Math.cos(this.localHeading)) > 0.08) {
         sprite.setFlipX(Math.cos(this.localHeading) < 0);
       }
 
-      // Dynamic Walking Stride Wobble
+      // Procedural Gait Animation Cycle (Stride Bobbing & Tilt)
       if (this.isMoving) {
-        sprite.setAngle(Math.sin(this.time.now / 90) * 3);
+        const strideFreq = this.isSprinting ? 24 : this.currentGait === GaitMode.WALK ? 10 : 16;
+        this.gaitTimer += dt * strideFreq;
+
+        const bob = Math.abs(Math.sin(this.gaitTimer)) * (this.isSprinting ? 3.5 : 1.8);
+        const tilt = Math.sin(this.gaitTimer) * (this.isSprinting ? 4.5 : 2.0);
+
+        sprite.setY(-bob);
+        sprite.setAngle(tilt);
+
+        // Stride dust particles when sprinting
+        if (this.isSprinting && Math.sin(this.gaitTimer) > 0.8) {
+          this.spawnFootstepDust(this.localX, this.localY + 16);
+        }
       } else {
+        sprite.setY(0);
         sprite.setAngle(0);
       }
 
-      // Update UI Pos info
+      // UI Pos info update
       const posInfoEl = document.getElementById('pos-info');
       if (posInfoEl) {
         posInfoEl.textContent = `Valentine (${Math.round(this.localX)}, ${Math.round(this.localY)})`;
@@ -497,7 +661,99 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
-   * Continuous collision validation against map bounds and 32px solid tiles
+   * Spawns a momentary dust particle puff at boots
+   */
+  private spawnFootstepDust(x: number, y: number) {
+    const puff = this.add.circle(x + Phaser.Math.Between(-4, 4), y, Phaser.Math.Between(2, 4), 0xc5bba8, 0.4);
+    puff.setDepth(y - 1);
+    this.tweens.add({
+      targets: puff,
+      scaleX: 2.2,
+      scaleY: 2.2,
+      alpha: 0,
+      y: y - 8,
+      duration: 350,
+      onComplete: () => puff.destroy()
+    });
+  }
+
+  /**
+   * Handles stamina drain when sprinting and recovery when idle/walking
+   */
+  private handleStaminaSystem(dt: number) {
+    if (this.isSprinting && this.isMoving) {
+      // Drain stamina
+      this.stamina = Math.max(0, this.stamina - 22 * dt);
+    } else {
+      // Regenerate stamina
+      this.stamina = Math.min(this.maxStamina, this.stamina + 14 * dt);
+    }
+
+    // Update DOM Stamina Fill Bar
+    const staminaFill = document.getElementById('stamina-fill');
+    if (staminaFill) {
+      const pct = (this.stamina / this.maxStamina) * 100;
+      staminaFill.style.width = `${pct}%`;
+    }
+
+    const menuStamina = document.getElementById('menu-stamina-val');
+    if (menuStamina) {
+      menuStamina.textContent = `${Math.round(this.stamina)} / 100`;
+    }
+  }
+
+  private updateGaitHUD() {
+    const badge = document.getElementById('gait-badge');
+    if (badge) {
+      if (this.isSprinting) {
+        badge.textContent = 'SPRINT';
+        badge.style.color = '#ef4444';
+        badge.style.borderColor = '#ef4444';
+      } else {
+        badge.textContent = this.currentGait.toUpperCase();
+        badge.style.color = this.currentGait === GaitMode.WALK ? '#a89a87' : '#d4af37';
+        badge.style.borderColor = '#7c633f';
+      }
+    }
+  }
+
+  /**
+   * Animates point lights with wind-blown lantern flickers
+   */
+  private updateLanternFlickers(time: number) {
+    this.pointLights.forEach((light) => {
+      const noise = Math.sin(time / 140 * light.flickerSpeed + light.phase);
+      const noise2 = Math.cos(time / 80 * light.flickerSpeed + light.phase * 2);
+      const flickerFactor = 1 + (noise * 0.05 + noise2 * 0.03);
+
+      light.sprite.setScale(light.baseScale * flickerFactor);
+      light.sprite.setAlpha(light.baseAlpha * (0.95 + noise * 0.05));
+    });
+  }
+
+  /**
+   * Drifts ambient dust motes & warm embers across Valentine
+   */
+  private updateAtmosphericParticles(dt: number) {
+    this.particleGraphics.clear();
+
+    this.particles.forEach((p) => {
+      p.x += p.vx * dt;
+      p.y += p.vy * dt + Math.sin(this.time.now / 400 + p.phase) * 0.4;
+
+      // Wrap around world map bounds
+      if (p.x > WORLD_MAP_WIDTH) p.x = 0;
+      if (p.x < 0) p.x = WORLD_MAP_WIDTH;
+      if (p.y > WORLD_MAP_HEIGHT) p.y = 0;
+      if (p.y < 0) p.y = WORLD_MAP_HEIGHT;
+
+      this.particleGraphics.fillStyle(p.color, p.alpha);
+      this.particleGraphics.fillCircle(p.x, p.y, p.size);
+    });
+  }
+
+  /**
+   * Continuous collision validation against map bounds and 16px solid tiles
    */
   private isPositionWalkable(px: number, py: number): boolean {
     const map = getMapById('world_map_01');
@@ -506,7 +762,7 @@ export class WorldScene extends Phaser.Scene {
     const radius = PLAYER_COLLISION_RADIUS;
     const feetY = py + 14;
 
-    // Map bounds
+    // Check map boundaries
     if (
       px - radius < 0 ||
       px + radius >= WORLD_MAP_WIDTH ||
@@ -516,7 +772,7 @@ export class WorldScene extends Phaser.Scene {
       return false;
     }
 
-    // Check intersecting tiles
+    // Check intersecting 16px tiles
     const minTileX = Math.floor((px - radius) / map.tileSize);
     const maxTileX = Math.floor((px + radius) / map.tileSize);
     const minTileY = Math.floor((feetY - radius) / map.tileSize);
@@ -606,9 +862,8 @@ export class WorldScene extends Phaser.Scene {
     // Draw local player arrow in the exact center
     ctx.save();
     ctx.translate(centerX, centerY);
-    ctx.rotate(this.localHeading - Math.PI / 2); // Rotate to current heading
+    ctx.rotate(this.localHeading - Math.PI / 2);
 
-    // Gold player arrow
     ctx.beginPath();
     ctx.moveTo(0, -8);
     ctx.lineTo(5, 5);
@@ -623,7 +878,6 @@ export class WorldScene extends Phaser.Scene {
 
     ctx.restore();
 
-    // End radar clip
     ctx.restore();
 
     // Radar border ring

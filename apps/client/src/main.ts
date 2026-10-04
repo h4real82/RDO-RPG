@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Client } from 'colyseus.js';
 import { WorldState } from '@nes-rdo/shared';
 import { discordManager } from './discord';
+import { rpgMenuManager } from './menu';
 import { WorldScene } from './scenes/WorldScene';
 
 async function bootstrap() {
@@ -37,6 +38,11 @@ async function bootstrap() {
 
     if (statusBadge) statusBadge.classList.add('connected');
     if (statusText) statusText.textContent = `Online: ${profile.username}`;
+
+    // Initialize Red Dead RPG Logbook Menu
+    rpgMenuManager.init();
+    const menuCharName = document.getElementById('menu-char-name');
+    if (menuCharName) menuCharName.textContent = profile.username;
 
     // Step 3: Initialize Phaser 3 Game Engine with 1080p HD Configuration
     const config: Phaser.Types.Core.GameConfig = {
