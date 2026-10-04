@@ -1,4 +1,4 @@
-import { POIDefinition } from '@nes-rdo/shared';
+import { POIDefinition } from '@rdo-rpg/shared';
 
 export interface InventoryItem {
   id: string;

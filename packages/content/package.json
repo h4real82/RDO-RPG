@@ -1,5 +1,5 @@
 {
-  "name": "@nes-rdo/content",
+  "name": "@rdo-rpg/content",
   "version": "0.1.0",
   "private": true,
   "main": "./dist/index.js",
@@ -21,7 +21,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@nes-rdo/shared": "workspace:*"
+    "@rdo-rpg/shared": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

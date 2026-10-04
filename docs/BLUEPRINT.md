@@ -2,22 +2,22 @@ Hier ist der vollständige, zusammenhängende Text des gesamten Blueprints aus a
 
 ---
 
-# NES-RDO: Discord Activity Multiplayer RPG — MVP Blueprint
+# RDO-RPG: Discord Activity Multiplayer RPG — Blueprint
 
 ## 1. Tech Stack
 
 | Layer | Choice | Rationale |
 | --- | --- | --- |
-| Client | Phaser 3.80 + TypeScript (strict) | Built-in tilemap/camera, `pixelArt: true`, integer zoom |
+| Client | Phaser 3.80 + TypeScript (strict) | Built-in tilemap/camera, HD canvas rendering, sub-pixel physics |
 | Netcode | Colyseus 0.15 (`@colyseus/schema`) | Authoritative rooms, delta-encoded binary state, 20Hz patch rate |
 | Discord | `@discord/embedded-app-sdk` | Activity iframe, RPC auth, voice-channel identity |
 | Persistence | PostgreSQL 16 (Drizzle ORM) + Redis 7 | Durable profiles vs ephemeral zone/spatial state |
 | Hosting | Fly.io / Railway — single region per shard; WSS behind Discord URL-mapping proxy | Activities require all traffic through `/.proxy/` mapped paths |
-| Audio | Web Audio API + jsfxr-style procedural chiptune (2 pulse, 1 triangle, 1 noise channel — 2A03 constraint) |  |
+| Audio | Web Audio API + ambient western soundtrack and sound effects | Atmospheric Western audio immersion |
 
 **Protocol:** Colyseus binary schema patches (server→client @ 20Hz), client inputs as sequenced command messages (client→server @ 20Hz, input buffer with seq numbers for reconciliation). No client authority over position/HP/inventory — ever.
 
-**Rendering constraints:** Virtual canvas 256×240, integer `zoom: Math.floor(min(w/256, h/240))`, `roundPixels: true`. Lock all assets to the NES 54-color master palette; 3 colors + transparency per sprite, enforced at asset-build time by a CI script that rejects PNGs violating the constraint.
+**Rendering:** High-Definition Western Canvas (1920×1080 viewport / 1376×768 world coordinates), smooth sub-pixel continuous movement, 16×16 fine collision sub-grid and cinematic lighting.
 
 ---
 
@@ -89,7 +89,7 @@ export class Player extends Schema {
   @type("string") name = "";
   @type("int16") x = 0;
   @type("int16") y = 0;
-  @type("uint8") dir = 0;              // 0=S 1=N 2=W 3=E (NES 4-dir facing)
+  @type("uint8") dir = 0;              // 0=S 1=N 2=W 3=E (4-dir facing)
   @type("uint8") hp = 100;
   @type("uint8") state = 0;            // 0 idle, 1 walk, 2 mounted, 3 lassoed, 4 deadeye, 5 dead
   @type("boolean") mounted = false;
@@ -375,7 +375,7 @@ boot();
 
 ---
 
-## 5. System Specs (RDO → NES translation)
+## 5. System Specs (RDO Mechanics)
 
 * **Lasso:** projectile entity (8px/tick, 64px max). On hit: target `state=3`, position lerped toward roper at 0.5px/tick server-side, breaks on roper damage or 5s timer. Lassoed players mash (send `struggle` msgs; 10 reduces timer by 1s).
 * **Honor:** ±events table (kill NPC −10, lawman −5, clean hunt +2, delivery +5, bounty capture alive +15/dead +5). Honor gates shop prices (±10%) and mission pool.
@@ -393,7 +393,7 @@ Ziel von Phase 1 ist ein durchgängig lauffähiger Vertikalschnitt: Ein Spieler 
 ### 6.1 Repository-Struktur (Monorepo)
 
 ```
-nes-rdo/
+rdo-rpg/
 ├── apps/
 │   ├── client/          # Vite + TypeScript + Phaser 3
 │   └── server/          # Node 20 + Colyseus + Express
@@ -609,13 +609,13 @@ tick(dt: number) {
 // apps/client/src/scenes/WorldScene.ts (Auszug)
 create() {
   const map = this.make.tilemap({ key: "frontier_town" });
-  const tiles = map.addTilesetImage("nes_tiles", "tiles");
+  const tiles = map.addTilesetImage("rdo_tiles", "tiles");
   map.createLayer("ground", tiles);
   map.createLayer("decor", tiles);
 
   this.room.state.players.onAdd((p, sid) => {
     const sprite = this.add.sprite(p.x * 16, p.y * 16, "hero").setOrigin(0);
-    const label = this.add.bitmapText(0, -10, "nes_font", p.name, 8);
+    const label = this.add.bitmapText(0, -10, "western_font", p.name, 8);
     this.sprites.set(sid, { sprite, label });
 
     p.onChange(() => {
@@ -895,7 +895,7 @@ $$\text{dmg} = \max\!\left(1,\ \left\lfloor \text{atk} \cdot r - \frac{\text{def
 | Szene | Verantwortung |
 | --- | --- |
 | `CombatScene` | Rendert Kampfhintergrund, Combatants, Menü, Countdown, Kampf-Log |
-| `DialogScene` | Textbox im NES-Stil mit Typewriter-Effekt, Choice-Cursor |
+| `DialogScene` | Textbox im Western-Stil mit Typewriter-Effekt, Choice-Cursor |
 
 ### 7.9 Persistenz-Erweiterung
 
@@ -1035,7 +1035,7 @@ Discord Client ──> Caddy (:443) ──┬──> Static Frontend (/dist)
 ### 8.7 Produktions-Caddyfile
 
 ```
-nes-rdo.example.com {
+rdo-rpg.example.com {
   encode gzip
   handle /api/* { reverse_proxy node_a:2567 node_b:2567 }
   handle /ws* {
@@ -1063,7 +1063,7 @@ nes-rdo.example.com {
 
 * Scopes auf Minimum (`identify`) beschränkt.
 * Datenschutzerklärung und ToS verlinkt.
-* Lösch-Endpunkt `DELETE /api/me` und Slash-Command `/nes-rdo delete`.
+* Lösch-Endpunkt `DELETE /api/me` und Slash-Command `/rdo-rpg delete`.
 * Rate-Limiting auf `/api/auth/token` (10/min pro IP).
 * Serverseitiger Chat-Filter und Meldesystem (`/report`).
 

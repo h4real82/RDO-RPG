@@ -13,9 +13,9 @@ COPY packages/shared ./packages/shared
 COPY packages/content ./packages/content
 COPY apps/client ./apps/client
 
-RUN pnpm --filter @nes-rdo/shared build
-RUN pnpm --filter @nes-rdo/content build
-RUN pnpm --filter @nes-rdo/client build
+RUN pnpm --filter @rdo-rpg/shared build
+RUN pnpm --filter @rdo-rpg/content build
+RUN pnpm --filter @rdo-rpg/client build
 
 FROM caddy:2.7-alpine
 WORKDIR /srv

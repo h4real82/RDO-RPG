@@ -1,5 +1,5 @@
 {
-  "name": "@nes-rdo/client",
+  "name": "@rdo-rpg/client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@discord/embedded-app-sdk": "^1.1.0",
-    "@nes-rdo/content": "workspace:*",
-    "@nes-rdo/shared": "workspace:*",
+    "@rdo-rpg/content": "workspace:*",
+    "@rdo-rpg/shared": "workspace:*",
     "colyseus.js": "^0.15.17",
     "phaser": "^3.80.1"
   },

@@ -13,9 +13,9 @@ COPY packages/shared ./packages/shared
 COPY packages/content ./packages/content
 COPY apps/server ./apps/server
 
-RUN pnpm --filter @nes-rdo/shared build
-RUN pnpm --filter @nes-rdo/content build
-RUN pnpm --filter @nes-rdo/server build
+RUN pnpm --filter @rdo-rpg/shared build
+RUN pnpm --filter @rdo-rpg/content build
+RUN pnpm --filter @rdo-rpg/server build
 
 EXPOSE 2567
 CMD ["node", "apps/server/dist/index.js"]

@@ -2,7 +2,7 @@ import itemsData from '../data/items.json';
 import tilesetsData from '../data/tilesets.json';
 import worldMap01 from '../data/maps/world_map_01.json';
 import poisData from '../data/pois.json';
-import { ItemDefinition, MapData, POIDefinition } from '@nes-rdo/shared';
+import { ItemDefinition, MapData, POIDefinition } from '@rdo-rpg/shared';
 
 export const items: ItemDefinition[] = itemsData as ItemDefinition[];
 export const tilesets = tilesetsData;

@@ -1,7 +1,7 @@
 [
   {
-    "id": "overworld_nes",
-    "name": "NES Overworld",
+    "id": "overworld_rdo",
+    "name": "RDO Overworld",
     "image": "tilesets/overworld.png",
     "tileSize": 16,
     "tileCount": 64,

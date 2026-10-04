@@ -16,8 +16,8 @@ import {
   WORLD_MAP_HEIGHT,
   GaitMode,
   POIDefinition
-} from '@nes-rdo/shared';
-import { getMapById, pois } from '@nes-rdo/content';
+} from '@rdo-rpg/shared';
+import { getMapById, pois } from '@rdo-rpg/content';
 import { UserProfile } from '../discord';
 import { rpgMenuManager } from '../menu';
 

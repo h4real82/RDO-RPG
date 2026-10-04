@@ -18,8 +18,8 @@ import {
   PLAYER_COLLISION_RADIUS,
   WORLD_MAP_WIDTH,
   WORLD_MAP_HEIGHT
-} from '@nes-rdo/shared';
-import { getMapById, getItemById } from '@nes-rdo/content';
+} from '@rdo-rpg/shared';
+import { getMapById, getItemById } from '@rdo-rpg/content';
 
 interface JoinOptions {
   discordId?: string;

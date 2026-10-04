@@ -1,17 +1,17 @@
 {
-  "name": "nes-rdo-monorepo",
+  "name": "rdo-rpg-monorepo",
   "version": "0.1.0",
   "private": true,
-  "description": "NES-RDO Discord Activity Multiplayer RPG Monorepo",
+  "description": "RDO-RPG Discord Activity Multiplayer RPG Monorepo",
   "scripts": {
     "dev": "pnpm --parallel --filter ./apps/* dev",
-    "dev:server": "pnpm --filter @nes-rdo/server dev",
-    "dev:client": "pnpm --filter @nes-rdo/client dev",
+    "dev:server": "pnpm --filter @rdo-rpg/server dev",
+    "dev:client": "pnpm --filter @rdo-rpg/client dev",
     "build": "pnpm --filter ./packages/* build && pnpm --filter ./apps/* build",
-    "build:shared": "pnpm --filter @nes-rdo/shared build",
-    "build:content": "pnpm --filter @nes-rdo/content build",
-    "build:server": "pnpm --filter @nes-rdo/server build",
-    "build:client": "pnpm --filter @nes-rdo/client build",
+    "build:shared": "pnpm --filter @rdo-rpg/shared build",
+    "build:content": "pnpm --filter @rdo-rpg/content build",
+    "build:server": "pnpm --filter @rdo-rpg/server build",
+    "build:client": "pnpm --filter @rdo-rpg/client build",
     "clean": "pnpm -r exec rm -rf dist node_modules"
   },
   "devDependencies": {

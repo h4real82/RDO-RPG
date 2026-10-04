@@ -17,10 +17,10 @@ importers:
       '@discord/embedded-app-sdk':
         specifier: ^1.1.0
         version: 1.9.0
-      '@nes-rdo/content':
+      '@rdo-rpg/content':
         specifier: workspace:*
         version: link:../../packages/content
-      '@nes-rdo/shared':
+      '@rdo-rpg/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       colyseus.js:
@@ -54,10 +54,10 @@ importers:
       '@colyseus/ws-transport':
         specifier: ^0.15.0
         version: 0.15.3(@colyseus/core@0.15.57(@colyseus/schema@2.0.37))(@colyseus/schema@2.0.37)
-      '@nes-rdo/content':
+      '@rdo-rpg/content':
         specifier: workspace:*
         version: link:../../packages/content
-      '@nes-rdo/shared':
+      '@rdo-rpg/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       colyseus:
@@ -91,7 +91,7 @@ importers:
 
   packages/content:
     dependencies:
-      '@nes-rdo/shared':
+      '@rdo-rpg/shared':
         specifier: workspace:*
         version: link:../shared
     devDependencies:

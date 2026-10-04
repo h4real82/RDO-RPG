@@ -68,6 +68,6 @@ gameServer.define('world_room', WorldRoom);
 
 // Start server
 server.listen(config.port, () => {
-  console.log(`[NES-RDO Server] Listening on http://localhost:${config.port}`);
+  console.log(`[RDO-RPG Server] Listening on http://localhost:${config.port}`);
   console.log(`[Colyseus] Room 'world_room' registered and ready.`);
 });

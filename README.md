@@ -1,6 +1,6 @@
-# NES-RDO (Retro Discord Online RPG)
+# RDO-RPG (Red Dead Online Discord Activity RPG)
 
-A lightweight multiplayer retro RPG built specifically as a **Discord Activity** using **Phaser 3**, **Colyseus**, and **TypeScript** in a modern monorepo setup.
+A multiplayer Western RPG built specifically as a **Discord Activity** using **Phaser 3**, **Colyseus**, and **TypeScript** in a modern monorepo setup.
 
 ---
 
@@ -29,7 +29,7 @@ graph TD
 ### Key Pillars
 
 1. **Client (`apps/client`)**:
-   - **Phaser 3 + Vite + TypeScript**: Pixel-art 2D game engine optimized for low-latency canvas rendering inside the Discord desktop and mobile clients.
+   - **Phaser 3 + Vite + TypeScript**: HD game engine optimized for low-latency canvas rendering inside the Discord desktop and mobile clients.
    - **Discord Embedded App SDK**: Handles user identity authentication, handshake, and context inside voice channel activities.
    - **Colyseus.js Client**: Connects to the multiplayer room, interpolating player movement and broadcasting input intents.
 
@@ -40,8 +40,8 @@ graph TD
    - **Discord OAuth Token Exchange**: Secure `/api/token` route for exchanging authorization codes for Discord tokens.
 
 3. **Shared Packages (`packages/shared` & `packages/content`)**:
-   - **`@nes-rdo/shared`**: Single source of truth for `@colyseus/schema` classes (`Player`, `WorldState`, `Stats`, `ItemStack`, `Position`), movement constants, and network message types.
-   - **`@nes-rdo/content`**: Static JSON data definitions for items, tilesets, and 2D tilemaps.
+   - **`@rdo-rpg/shared`**: Single source of truth for `@colyseus/schema` classes (`Player`, `WorldState`, `Stats`, `ItemStack`, `Position`), movement constants, and network message types.
+   - **`@rdo-rpg/content`**: Static JSON data definitions for items, tilesets, and 2D tilemaps.
 
 4. **Infrastructure (`infra`)**:
    - **Caddy Reverse Proxy**: Handles SSL termination and proxying for WebSocket (`/colyseus`), API (`/api`), and client static assets.
@@ -52,7 +52,7 @@ graph TD
 ## 📁 Repository Structure
 
 ```text
-nes-rdo/
+rdo-rpg/
 ├── apps/
 │   ├── client/                  # Phaser 3 + Vite + TypeScript
 │   │   ├── src/

@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import { Client } from 'colyseus.js';
-import { WorldState } from '@nes-rdo/shared';
+import { WorldState } from '@rdo-rpg/shared';
 import { discordManager } from './discord';
 import { rpgMenuManager } from './menu';
 import { WorldScene } from './scenes/WorldScene';
 
 async function bootstrap() {
-  console.log('[Bootstrap] Initializing NES-RDO Discord Activity...');
+  console.log('[Bootstrap] Initializing RDO-RPG Discord Activity...');
   const statusBadge = document.getElementById('status-badge');
   const statusText = document.getElementById('status-text');
 
@@ -46,6 +46,7 @@ async function bootstrap() {
 
     // Step 3: Initialize Phaser 3 Game Engine with 1080p HD Configuration
     const config: Phaser.Types.Core.GameConfig = {
+      title: 'RDO-RPG',
       type: Phaser.AUTO,
       parent: 'game-container',
       width: 1920,

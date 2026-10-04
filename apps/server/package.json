@@ -1,5 +1,5 @@
 {
-  "name": "@nes-rdo/server",
+  "name": "@rdo-rpg/server",
   "version": "0.1.0",
   "private": true,
   "main": "dist/index.js",
@@ -13,8 +13,8 @@
     "@colyseus/schema": "^2.0.35",
     "@colyseus/tools": "^0.15.0",
     "@colyseus/ws-transport": "^0.15.0",
-    "@nes-rdo/content": "workspace:*",
-    "@nes-rdo/shared": "workspace:*",
+    "@rdo-rpg/content": "workspace:*",
+    "@rdo-rpg/shared": "workspace:*",
     "colyseus": "^0.15.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
