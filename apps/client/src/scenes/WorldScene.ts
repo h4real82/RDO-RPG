@@ -12,6 +12,7 @@ import {
   PLAYER_JOG_SPEED,
   PLAYER_SPRINT_SPEED,
   PLAYER_COLLISION_RADIUS,
+  PLAYER_FEET_OFFSET_Y,
   WORLD_MAP_WIDTH,
   WORLD_MAP_HEIGHT,
   GaitMode,
@@ -183,6 +184,9 @@ export class WorldScene extends Phaser.Scene {
       this.wasdKeys.cKey.on('down', () => {
         this.showCollisionGrid = !this.showCollisionGrid;
         this.collisionGraphics.setVisible(this.showCollisionGrid);
+        const localContainer = this.playerContainers.get(this.room.sessionId);
+        const hitboxObj = localContainer?.getByName('debug_hitbox') as Phaser.GameObjects.Arc;
+        if (hitboxObj) hitboxObj.setVisible(this.showCollisionGrid);
       });
 
       // Toggle gait mode between WALK and JOG with 'G' or 'CapsLock'
@@ -519,27 +523,21 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
-   * Renders 16x16 fine collision grid
+   * Renders 4x4 ultra-fine collision grid
    */
   private renderCollisionGrid(mapId: string) {
     const map = getMapById(mapId);
     if (!map) return;
 
     this.collisionGraphics.clear();
+    this.collisionGraphics.fillStyle(0xdc2626, 0.45);
 
+    const ts = map.tileSize;
     for (let y = 0; y < map.height; y++) {
       for (let x = 0; x < map.width; x++) {
         const index = y * map.width + x;
-        const isSolid = map.collisionLayer && map.collisionLayer[index] === 1;
-
-        if (isSolid) {
-          this.collisionGraphics.fillStyle(0xdc2626, 0.4);
-          this.collisionGraphics.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-          this.collisionGraphics.lineStyle(1, 0xef4444, 0.7);
-          this.collisionGraphics.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-        } else {
-          this.collisionGraphics.lineStyle(1, 0x22c55e, 0.08);
-          this.collisionGraphics.strokeRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        if (map.collisionLayer && map.collisionLayer[index] === 1) {
+          this.collisionGraphics.fillRect(x * ts, y * ts, ts, ts);
         }
       }
     }
@@ -617,6 +615,15 @@ export class WorldScene extends Phaser.Scene {
 
     if (isLocal) {
       this.localPlayerShadow = shadow;
+
+      // Debug feet collision hitbox circle (radius 7px at boots)
+      const debugHitbox = this.add.circle(0, PLAYER_FEET_OFFSET_Y, PLAYER_COLLISION_RADIUS);
+      debugHitbox.setStrokeStyle(1.5, 0x22c55e, 0.9);
+      debugHitbox.setFillStyle(0x22c55e, 0.2);
+      debugHitbox.setName('debug_hitbox');
+      debugHitbox.setVisible(this.showCollisionGrid);
+      container.add(debugHitbox);
+
       // Smooth Cinematic Camera Follow with Deadzone
       this.cameras.main.startFollow(container, true, 0.05, 0.05);
       this.cameras.main.setDeadzone(30, 20);
@@ -940,14 +947,14 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
-   * Continuous collision validation against map bounds and 16px solid tiles
+   * Continuous collision validation against map bounds and 4x4 solid tiles with circle-to-AABB distance check
    */
   private isPositionWalkable(px: number, py: number): boolean {
     const map = getMapById('world_map_01');
     if (!map) return false;
 
     const radius = PLAYER_COLLISION_RADIUS;
-    const feetY = py + 14;
+    const feetY = py + PLAYER_FEET_OFFSET_Y;
 
     // Check map boundaries
     if (
@@ -959,7 +966,7 @@ export class WorldScene extends Phaser.Scene {
       return false;
     }
 
-    // Check intersecting 16px tiles
+    // Check intersecting 4x4 tiles
     const minTileX = Math.floor((px - radius) / map.tileSize);
     const maxTileX = Math.floor((px + radius) / map.tileSize);
     const minTileY = Math.floor((feetY - radius) / map.tileSize);
@@ -972,7 +979,14 @@ export class WorldScene extends Phaser.Scene {
         }
         const index = ty * map.width + tx;
         if (map.collisionLayer && map.collisionLayer[index] === 1) {
-          return false;
+          // Precise circle-to-AABB distance check against 4x4 tile
+          const closestX = Math.max(tx * map.tileSize, Math.min(px, (tx + 1) * map.tileSize));
+          const closestY = Math.max(ty * map.tileSize, Math.min(feetY, (ty + 1) * map.tileSize));
+          const distX = px - closestX;
+          const distY = feetY - closestY;
+          if (distX * distX + distY * distY < radius * radius) {
+            return false;
+          }
         }
       }
     }

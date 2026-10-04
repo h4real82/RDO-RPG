@@ -16,6 +16,7 @@ import {
   PLAYER_WALK_SPEED,
   PLAYER_SPRINT_SPEED,
   PLAYER_COLLISION_RADIUS,
+  PLAYER_FEET_OFFSET_Y,
   WORLD_MAP_WIDTH,
   WORLD_MAP_HEIGHT
 } from '@rdo-rpg/shared';
@@ -207,7 +208,7 @@ export class WorldRoom extends Room<WorldState> {
     if (!map) return false;
 
     const radius = PLAYER_COLLISION_RADIUS;
-    const feetY = py + 14;
+    const feetY = py + PLAYER_FEET_OFFSET_Y;
 
     // Check map boundaries
     if (
@@ -219,7 +220,7 @@ export class WorldRoom extends Room<WorldState> {
       return false;
     }
 
-    // Check intersecting 32px tiles against collisionLayer
+    // Check intersecting 4x4 tiles against collisionLayer
     const minTileX = Math.floor((px - radius) / map.tileSize);
     const maxTileX = Math.floor((px + radius) / map.tileSize);
     const minTileY = Math.floor((feetY - radius) / map.tileSize);
@@ -232,7 +233,14 @@ export class WorldRoom extends Room<WorldState> {
         }
         const index = ty * map.width + tx;
         if (map.collisionLayer && map.collisionLayer[index] === 1) {
-          return false;
+          // Precise circle-to-AABB distance check against 4x4 tile
+          const closestX = Math.max(tx * map.tileSize, Math.min(px, (tx + 1) * map.tileSize));
+          const closestY = Math.max(ty * map.tileSize, Math.min(feetY, (ty + 1) * map.tileSize));
+          const distX = px - closestX;
+          const distY = feetY - closestY;
+          if (distX * distX + distY * distY < radius * radius) {
+            return false;
+          }
         }
       }
     }
