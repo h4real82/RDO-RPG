@@ -38,15 +38,38 @@ interface PointLightData {
   phase: number;
 }
 
+interface WaterTrough {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  lanternX: number;
+  lanternY: number;
+}
+
+interface WaterPuddle {
+  x: number;
+  y: number;
+  rx: number;
+  ry: number;
+  lanternX: number;
+  lanternY: number;
+  phase: number;
+}
+
 interface AmbientParticle {
+  type: 'dust' | 'ember' | 'mist';
   x: number;
   y: number;
   vx: number;
   vy: number;
   size: number;
   alpha: number;
+  baseAlpha: number;
   color: number;
   phase: number;
+  originX?: number;
+  originY?: number;
 }
 
 interface POIVisual {
@@ -93,11 +116,20 @@ export class WorldScene extends Phaser.Scene {
   private playerSprites: Map<string, Phaser.GameObjects.Image> = new Map();
   private localPlayerShadow: Phaser.GameObjects.Ellipse | null = null;
 
-  // Lighting & Atmosphere
+  // Dynamic Lighting, Forward Lantern Beam & Ambient Occlusion
   private pointLights: PointLightData[] = [];
+  private playerLanternCone: Phaser.GameObjects.Image | null = null;
+  private aoShadowsGraphics!: Phaser.GameObjects.Graphics;
+  private ambientOverlay!: Phaser.GameObjects.Rectangle;
+
+  // Animated Water Simulation (Troughs & Mud Puddles)
+  private waterGraphics!: Phaser.GameObjects.Graphics;
+  private waterTroughs: WaterTrough[] = [];
+  private waterPuddles: WaterPuddle[] = [];
+
+  // Multi-tier Atmospheric Particles
   private particles: AmbientParticle[] = [];
   private particleGraphics!: Phaser.GameObjects.Graphics;
-  private ambientOverlay!: Phaser.GameObjects.Rectangle;
 
   // Inputs
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -139,26 +171,33 @@ export class WorldScene extends Phaser.Scene {
   }
 
   create() {
-    // 1. Generate Warm Radial Point Light Texture
+    // 1. Generate Warm Radial Point Light Texture & Forward Lantern Beam
     this.createRadialLightTexture();
+    this.createPlayerLanternConeTexture();
 
     // 2. HD Background Map (1376x768)
     const map = this.add.image(0, 0, 'western_map').setOrigin(0, 0);
     map.setDisplaySize(WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT);
 
-    // 3. Ambient Dusk / Game of Thrones Cinematic Lighting Overlay
-    this.ambientOverlay = this.add.rectangle(0, 0, WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT, 0x0f0b08, 0.45);
-    this.ambientOverlay.setOrigin(0, 0);
-    this.ambientOverlay.setBlendMode(Phaser.BlendModes.MULTIPLY);
-    this.ambientOverlay.setDepth(10);
+    // 3. Animated Water Simulation (Troughs & Puddles with Shimmer & Reflections)
+    this.setupWaterEffects();
 
-    // 4. Warm Point Lights (Lanterns & Torches) at Buildings
+    // 4. Ambient Occlusion & Soft Drop Shadows under Roofs, Boardwalks & Buildings
+    this.setupAmbientOcclusionShadows();
+
+    // 5. Warm Point Lights (Flickering Lanterns & Torches) at Buildings
     this.setupWarmPointLights();
 
-    // 5. Ambient Atmospheric Dust & Spark Particles
+    // 6. Ambient Dusk / Western Twilight Multiplicative Filter
+    this.ambientOverlay = this.add.rectangle(0, 0, WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT, 0x100b08, 0.48);
+    this.ambientOverlay.setOrigin(0, 0);
+    this.ambientOverlay.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    this.ambientOverlay.setDepth(900);
+
+    // 7. Ambient Atmospheric Dust, Ember & Mist Particles
     this.setupAtmosphericParticles();
 
-    // 6. Collision Debug Layer (Default: INVISIBLE, toggle with 'C')
+    // 8. Collision Debug Layer (Default: INVISIBLE, toggle with 'C')
     this.collisionGraphics = this.add.graphics();
     this.collisionGraphics.setVisible(false);
     this.collisionGraphics.setDepth(2000);
@@ -219,6 +258,9 @@ export class WorldScene extends Phaser.Scene {
       if (container) {
         container.setPosition(destX, destY);
         container.setDepth(destY);
+      }
+      if (this.playerLanternCone) {
+        this.playerLanternCone.setPosition(destX, destY + 8);
       }
       this.room.send(RoomMessage.INTERACT, {
         type: 'travel',
@@ -286,6 +328,58 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
+   * Procedural directional forward lantern cone texture with soft radial falloff
+   */
+  private createPlayerLanternConeTexture() {
+    if (this.textures.exists('player_lantern_cone')) return;
+
+    const width = 256;
+    const height = 256;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const originX = 24;
+    const originY = 128;
+    const maxRadius = 180;
+    const spreadAngle = 0.58; // ~33 deg each side => ~66 deg FOV
+
+    // 1. Directional forward lantern beam
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(originX, originY);
+    ctx.arc(originX, originY, maxRadius, -spreadAngle, spreadAngle);
+    ctx.closePath();
+
+    const coneGrad = ctx.createRadialGradient(originX, originY, 4, originX, originY, maxRadius);
+    coneGrad.addColorStop(0, 'rgba(255, 245, 205, 0.85)'); // Bright lantern core
+    coneGrad.addColorStop(0.2, 'rgba(255, 195, 75, 0.55)');  // Warm golden amber
+    coneGrad.addColorStop(0.55, 'rgba(235, 125, 25, 0.22)'); // Soft orange falloff
+    coneGrad.addColorStop(0.85, 'rgba(180, 70, 10, 0.06)');  // Twilight edge
+    coneGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = coneGrad;
+    ctx.fill();
+    ctx.restore();
+
+    // 2. Immediate Ambient Hand Lantern Glow (360 degrees small aura)
+    ctx.save();
+    const handGlow = ctx.createRadialGradient(originX, originY, 2, originX, originY, 44);
+    handGlow.addColorStop(0, 'rgba(255, 248, 220, 0.8)');
+    handGlow.addColorStop(0.35, 'rgba(255, 180, 50, 0.45)');
+    handGlow.addColorStop(0.7, 'rgba(220, 100, 15, 0.15)');
+    handGlow.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = handGlow;
+    ctx.beginPath();
+    ctx.arc(originX, originY, 44, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    this.textures.addCanvas('player_lantern_cone', canvas);
+  }
+
+  /**
    * Instantiates warm lanterns with organic flicker tweens
    */
   private setupWarmPointLights() {
@@ -307,7 +401,7 @@ export class WorldScene extends Phaser.Scene {
       sprite.setScale(pos.scale);
       sprite.setAlpha(pos.alpha);
       sprite.setBlendMode(Phaser.BlendModes.ADD);
-      sprite.setDepth(pos.y + 10);
+      sprite.setDepth(950);
 
       this.pointLights.push({
         x: pos.x,
@@ -318,6 +412,162 @@ export class WorldScene extends Phaser.Scene {
         flickerSpeed: pos.speed,
         phase: idx * 1.7
       });
+    });
+  }
+
+  /**
+   * Renders soft multi-layered drop shadows (Ambient Occlusion) beneath roofs, veranda edges & walls
+   */
+  private setupAmbientOcclusionShadows() {
+    this.aoShadowsGraphics = this.add.graphics();
+    this.aoShadowsGraphics.setDepth(3);
+
+    // Saloon
+    this.drawSoftDropShadow(284, 420, 200, 14, 0.55); // Porch edge onto dirt road
+    this.drawSoftDropShadow(288, 392, 192, 7, 0.4);   // Wall base onto porch floor
+    this.drawSoftDropShadow(284, 392, 6, 30, 0.35);   // West porch side shadow
+
+    // General Store
+    this.drawSoftDropShadow(540, 418, 136, 12, 0.55); // Porch edge
+    this.drawSoftDropShadow(544, 392, 128, 6, 0.38);  // Wall base
+
+    // Sheriff's Office
+    this.drawSoftDropShadow(716, 418, 120, 12, 0.55); // Porch edge
+    this.drawSoftDropShadow(720, 392, 112, 6, 0.38);  // Wall base
+
+    // Valentine Bank
+    this.drawSoftDropShadow(876, 418, 136, 12, 0.55); // Porch edge
+    this.drawSoftDropShadow(880, 392, 128, 6, 0.38);  // Wall base
+
+    // Barber Shop
+    this.drawSoftDropShadow(1052, 420, 72, 12, 0.5);
+
+    // Gunsmith
+    this.drawSoftDropShadow(1196, 422, 136, 12, 0.55);
+
+    // Livery Stable Barn
+    this.drawSoftDropShadow(508, 216, 232, 16, 0.6);  // Deep entrance overhang
+    this.drawSoftDropShadow(420, 224, 92, 6, 0.35);   // Corral fence base
+
+    // Blacksmith Forge & Workshop
+    this.drawSoftDropShadow(1068, 218, 168, 15, 0.55);
+
+    // Top-Left Cabin
+    this.drawSoftDropShadow(128, 218, 144, 12, 0.45);
+
+    // South Buildings Boardwalk Edge along Main Street
+    this.drawSoftDropShadow(120, 562, 1230, 12, 0.52);
+
+    // South Buildings Wall Bases
+    this.drawSoftDropShadow(128, 672, 144, 8, 0.4);
+    this.drawSoftDropShadow(352, 672, 144, 8, 0.4);
+    this.drawSoftDropShadow(576, 672, 128, 8, 0.4);
+    this.drawSoftDropShadow(768, 672, 128, 8, 0.4);
+    this.drawSoftDropShadow(944, 672, 112, 8, 0.4);
+    this.drawSoftDropShadow(1104, 672, 112, 8, 0.4);
+    this.drawSoftDropShadow(1264, 672, 80, 8, 0.4);
+
+    // Hitching Posts along Main Street
+    this.drawSoftDropShadow(332, 434, 96, 6, 0.35);
+    this.drawSoftDropShadow(564, 434, 88, 6, 0.35);
+    this.drawSoftDropShadow(742, 434, 76, 6, 0.35);
+  }
+
+  /**
+   * Helper to draw soft gradient drop shadow bands
+   */
+  private drawSoftDropShadow(x: number, y: number, width: number, height: number, baseAlpha: number = 0.5) {
+    const steps = 4;
+    const stepHeight = height / steps;
+    for (let i = 0; i < steps; i++) {
+      const alpha = baseAlpha * (1 - (i / steps) * 0.75);
+      this.aoShadowsGraphics.fillStyle(0x0a0705, alpha);
+      this.aoShadowsGraphics.fillRect(x, y + i * stepHeight, width, stepHeight + 0.5);
+    }
+  }
+
+  /**
+   * Sets up animated water troughs and mud puddles
+   */
+  private setupWaterEffects() {
+    this.waterGraphics = this.add.graphics();
+    this.waterGraphics.setDepth(2);
+
+    this.waterTroughs = [
+      { x: 326, y: 226, width: 48, height: 18, lanternX: 630, lanternY: 215 },
+      { x: 472, y: 228, width: 44, height: 18, lanternX: 630, lanternY: 215 },
+      { x: 36, y: 536, width: 44, height: 18, lanternX: 65, lanternY: 460 }
+    ];
+
+    this.waterPuddles = [
+      { x: 358, y: 462, rx: 30, ry: 12, lanternX: 380, lanternY: 405, phase: 0 },
+      { x: 692, y: 466, rx: 34, ry: 13, lanternX: 785, lanternY: 405, phase: 1.8 },
+      { x: 985, y: 470, rx: 28, ry: 11, lanternX: 955, lanternY: 405, phase: 3.4 },
+      { x: 486, y: 196, rx: 22, ry: 9, lanternX: 630, lanternY: 215, phase: 2.1 },
+      { x: 175, y: 485, rx: 26, ry: 10, lanternX: 65, lanternY: 460, phase: 4.7 }
+    ];
+  }
+
+  /**
+   * Renders dynamic water shimmer, sine caustics & lantern specular glints
+   */
+  private updateWaterEffects(time: number) {
+    this.waterGraphics.clear();
+
+    // 1. Water Troughs
+    this.waterTroughs.forEach((t) => {
+      // Dark murky trough water base
+      this.waterGraphics.fillStyle(0x0f272a, 0.72);
+      this.waterGraphics.fillRoundedRect(t.x + 2, t.y + 2, t.width - 4, t.height - 4, 3);
+
+      // Animated sine wave caustics
+      for (let i = 0; i < 3; i++) {
+        const wavePhase = time * 0.0022 + i * 1.7;
+        const waveY = t.y + 4 + ((Math.sin(wavePhase) + 1) / 2) * (t.height - 8);
+        const waveAlpha = 0.22 + Math.sin(wavePhase * 1.4) * 0.12;
+        this.waterGraphics.lineStyle(1.2, 0x67e8f9, waveAlpha);
+        this.waterGraphics.beginPath();
+        this.waterGraphics.moveTo(t.x + 4, waveY);
+        this.waterGraphics.lineTo(t.x + t.width / 2, waveY + Math.sin(time * 0.0035 + i) * 1.5);
+        this.waterGraphics.lineTo(t.x + t.width - 4, waveY);
+        this.waterGraphics.stroke();
+      }
+
+      // Specular lantern glint
+      const flicker = Math.sin(time * 0.005 + t.x) * 0.25 + 0.75;
+      this.waterGraphics.fillStyle(0xfde68a, 0.65 * flicker);
+      this.waterGraphics.fillCircle(t.x + t.width * 0.65, t.y + t.height * 0.45, 2.0);
+      this.waterGraphics.fillStyle(0xffffff, 0.9 * flicker);
+      this.waterGraphics.fillCircle(t.x + t.width * 0.65, t.y + t.height * 0.45, 1.0);
+    });
+
+    // 2. Mud Puddles
+    this.waterPuddles.forEach((p) => {
+      // Dark muddy wet perimeter
+      this.waterGraphics.fillStyle(0x110c07, 0.62);
+      this.waterGraphics.fillEllipse(p.x, p.y, p.rx * 2, p.ry * 2);
+
+      // Water sheen
+      this.waterGraphics.fillStyle(0x1a2630, 0.45);
+      this.waterGraphics.fillEllipse(p.x, p.y, (p.rx - 2) * 2, (p.ry - 1.5) * 2);
+
+      // Animated sine wave surface ripple
+      const ripple = ((time * 0.0007 + p.phase) % 1);
+      const rx = p.rx * ripple;
+      const ry = p.ry * ripple;
+      const rAlpha = (1 - ripple) * 0.32;
+      this.waterGraphics.lineStyle(1, 0x7dd3fc, rAlpha);
+      this.waterGraphics.strokeEllipse(p.x, p.y, rx * 2, ry * 2);
+
+      // Specular reflection of nearby lantern
+      const dx = p.lanternX - p.x;
+      const reflX = p.x + Math.sign(dx) * Math.min(p.rx * 0.45, Math.abs(dx) * 0.06);
+      const reflY = p.y - p.ry * 0.2;
+      const reflFlicker = Math.sin(time * 0.006 + p.phase) * 0.2 + 0.8;
+      this.waterGraphics.fillStyle(0xf59e0b, 0.5 * reflFlicker);
+      this.waterGraphics.fillEllipse(reflX, reflY, 9, 4);
+      this.waterGraphics.fillStyle(0xfef08a, 0.85 * reflFlicker);
+      this.waterGraphics.fillEllipse(reflX, reflY, 4, 1.8);
     });
   }
 
@@ -456,22 +706,61 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
-   * Atmospheric floating dust motes & warm embers
+   * Atmospheric multi-tier particles: drifting prairie dust, blacksmith forge embers & rolling street mist
    */
   private setupAtmosphericParticles() {
     this.particleGraphics = this.add.graphics();
     this.particleGraphics.setDepth(1500);
 
-    const count = 45;
-    for (let i = 0; i < count; i++) {
+    // 1. Prairie Wind Dust Motes (Drifting West-to-East)
+    const dustCount = 35;
+    for (let i = 0; i < dustCount; i++) {
       this.particles.push({
+        type: 'dust',
         x: Phaser.Math.Between(0, WORLD_MAP_WIDTH),
-        y: Phaser.Math.Between(0, WORLD_MAP_HEIGHT),
-        vx: Phaser.Math.FloatBetween(8, 28),
-        vy: Phaser.Math.FloatBetween(-6, 6),
-        size: Phaser.Math.FloatBetween(1, 2.8),
-        alpha: Phaser.Math.FloatBetween(0.2, 0.65),
-        color: Math.random() > 0.4 ? 0xf59e0b : 0xe5ded2,
+        y: Phaser.Math.Between(20, WORLD_MAP_HEIGHT - 20),
+        vx: Phaser.Math.FloatBetween(18, 38),
+        vy: Phaser.Math.FloatBetween(-3, 3),
+        size: Phaser.Math.FloatBetween(1.2, 2.4),
+        alpha: Phaser.Math.FloatBetween(0.25, 0.55),
+        baseAlpha: Phaser.Math.FloatBetween(0.25, 0.55),
+        color: Math.random() > 0.4 ? 0xd6c7b2 : 0xe8decb,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    // 2. Blacksmith Forge Glowing Embers & Sparks (Rising Upward)
+    const emberCount = 16;
+    for (let i = 0; i < emberCount; i++) {
+      this.particles.push({
+        type: 'ember',
+        x: 1140 + Phaser.Math.Between(-35, 35),
+        y: 215 + Phaser.Math.Between(-15, 25),
+        vx: Phaser.Math.FloatBetween(-6, 12),
+        vy: Phaser.Math.FloatBetween(-28, -52),
+        size: Phaser.Math.FloatBetween(1.5, 2.8),
+        alpha: Phaser.Math.FloatBetween(0.65, 0.95),
+        baseAlpha: Phaser.Math.FloatBetween(0.65, 0.95),
+        color: Math.random() > 0.5 ? 0xf97316 : 0xfbbf24,
+        phase: Math.random() * Math.PI * 2,
+        originX: 1140,
+        originY: 215
+      });
+    }
+
+    // 3. Low-Altitude Rolling Dust & Mist Puffs across Main Street
+    const mistCount = 10;
+    for (let i = 0; i < mistCount; i++) {
+      this.particles.push({
+        type: 'mist',
+        x: Phaser.Math.Between(0, WORLD_MAP_WIDTH),
+        y: Phaser.Math.Between(420, 540),
+        vx: Phaser.Math.FloatBetween(10, 22),
+        vy: Phaser.Math.FloatBetween(-1, 1),
+        size: Phaser.Math.FloatBetween(28, 48),
+        alpha: Phaser.Math.FloatBetween(0.035, 0.075),
+        baseAlpha: Phaser.Math.FloatBetween(0.035, 0.075),
+        color: 0xc4b7a6,
         phase: Math.random() * Math.PI * 2
       });
     }
@@ -566,6 +855,10 @@ export class WorldScene extends Phaser.Scene {
         this.playerContainers.delete(sessionId);
         this.playerSprites.delete(sessionId);
       }
+      if (sessionId === this.room.sessionId && this.playerLanternCone) {
+        this.playerLanternCone.destroy();
+        this.playerLanternCone = null;
+      }
     });
 
     this.room.onMessage(RoomMessage.MOVE, (data: { success: boolean; x: number; y: number }) => {
@@ -586,20 +879,20 @@ export class WorldScene extends Phaser.Scene {
 
     const container = this.add.container(startX, startY);
 
-    // 1. Soft Oval Ground Shadow anchored under boots
-    const shadow = this.add.ellipse(0, 22, 34, 12, 0x000000, 0.45);
+    // 1. Soft Oval Ground Contact Shadow anchored under boots
+    const shadow = this.add.ellipse(0, 26, 32, 11, 0x000000, 0.45);
 
-    // 2. High-Resolution Cowboy Outlaw Sprite
+    // 2. High-Resolution Western Outlaw Sprite (crisp slouch hat, duster coat & revolvers)
     const cowboySprite = this.add.image(0, 0, 'cowboy');
-    cowboySprite.setDisplaySize(48, 54);
+    cowboySprite.setDisplaySize(30, 58);
     cowboySprite.setOrigin(0.5, 0.5);
 
     // 3. Anti-Aliased High-Res Name Label
     const nameLabelText = isLocal ? `★ ${player.username}` : player.username || 'Outlaw';
-    const nameBg = this.add.rectangle(0, -32, nameLabelText.length * 7 + 14, 16, 0x14100c, 0.8);
+    const nameBg = this.add.rectangle(0, -36, nameLabelText.length * 7 + 14, 16, 0x14100c, 0.85);
     nameBg.setStrokeStyle(1, isLocal ? 0xd4af37 : 0x8c734b, 0.85);
 
-    const nameText = this.add.text(0, -32, nameLabelText, {
+    const nameText = this.add.text(0, -36, nameLabelText, {
       fontSize: '10px',
       color: isLocal ? '#fef08a' : '#f5ebe0',
       fontFamily: 'Inter, Cinzel, serif',
@@ -615,6 +908,12 @@ export class WorldScene extends Phaser.Scene {
 
     if (isLocal) {
       this.localPlayerShadow = shadow;
+
+      // Forward Directional Lantern Light Cone for Local Player
+      this.playerLanternCone = this.add.image(startX, startY + 8, 'player_lantern_cone');
+      this.playerLanternCone.setOrigin(24 / 256, 128 / 256);
+      this.playerLanternCone.setBlendMode(Phaser.BlendModes.ADD);
+      this.playerLanternCone.setDepth(960);
 
       // Debug feet collision hitbox circle (radius 7px at boots)
       const debugHitbox = this.add.circle(0, PLAYER_FEET_OFFSET_Y, PLAYER_COLLISION_RADIUS);
@@ -675,10 +974,16 @@ export class WorldScene extends Phaser.Scene {
     // 3. Animate Dynamic Lantern Flickers
     this.updateLanternFlickers(time);
 
-    // 4. Animate Atmospheric Dust Particles
+    // 4. Animate Animated Water Troughs & Puddles (Sinus ripples & specular reflections)
+    this.updateWaterEffects(time);
+
+    // 5. Update Dynamic Character Lighting & Warm Tinting near Lanterns
+    this.updateCharacterLighting(time);
+
+    // 6. Animate Atmospheric Multi-tier Dust, Ember & Mist Particles
     this.updateAtmosphericParticles(dt);
 
-    // 5. Update POI Proximity & Interaction Prompts
+    // 7. Update POI Proximity & Interaction Prompts
     this.updatePOIProximity();
 
     // 6. Broadcast Continuous Move Intent at 20Hz
@@ -821,9 +1126,34 @@ export class WorldScene extends Phaser.Scene {
       container.setPosition(this.localX, this.localY);
       container.setDepth(this.localY);
 
+      // Forward Lantern Beam: position, rotation with walking sway & organic flicker
+      if (this.playerLanternCone) {
+        this.playerLanternCone.setPosition(this.localX, this.localY + 8);
+        const sway = this.isMoving ? Math.sin(this.gaitTimer) * 0.05 : 0;
+        this.playerLanternCone.setRotation(this.localHeading + sway);
+        const flicker = Math.sin(this.time.now / 110) * 0.04 + Math.cos(this.time.now / 75) * 0.03;
+        this.playerLanternCone.setAlpha(0.72 + flicker);
+      }
+
       // Facing Direction
       if (Math.abs(Math.cos(this.localHeading)) > 0.08) {
         sprite.setFlipX(Math.cos(this.localHeading) < 0);
+      }
+
+      // Dynamic Contact Shadow Squash & Stretch during movement
+      if (this.localPlayerShadow) {
+        if (this.isMoving) {
+          const stridePhase = this.gaitTimer * 2;
+          const stretch = Math.sin(stridePhase);
+          this.localPlayerShadow.setScale(
+            1 + stretch * (this.isSprinting ? 0.22 : 0.15),
+            1 - stretch * (this.isSprinting ? 0.15 : 0.10)
+          );
+          this.localPlayerShadow.setAlpha(0.48 + Math.cos(stridePhase) * 0.08);
+        } else {
+          this.localPlayerShadow.setScale(1, 1);
+          this.localPlayerShadow.setAlpha(0.45);
+        }
       }
 
       // Procedural Gait Animation Cycle (Stride Bobbing & Tilt)
@@ -839,7 +1169,7 @@ export class WorldScene extends Phaser.Scene {
 
         // Stride dust particles when sprinting
         if (this.isSprinting && Math.sin(this.gaitTimer) > 0.8) {
-          this.spawnFootstepDust(this.localX, this.localY + 16);
+          this.spawnFootstepDust(this.localX, this.localY + 24);
         }
       } else {
         sprite.setY(0);
@@ -926,23 +1256,86 @@ export class WorldScene extends Phaser.Scene {
   }
 
   /**
-   * Drifts ambient dust motes & warm embers across Valentine
+   * Dynamically modulates character sprite tint as outlaw passes warm flickering lanterns
+   */
+  private updateCharacterLighting(time: number) {
+    this.playerContainers.forEach((container, sessionId) => {
+      const sprite = this.playerSprites.get(sessionId);
+      if (!sprite) return;
+
+      const px = container.x;
+      const py = container.y;
+
+      let nearestDist = Infinity;
+      let nearestLight: PointLightData | null = null;
+
+      for (const light of this.pointLights) {
+        const dist = Phaser.Math.Distance.Between(px, py, light.x, light.y);
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestLight = light;
+        }
+      }
+
+      if (nearestDist < 140 && nearestLight) {
+        const factor = 1 - (nearestDist / 140);
+        const flicker = Math.sin(time / 140 * nearestLight.flickerSpeed + nearestLight.phase) * 0.08;
+        const intensity = Math.min(1, Math.max(0, factor * 0.85 + flicker));
+
+        // Smoothly blend from dusk neutral to warm golden amber lantern reflection
+        const r = Math.min(255, Math.round(195 + (255 - 195) * intensity));
+        const g = Math.min(255, Math.round(180 + (225 - 180) * intensity));
+        const b = Math.min(255, Math.round(165 - (165 - 120) * intensity));
+        const tint = (r << 16) | (g << 8) | b;
+        sprite.setTint(tint);
+      } else {
+        // Atmospheric dusk base tint
+        sprite.setTint(0xc5bba8);
+      }
+    });
+  }
+
+  /**
+   * Drifts multi-tier particles (prairie wind dust, blacksmith embers & low mist) across Valentine
    */
   private updateAtmosphericParticles(dt: number) {
     this.particleGraphics.clear();
 
     this.particles.forEach((p) => {
       p.x += p.vx * dt;
-      p.y += p.vy * dt + Math.sin(this.time.now / 400 + p.phase) * 0.4;
+      p.y += p.vy * dt;
 
-      // Wrap around world map bounds
-      if (p.x > WORLD_MAP_WIDTH) p.x = 0;
-      if (p.x < 0) p.x = WORLD_MAP_WIDTH;
-      if (p.y > WORLD_MAP_HEIGHT) p.y = 0;
-      if (p.y < 0) p.y = WORLD_MAP_HEIGHT;
+      if (p.type === 'dust') {
+        p.y += Math.sin(this.time.now / 350 + p.phase) * 0.35;
+        // Wrap around world map bounds
+        if (p.x > WORLD_MAP_WIDTH) p.x = 0;
+        if (p.x < 0) p.x = WORLD_MAP_WIDTH;
+        if (p.y > WORLD_MAP_HEIGHT) p.y = 0;
+        if (p.y < 0) p.y = WORLD_MAP_HEIGHT;
 
-      this.particleGraphics.fillStyle(p.color, p.alpha);
-      this.particleGraphics.fillCircle(p.x, p.y, p.size);
+        this.particleGraphics.fillStyle(p.color, p.alpha);
+        this.particleGraphics.fillCircle(p.x, p.y, p.size);
+      } else if (p.type === 'ember') {
+        p.x += Math.sin(this.time.now / 150 + p.phase) * 0.6;
+        // Twinkle
+        p.alpha = p.baseAlpha * (0.6 + Math.sin(this.time.now / 80 + p.phase) * 0.4);
+
+        // Reset if drifted too high or dissipated
+        if (p.y < 70 || p.x < 1050 || p.x > 1250) {
+          p.x = (p.originX || 1140) + Phaser.Math.Between(-30, 30);
+          p.y = (p.originY || 215) + Phaser.Math.Between(-10, 20);
+        }
+
+        this.particleGraphics.fillStyle(p.color, p.alpha);
+        this.particleGraphics.fillCircle(p.x, p.y, p.size);
+      } else if (p.type === 'mist') {
+        if (p.x > WORLD_MAP_WIDTH + 60) p.x = -60;
+        if (p.x < -60) p.x = WORLD_MAP_WIDTH + 60;
+
+        const pulseAlpha = p.baseAlpha * (0.85 + Math.sin(this.time.now / 800 + p.phase) * 0.15);
+        this.particleGraphics.fillStyle(p.color, pulseAlpha);
+        this.particleGraphics.fillCircle(p.x, p.y, p.size);
+      }
     });
   }
 
