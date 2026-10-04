@@ -1,12 +1,11 @@
-import Phaser from 'phaser';
 import { Client } from 'colyseus.js';
 import { WorldState } from '@rdo-rpg/shared';
 import { discordManager } from './discord';
 import { rpgMenuManager } from './menu';
-import { WorldScene } from './scenes/WorldScene';
+import { ThreeWorld } from './world/ThreeWorld';
 
 async function bootstrap() {
-  console.log('[Bootstrap] Initializing RDO-RPG Discord Activity...');
+  console.log('[Bootstrap] Initializing RDO-RPG Discord Activity (Three.js 3D)...');
   const statusBadge = document.getElementById('status-badge');
   const statusText = document.getElementById('status-text');
 
@@ -14,10 +13,9 @@ async function bootstrap() {
   const profile = await discordManager.initialize();
 
   // Step 2: Establish Colyseus WebSocket Connection
-  // Determine server endpoint (supports Discord Proxy, Vite dev proxy, and direct connection)
   const isSecure = window.location.protocol === 'https:';
   const wsProtocol = isSecure ? 'wss:' : 'ws:';
-  
+
   let endpoint = `${wsProtocol}//${window.location.host}`;
   if (window.location.port === '3000' && !discordManager.isEmbedded) {
     // Local standalone dev server fallback
@@ -44,33 +42,10 @@ async function bootstrap() {
     const menuCharName = document.getElementById('menu-char-name');
     if (menuCharName) menuCharName.textContent = profile.username;
 
-    // Step 3: Initialize Phaser 3 Game Engine with 1080p HD Configuration
-    const config: Phaser.Types.Core.GameConfig = {
-      title: 'RDO-RPG',
-      type: Phaser.AUTO,
-      parent: 'game-container',
-      width: 1920,
-      height: 1080,
-      pixelArt: false,
-      roundPixels: false,
-      antialias: true,
-      antialiasGL: true,
-      physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: { x: 0, y: 0 },
-          debug: false
-        }
-      },
-      scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
-      },
-      scene: [WorldScene]
-    };
-
-    const game = new Phaser.Game(config);
-    game.scene.start('WorldScene', { client, room, profile });
+    // Step 3: Initialize Three.js 3D Tactical RPG Engine
+    console.log('[Bootstrap] Launching Three.js 3D Engine...');
+    const world3D = new ThreeWorld(client, room, profile);
+    (window as any).__world3D = world3D;
 
     room.onLeave((code) => {
       console.warn(`[Bootstrap] Left room with code: ${code}`);

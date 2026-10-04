@@ -19,6 +19,7 @@ import {
   PLAYER_FEET_OFFSET_Y,
   WORLD_MAP_WIDTH,
   WORLD_MAP_HEIGHT,
+  VALENTINE_OBSTACLES,
   TimeOfDay,
   WeatherState
 } from '@rdo-rpg/shared';
@@ -219,47 +220,29 @@ export class WorldRoom extends Room<WorldState> {
   }
 
   /**
-   * Validates if a continuous pixel coordinate (with collision radius) is walkable
+   * Validates if a continuous pixel coordinate (with collision radius) is walkable against 3D obstacle bounding boxes
    */
-  public isPositionWalkable(px: number, py: number, mapId: string): boolean {
-    const map = getMapById(mapId);
-    if (!map) return false;
-
+  public isPositionWalkable(px: number, py: number, _mapId?: string): boolean {
     const radius = PLAYER_COLLISION_RADIUS;
-    const feetY = py + PLAYER_FEET_OFFSET_Y;
 
     // Check map boundaries
     if (
       px - radius < 0 ||
       px + radius >= WORLD_MAP_WIDTH ||
-      feetY - radius < 0 ||
-      feetY + radius >= WORLD_MAP_HEIGHT
+      py - radius < 0 ||
+      py + radius >= WORLD_MAP_HEIGHT
     ) {
       return false;
     }
 
-    // Check intersecting 4x4 tiles against collisionLayer
-    const minTileX = Math.floor((px - radius) / map.tileSize);
-    const maxTileX = Math.floor((px + radius) / map.tileSize);
-    const minTileY = Math.floor((feetY - radius) / map.tileSize);
-    const maxTileY = Math.floor((feetY + radius) / map.tileSize);
-
-    for (let ty = minTileY; ty <= maxTileY; ty++) {
-      for (let tx = minTileX; tx <= maxTileX; tx++) {
-        if (tx < 0 || tx >= map.width || ty < 0 || ty >= map.height) {
-          return false;
-        }
-        const index = ty * map.width + tx;
-        if (map.collisionLayer && map.collisionLayer[index] === 1) {
-          // Precise circle-to-AABB distance check against 4x4 tile
-          const closestX = Math.max(tx * map.tileSize, Math.min(px, (tx + 1) * map.tileSize));
-          const closestY = Math.max(ty * map.tileSize, Math.min(feetY, (ty + 1) * map.tileSize));
-          const distX = px - closestX;
-          const distY = feetY - closestY;
-          if (distX * distX + distY * distY < radius * radius) {
-            return false;
-          }
-        }
+    // Check intersecting 3D obstacle bounding boxes (AABBs)
+    for (const obs of VALENTINE_OBSTACLES) {
+      const closestX = Math.max(obs.x, Math.min(px, obs.x + obs.w));
+      const closestY = Math.max(obs.y, Math.min(py, obs.y + obs.h));
+      const distX = px - closestX;
+      const distY = py - closestY;
+      if (distX * distX + distY * distY < radius * radius) {
+        return false;
       }
     }
 

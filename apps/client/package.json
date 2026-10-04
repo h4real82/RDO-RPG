@@ -12,10 +12,11 @@
     "@rdo-rpg/content": "workspace:*",
     "@rdo-rpg/shared": "workspace:*",
     "colyseus.js": "^0.15.17",
-    "phaser": "^3.80.1"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@types/three": "^0.186.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
   }
