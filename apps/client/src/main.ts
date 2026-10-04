@@ -47,6 +47,7 @@ async function bootstrap() {
       pixelArt: false,
       roundPixels: false,
       antialias: true,
+      antialiasGL: true,
       physics: {
         default: 'arcade',
         arcade: {

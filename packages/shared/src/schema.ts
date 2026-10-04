@@ -4,11 +4,15 @@ import { Direction, DEFAULT_SPAWN_X, DEFAULT_SPAWN_Y, DEFAULT_MAP_ID } from './c
 export class Position extends Schema {
   @type('number') x: number = DEFAULT_SPAWN_X;
   @type('number') y: number = DEFAULT_SPAWN_Y;
+  @type('number') vx: number = 0;
+  @type('number') vy: number = 0;
   @type('number') targetX: number = DEFAULT_SPAWN_X;
   @type('number') targetY: number = DEFAULT_SPAWN_Y;
+  @type('number') heading: number = 0; // facing angle in radians
   @type('string') mapId: string = DEFAULT_MAP_ID;
   @type('string') direction: string = Direction.DOWN;
   @type('boolean') isMoving: boolean = false;
+  @type('boolean') isSprinting: boolean = false;
 }
 
 export class Stats extends Schema {
@@ -19,6 +23,8 @@ export class Stats extends Schema {
   @type('number') maxHp: number = 100;
   @type('number') mp: number = 50;
   @type('number') maxMp: number = 50;
+  @type('number') stamina: number = 100;
+  @type('number') maxStamina: number = 100;
   @type('number') attack: number = 10;
   @type('number') defense: number = 5;
   @type('number') speed: number = 4;

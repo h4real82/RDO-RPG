@@ -1,7 +1,16 @@
 import { Direction } from './constants';
 
 export interface MoveIntentMessage {
-  direction: Direction;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  heading?: number;
+  direction?: Direction;
+  targetX?: number;
+  targetY?: number;
+  isMoving: boolean;
+  isSprinting?: boolean;
   clientTimestamp: number;
 }
 

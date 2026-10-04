@@ -10,10 +10,14 @@ import {
   MoveIntentMessage,
   ChatMessagePayload,
   TICK_INTERVAL_MS,
-  SERVER_TICK_RATE,
   DEFAULT_SPAWN_X,
   DEFAULT_SPAWN_Y,
-  DEFAULT_MAP_ID
+  DEFAULT_MAP_ID,
+  PLAYER_WALK_SPEED,
+  PLAYER_SPRINT_SPEED,
+  PLAYER_COLLISION_RADIUS,
+  WORLD_MAP_WIDTH,
+  WORLD_MAP_HEIGHT
 } from '@nes-rdo/shared';
 import { getMapById, getItemById } from '@nes-rdo/content';
 
@@ -31,7 +35,7 @@ export class WorldRoom extends Room<WorldState> {
     this.setState(new WorldState());
     this.state.mapId = this.currentMapId;
 
-    console.log(`[WorldRoom] Initialized with 20Hz simulation interval (${TICK_INTERVAL_MS}ms).`);
+    console.log(`[WorldRoom] Initialized 20Hz continuous simulation loop (${TICK_INTERVAL_MS}ms).`);
 
     // 20Hz Server Simulation Loop
     this.setSimulationInterval((deltaTime) => this.update(deltaTime), TICK_INTERVAL_MS);
@@ -41,23 +45,28 @@ export class WorldRoom extends Room<WorldState> {
   }
 
   onJoin(client: Client, options: JoinOptions) {
-    console.log(`[WorldRoom] Client joined: ${client.sessionId}, user: ${options?.username || 'Hero'}`);
+    console.log(`[WorldRoom] Client joined: ${client.sessionId}, user: ${options?.username || 'Outlaw'}`);
 
     const player = new Player();
     player.id = client.sessionId;
     player.sessionId = client.sessionId;
     player.discordId = options.discordId || `anon_${client.sessionId.substring(0, 6)}`;
-    player.username = options.username || `Player_${client.sessionId.substring(0, 4)}`;
+    player.username = options.username || `Gunslinger_${client.sessionId.substring(0, 4)}`;
     player.avatar = options.avatar || '';
 
-    // Initial position
+    // Continuous world pixel coordinates
     player.position = new Position();
     player.position.x = DEFAULT_SPAWN_X;
     player.position.y = DEFAULT_SPAWN_Y;
     player.position.targetX = DEFAULT_SPAWN_X;
     player.position.targetY = DEFAULT_SPAWN_Y;
+    player.position.vx = 0;
+    player.position.vy = 0;
+    player.position.heading = Math.PI / 2; // facing down
     player.position.mapId = this.currentMapId;
     player.position.direction = Direction.DOWN;
+    player.position.isMoving = false;
+    player.position.isSprinting = false;
 
     // Initial stats
     player.stats = new Stats();
@@ -73,8 +82,8 @@ export class WorldRoom extends Room<WorldState> {
     this.state.players.set(client.sessionId, player);
 
     this.broadcast(RoomMessage.CHAT, {
-      sender: 'System',
-      message: `${player.username} has entered the world.`
+      sender: 'Sheriff',
+      message: `${player.username} has arrived in Valentine.`
     });
   }
 
@@ -86,8 +95,8 @@ export class WorldRoom extends Room<WorldState> {
     this.state.players.delete(client.sessionId);
 
     this.broadcast(RoomMessage.CHAT, {
-      sender: 'System',
-      message: `${username} has left the world.`
+      sender: 'Sheriff',
+      message: `${username} left town.`
     });
   }
 
@@ -98,58 +107,41 @@ export class WorldRoom extends Room<WorldState> {
   private update(deltaTime: number) {
     this.state.tick += 1;
     this.state.serverTime = Date.now();
-
-    // Handle tick-based game updates (e.g. movement completion, status effects, etc.)
-    this.state.players.forEach((player) => {
-      if (player.position.isMoving) {
-        // Linear movement completion towards target tile
-        player.position.x = player.position.targetX;
-        player.position.y = player.position.targetY;
-        player.position.isMoving = false;
-      }
-    });
   }
 
   private registerMessageHandlers() {
-    // Movement Intent
+    // Continuous Movement Intent
     this.onMessage(RoomMessage.MOVE, (client, message: MoveIntentMessage) => {
       const player = this.state.players.get(client.sessionId);
       if (!player) return;
 
-      const { direction } = message;
-      player.position.direction = direction;
+      const { x, y, vx, vy, heading, targetX, targetY, isMoving, isSprinting } = message;
 
-      let nextX = player.position.x;
-      let nextY = player.position.y;
+      // Validate position against collision boundaries
+      if (this.isPositionWalkable(x, y, player.position.mapId)) {
+        // Anti-teleport speed sanity check
+        const dist = Math.hypot(x - player.position.x, y - player.position.y);
+        const maxSpeed = (isSprinting ? PLAYER_SPRINT_SPEED : PLAYER_WALK_SPEED) * 1.8;
+        const maxDistPerTick = (maxSpeed * (TICK_INTERVAL_MS / 1000)) + 16; // tolerance buffer for latency spikes
 
-      switch (direction) {
-        case Direction.UP:
-          nextY -= 1;
-          break;
-        case Direction.DOWN:
-          nextY += 1;
-          break;
-        case Direction.LEFT:
-          nextX -= 1;
-          break;
-        case Direction.RIGHT:
-          nextX += 1;
-          break;
-      }
-
-      // Tile Validation (bounds, collision, obstacles)
-      if (this.isTileWalkable(nextX, nextY, player.position.mapId)) {
-        player.position.targetX = nextX;
-        player.position.targetY = nextY;
-        player.position.isMoving = true;
-        player.lastActionTimestamp = Date.now();
+        if (dist <= maxDistPerTick || player.position.isMoving === false) {
+          player.position.x = x;
+          player.position.y = y;
+          player.position.vx = vx;
+          player.position.vy = vy;
+          if (heading !== undefined) player.position.heading = heading;
+          if (targetX !== undefined) player.position.targetX = targetX;
+          if (targetY !== undefined) player.position.targetY = targetY;
+          player.position.isMoving = isMoving;
+          player.position.isSprinting = !!isSprinting;
+          player.lastActionTimestamp = Date.now();
+        }
       } else {
-        // Send rejection or keep orientation
+        // Position was invalid / inside an obstacle; keep last valid position
         client.send(RoomMessage.MOVE, {
           success: false,
           x: player.position.x,
-          y: player.position.y,
-          direction: player.position.direction
+          y: player.position.y
         });
       }
     });
@@ -190,21 +182,41 @@ export class WorldRoom extends Room<WorldState> {
   }
 
   /**
-   * Validates if a target tile is walkable based on map boundaries and collision layers
+   * Validates if a continuous pixel coordinate (with collision radius) is walkable
    */
-  public isTileWalkable(tileX: number, tileY: number, mapId: string): boolean {
+  public isPositionWalkable(px: number, py: number, mapId: string): boolean {
     const map = getMapById(mapId);
     if (!map) return false;
 
-    // Check boundary constraints
-    if (tileX < 0 || tileX >= map.width || tileY < 0 || tileY >= map.height) {
+    const radius = PLAYER_COLLISION_RADIUS;
+    const feetY = py + 14;
+
+    // Check map boundaries
+    if (
+      px - radius < 0 ||
+      px + radius >= WORLD_MAP_WIDTH ||
+      feetY - radius < 0 ||
+      feetY + radius >= WORLD_MAP_HEIGHT
+    ) {
       return false;
     }
 
-    // Check collision layer: 0 = walkable, 1+ = solid/obstacle
-    const tileIndex = tileY * map.width + tileX;
-    if (map.collisionLayer && map.collisionLayer[tileIndex] !== 0) {
-      return false;
+    // Check intersecting 32px tiles against collisionLayer
+    const minTileX = Math.floor((px - radius) / map.tileSize);
+    const maxTileX = Math.floor((px + radius) / map.tileSize);
+    const minTileY = Math.floor((feetY - radius) / map.tileSize);
+    const maxTileY = Math.floor((feetY + radius) / map.tileSize);
+
+    for (let ty = minTileY; ty <= maxTileY; ty++) {
+      for (let tx = minTileX; tx <= maxTileX; tx++) {
+        if (tx < 0 || tx >= map.width || ty < 0 || ty >= map.height) {
+          return false;
+        }
+        const index = ty * map.width + tx;
+        if (map.collisionLayer && map.collisionLayer[index] === 1) {
+          return false;
+        }
+      }
     }
 
     return true;
