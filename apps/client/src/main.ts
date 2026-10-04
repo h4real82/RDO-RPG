@@ -38,13 +38,15 @@ async function bootstrap() {
     if (statusBadge) statusBadge.classList.add('connected');
     if (statusText) statusText.textContent = `Online: ${profile.username}`;
 
-    // Step 3: Initialize Phaser 3 Game Engine
+    // Step 3: Initialize Phaser 3 Game Engine with 1080p HD Configuration
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
       parent: 'game-container',
-      width: 480,
-      height: 320,
-      pixelArt: true,
+      width: 1920,
+      height: 1080,
+      pixelArt: false,
+      roundPixels: false,
+      antialias: true,
       physics: {
         default: 'arcade',
         arcade: {
