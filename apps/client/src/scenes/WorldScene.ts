@@ -14,9 +14,10 @@ import {
   PLAYER_COLLISION_RADIUS,
   WORLD_MAP_WIDTH,
   WORLD_MAP_HEIGHT,
-  GaitMode
+  GaitMode,
+  POIDefinition
 } from '@nes-rdo/shared';
-import { getMapById } from '@nes-rdo/content';
+import { getMapById, pois } from '@nes-rdo/content';
 import { UserProfile } from '../discord';
 import { rpgMenuManager } from '../menu';
 
@@ -47,6 +48,18 @@ interface AmbientParticle {
   phase: number;
 }
 
+interface POIVisual {
+  poi: POIDefinition;
+  container: Phaser.GameObjects.Container;
+  outerRing: Phaser.GameObjects.Arc;
+  innerDot: Phaser.GameObjects.Arc;
+  iconText: Phaser.GameObjects.Text;
+  labelBg: Phaser.GameObjects.Rectangle;
+  labelText: Phaser.GameObjects.Text;
+  keyBadge: Phaser.GameObjects.Container;
+  isNear: boolean;
+}
+
 export class WorldScene extends Phaser.Scene {
   private client!: Client;
   private room!: Room<WorldState>;
@@ -69,6 +82,10 @@ export class WorldScene extends Phaser.Scene {
 
   // Point-and-Click Navigation
   private navTarget: NavTarget | null = null;
+
+  // POI & Travel Interaction Zones
+  private poiVisuals: POIVisual[] = [];
+  private currentNearbyPOI: POIDefinition | null = null;
 
   // Visual Entities
   private playerContainers: Map<string, Phaser.GameObjects.Container> = new Map();
@@ -93,6 +110,7 @@ export class WorldScene extends Phaser.Scene {
     capsLock: Phaser.Input.Keyboard.Key;
     cKey: Phaser.Input.Keyboard.Key;
     tabKey: Phaser.Input.Keyboard.Key;
+    eKey: Phaser.Input.Keyboard.Key;
   };
 
   private lastMoveSent: number = 0;
@@ -157,7 +175,8 @@ export class WorldScene extends Phaser.Scene {
         gKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G),
         capsLock: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CAPS_LOCK),
         cKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C),
-        tabKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB)
+        tabKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB),
+        eKey: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E)
       };
 
       // Toggle collision grid with 'C'
@@ -173,9 +192,38 @@ export class WorldScene extends Phaser.Scene {
       };
       this.wasdKeys.gKey.on('down', toggleGait);
       this.wasdKeys.capsLock.on('down', toggleGait);
+
+      // Interact with closest POI with 'E'
+      this.wasdKeys.eKey.on('down', () => {
+        if (this.currentNearbyPOI && !rpgMenuManager.isMenuOpen()) {
+          rpgMenuManager.openPOIModal(this.currentNearbyPOI);
+        }
+      });
     }
 
-    // 8. Point-and-Click (Click to Walk)
+    // 8. RDO Map POIs & Interaction Zones (Saloon, Sheriff, General Store, Stable, Fast-Travel)
+    this.setupPOIs();
+
+    // 9. Fast-Travel Stagecoach Callback
+    rpgMenuManager.setOnTravel((destX: number, destY: number) => {
+      this.localX = destX;
+      this.localY = destY;
+      this.localVx = 0;
+      this.localVy = 0;
+      this.clearClickWaypoint();
+      const container = this.playerContainers.get(this.room.sessionId);
+      if (container) {
+        container.setPosition(destX, destY);
+        container.setDepth(destY);
+      }
+      this.room.send(RoomMessage.INTERACT, {
+        type: 'travel',
+        x: destX,
+        y: destY
+      });
+    });
+
+    // 10. Point-and-Click (Click to Walk)
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       // Don't click to move if menu is open
       if (rpgMenuManager.isMenuOpen()) return;
@@ -185,12 +233,12 @@ export class WorldScene extends Phaser.Scene {
       this.setClickWaypoint(worldPoint.x, worldPoint.y);
     });
 
-    // 9. Camera Setup with Smooth Lerp Follow & Cinematic Deadzone
+    // 11. Camera Setup with Smooth Lerp Follow & Cinematic Deadzone
     this.cameras.main.setBounds(0, 0, WORLD_MAP_WIDTH, WORLD_MAP_HEIGHT);
     this.cameras.main.setZoom(2.2);
     this.cameras.main.setBackgroundColor('#0e0a07');
 
-    // 10. Connect to DOM Minimap Radar
+    // 12. Connect to DOM Minimap Radar
     this.minimapCanvas = document.getElementById('rdr-minimap-canvas') as HTMLCanvasElement;
     if (this.minimapCanvas) {
       this.minimapCtx = this.minimapCanvas.getContext('2d');
@@ -201,7 +249,7 @@ export class WorldScene extends Phaser.Scene {
       this.mapImageSource = mapTexture;
     }
 
-    // 11. Colyseus State Listeners
+    // 13. Colyseus State Listeners
     this.setupRoomListeners();
     this.updateGaitHUD();
   }
@@ -245,7 +293,9 @@ export class WorldScene extends Phaser.Scene {
       { x: 610, y: 405, scale: 0.9, alpha: 0.8, speed: 1.0 },   // General Store
       { x: 1140, y: 210, scale: 1.25, alpha: 0.95, speed: 1.8 },// Blacksmith Forge Fire
       { x: 1080, y: 410, scale: 0.85, alpha: 0.75, speed: 1.2 },// Barber
-      { x: 1260, y: 415, scale: 0.85, alpha: 0.75, speed: 1.1 } // Gunsmith
+      { x: 1260, y: 415, scale: 0.85, alpha: 0.75, speed: 1.1 },// Gunsmith
+      { x: 65, y: 460, scale: 1.05, alpha: 0.85, speed: 1.2 },  // West Stagecoach Station
+      { x: 1310, y: 460, scale: 1.05, alpha: 0.85, speed: 1.2 } // East Stagecoach Station
     ];
 
     lampPositions.forEach((pos, idx) => {
@@ -265,6 +315,140 @@ export class WorldScene extends Phaser.Scene {
         phase: idx * 1.7
       });
     });
+  }
+
+  /**
+   * Instantiates visual animated POI markers and interaction zones aligned with Jean Ropke RDOMap
+   */
+  private setupPOIs() {
+    this.poiVisuals = [];
+
+    pois.forEach((poi) => {
+      const container = this.add.container(poi.x, poi.y);
+      container.setDepth(poi.y);
+
+      // 1. Soft pulsing ground aura
+      const groundAura = this.add.circle(0, 0, 18, 0xf59e0b, 0.22);
+
+      // 2. Animated outer beacon ring
+      const outerRing = this.add.circle(0, 0, 16);
+      outerRing.setStrokeStyle(2, 0xd4af37, 0.85);
+
+      this.tweens.add({
+        targets: outerRing,
+        scaleX: 1.85,
+        scaleY: 1.85,
+        alpha: 0.1,
+        duration: 1200,
+        repeat: -1,
+        ease: 'Cubic.easeOut'
+      });
+
+      // 3. Central golden disc / diamond
+      const innerDot = this.add.circle(0, 0, 6, 0xf59e0b, 0.9);
+      innerDot.setStrokeStyle(1.5, 0xffffff, 0.9);
+
+      // 4. Bobbing Emoji / Icon
+      const iconText = this.add.text(0, -18, poi.icon || '★', {
+        fontSize: '18px',
+        align: 'center'
+      }).setOrigin(0.5);
+
+      this.tweens.add({
+        targets: iconText,
+        y: -23,
+        duration: 1000,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut'
+      });
+
+      // 5. High-resolution Western sign label
+      const labelTextContent = poi.name;
+      const labelWidth = Math.max(80, labelTextContent.length * 6.5 + 24);
+      const labelBg = this.add.rectangle(0, -38, labelWidth, 18, 0x18120b, 0.85);
+      labelBg.setStrokeStyle(1, 0x8c734b, 0.9);
+
+      const labelText = this.add.text(0, -38, labelTextContent, {
+        fontSize: '10px',
+        color: '#fef08a',
+        fontFamily: 'Inter, Cinzel, serif',
+        fontStyle: 'bold',
+        resolution: 2
+      }).setOrigin(0.5);
+
+      // 6. [E] Prompt Key badge above sign
+      const keyBadge = this.add.container(0, -53);
+      const keyBg = this.add.rectangle(0, 0, 36, 14, 0xd4af37, 0.95);
+      keyBg.setStrokeStyle(1, 0x221a10, 1);
+      const keyText = this.add.text(0, 0, '[E]', {
+        fontSize: '9px',
+        color: '#1a1208',
+        fontFamily: 'Inter, sans-serif',
+        fontStyle: 'bold',
+        resolution: 2
+      }).setOrigin(0.5);
+      keyBadge.add([keyBg, keyText]);
+      keyBadge.setVisible(false); // only visible when player is near
+
+      container.add([groundAura, outerRing, innerDot, iconText, labelBg, labelText, keyBadge]);
+
+      // Interactive click to move or interact
+      container.setSize(labelWidth, 60);
+      container.setInteractive({ useHandCursor: true });
+      container.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+        if (rpgMenuManager.isMenuOpen()) return;
+        const dist = Phaser.Math.Distance.Between(this.localX, this.localY, poi.x, poi.y);
+        if (dist <= poi.radius) {
+          rpgMenuManager.openPOIModal(poi);
+        } else {
+          this.setClickWaypoint(poi.x, poi.y);
+        }
+      });
+
+      this.poiVisuals.push({
+        poi,
+        container,
+        outerRing,
+        innerDot,
+        iconText,
+        labelBg,
+        labelText,
+        keyBadge,
+        isNear: false
+      });
+    });
+  }
+
+  /**
+   * Updates proximity checks for all POIs to show interaction prompts
+   */
+  private updatePOIProximity() {
+    let closestPOI: POIDefinition | null = null;
+    let closestDist = Infinity;
+
+    for (const pv of this.poiVisuals) {
+      const dist = Phaser.Math.Distance.Between(this.localX, this.localY, pv.poi.x, pv.poi.y);
+      const isNear = dist <= pv.poi.radius;
+
+      if (isNear && dist < closestDist) {
+        closestDist = dist;
+        closestPOI = pv.poi;
+      }
+
+      if (isNear !== pv.isNear) {
+        pv.isNear = isNear;
+        pv.keyBadge.setVisible(isNear);
+        pv.labelBg.setStrokeStyle(1.5, isNear ? 0xf59e0b : 0x8c734b, isNear ? 1 : 0.85);
+        pv.labelText.setColor(isNear ? '#ffffff' : '#fef08a');
+        pv.innerDot.setScale(isNear ? 1.4 : 1.0);
+      }
+    }
+
+    if (closestPOI !== this.currentNearbyPOI) {
+      this.currentNearbyPOI = closestPOI;
+      rpgMenuManager.showPOIPrompt(closestPOI);
+    }
   }
 
   /**
@@ -487,7 +671,10 @@ export class WorldScene extends Phaser.Scene {
     // 4. Animate Atmospheric Dust Particles
     this.updateAtmosphericParticles(dt);
 
-    // 5. Broadcast Continuous Move Intent at 20Hz
+    // 5. Update POI Proximity & Interaction Prompts
+    this.updatePOIProximity();
+
+    // 6. Broadcast Continuous Move Intent at 20Hz
     if (time - this.lastMoveSent >= TICK_INTERVAL_MS) {
       const payload: MoveIntentMessage = {
         x: Math.round(this.localX * 10) / 10,
@@ -842,6 +1029,30 @@ export class WorldScene extends Phaser.Scene {
       ctx.strokeStyle = '#ffffff';
       ctx.stroke();
     }
+
+    // Draw POIs on radar as golden diamond blips
+    pois.forEach((poi) => {
+      const poiRelX = (poi.x - this.localX) * (w / cropSize) + centerX;
+      const poiRelY = (poi.y - this.localY) * (h / cropSize) + centerY;
+      const distFromCenter = Math.hypot(poiRelX - centerX, poiRelY - centerY);
+
+      if (distFromCenter <= radius - 4) {
+        ctx.save();
+        ctx.translate(poiRelX, poiRelY);
+        ctx.beginPath();
+        ctx.moveTo(0, -4);
+        ctx.lineTo(4, 0);
+        ctx.lineTo(0, 4);
+        ctx.lineTo(-4, 0);
+        ctx.closePath();
+        ctx.fillStyle = '#f59e0b';
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#221508';
+        ctx.stroke();
+        ctx.restore();
+      }
+    });
 
     // Draw remote players as red dots
     this.room.state.players.forEach((p, sid) => {

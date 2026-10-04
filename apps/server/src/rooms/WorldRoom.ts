@@ -157,6 +157,24 @@ export class WorldRoom extends Room<WorldState> {
       });
     });
 
+    // POI & Travel Interaction
+    this.onMessage(RoomMessage.INTERACT, (client, message: { type?: string; poiId?: string; x?: number; y?: number }) => {
+      const player = this.state.players.get(client.sessionId);
+      if (!player) return;
+
+      if (message.type === 'travel' && typeof message.x === 'number' && typeof message.y === 'number') {
+        if (this.isPositionWalkable(message.x, message.y, player.position.mapId)) {
+          player.position.x = message.x;
+          player.position.y = message.y;
+          player.position.vx = 0;
+          player.position.vy = 0;
+          player.position.isMoving = false;
+          player.position.isSprinting = false;
+          player.lastActionTimestamp = Date.now();
+        }
+      }
+    });
+
     // Item Usage
     this.onMessage(RoomMessage.USE_ITEM, (client, { slotIndex }: { slotIndex: number }) => {
       const player = this.state.players.get(client.sessionId);

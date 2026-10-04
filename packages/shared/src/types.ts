@@ -69,3 +69,16 @@ export interface MapData {
   layers: MapLayerData[];
   collisionLayer: number[]; // 0 = walkable, 1 = solid
 }
+
+export interface POIDefinition {
+  id: string;
+  name: string;
+  category: 'saloon' | 'sheriff' | 'store' | 'stable' | 'travel';
+  x: number;
+  y: number;
+  radius: number;
+  promptText: string;
+  icon: string;
+  description: string;
+}
+

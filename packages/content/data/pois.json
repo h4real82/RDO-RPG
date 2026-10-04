@@ -1,0 +1,68 @@
+[
+  {
+    "id": "saloon_smithfields",
+    "name": "Smithfield's Saloon",
+    "category": "saloon",
+    "x": 385,
+    "y": 410,
+    "radius": 42,
+    "promptText": "Saloon betreten & Drinks bestellen",
+    "icon": "🍺",
+    "description": "Der geschäftigste Saloon in den Heartlands. Hier gibt es kühles Bier, feinsten Kentucky-Bourbon und kräftigen Fleischeintopf zur Ausdauer- und Lebensenergie-Regeneration."
+  },
+  {
+    "id": "sheriff_office",
+    "name": "Sheriff's Office & Steckbrief-Tafel",
+    "category": "sheriff",
+    "x": 775,
+    "y": 410,
+    "radius": 42,
+    "promptText": "Steckbrief-Tafel ansehen",
+    "icon": "⭐",
+    "description": "Amtsstube von Sheriff Malloy. An der Holztafel hängen offizielle Kopfgelder auf gesuchte Bandenmitglieder und Outlaws."
+  },
+  {
+    "id": "general_store",
+    "name": "Valentine General Store",
+    "category": "store",
+    "x": 605,
+    "y": 410,
+    "radius": 42,
+    "promptText": "Gemischtwaren & Vorräte kaufen",
+    "icon": "🛒",
+    "description": "Gemischtwarenladen mit Dosenbohnen, Schlangenöl, Kautabak, Jagdbedarf und Repetierer-Munition."
+  },
+  {
+    "id": "livery_stable",
+    "name": "Valentine Livery & Auction Stable",
+    "category": "stable",
+    "x": 620,
+    "y": 225,
+    "radius": 46,
+    "promptText": "Pferdestall betreten",
+    "icon": "🐴",
+    "description": "Pferdepflege, Bürsten, Haferfütterung, Satteltaschen-Ausrüstung und Pferdehandel in der großen Scheune."
+  },
+  {
+    "id": "travel_west",
+    "name": "Kutsche & Wegweiser: West Elizabeth",
+    "category": "travel",
+    "x": 55,
+    "y": 480,
+    "radius": 48,
+    "promptText": "Reise nach Strawberry & West Elizabeth",
+    "icon": "🐎",
+    "description": "Kutschenstation und Wegweiser in Richtung Dakota River, Strawberry und Blackwater."
+  },
+  {
+    "id": "travel_east",
+    "name": "Kutsche & Wegweiser: Emerald Ranch & Lemoyne",
+    "category": "travel",
+    "x": 1320,
+    "y": 480,
+    "radius": 48,
+    "promptText": "Reise zur Emerald Ranch & Rhodes",
+    "icon": "🗺️",
+    "description": "Poststraße durch die weiten Ebenen der Heartlands zur Emerald Ranch und den Plantagen von Rhodes."
+  }
+]

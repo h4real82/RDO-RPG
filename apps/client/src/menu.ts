@@ -1,3 +1,5 @@
+import { POIDefinition } from '@nes-rdo/shared';
+
 export interface InventoryItem {
   id: string;
   name: string;
@@ -111,21 +113,38 @@ export const sampleInventory: InventoryItem[] = [
 ];
 
 class RpgMenuManager {
-  private modal: HTMLElement | null = null;
-  private isOpen: boolean = false;
+  private logbookModal: HTMLElement | null = null;
+  private poiModal: HTMLElement | null = null;
+  private poiPromptBanner: HTMLElement | null = null;
+  private poiPromptText: HTMLElement | null = null;
+
+  private isLogbookOpen: boolean = false;
+  private isPoiModalOpen: boolean = false;
+
+  private activePOI: POIDefinition | null = null;
   private selectedItem: InventoryItem = sampleInventory[0];
   private currentFilter: string = 'all';
 
-  public init() {
-    this.modal = document.getElementById('rpg-menu-modal');
+  private playerCash: number = 142.50;
+  private onTravelCallback: ((destX: number, destY: number) => void) | null = null;
 
-    // Close button
-    const closeBtn = document.getElementById('close-menu-btn');
-    closeBtn?.addEventListener('click', () => this.close());
+  public init() {
+    this.logbookModal = document.getElementById('rpg-menu-modal');
+    this.poiModal = document.getElementById('poi-modal');
+    this.poiPromptBanner = document.getElementById('poi-prompt-banner');
+    this.poiPromptText = document.getElementById('poi-prompt-text');
+
+    // Close buttons
+    document.getElementById('close-menu-btn')?.addEventListener('click', () => this.closeLogbook());
+    document.getElementById('close-poi-btn')?.addEventListener('click', () => this.closePOIModal());
+
+    // Click on interaction prompt banner
+    this.poiPromptBanner?.addEventListener('click', () => {
+      if (this.activePOI) this.openPOIModal(this.activePOI);
+    });
 
     // Tab buttons
-    const tabBtns = document.querySelectorAll('.menu-tab-btn');
-    tabBtns.forEach((btn) => {
+    document.querySelectorAll('.menu-tab-btn').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const target = e.currentTarget as HTMLElement;
         const tab = target.dataset.tab;
@@ -134,10 +153,9 @@ class RpgMenuManager {
     });
 
     // Inventory filter buttons
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach((btn) => {
+    document.querySelectorAll('.filter-btn').forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        filterBtns.forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
         const target = e.currentTarget as HTMLElement;
         target.classList.add('active');
         this.currentFilter = target.dataset.filter || 'all';
@@ -145,43 +163,342 @@ class RpgMenuManager {
       });
     });
 
-    // Keyboard listener for TAB and ESC
+    // Keyboard listener for TAB, ESC, and E
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
-        this.toggle();
-      } else if (e.key === 'Escape' && this.isOpen) {
+        this.toggleLogbook();
+      } else if (e.key === 'Escape') {
         e.preventDefault();
-        this.close();
+        if (this.isPoiModalOpen) this.closePOIModal();
+        else if (this.isLogbookOpen) this.closeLogbook();
+      } else if (e.key === 'e' || e.key === 'E') {
+        if (!this.isAnyModalOpen() && this.activePOI) {
+          e.preventDefault();
+          this.openPOIModal(this.activePOI);
+        }
       }
     });
 
-    // Render initial inventory
     this.renderInventory();
+    this.updateCashDisplay();
   }
 
-  public toggle() {
-    if (this.isOpen) {
-      this.close();
+  public setOnTravel(cb: (destX: number, destY: number) => void) {
+    this.onTravelCallback = cb;
+  }
+
+  public showPOIPrompt(poi: POIDefinition | null) {
+    this.activePOI = poi;
+    if (!this.poiPromptBanner || !this.poiPromptText) return;
+
+    if (poi && !this.isAnyModalOpen()) {
+      this.poiPromptText.textContent = `${poi.name}: [E] ${poi.promptText}`;
+      this.poiPromptBanner.classList.add('active');
     } else {
-      this.open();
+      this.poiPromptBanner.classList.remove('active');
     }
   }
 
-  public open() {
-    if (!this.modal) return;
-    this.isOpen = true;
-    this.modal.classList.add('active');
+  public openPOIModal(poi: POIDefinition) {
+    if (!this.poiModal) return;
+    this.isPoiModalOpen = true;
+    this.poiModal.classList.add('active');
+    this.showPOIPrompt(null);
+
+    const titleEl = document.getElementById('poi-modal-title');
+    const contentEl = document.getElementById('poi-modal-content');
+    if (titleEl) titleEl.textContent = `★ ${poi.name.toUpperCase()}`;
+    if (!contentEl) return;
+
+    contentEl.innerHTML = '';
+
+    // Render content according to category
+    switch (poi.category) {
+      case 'saloon':
+        this.renderSaloonMenu(contentEl);
+        break;
+      case 'sheriff':
+        this.renderSheriffBoard(contentEl);
+        break;
+      case 'store':
+        this.renderGeneralStore(contentEl);
+        break;
+      case 'stable':
+        this.renderStableMenu(contentEl);
+        break;
+      case 'travel':
+        this.renderTravelMenu(contentEl, poi);
+        break;
+    }
   }
 
-  public close() {
-    if (!this.modal) return;
-    this.isOpen = false;
-    this.modal.classList.remove('active');
+  public closePOIModal() {
+    if (!this.poiModal) return;
+    this.isPoiModalOpen = false;
+    this.poiModal.classList.remove('active');
+    if (this.activePOI) this.showPOIPrompt(this.activePOI);
+  }
+
+  private renderSaloonMenu(container: HTMLElement) {
+    const drinks = [
+      { name: 'Kentucky Bourbon', cost: 0.50, icon: '🥃', desc: 'Feinster gebrannter Maiswhiskey. Stellt sofort 50 Ausdauer und Dead Eye her.' },
+      { name: 'Kühles Bier vom Fass', cost: 0.25, icon: '🍺', desc: 'Frisch gezapftes Gerstenbier. Erfrischt nach einem langen Ritt durch den Staub.' },
+      { name: 'Herzhafter Fleischeintopf', cost: 1.00, icon: '🍲', desc: 'Frisch gekochter Rindfleischeintopf mit Kartoffeln. Stellt alle Kerne wieder her.' }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    drinks.forEach((d) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${d.icon}</span>
+          <div>
+            <div class="poi-item-title">${d.name}</div>
+            <div class="poi-item-cost">$ ${d.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${d.desc}</div>
+        <button class="poi-action-btn">Bestellen & Trinken</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= d.cost) {
+          this.playerCash -= d.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${d.name} getrunken! Ausdauer & Gesundheit regeneriert.`);
+        } else {
+          alert('Nicht genug Bargeld in der Tasche!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderSheriffBoard(container: HTMLElement) {
+    const bounties = [
+      { name: 'Blackwater Bill', reward: 35.00, icon: '⭐', desc: 'Gesucht wegen Postkutschen-Raubes. Zuletzt bei den Cumberland Falls gesehen. Tot oder lebendig.' },
+      { name: 'Kojotenplage (Farmer-Schutz)', reward: 30.00, icon: '🐺', desc: 'Beseitige 5 Kojoten auf den Weiden östlich von Valentine. Belohnung wird sofort bar ausgezahlt.' },
+      { name: 'Six-Shooter Sam', reward: 50.00, icon: '💀', desc: 'Gefährlicher Falschspieler und Desperado. Hat einen Deputy im Saloon erschossen. Nur LEBENDIG!' }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    bounties.forEach((b) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${b.icon}</span>
+          <div>
+            <div class="poi-item-title">${b.name}</div>
+            <div class="poi-item-cost" style="color:#eab308;">Kopfgeld: $ ${b.reward.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${b.desc}</div>
+        <button class="poi-action-btn">Kopfgeld annehmen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', (e) => {
+        const btn = e.currentTarget as HTMLElement;
+        btn.textContent = 'Auftrag aktiv in Tagebuch';
+        btn.style.background = '#22c55e';
+        this.notifyAction(`Kopfgeld "${b.name}" angenommen! Siehe Logbuch [TAB].`);
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderGeneralStore(container: HTMLElement) {
+    const goods = [
+      { name: 'Revolver-Munition (60 Schuss)', cost: 1.50, icon: '🪙', desc: 'Standardpatronen für alle Single- und Double-Action Revolver.' },
+      { name: 'Repetierer-Munition (100 Schuss)', cost: 2.50, icon: '📦', desc: 'Präzisions-Kugeln für Lancaster- und Litchfield-Gewehre.' },
+      { name: 'Starker Wundertrank', cost: 4.00, icon: '🧪', desc: 'Medizinische Tinktur zur vollen Wiederherstellung aller Lebenskerne.' },
+      { name: 'Kentucky-Kautabak', cost: 1.00, icon: '🍂', desc: 'Schützt vor rascher Erschöpfung beim Zielen.' }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    goods.forEach((g) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${g.icon}</span>
+          <div>
+            <div class="poi-item-title">${g.name}</div>
+            <div class="poi-item-cost">$ ${g.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${g.desc}</div>
+        <button class="poi-action-btn">Kaufen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= g.cost) {
+          this.playerCash -= g.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${g.name} gekauft und ins Inventar gelegt!`);
+        } else {
+          alert('Nicht genug Bargeld!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderStableMenu(container: HTMLElement) {
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    const stableOpts = [
+      { name: 'Ungarisches Halbblut', cost: 25.00, icon: '🐴', desc: 'Kräftiges, ausdauerndes Streitpferd mit hoher Schreckresistenz.' },
+      { name: 'Pferdepflege & Haferfütterung', cost: 2.00, icon: '🌾', desc: 'Bürstet den Schmutz ab und stellt volle Pferde-Ausdauer wieder her.' },
+      { name: 'Große Satteltaschen', cost: 12.00, icon: '🎒', desc: 'Ermöglicht das Mitführen von bis zu 4 großen Fellen und extra Proviant.' }
+    ];
+
+    stableOpts.forEach((s) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${s.icon}</span>
+          <div>
+            <div class="poi-item-title">${s.name}</div>
+            <div class="poi-item-cost">$ ${s.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${s.desc}</div>
+        <button class="poi-action-btn">Auswählen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= s.cost) {
+          this.playerCash -= s.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${s.name} aktiviert!`);
+        } else {
+          alert('Nicht genug Geld im Beutel!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderTravelMenu(container: HTMLElement, poi: POIDefinition) {
+    const isWest = poi.id === 'travel_west';
+    const destName = isWest ? 'Strawberry & West Elizabeth' : 'Emerald Ranch & Rhodes (Lemoyne)';
+    const fare = 3.50;
+
+    const box = document.createElement('div');
+    box.style.display = 'flex';
+    box.style.flexDirection = 'column';
+    box.style.alignItems = 'center';
+    box.style.justifyContent = 'center';
+    box.style.width = '100%';
+    box.style.textAlign = 'center';
+    box.style.padding = '20px';
+
+    box.innerHTML = `
+      <div style="font-size: 54px; margin-bottom: 14px;">🐎 💨</div>
+      <div style="font-family:'Cinzel',serif; font-size:22px; font-weight:800; color:#ebdcb9;">SCHNELLREISE-POSTKUTSCHE</div>
+      <div style="font-size:14px; color:#d1c7b7; margin-top:8px;">Zielort: <b style="color:#d4af37;">${destName}</b></div>
+      <div style="font-size:12px; color:#8c7e6c; max-width:480px; margin-top:12px; line-height:1.5;">${poi.description}</div>
+      <div style="font-family:'Cinzel',serif; font-size:18px; font-weight:700; color:#22c55e; margin-top:18px;">Fahrpreis: $ ${fare.toFixed(2)}</div>
+      <button id="confirm-travel-btn" class="item-action-btn" style="padding:12px 32px; font-size:14px; margin-top:20px;">Kutsche besteigen & Reise antreten</button>
+    `;
+
+    box.querySelector('#confirm-travel-btn')?.addEventListener('click', () => {
+      this.closePOIModal();
+      this.executeFastTravel(isWest);
+    });
+
+    container.appendChild(box);
+  }
+
+  private executeFastTravel(isWest: boolean) {
+    const overlay = document.getElementById('transition-overlay');
+    overlay?.classList.add('fading');
+
+    setTimeout(() => {
+      // Teleport player near opposite road entrance or road center
+      const targetX = isWest ? 1280 : 90;
+      const targetY = 480;
+
+      if (this.onTravelCallback) {
+        this.onTravelCallback(targetX, targetY);
+      }
+
+      this.notifyAction(isWest ? 'In West Elizabeth angekommen.' : 'An der Emerald Ranch angekommen.');
+
+      setTimeout(() => {
+        overlay?.classList.remove('fading');
+      }, 500);
+    }, 600);
+  }
+
+  private notifyAction(text: string) {
+    const banner = document.getElementById('poi-prompt-banner');
+    const bannerText = document.getElementById('poi-prompt-text');
+    if (banner && bannerText) {
+      bannerText.textContent = text;
+      banner.classList.add('active');
+      setTimeout(() => {
+        if (!this.activePOI) banner.classList.remove('active');
+      }, 3500);
+    }
+  }
+
+  private updateCashDisplay() {
+    const topCash = document.getElementById('hud-cash-val');
+    const charCash = document.getElementById('char-cash-display');
+    const val = `$ ${this.playerCash.toFixed(2)}`;
+    if (topCash) topCash.textContent = val;
+    if (charCash) charCash.textContent = val;
+  }
+
+  public toggleLogbook() {
+    if (this.isLogbookOpen) this.closeLogbook();
+    else this.openLogbook();
+  }
+
+  public openLogbook() {
+    if (!this.logbookModal) return;
+    this.isLogbookOpen = true;
+    this.logbookModal.classList.add('active');
+    this.showPOIPrompt(null);
+  }
+
+  public closeLogbook() {
+    if (!this.logbookModal) return;
+    this.isLogbookOpen = false;
+    this.logbookModal.classList.remove('active');
+    if (this.activePOI) this.showPOIPrompt(this.activePOI);
+  }
+
+  public isAnyModalOpen(): boolean {
+    return this.isLogbookOpen || this.isPoiModalOpen;
   }
 
   public isMenuOpen(): boolean {
-    return this.isOpen;
+    return this.isAnyModalOpen();
   }
 
   private switchTab(tabId: string) {
@@ -227,7 +544,6 @@ class RpgMenuManager {
       grid.appendChild(slot);
     });
 
-    // Empty placeholder slots to fill a 4x3 grid
     const remaining = Math.max(0, 12 - filtered.length);
     for (let i = 0; i < remaining; i++) {
       const emptySlot = document.createElement('div');

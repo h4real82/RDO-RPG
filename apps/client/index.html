@@ -50,6 +50,24 @@
         z-index: 5;
       }
 
+      /* Screen Transition Fade Overlay */
+      #transition-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 100;
+        transition: opacity 0.6s ease;
+      }
+      #transition-overlay.fading {
+        opacity: 1;
+        pointer-events: all;
+      }
+
       /* Top-Right Outlaw Status Header */
       #top-right-hud {
         position: absolute;
@@ -247,6 +265,51 @@
         100% { opacity: 0; transform: translate(-50%, -55%); visibility: hidden; }
       }
 
+      /* Active POI Interaction Banner */
+      #poi-prompt-banner {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+        align-items: center;
+        gap: 12px;
+        background: rgba(18, 14, 11, 0.92);
+        border: 2px solid #d4af37;
+        padding: 10px 24px;
+        border-radius: 6px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 14px rgba(212, 175, 55, 0.35);
+        backdrop-filter: blur(8px);
+        z-index: 30;
+        cursor: pointer;
+      }
+      #poi-prompt-banner.active {
+        display: flex;
+        animation: pulseBanner 1.8s infinite;
+      }
+      @keyframes pulseBanner {
+        0% { box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 10px rgba(212, 175, 55, 0.2); }
+        50% { box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.55); }
+        100% { box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 10px rgba(212, 175, 55, 0.2); }
+      }
+      .poi-prompt-key {
+        background: #d4af37;
+        color: #140f0a;
+        font-family: 'Cinzel', serif;
+        font-weight: 900;
+        font-size: 13px;
+        padding: 3px 9px;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      }
+      .poi-prompt-text {
+        font-family: 'Cinzel', serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: #f7eedb;
+        letter-spacing: 1px;
+      }
+
       /* Bottom-Right Controls Hint */
       #controls-hint {
         position: absolute;
@@ -283,7 +346,7 @@
       /* =========================================================
          RED DEAD LEATHER & PARCHMENT RPG MAIN MENU MODAL (TAB/ESC)
          ========================================================= */
-      #rpg-menu-modal {
+      #rpg-menu-modal, #poi-modal {
         position: absolute;
         top: 0;
         left: 0;
@@ -296,10 +359,10 @@
         align-items: center;
         justify-content: center;
       }
-      #rpg-menu-modal.active {
+      #rpg-menu-modal.active, #poi-modal.active {
         display: flex;
       }
-      #menu-book {
+      .menu-book {
         width: 900px;
         max-width: 92vw;
         height: 580px;
@@ -313,7 +376,7 @@
         overflow: hidden;
         position: relative;
       }
-      #menu-header {
+      .menu-header {
         height: 64px;
         background: #231912;
         border-bottom: 2px solid #6b5536;
@@ -361,7 +424,7 @@
         background: none;
         border: none;
         color: #a89a87;
-        font-size: 22px;
+        font-size: 24px;
         cursor: pointer;
         padding: 4px 8px;
       }
@@ -369,7 +432,7 @@
         color: #ef4444;
       }
 
-      #menu-content-area {
+      .menu-content-area {
         flex: 1;
         display: flex;
         padding: 24px;
@@ -651,11 +714,79 @@
         color: #eab308;
         margin-top: 6px;
       }
+
+      /* =========================================================
+         POI INTERACTION MODAL (SALOON, SHERIFF, STORE, STABLE)
+         ========================================================= */
+      .poi-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+        width: 100%;
+      }
+      .poi-item-card {
+        background: #18120e;
+        border: 1px solid #5a452d;
+        border-radius: 6px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.2s ease;
+      }
+      .poi-item-card:hover {
+        border-color: #d4af37;
+        background: #251b14;
+        transform: translateY(-2px);
+      }
+      .poi-item-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .poi-item-icon {
+        font-size: 28px;
+      }
+      .poi-item-title {
+        font-family: 'Cinzel', serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: #ebdcb9;
+      }
+      .poi-item-cost {
+        font-family: 'Cinzel', serif;
+        font-size: 13px;
+        font-weight: 800;
+        color: #22c55e;
+      }
+      .poi-item-desc {
+        font-size: 11px;
+        color: #b5a895;
+        line-height: 1.4;
+        margin: 12px 0;
+      }
+      .poi-action-btn {
+        background: #7c633f;
+        border: 1px solid #d4af37;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-family: 'Cinzel', serif;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+      }
+      .poi-action-btn:hover {
+        background: #96774a;
+      }
     </style>
   </head>
   <body>
     <div id="game-container">
       <div id="vignette"></div>
+      <div id="transition-overlay"></div>
 
       <!-- Red Dead Cinematic Location Title -->
       <div id="cinematic-banner">
@@ -663,9 +794,15 @@
         <p>The Heartlands • New Hanover</p>
       </div>
 
+      <!-- Active POI Interaction Banner (Appears when near Saloon, Sheriff, Store, etc.) -->
+      <div id="poi-prompt-banner">
+        <span class="poi-prompt-key">E</span>
+        <span id="poi-prompt-text" class="poi-prompt-text">Saloon betreten</span>
+      </div>
+
       <!-- Top Right Outlaw Stats -->
       <div id="top-right-hud">
-        <div class="hud-cash">$ 142.50</div>
+        <div id="hud-cash-val" class="hud-cash">$ 142.50</div>
         <div class="hud-subbar">
           <span id="status-badge" class="status-dot"></span>
           <span id="status-text" class="hud-text">Connecting...</span>
@@ -705,11 +842,18 @@
         </div>
       </div>
 
+      <!-- Active POI Interaction Prompt Banner -->
+      <div id="poi-prompt-banner">
+        <div class="poi-prompt-key">E</div>
+        <div id="poi-prompt-text" class="poi-prompt-text">Smithfield's Saloon: [E] Betreten & Drinks bestellen</div>
+      </div>
+
       <!-- Bottom Right Controls Hint -->
       <div id="controls-hint">
         <div class="key-chip"><span class="key-badge">W A S D</span> Move</div>
         <div class="key-chip"><span class="key-badge">SHIFT</span> Sprint</div>
         <div class="key-chip"><span class="key-badge">G</span> Gait</div>
+        <div class="key-chip"><span class="key-badge">E</span> Interact</div>
         <div class="key-chip"><span class="key-badge">TAB</span> Menu</div>
         <div class="key-chip"><span class="key-badge">C</span> Grid</div>
       </div>
@@ -718,8 +862,8 @@
            RED DEAD RPG MAIN MENU MODAL (TAB / ESC)
            ========================================================= -->
       <div id="rpg-menu-modal">
-        <div id="menu-book">
-          <div id="menu-header">
+        <div class="menu-book">
+          <div class="menu-header">
             <div class="menu-title">★ OUTLAW LOGBOOK</div>
             <div class="tab-bar">
               <button class="menu-tab-btn active" data-tab="char">Charakter</button>
@@ -729,7 +873,7 @@
             <button id="close-menu-btn" class="close-btn">&times;</button>
           </div>
 
-          <div id="menu-content-area">
+          <div class="menu-content-area">
             <!-- TAB 1: CHARAKTER -->
             <div id="tab-char" class="char-view">
               <div class="char-portrait-card">
@@ -756,7 +900,7 @@
                 <div class="stats-grid-card">
                   <div class="stat-box">
                     <div class="stat-label">Bargeld</div>
-                    <div class="stat-val">$ 142.50</div>
+                    <div id="char-cash-display" class="stat-val">$ 142.50</div>
                   </div>
                   <div class="stat-box">
                     <div class="stat-label">Kopfgeld (Valentine)</div>
@@ -832,6 +976,21 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================
+           POI INTERACTIVE MODAL (SALOON, SHERIFF, STORE, STABLE, TRAVEL)
+           ========================================================= -->
+      <div id="poi-modal">
+        <div class="menu-book" style="height: 520px;">
+          <div class="menu-header">
+            <div id="poi-modal-title" class="menu-title">★ SMITHFIELD'S SALOON</div>
+            <button id="close-poi-btn" class="close-btn">&times;</button>
+          </div>
+          <div id="poi-modal-content" class="menu-content-area">
+            <!-- Dynamically populated POI options -->
           </div>
         </div>
       </div>
