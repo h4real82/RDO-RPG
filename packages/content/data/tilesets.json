@@ -1,0 +1,20 @@
+[
+  {
+    "id": "overworld_nes",
+    "name": "NES Overworld",
+    "image": "tilesets/overworld.png",
+    "tileSize": 16,
+    "tileCount": 64,
+    "columns": 8,
+    "tileProperties": {
+      "0": { "walkable": true, "name": "grass" },
+      "1": { "walkable": false, "name": "water" },
+      "2": { "walkable": false, "name": "tree" },
+      "3": { "walkable": false, "name": "mountain" },
+      "4": { "walkable": true, "name": "dirt_path" },
+      "5": { "walkable": true, "name": "bridge" },
+      "6": { "walkable": false, "name": "wall" },
+      "7": { "walkable": true, "name": "floor" }
+    }
+  }
+]

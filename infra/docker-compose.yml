@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  caddy:
+    image: caddy:2.7-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - server
+      - client
+
+  server:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.server
+    restart: unless-stopped
+    environment:
+      - PORT=2567
+      - NODE_ENV=production
+      - VITE_DISCORD_CLIENT_ID=${VITE_DISCORD_CLIENT_ID}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
+    ports:
+      - "2567:2567"
+
+  client:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -1,0 +1,24 @@
+FROM node:20-alpine AS build
+RUN corepack enable && corepack prepare pnpm@9.1.0 --activate
+WORKDIR /app
+
+COPY package.json pnpm-workspace.yaml tsconfig.base.json ./
+COPY packages/shared/package.json ./packages/shared/
+COPY packages/content/package.json ./packages/content/
+COPY apps/client/package.json ./apps/client/
+
+RUN pnpm install --frozen-lockfile || pnpm install
+
+COPY packages/shared ./packages/shared
+COPY packages/content ./packages/content
+COPY apps/client ./apps/client
+
+RUN pnpm --filter @nes-rdo/shared build
+RUN pnpm --filter @nes-rdo/content build
+RUN pnpm --filter @nes-rdo/client build
+
+FROM caddy:2.7-alpine
+WORKDIR /srv
+COPY --from=build /app/apps/client/dist /srv
+EXPOSE 3000
+CMD ["caddy", "file-server", "--root", "/srv", "--listen", ":3000"]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "potion_red",
+    "name": "Red Potion",
+    "description": "Restores 50 HP",
+    "type": "consumable",
+    "icon": "potion_red",
+    "stackable": true,
+    "maxStack": 99,
+    "effects": {
+      "healHp": 50
+    }
+  },
+  {
+    "id": "potion_blue",
+    "name": "Blue Potion",
+    "description": "Restores 30 MP",
+    "type": "consumable",
+    "icon": "potion_blue",
+    "stackable": true,
+    "maxStack": 99,
+    "effects": {
+      "healMp": 30
+    }
+  },
+  {
+    "id": "wooden_sword",
+    "name": "Wooden Sword",
+    "description": "A basic training sword from the forest",
+    "type": "equipment",
+    "icon": "sword_wood",
+    "stackable": false,
+    "maxStack": 1,
+    "effects": {
+      "attackBonus": 5
+    }
+  },
+  {
+    "id": "leather_shield",
+    "name": "Leather Shield",
+    "description": "Simple shield made of cured hide",
+    "type": "equipment",
+    "icon": "shield_leather",
+    "stackable": false,
+    "maxStack": 1,
+    "effects": {
+      "defenseBonus": 3
+    }
+  }
+]

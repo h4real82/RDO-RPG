@@ -1,0 +1,36 @@
+{
+  # Global options
+  admin off
+  auto_https off # Or 'disable_redirects' if using Cloudflare SSL / local dev
+}
+
+:80, :443 {
+  # Discord OAuth API and Backend Endpoints
+  handle /api/* {
+    reverse_proxy server:2567
+  }
+
+  # Colyseus WebSocket Transport
+  handle /colyseus/* {
+    reverse_proxy server:2567
+  }
+
+  # Colyseus matchmake / raw connection
+  handle /matchmake/* {
+    reverse_proxy server:2567
+  }
+
+  # Client Static Frontend & Vite HMR in dev
+  handle {
+    reverse_proxy client:3000
+  }
+
+  # Security headers for Discord Activity iframe embedding
+  header {
+    # Allow embedding within Discord iframe
+    Content-Security-Policy "frame-ancestors https://*.discord.com https://discord.com;"
+    X-Frame-Options "ALLOW-FROM https://discord.com"
+    X-Content-Type-Options "nosniff"
+    Referrer-Policy "strict-origin-when-cross-origin"
+  }
+}

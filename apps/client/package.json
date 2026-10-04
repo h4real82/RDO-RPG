@@ -1,0 +1,22 @@
+{
+  "name": "@nes-rdo/client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@discord/embedded-app-sdk": "^1.1.0",
+    "@nes-rdo/content": "workspace:*",
+    "@nes-rdo/shared": "workspace:*",
+    "colyseus.js": "^0.15.17",
+    "phaser": "^3.80.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}

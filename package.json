@@ -1,0 +1,21 @@
+{
+  "name": "nes-rdo-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NES-RDO Discord Activity Multiplayer RPG Monorepo",
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./apps/* dev",
+    "dev:server": "pnpm --filter @nes-rdo/server dev",
+    "dev:client": "pnpm --filter @nes-rdo/client dev",
+    "build": "pnpm --filter ./packages/* build && pnpm --filter ./apps/* build",
+    "build:shared": "pnpm --filter @nes-rdo/shared build",
+    "build:content": "pnpm --filter @nes-rdo/content build",
+    "build:server": "pnpm --filter @nes-rdo/server build",
+    "build:client": "pnpm --filter @nes-rdo/client build",
+    "clean": "pnpm -r exec rm -rf dist node_modules"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "packageManager": "pnpm@9.1.0"
+}

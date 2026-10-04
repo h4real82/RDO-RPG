@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>NES-RDO | Discord Activity</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+      }
+      body, html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #0d0f18;
+        font-family: 'Press Start 2P', monospace, sans-serif;
+        color: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #game-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      #ui-overlay {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        pointer-events: none;
+        z-index: 10;
+        background: rgba(15, 23, 42, 0.75);
+        border: 2px solid #3b82f6;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 11px;
+        line-height: 1.5;
+        backdrop-filter: blur(4px);
+      }
+      #status-badge {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ef4444;
+        margin-right: 6px;
+      }
+      #status-badge.connected {
+        background-color: #22c55e;
+      }
+      canvas {
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-container">
+      <div id="ui-overlay">
+        <div><span id="status-badge"></span><span id="status-text">Connecting...</span></div>
+        <div id="player-info">Player: ---</div>
+        <div id="pos-info">Pos: (0, 0)</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
