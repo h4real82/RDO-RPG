@@ -18,7 +18,9 @@ import {
   PLAYER_COLLISION_RADIUS,
   PLAYER_FEET_OFFSET_Y,
   WORLD_MAP_WIDTH,
-  WORLD_MAP_HEIGHT
+  WORLD_MAP_HEIGHT,
+  TimeOfDay,
+  WeatherState
 } from '@rdo-rpg/shared';
 import { getMapById, getItemById } from '@rdo-rpg/content';
 
@@ -196,6 +198,22 @@ export class WorldRoom extends Room<WorldState> {
       if (itemStack.quantity <= 0) {
         const idx = player.inventory.indexOf(itemStack);
         if (idx !== -1) player.inventory.splice(idx, 1);
+      }
+    });
+
+    // Time of Day Synchronization
+    this.onMessage(RoomMessage.SET_TIME_OF_DAY, (client, data: { timeOfDay: string }) => {
+      if (Object.values(TimeOfDay).includes(data?.timeOfDay as TimeOfDay)) {
+        this.state.timeOfDay = data.timeOfDay;
+        console.log(`[WorldRoom] Time of day updated to: ${data.timeOfDay} by ${client.sessionId}`);
+      }
+    });
+
+    // Weather Synchronization
+    this.onMessage(RoomMessage.SET_WEATHER, (client, data: { weather: string }) => {
+      if (Object.values(WeatherState).includes(data?.weather as WeatherState)) {
+        this.state.weather = data.weather;
+        console.log(`[WorldRoom] Weather updated to: ${data.weather} by ${client.sessionId}`);
       }
     });
   }

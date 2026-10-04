@@ -55,4 +55,6 @@ export class WorldState extends Schema {
   @type('number') serverTime: number = Date.now();
   @type('string') mapId: string = DEFAULT_MAP_ID;
   @type('number') tick: number = 0;
+  @type('string') timeOfDay: string = 'golden_hour';
+  @type('string') weather: string = 'clear';
 }

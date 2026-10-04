@@ -33,6 +33,18 @@ export enum Direction {
   DOWN_RIGHT = 'down_right'
 }
 
+export enum TimeOfDay {
+  NOON = 'noon',
+  GOLDEN_HOUR = 'golden_hour',
+  NIGHT = 'night'
+}
+
+export enum WeatherState {
+  CLEAR = 'clear',
+  DUST_STORM = 'dust_storm',
+  RAIN = 'rain'
+}
+
 export enum RoomMessage {
   MOVE = 'move',
   INTERACT = 'interact',
@@ -40,7 +52,9 @@ export enum RoomMessage {
   USE_ITEM = 'use_item',
   CHAT = 'chat',
   PING = 'ping',
-  PONG = 'pong'
+  PONG = 'pong',
+  SET_TIME_OF_DAY = 'set_time_of_day',
+  SET_WEATHER = 'set_weather'
 }
 
 export enum ItemType {
