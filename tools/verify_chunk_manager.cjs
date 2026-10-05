@@ -3,7 +3,7 @@ const manifestJson = require(path.resolve(__dirname, '../apps/client/src/world/d
 const worldDataJson = require(path.resolve(__dirname, '../apps/client/src/world/data/worldData.json'));
 
 // Minimal simulation of WorldChunkManager logic using active manifest and worldData
-const CHUNK_SIZE = 500.0;
+const CHUNK_SIZE = 250.0;
 const ACTIVE_RADIUS = 1000.0;
 
 class ChunkSimulator {

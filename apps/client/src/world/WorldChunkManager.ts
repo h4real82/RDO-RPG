@@ -116,13 +116,40 @@ export class WorldChunk {
   }
 }
 
+// Jean Röpke Coordinate System Transformation Constants (Validated Ground Truth)
+export const CRS_SCALE = 0.01552;
+export const CRS_LAT_OFFSET = -63.6;
+export const CRS_LNG_OFFSET = 111.29;
+
 /**
- * WorldChunkManager handles RDO master manifest parsing, 500m x 500m chunk spatial partitioning,
+ * Converts Leaflet CRS.Simple [lat, lng] to in-game meters [game_x, game_y]
+ * game_x = (lng - CRS_LNG_OFFSET) / CRS_SCALE
+ * game_y = (lat - CRS_LAT_OFFSET) / CRS_SCALE
+ */
+export function leafletToGameCoords(lat: number, lng: number): { x: number; y: number } {
+  return {
+    x: (lng - CRS_LNG_OFFSET) / CRS_SCALE,
+    y: (lat - CRS_LAT_OFFSET) / CRS_SCALE
+  };
+}
+
+/**
+ * Converts in-game meters [game_x, game_y] to Leaflet CRS.Simple [lat, lng]
+ */
+export function gameToLeafletCoords(game_x: number, game_y: number): { lat: number; lng: number } {
+  return {
+    lat: game_y * CRS_SCALE + CRS_LAT_OFFSET,
+    lng: game_x * CRS_SCALE + CRS_LNG_OFFSET
+  };
+}
+
+/**
+ * WorldChunkManager handles RDO master manifest parsing, 250m x 250m chunk spatial partitioning,
  * 1000m radius distance-based streaming (LOD loading and memory disposal), procedural PBR object factory,
  * and high-priority railroad/road spline generation.
  */
 export class WorldChunkManager {
-  public static readonly CHUNK_SIZE = 500.0; // 500m x 500m per chunk
+  public static readonly CHUNK_SIZE = 250.0; // 250m x 250m per chunk (validated ground truth partitioning)
   public static readonly ACTIVE_RADIUS = 1000.0; // 1000m radius LOD streaming
 
   private scene: THREE.Scene;
@@ -194,18 +221,18 @@ export class WorldChunkManager {
       }
     }
 
-    const pool = candidates.length >= 3 ? candidates : this.elevationSamples;
+    const pool = candidates.length >= 5 ? candidates : this.elevationSamples;
 
-    // Find 4 nearest samples
+    // Find 5 nearest samples from item-coordinates-in-game.json benchmarks
     let best: { dSq: number; z: number }[] = [];
     for (let i = 0; i < pool.length; i++) {
       const p = pool[i];
       const dSq = (p.x - gx) * (p.x - gx) + (p.y - gz) * (p.y - gz);
-      if (best.length < 4) {
+      if (best.length < 5) {
         best.push({ dSq, z: p.z });
         best.sort((a, b) => a.dSq - b.dSq);
-      } else if (dSq < best[3].dSq) {
-        best[3] = { dSq, z: p.z };
+      } else if (dSq < best[4].dSq) {
+        best[4] = { dSq, z: p.z };
         best.sort((a, b) => a.dSq - b.dSq);
       }
     }
@@ -520,6 +547,24 @@ export class WorldChunkManager {
             // Nudge building safely outside track boundary
             continue;
           }
+        }
+
+        // AABB-Kollisionsprüfung: Keine Überlappung zweier 2.5D-Objekte im selben Chunk
+        const [objWidth, objDepth, objHeight] = obj.bounds;
+        const candidateAABB = new THREE.Box3(
+          new THREE.Vector3(obj.position[0] - objWidth * 0.45, obj.position[1], obj.position[2] - objDepth * 0.45),
+          new THREE.Vector3(obj.position[0] + objWidth * 0.45, obj.position[1] + objHeight, obj.position[2] + objDepth * 0.45)
+        );
+
+        let overlapsExisting = false;
+        for (const existingBox of chunk.colliders) {
+          if (candidateAABB.intersectsBox(existingBox)) {
+            overlapsExisting = true;
+            break;
+          }
+        }
+        if (overlapsExisting) {
+          continue;
         }
 
         const objectMeshGroup = this.createValidatedObjectGroup(obj, chunk);
@@ -1370,6 +1415,71 @@ export class WorldChunkManager {
       boxes.push(...chunk.colliders);
     }
     return boxes;
+  }
+
+  /**
+   * Fast spatial AABB retrieval: queries only active chunks touching (worldX, worldZ) within searchRadius.
+   */
+  public getNearbyObstacleBoxes(worldX: number, worldZ: number, searchRadius: number = 35.0): THREE.Box3[] {
+    const boxes: THREE.Box3[] = [];
+    const minCX = Math.floor((worldX - searchRadius) / WorldChunkManager.CHUNK_SIZE);
+    const maxCX = Math.floor((worldX + searchRadius) / WorldChunkManager.CHUNK_SIZE);
+    const minCZ = Math.floor((worldZ - searchRadius) / WorldChunkManager.CHUNK_SIZE);
+    const maxCZ = Math.floor((worldZ + searchRadius) / WorldChunkManager.CHUNK_SIZE);
+
+    for (let cx = minCX; cx <= maxCX; cx++) {
+      for (let cz = minCZ; cz <= maxCZ; cz++) {
+        const chunk = this.activeChunks.get(`${cx},${cz}`);
+        if (chunk && chunk.colliders.length > 0) {
+          boxes.push(...chunk.colliders);
+        }
+      }
+    }
+    return boxes;
+  }
+
+  /**
+   * Performs an immediate 2.5D AABB collision test at (worldX, worldZ) against nearby world objects.
+   */
+  public testAABBCollision(
+    worldX: number,
+    worldZ: number,
+    radius: number = 0.45,
+    groundY?: number
+  ): { hasCollision: boolean; nearestBox: THREE.Box3 | null; penetration: number; normal: THREE.Vector3 } {
+    const y = groundY !== undefined ? groundY : this.getGroundHeightAt(worldX, worldZ);
+    const nearby = this.getNearbyObstacleBoxes(worldX, worldZ, radius + 15.0);
+    const sphereCenter = new THREE.Vector3(worldX, y + 0.9, worldZ);
+    const closest = new THREE.Vector3();
+    const diff = new THREE.Vector3();
+    const normal = new THREE.Vector3();
+
+    for (const box of nearby) {
+      if (box.max.y < y + 0.1 || box.min.y > y + 1.8) {
+        continue;
+      }
+
+      box.clampPoint(sphereCenter, closest);
+      diff.subVectors(sphereCenter, closest);
+      diff.y = 0;
+
+      const dist = diff.length();
+      if (dist < radius) {
+        if (dist > 0.0001) {
+          normal.copy(diff).multiplyScalar(1 / dist);
+        } else {
+          normal.set(0, 0, 1);
+        }
+        return {
+          hasCollision: true,
+          nearestBox: box,
+          penetration: radius - dist,
+          normal
+        };
+      }
+    }
+
+    return { hasCollision: false, nearestBox: null, penetration: 0, normal };
   }
 
   public getLoadedRailroadSegmentsCount(): number {

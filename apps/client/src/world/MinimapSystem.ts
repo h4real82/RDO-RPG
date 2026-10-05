@@ -1,8 +1,50 @@
 import * as THREE from 'three';
 import { pois } from '@rdo-rpg/content';
 import valentineData from './data/valentineLayout.json';
+import fastTravelPointsJson from './data/fastTravelPoints.json';
 import { ValentineCity } from './ValentineCity';
 import { CowboyCharacter } from './CowboyCharacter';
+
+// Validated Ground-Truth Matrix for Red Dead Online (Jean Röpke Leaflet Projection)
+export const CRS_SCALE = 0.01552;
+export const CRS_LAT_OFFSET = -63.6;
+export const CRS_LNG_OFFSET = 111.29;
+
+/**
+ * Forward conversion: Leaflet CRS.Simple (lat, lng) -> In-Game Meters (game_x, game_y)
+ * game_x = (lng - CRS_LNG_OFFSET) / CRS_SCALE
+ * game_y = (lat - CRS_LAT_OFFSET) / CRS_SCALE
+ */
+export function leafletToGameCoords(lat: number, lng: number): { x: number; y: number } {
+  return {
+    x: (lng - CRS_LNG_OFFSET) / CRS_SCALE,
+    y: (lat - CRS_LAT_OFFSET) / CRS_SCALE
+  };
+}
+
+/**
+ * Inverse conversion: In-Game Meters (game_x, game_y) -> Leaflet CRS.Simple (lat, lng)
+ */
+export function gameToLeafletCoords(game_x: number, game_y: number): { lat: number; lng: number } {
+  return {
+    lat: game_y * CRS_SCALE + CRS_LAT_OFFSET,
+    lng: game_x * CRS_SCALE + CRS_LNG_OFFSET
+  };
+}
+
+/**
+ * Three.js World Vector Mapping:
+ * threeX = game_x
+ * threeY = elevation
+ * threeZ = game_y
+ */
+export function gameToThreeCoords(game_x: number, game_y: number, elevation: number = 0): THREE.Vector3 {
+  return new THREE.Vector3(game_x, elevation, game_y);
+}
+
+export function threeToLeafletCoords(threeX: number, threeZ: number): { lat: number; lng: number } {
+  return gameToLeafletCoords(threeX, threeZ);
+}
 
 export interface MinimapConfig {
   showCompassRose: boolean;
@@ -478,34 +520,67 @@ export class MinimapSystem {
       }
     }
 
-    // 5. POI Markers & Icons
-    for (const poi of pois) {
-      const px = poi.x * ValentineCity.SCALE;
-      const pz = poi.y * ValentineCity.SCALE;
-      const dx = (px - effectiveX) * pixelsPerMeter;
-      const dy = (pz - effectiveZ) * pixelsPerMeter;
+    // 5. Local POI Markers & Icons (Valentine Town Points)
+    if (visibleMeters <= 500) {
+      for (const poi of pois) {
+        const px = poi.x * ValentineCity.SCALE;
+        const pz = poi.y * ValentineCity.SCALE;
+        const dx = (px - effectiveX) * pixelsPerMeter;
+        const dy = (pz - effectiveZ) * pixelsPerMeter;
 
-      if (Math.hypot(dx, dy) < w * 0.85) {
-        ctx.save();
-        ctx.translate(dx, dy);
-        ctx.fillStyle = '#d4af37';
-        ctx.beginPath();
-        ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
-        ctx.fill();
+        if (Math.hypot(dx, dy) < w * 0.85) {
+          ctx.save();
+          ctx.translate(dx, dy);
+          ctx.fillStyle = '#d4af37';
+          ctx.beginPath();
+          ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+          ctx.fill();
 
-        ctx.strokeStyle = '#221910';
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
+          ctx.strokeStyle = '#221910';
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
 
-        if (visibleMeters <= 200) {
-          ctx.fillStyle = '#f5ecd8';
-          ctx.font = 'bold 9px "Cinzel", Georgia, serif';
-          ctx.textAlign = 'center';
-          ctx.shadowColor = 'rgba(0,0,0,0.8)';
-          ctx.shadowBlur = 3;
-          ctx.fillText(poi.name, 0, -6);
+          if (visibleMeters <= 200) {
+            ctx.fillStyle = '#f5ecd8';
+            ctx.font = 'bold 9px "Cinzel", Georgia, serif';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = 'rgba(0,0,0,0.8)';
+            ctx.shadowBlur = 3;
+            ctx.fillText(poi.name, 0, -6);
+          }
+          ctx.restore();
         }
-        ctx.restore();
+      }
+    }
+
+    // 5b. Global Town & Fast-Travel Waypoints (Validated Ground-Truth Positions)
+    if (visibleMeters >= 400 && fastTravelPointsJson) {
+      for (const ft of (fastTravelPointsJson as unknown as Array<{ name: string; three_pos: [number, number, number] }>)) {
+        const ftx = ft.three_pos[0];
+        const ftz = ft.three_pos[2];
+        const dx = (ftx - effectiveX) * pixelsPerMeter;
+        const dy = (ftz - effectiveZ) * pixelsPerMeter;
+
+        if (Math.hypot(dx, dy) < w * 0.9) {
+          ctx.save();
+          ctx.translate(dx, dy);
+          ctx.fillStyle = '#f59e0b';
+          ctx.beginPath();
+          ctx.arc(0, 0, 4.0, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = '#18120c';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 10px "Cinzel", Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.shadowColor = 'rgba(0,0,0,0.9)';
+          ctx.shadowBlur = 4;
+          ctx.fillText(ft.name, 0, -7);
+          ctx.restore();
+        }
       }
     }
 

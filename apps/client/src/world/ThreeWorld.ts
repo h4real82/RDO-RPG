@@ -952,7 +952,7 @@ export class ThreeWorld {
     radius: number = 0.45,
     groundY: number
   ): THREE.Vector3 {
-    const chunkObstacles = this.chunkManager ? this.chunkManager.getActiveObstacleBoxes() : [];
+    const chunkObstacles = this.chunkManager ? this.chunkManager.getNearbyObstacleBoxes(currentPos.x, currentPos.z, 35.0) : [];
     const valObstacles = this.valentineCity ? this.valentineCity.obstacleBoxes : [];
     const allObstacles = [...valObstacles, ...chunkObstacles];
 
