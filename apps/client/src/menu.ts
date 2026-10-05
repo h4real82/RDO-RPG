@@ -727,9 +727,9 @@ class RpgMenuManager {
     overlay?.classList.add('fading');
 
     setTimeout(() => {
-      // Teleport player near opposite road entrance or road center
-      const targetX = isWest ? 1280 : 90;
-      const targetY = 480;
+      // Teleport player near opposite road entrance or road center (in world 3D meters)
+      const targetX = isWest ? 128.0 : 9.0;
+      const targetY = 48.0;
 
       if (this.onTravelCallback) {
         this.onTravelCallback(targetX, targetY);
@@ -830,27 +830,28 @@ class RpgMenuManager {
         if (e.target === overlay) this.closeFastTravelModal();
       });
 
-      // Populate destinations from imported JSON
+      // Populate destinations from imported ground truth fastTravelPointsJson
       const list = document.getElementById('ft-dest-list');
       if (!list) return;
 
-      const destinations: Array<{ id: string; name: string; region: string; x: number; z: number; cost?: number }> = [
-        { id: 'fasttravel.valentine',    name: 'Valentine',       region: 'West Elizabeth',  x: 120,   z: 950 },
-        { id: 'fasttravel.rhodes',       name: 'Rhodes',          region: 'Lemoyne',          x: -360,  z: 2200 },
-        { id: 'fasttravel.saint_denis',  name: 'Saint Denis',     region: 'Lemoyne',          x: 2450,  z: 2300 },
-        { id: 'fasttravel.blackwater',   name: 'Blackwater',      region: 'West Elizabeth',   x: -80,   z: 3450 },
-        { id: 'fasttravel.strawberry',   name: 'Strawberry',      region: 'West Elizabeth',   x: -1280, z: 2880 },
-        { id: 'fasttravel.annesburg',    name: 'Annesburg',        region: 'New Hanover',      x: 2790,  z: 640 },
-        { id: 'fasttravel.van_horn',     name: 'Van Horn Trading', region: 'New Hanover',     x: 2910,  z: 1310 },
-        { id: 'fasttravel.armadillo',    name: 'Armadillo',        region: 'New Austin',       x: -3240, z: 3550 },
-        { id: 'fasttravel.tumbleweed',   name: 'Tumbleweed',       region: 'New Austin',       x: -4640, z: 3870 },
-        { id: 'fasttravel.lagras',       name: 'Lagras',           region: 'Lemoyne Swamps',   x: 1620,  z: 2900 },
-        { id: 'fasttravel.colter',       name: 'Colter',           region: 'Ambarino',         x: -1280, z: -1010 },
-        { id: 'fasttravel.emerald',      name: 'Emerald Ranch',    region: 'New Hanover',      x: 1120,  z: 1800 },
-        { id: 'fasttravel.macfarlanes',  name: "MacFarlane's Ranch", region: 'New Austin',    x: -2780, z: 3340 },
-        { id: 'fasttravel.manzanita',    name: 'Manzanita Post',   region: 'West Elizabeth',   x: -1340, z: 3830 },
-        { id: 'fasttravel.wapiti',       name: 'Wapiti Indian Res.', region: 'New Hanover',   x: 1660,  z: 300 },
-      ];
+      const destinations: Array<{ id: string; name: string; region: string; x: number; z: number }> = (
+        fastTravelPointsJson as FastTravelPoint[]
+      ).map((p) => {
+        let region = 'Frontier';
+        if (p.game_x < -2000) region = 'New Austin';
+        else if (p.game_y > 1600) region = 'Ambarino';
+        else if (p.game_x > 1800 && p.game_y < -600) region = 'Lemoyne';
+        else if (p.game_x < 0 && p.game_y < 0) region = 'West Elizabeth';
+        else region = 'New Hanover';
+
+        return {
+          id: p.id,
+          name: p.name,
+          region,
+          x: p.three_pos[0],
+          z: p.three_pos[2],
+        };
+      });
 
       const TRAVEL_COST = 0.50;
 

@@ -328,6 +328,7 @@ export class WorldChunkManager {
     const mat = this.getChunkBiomeMaterial(chunk.minX, chunk.minZ);
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.set(chunk.minX + size * 0.5, 0, chunk.minZ + size * 0.5);
+    mesh.castShadow = false;
     mesh.receiveShadow = true;
     mesh.name = `GroundMesh_${chunk.key}`;
 

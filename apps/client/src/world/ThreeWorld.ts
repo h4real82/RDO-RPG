@@ -126,13 +126,11 @@ export class ThreeWorld {
     // Fast travel callback from menu
     rpgMenuManager.setOnTravel((destX, destY) => {
       try {
-        this.posX = destX * ValentineCity.SCALE;
-        this.posZ = destY * ValentineCity.SCALE;
+        this.posX = destX;
+        this.posZ = destY;
 
         // Query proper terrain elevation at destination
-        const groundY = this.chunkManager
-          ? this.chunkManager.getGroundHeightAt(this.posX, this.posZ)
-          : (this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0);
+        const groundY = this.getGroundElevation(this.posX, this.posZ);
 
         this.localPlayer.setPosition(this.posX, groundY, this.posZ);
         this.clickNavDestination = null;
@@ -141,9 +139,9 @@ export class ThreeWorld {
           this.clickMarker = null;
         }
 
-        // Atomic chunk flush + reload at destination
+        // Synchronous chunk flush + reload at destination
         if (this.chunkManager) {
-          this.chunkManager.teleport(this.posX, this.posZ, this.camera);
+          this.chunkManager.forceUpdate(this.posX, this.posZ, this.camera);
         }
 
         // Recenter camera and shadow immediately
@@ -162,15 +160,28 @@ export class ThreeWorld {
     this.animate();
   }
 
+  /**
+   * Retrieves ground elevation across Valentine local coordinates and global world chunks
+   */
+  public getGroundElevation(x: number, z: number): number {
+    // In Valentine local bounds [-280 to 140, -50 to 300], blend with Valentine city elevation
+    if (x >= -280 && x <= 140 && z >= -50 && z <= 300) {
+      return this.valentineCity ? this.valentineCity.getGroundHeight(x, z) : 0;
+    }
+    // Outside Valentine, query chunkManager interpolated elevation
+    if (this.chunkManager) {
+      return this.chunkManager.getGroundHeightAt(x, z);
+    }
+    return this.valentineCity ? this.valentineCity.getGroundHeight(x, z) : 0;
+  }
+
   public teleport(x: number, z: number) {
     try {
       this.posX = x;
       this.posZ = z;
 
       // Query proper terrain elevation at destination
-      const groundY = this.chunkManager
-        ? this.chunkManager.getGroundHeightAt(this.posX, this.posZ)
-        : (this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0);
+      const groundY = this.getGroundElevation(this.posX, this.posZ);
 
       this.localPlayer.setPosition(this.posX, groundY, this.posZ);
       this.clickNavDestination = null;
@@ -179,9 +190,9 @@ export class ThreeWorld {
         this.clickMarker = null;
       }
 
-      // Atomic chunk flush + reload at destination
+      // Synchronous chunk flush + reload at destination
       if (this.chunkManager) {
-        this.chunkManager.teleport(this.posX, this.posZ, this.camera);
+        this.chunkManager.forceUpdate(this.posX, this.posZ, this.camera);
       }
 
       // Recenter camera and shadow immediately
@@ -204,8 +215,8 @@ export class ThreeWorld {
     const height = this.container.clientHeight || window.innerHeight;
 
     // Tactical RPG Perspective Camera (Steep overview, wider zoom)
-    // Near 0.3 prevents z-fighting on close geometry; far 2000 covers full world streaming range
-    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.3, 2000);
+    // Near 0.3 prevents z-fighting on close geometry; far 600 covers world streaming range without depth buffer loss
+    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.3, 600);
     this.updateCameraPosition(true);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -268,8 +279,8 @@ export class ThreeWorld {
     this.sunLight.shadow.mapSize.height = 2048;
     this.sunLight.shadow.camera.near = 0.5;
     this.sunLight.shadow.camera.far = 250;
-    this.sunLight.shadow.bias = -0.0003;
-    this.sunLight.shadow.normalBias = 0.02;
+    this.sunLight.shadow.bias = 0.0002;
+    this.sunLight.shadow.normalBias = 0.05;
 
     const shadowDist = 45;
     this.sunLight.shadow.camera.left = -shadowDist;
@@ -897,7 +908,7 @@ export class ThreeWorld {
       const moveDistance = speed * delta;
       const moveVec = new THREE.Vector3(moveDir.x * moveDistance, 0, moveDir.z * moveDistance);
 
-      const groundY = this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0;
+      const groundY = this.getGroundElevation(this.posX, this.posZ);
       const sphereRadius = 0.45; // 0.45m bounding sphere radius
 
       // Resolve collision with sliding response against massive Box3 obstacles
@@ -926,7 +937,7 @@ export class ThreeWorld {
       this.isMoving = false;
     }
 
-    const groundY = this.valentineCity.getGroundHeight(this.posX, this.posZ);
+    const groundY = this.getGroundElevation(this.posX, this.posZ);
     this.localPlayer.setPosition(this.posX, groundY, this.posZ);
     this.localPlayer.update(delta, this.isMoving, activeGait, speed / (PLAYER_JOG_SPEED * ValentineCity.SCALE));
   }
@@ -1023,7 +1034,7 @@ export class ThreeWorld {
    * - Pitch/Yaw free orbit with right mouse drag, focus point at player.y + 1.2
    */
   private updateCameraPosition(immediate: boolean = false) {
-    const groundY = this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0;
+    const groundY = this.getGroundElevation(this.posX, this.posZ);
     const playerPos = new THREE.Vector3(this.posX, groundY, this.posZ);
     const targetLookAt = playerPos.clone().add(new THREE.Vector3(0, 1.2, 0));
 
@@ -1063,9 +1074,7 @@ export class ThreeWorld {
     try {
       if (!this.sunLight) return;
 
-      const groundY = this.valentineCity
-        ? this.valentineCity.getGroundHeight(this.posX, this.posZ)
-        : 0;
+      const groundY = this.getGroundElevation(this.posX, this.posZ);
 
       // Recenter sun position relative to new player position
       // Preserve the directional offset from applyTimeOfDay
@@ -1074,7 +1083,7 @@ export class ThreeWorld {
       this.sunLight.position.copy(this.sunLight.target.position).add(sunOffset);
 
       // Expand shadow frustum to cover the streaming area around new position
-      const shadowDist = 55;
+      const shadowDist = 45;
       this.sunLight.shadow.camera.left = -shadowDist;
       this.sunLight.shadow.camera.right = shadowDist;
       this.sunLight.shadow.camera.top = shadowDist;

@@ -99,6 +99,7 @@ export class ValentineCity {
     });
 
     this.groundMesh = new THREE.Mesh(groundGeo, groundMat);
+    this.groundMesh.castShadow = false;
     this.groundMesh.receiveShadow = true;
     this.groundMesh.name = 'GroundTerrain';
     this.scene.add(this.groundMesh);
@@ -166,6 +167,7 @@ export class ValentineCity {
     });
 
     const roadMesh = new THREE.Mesh(roadGeo, roadMat);
+    roadMesh.castShadow = false;
     roadMesh.receiveShadow = true;
     roadMesh.name = 'MainStreetRibbon';
     this.scene.add(roadMesh);
@@ -1772,6 +1774,7 @@ export class ValentineCity {
 
     const pastureMesh = new THREE.Mesh(pastureGeo, grassPrairieMat);
     pastureMesh.position.set(28.0, 0, 15.0);
+    pastureMesh.castShadow = false;
     pastureMesh.receiveShadow = true;
     pensGroup.add(pastureMesh);
 
@@ -1916,6 +1919,7 @@ export class ValentineCity {
 
       const mudMesh = new THREE.Mesh(mGeo, mudMat);
       mudMesh.position.set(pen.cx, 0, pen.cz);
+      mudMesh.castShadow = false;
       mudMesh.receiveShadow = true;
       pensGroup.add(mudMesh);
 
