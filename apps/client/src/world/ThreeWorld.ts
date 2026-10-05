@@ -227,7 +227,7 @@ export class ThreeWorld {
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // AAA soft shadow edges
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.0;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -265,24 +265,24 @@ export class ThreeWorld {
 
   private initEnvironment() {
     // 1. Hemisphere Light for soft atmospheric sky/ground fill
-    this.hemiLight = new THREE.HemisphereLight(0x78a7d8, 0x44301c, 0.85);
+    this.hemiLight = new THREE.HemisphereLight(0xe8b878, 0x382618, 0.65);
     this.scene.add(this.hemiLight);
 
-    // 2. Base Ambient Light (ensures dark corners and night remain readable, at least 0.6)
-    this.ambientLight = new THREE.AmbientLight(0x403226, 0.65);
+    // 2. Base Ambient Light (reduced for deep, rich western shadows)
+    this.ambientLight = new THREE.AmbientLight(0x281e15, 0.35);
     this.scene.add(this.ambientLight);
 
-    // 3. Directional Sun/Moon with Shadow Map
-    this.sunLight = new THREE.DirectionalLight(0xffeedd, 2.0);
+    // 3. Directional Sun/Moon with PCFSoftShadowMap
+    this.sunLight = new THREE.DirectionalLight(0xffcb55, 4.2);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.mapSize.width = 2048;
     this.sunLight.shadow.mapSize.height = 2048;
     this.sunLight.shadow.camera.near = 0.5;
-    this.sunLight.shadow.camera.far = 250;
-    this.sunLight.shadow.bias = 0.0002;
-    this.sunLight.shadow.normalBias = 0.05;
+    this.sunLight.shadow.camera.far = 180;
+    this.sunLight.shadow.bias = 0.00015;
+    this.sunLight.shadow.normalBias = 0.04;
 
-    const shadowDist = 45;
+    const shadowDist = 40;
     this.sunLight.shadow.camera.left = -shadowDist;
     this.sunLight.shadow.camera.right = shadowDist;
     this.sunLight.shadow.camera.top = shadowDist;
@@ -336,10 +336,9 @@ export class ThreeWorld {
   private initLocalPlayer() {
     this.localPlayer = new CowboyCharacter(this.profile.username, true);
     
-    // 1. SPAWN-PUNKT ERZWINGEN:
-    // Setze die Startposition des Spielers hart auf die freie Straße:
-    const safeX = 0;
-    const safeZ = 0;
+    // 1. SPAWN-PUNKT: Haupteinfahrt nach Valentine (Blick entlang der Hauptstraße Richtung Saloon)
+    const safeX = 64.0;
+    const safeZ = 2.0;
     const getTerrainHeight = (x: number, z: number) => {
       if (this.valentineCity && typeof this.valentineCity.getGroundHeight === 'function') {
         return this.valentineCity.getGroundHeight(x, z);
@@ -354,17 +353,17 @@ export class ThreeWorld {
     this.localPlayer.root.position.set(safeX, safeY, safeZ);
     this.localPlayer.root.visible = true;
 
-    this.heading = Math.PI; // Face towards Z = -20 (Saloon)
+    // Blickachse Richtung Nord-West (die Hauptstraße hinunter)
+    this.heading = -Math.PI * 0.65;
     this.localPlayer.setHeading(this.heading, 1.0);
+    this.cameraYaw = 0.95; // Kamera steht schräg hinter dem Spieler mit Blick auf die Einfahrt
     
     // 2. MESH-CHECK & RENDER-STATUS:
-    // Stelle sicher, dass das Mesh des Spielers wirklich mit 'scene.add(player)' in der Szene landet
     if (!this.scene.children.includes(this.localPlayer.root)) {
       this.scene.add(this.localPlayer.root);
     }
 
     // 3. KAMERA-RESET:
-    // Standardabstand: 4.5 Meter hinter und 2.0 Meter über dem Charakter:
     this.updateCameraPosition(true);
   }
 
@@ -373,40 +372,40 @@ export class ThreeWorld {
 
     if (tod === TimeOfDay.NOON) {
       // High bright warm sun shining from South-East onto front facades
-      this.sunLight.color.setHex(0xfffaec);
-      this.sunLight.intensity = 3.6;
-      this.sunLight.position.set(this.posX + 20, 65, this.posZ + 20);
-      this.hemiLight.color.setHex(0x90c5f5);
-      this.hemiLight.groundColor.setHex(0x6e5238);
-      this.hemiLight.intensity = 1.3;
-      this.ambientLight.color.setHex(0x4a3a2c);
-      this.ambientLight.intensity = 0.85;
-      this.scene.background = new THREE.Color(0x76b4ea);
-      this.renderer.toneMappingExposure = 1.35;
-    } else if (tod === TimeOfDay.GOLDEN_HOUR) {
-      // Low western amber sunset shining from South-West
-      this.sunLight.color.setHex(0xff9e44);
-      this.sunLight.intensity = 3.2;
-      this.sunLight.position.set(this.posX - 45, 28, this.posZ + 25);
-      this.hemiLight.color.setHex(0xfda560);
-      this.hemiLight.groundColor.setHex(0x52321a);
-      this.hemiLight.intensity = 1.2;
-      this.ambientLight.color.setHex(0x3e2815);
-      this.ambientLight.intensity = 0.75;
-      this.scene.background = new THREE.Color(0xd47535);
+      this.sunLight.color.setHex(0xfff5d8);
+      this.sunLight.intensity = 4.0;
+      this.sunLight.position.set(this.posX + 30, 60, this.posZ + 25);
+      this.hemiLight.color.setHex(0x8ac4f8);
+      this.hemiLight.groundColor.setHex(0x553d26);
+      this.hemiLight.intensity = 0.70;
+      this.ambientLight.color.setHex(0x362c20);
+      this.ambientLight.intensity = 0.40;
+      this.scene.background = new THREE.Color(0x6caae8);
       this.renderer.toneMappingExposure = 1.25;
+    } else if (tod === TimeOfDay.GOLDEN_HOUR) {
+      // Low western golden-yellow sunset: long dramatic shadows and warm saturated wood tones
+      this.sunLight.color.setHex(0xffcb55);
+      this.sunLight.intensity = 4.2;
+      this.sunLight.position.set(this.posX - 55, 24, this.posZ + 35);
+      this.hemiLight.color.setHex(0xe8b878);
+      this.hemiLight.groundColor.setHex(0x382618);
+      this.hemiLight.intensity = 0.65;
+      this.ambientLight.color.setHex(0x281e15);
+      this.ambientLight.intensity = 0.35; // Dunkle, tiefe Schattenkanten
+      this.scene.background = new THREE.Color(0xb58045);
+      this.renderer.toneMappingExposure = 1.15;
     } else {
-      // Cool deep blue moonlight from South - excellent visibility (no pitch-black blinds)
-      this.sunLight.color.setHex(0x6699dd);
+      // Cool deep blue moonlight from South - excellent visibility
+      this.sunLight.color.setHex(0x6088cc);
       this.sunLight.intensity = 2.0;
       this.sunLight.position.set(this.posX - 20, 50, this.posZ + 30);
       this.hemiLight.color.setHex(0x38557a);
       this.hemiLight.groundColor.setHex(0x182436);
-      this.hemiLight.intensity = 1.1;
-      this.ambientLight.color.setHex(0x283850);
-      this.ambientLight.intensity = 0.85;
-      this.scene.background = new THREE.Color(0x0e1828);
-      this.renderer.toneMappingExposure = 1.2;
+      this.hemiLight.intensity = 0.55;
+      this.ambientLight.color.setHex(0x182436);
+      this.ambientLight.intensity = 0.45;
+      this.scene.background = new THREE.Color(0x0a1220);
+      this.renderer.toneMappingExposure = 1.15;
     }
 
     this.sunLight.target.position.set(this.posX, 0, this.posZ);

@@ -104,14 +104,20 @@ export class ValentineCity {
     this.groundMesh.name = 'GroundTerrain';
     this.scene.add(this.groundMesh);
 
-    // Road Ribbon Mesh along roadSpline from valentineLayout.json (width 7.0)
-    const splinePoints = (valentineData.roadSpline as [number, number][]).map(
+    // Road Ribbon Mesh along roadSpline from valentineLayout.json with entrance extension
+    const rawSpline: [number, number][] = [
+      [112.0, 68.0],
+      [98.0, 56.0],
+      ...(valentineData.roadSpline as [number, number][])
+    ];
+
+    const splinePoints = rawSpline.map(
       ([x, z]) => new THREE.Vector3(x, this.getGroundHeight(x, z), z)
     );
 
     const curve = new THREE.CatmullRomCurve3(splinePoints, false, 'catmullrom', 0.5);
-    const segments = 150;
-    const roadWidth = 7.0;
+    const segments = 180;
+    const roadWidth = 7.4;
 
     const roadGeo = new THREE.BufferGeometry();
     const positions: number[] = [];
@@ -125,17 +131,17 @@ export class ValentineCity {
       const normal = new THREE.Vector3(0, 1, 0);
       const binormal = new THREE.Vector3().crossVectors(tangent, normal).normalize();
 
-      // Left vertex
+      // Left vertex (slightly dipped for muddy wagon ruts)
       const left = new THREE.Vector3().copy(point).add(binormal.clone().multiplyScalar(roadWidth / 2));
-      left.y = this.getGroundHeight(left.x, left.z) + 0.03;
+      left.y = this.getGroundHeight(left.x, left.z) + 0.04;
       positions.push(left.x, left.y, left.z);
-      uvs.push(0, t * 24);
+      uvs.push(0, t * 28);
 
       // Right vertex
       const right = new THREE.Vector3().copy(point).add(binormal.clone().multiplyScalar(-roadWidth / 2));
-      right.y = this.getGroundHeight(right.x, right.z) + 0.03;
+      right.y = this.getGroundHeight(right.x, right.z) + 0.04;
       positions.push(right.x, right.y, right.z);
-      uvs.push(1, t * 24);
+      uvs.push(1, t * 28);
     }
 
     for (let i = 0; i < segments; i++) {
@@ -154,16 +160,17 @@ export class ValentineCity {
     roadGeo.computeVertexNormals();
 
     const mudTex = TextureGenerator.getMuddyStreetTextures();
+    // Deep dark muddy brown with specular wet-sheen for Valentine's iconic muddy main street
     const roadMat = new THREE.MeshStandardMaterial({
       map: mudTex.diffuse,
       normalMap: mudTex.normal,
       roughnessMap: mudTex.roughness,
-      color: 0x54402e, // Lifted tone for visible road contrast and no shadow blackout
-      roughness: 0.85, // Rough frontier ground
-      metalness: 0.05, // Slight soil sheen
+      color: 0x2e1e12, // Deep dark mud tone standing out strikingly against prairie grass
+      roughness: 0.65, // Wet churned mud sheen
+      metalness: 0.10, // Specular highlights catching the golden sunlight
       polygonOffset: true,
-      polygonOffsetFactor: -2,
-      polygonOffsetUnits: -2
+      polygonOffsetFactor: -3,
+      polygonOffsetUnits: -3
     });
 
     const roadMesh = new THREE.Mesh(roadGeo, roadMat);
@@ -1315,6 +1322,62 @@ export class ValentineCity {
 
       hGroup.position.set(0, 0, d / 2 + porchDepth + 0.75);
       bGroup.add(hGroup);
+
+      // Warm glowing windows on facade
+      const glowTex = TextureGenerator.getWindowGlowTexture();
+      const winMat = new THREE.MeshStandardMaterial({
+        map: glowTex,
+        roughness: 0.35,
+        emissive: 0x5a3416,
+        emissiveIntensity: 0.55
+      });
+      for (const wx of [-w / 2 + segW / 2, w / 2 - segW / 2]) {
+        const winGlass = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.5, 0.05), winMat);
+        winGlass.position.set(wx, 0.2 + 1.6, d / 2 + 0.01);
+        bGroup.add(winGlass);
+
+        const winFrame = new THREE.Mesh(new THREE.BoxGeometry(1.35, 1.65, 0.07), trimMat);
+        winFrame.position.set(wx, 0.2 + 1.6, d / 2);
+        bGroup.add(winFrame);
+      }
+
+      // Authentic 1899 Western Signboard above entrance
+      let signTitle = '';
+      let signSub = '';
+      if (id === 'store') {
+        signTitle = 'GENERAL STORE';
+        signSub = 'VALENTINE PROVISIONS & DRY GOODS';
+      } else if (id === 'gunsmith') {
+        signTitle = 'VALENTINE GUNSMITH';
+        signSub = 'WINCHESTER & COLT · AMMUNITION';
+      } else if (id === 'doctor') {
+        signTitle = 'DOCTOR & APOTHECARY';
+        signSub = 'SURGERY & MEDICINE';
+      } else if (id === 'sheriff') {
+        signTitle = "SHERIFF'S OFFICE";
+        signSub = 'COUNTY OF VALENTINE';
+      } else if (id.startsWith('bldg_')) {
+        const frontierNames = [
+          { t: 'BOARDING HOUSE', s: 'ROOMS & MEALS' },
+          { t: 'BLACKSMITH', s: 'FARRIER & FORGE' },
+          { t: 'FEED & SEED', s: 'GRAIN & FLOUR' },
+          { t: 'SADDLERY', s: 'HARNESS & BOOTS' }
+        ];
+        const idx = Math.abs(id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)) % frontierNames.length;
+        signTitle = frontierNames[idx].t;
+        signSub = frontierNames[idx].s;
+      }
+
+      if (signTitle) {
+        const sTex = TextureGenerator.createSignboardTexture(signTitle, signSub, '#241a12', '#ebdcb9', true);
+        const sW = Math.min(w * 0.72, 4.6);
+        const sH = 0.95;
+        const sMat = new THREE.MeshStandardMaterial({ map: sTex, roughness: 0.6 });
+        const sMesh = new THREE.Mesh(new THREE.BoxGeometry(sW, sH, 0.08), sMat);
+        sMesh.position.set(0, 0.2 + porchH + 0.52, d / 2 + porchDepth * 0.5 + 0.05);
+        sMesh.castShadow = true;
+        bGroup.add(sMesh);
+      }
     }
 
     // 7. GIEBELDACH (Gable Roof: sichtbare Firstbalken, gestufte Dachkanten, Überhang <= 0.5 Einheiten)
@@ -1728,6 +1791,158 @@ export class ValentineCity {
       }
     }
 
+    // e) Telegrafendrähte (Sagging Catenary Wires connecting the poles)
+    const wireMat = new THREE.LineBasicMaterial({ color: 0x181512, linewidth: 1.2 });
+    for (let i = 0; i < poleLocations.length - 1; i++) {
+      const p1 = poleLocations[i];
+      const p2 = poleLocations[i + 1];
+      const py1 = this.getGroundHeight(p1.x, p1.z);
+      const py2 = this.getGroundHeight(p2.x, p2.z);
+      const midX = (p1.x + p2.x) / 2;
+      const midZ = (p1.z + p2.z) / 2;
+      const midY = (py1 + py2) / 2 + 7.12 - 0.45; // 0.45m catenary sag
+
+      for (const ix of [-0.6, -0.2, 0.2, 0.6]) {
+        const curve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(p1.x + ix, py1 + 7.12, p1.z),
+          new THREE.Vector3(midX + ix, midY, midZ),
+          new THREE.Vector3(p2.x + ix, py2 + 7.12, p2.z)
+        ]);
+        const wirePoints = curve.getPoints(16);
+        const wireGeo = new THREE.BufferGeometry().setFromPoints(wirePoints);
+        const wire = new THREE.Line(wireGeo, wireMat);
+        propsGroup.add(wire);
+      }
+    }
+
+    // f) Instanziierte Grasbüschel (THREE.InstancedMesh) entlang der Straßenränder
+    const grassBladeCount = 550;
+    const bladeGeo = new THREE.BufferGeometry();
+    const bladeVerts = new Float32Array([
+      -0.35, 0.0, 0.0,   0.35, 0.0, 0.0,   0.28, 0.55, 0.0,
+      -0.35, 0.0, 0.0,   0.28, 0.55, 0.0, -0.28, 0.55, 0.0,
+      -0.18, 0.0, -0.30, 0.18, 0.0,  0.30, 0.14, 0.55, 0.24,
+      -0.18, 0.0, -0.30, 0.14, 0.55, 0.24, -0.14, 0.55, -0.24,
+      -0.18, 0.0,  0.30, 0.18, 0.0, -0.30, 0.14, 0.55, -0.24,
+      -0.18, 0.0,  0.30, 0.14, 0.55, -0.24, -0.14, 0.55,  0.24
+    ]);
+    bladeGeo.setAttribute('position', new THREE.BufferAttribute(bladeVerts, 3));
+    bladeGeo.computeVertexNormals();
+
+    const grassMat = new THREE.MeshStandardMaterial({
+      color: 0x8a7f4e,
+      roughness: 0.95,
+      metalness: 0.0,
+      side: THREE.DoubleSide
+    });
+
+    const grassInstanced = new THREE.InstancedMesh(bladeGeo, grassMat, grassBladeCount);
+    grassInstanced.castShadow = false;
+    grassInstanced.receiveShadow = true;
+
+    const dummy = new THREE.Object3D();
+    let grassIdx = 0;
+
+    const roadSpline = valentineData.roadSpline as [number, number][];
+    for (let i = 0; i < roadSpline.length - 1 && grassIdx < grassBladeCount; i++) {
+      const p1 = roadSpline[i];
+      const p2 = roadSpline[i + 1];
+      const countPerSeg = 35;
+      for (let s = 0; s < countPerSeg && grassIdx < grassBladeCount; s++) {
+        const t = s / countPerSeg;
+        const rx = p1[0] + (p2[0] - p1[0]) * t;
+        const rz = p1[1] + (p2[1] - p1[1]) * t;
+        const side = (s % 2 === 0 ? 1 : -1);
+        const offsetDist = 4.2 + (s % 5) * 0.9;
+        const gx = rx + side * offsetDist;
+        const gz = rz + (Math.sin(s * 7) * 1.5);
+        const gy = this.getGroundHeight(gx, gz);
+
+        dummy.position.set(gx, gy, gz);
+        dummy.scale.set(0.7 + (s % 4) * 0.2, 0.7 + (s % 3) * 0.3, 0.7 + (s % 4) * 0.2);
+        dummy.rotation.y = (s * 1.7) % (Math.PI * 2);
+        dummy.updateMatrix();
+        grassInstanced.setMatrixAt(grassIdx++, dummy.matrix);
+      }
+    }
+    while (grassIdx < grassBladeCount) {
+      const gx = 5.0 + (grassIdx % 15) * 3.5;
+      const gz = 35.0 + (grassIdx % 10) * 3.0;
+      const gy = this.getGroundHeight(gx, gz);
+      dummy.position.set(gx, gy, gz);
+      dummy.scale.set(0.8, 0.8, 0.8);
+      dummy.rotation.y = grassIdx * 0.5;
+      dummy.updateMatrix();
+      grassInstanced.setMatrixAt(grassIdx++, dummy.matrix);
+    }
+    grassInstanced.instanceMatrix.needsUpdate = true;
+    propsGroup.add(grassInstanced);
+
+    // g) Instanziierte Kiesel & Steine (THREE.InstancedMesh)
+    const stoneCount = 180;
+    const stoneGeo = new THREE.DodecahedronGeometry(0.18, 0);
+    const stoneMat = new THREE.MeshStandardMaterial({
+      color: 0x6e6559,
+      roughness: 0.92,
+      metalness: 0.04
+    });
+    const stoneInstanced = new THREE.InstancedMesh(stoneGeo, stoneMat, stoneCount);
+    stoneInstanced.castShadow = true;
+    stoneInstanced.receiveShadow = true;
+
+    for (let i = 0; i < stoneCount; i++) {
+      const seg = roadSpline[i % (roadSpline.length - 1)];
+      const side = (i % 2 === 0 ? 1 : -1);
+      const sx = seg[0] + side * (3.8 + (i % 4) * 0.8);
+      const sz = seg[1] + (Math.cos(i * 3.1) * 2.0);
+      const sy = this.getGroundHeight(sx, sz) + 0.08;
+
+      dummy.position.set(sx, sy, sz);
+      dummy.scale.set(0.6 + (i % 5) * 0.25, 0.4 + (i % 3) * 0.2, 0.6 + (i % 4) * 0.25);
+      dummy.rotation.set((i * 0.3) % Math.PI, (i * 0.7) % Math.PI, 0);
+      dummy.updateMatrix();
+      stoneInstanced.setMatrixAt(i, dummy.matrix);
+    }
+    stoneInstanced.instanceMatrix.needsUpdate = true;
+    propsGroup.add(stoneInstanced);
+
+    // h) Hölzerne Wagenräder angelehnt an Wände & Zäune
+    const wheelLocations = [
+      { x: 32.8, z: -14.2, rotY: 0.2, rotZ: 0.15 },
+      { x: 41.5, z: -14.2, rotY: -0.15, rotZ: 0.12 },
+      { x: 67.2, z: -7.5, rotY: 0.4, rotZ: 0.14 },
+      { x: 19.5, z: -9.8, rotY: 1.5, rotZ: 0.15 }
+    ];
+    const wheelRimGeo = new THREE.TorusGeometry(0.65, 0.04, 8, 24);
+    const wheelHubGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.18, 12);
+    const spokeGeo = new THREE.CylinderGeometry(0.02, 0.02, 1.25, 6);
+    const wheelWoodMat = WoodMaterials.getWeatheredGreyMaterial(1, 1);
+
+    for (const wLoc of wheelLocations) {
+      const wy = this.getGroundHeight(wLoc.x, wLoc.z);
+      const wheelGroup = new THREE.Group();
+      wheelGroup.position.set(wLoc.x, wy + 0.65, wLoc.z);
+      wheelGroup.rotation.y = wLoc.rotY;
+      wheelGroup.rotation.z = wLoc.rotZ;
+
+      const rim = new THREE.Mesh(wheelRimGeo, wheelWoodMat);
+      rim.castShadow = true;
+      wheelGroup.add(rim);
+
+      const hub = new THREE.Mesh(wheelHubGeo, ironMat);
+      hub.rotation.x = Math.PI / 2;
+      hub.castShadow = true;
+      wheelGroup.add(hub);
+
+      for (let s = 0; s < 8; s++) {
+        const spoke = new THREE.Mesh(spokeGeo, wheelWoodMat);
+        spoke.rotation.z = (s / 8) * Math.PI;
+        spoke.castShadow = true;
+        wheelGroup.add(spoke);
+      }
+      propsGroup.add(wheelGroup);
+    }
+
     this.scene.add(propsGroup);
   }
 
@@ -1892,10 +2107,11 @@ export class ValentineCity {
       pensGroup.add(tGroup);
     };
 
-    // 2. ZWEI GROSSE TIERGATTER (14x10m)
+    // 2. GROSSE TIERGATTER & PFERCHE (Einfahrts-Landmarken links an der Straße)
     const penConfigs = [
       { name: 'CattlePenWest', cx: 23.0, cz: 33.0, w: 14.0, d: 10.0 },
-      { name: 'SheepPenEast', cx: 39.0, cz: 33.0, w: 14.0, d: 10.0 }
+      { name: 'SheepPenEast', cx: 39.0, cz: 33.0, w: 14.0, d: 10.0 },
+      { name: 'RoadsideEntrancePen', cx: 56.0, cz: 22.0, w: 12.0, d: 11.0 }
     ];
 
     for (const pen of penConfigs) {

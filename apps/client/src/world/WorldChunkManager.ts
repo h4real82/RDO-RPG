@@ -1276,6 +1276,47 @@ export class WorldChunkManager {
     roofMesh.castShadow = true;
     group.add(roofMesh);
     chunk.roofMeshes.push(roofMesh);
+
+    // Front Porch Platform, Canopy and Posts to break box geometry
+    const porchDepth = 2.0;
+    const porchFloorGeo = new THREE.BoxGeometry(width + 0.2, 0.2, porchDepth);
+    const porchFloorMat = WoodMaterials.getHoneyPineMaterial(2, 1);
+    const porchFloor = new THREE.Mesh(porchFloorGeo, porchFloorMat);
+    porchFloor.position.set(0, 0.1, depth * 0.5 + porchDepth * 0.5);
+    porchFloor.receiveShadow = true;
+    group.add(porchFloor);
+
+    // Porch support posts
+    const porchH = Math.min(height * 0.65, 3.2);
+    const postGeo = new THREE.BoxGeometry(0.16, porchH, 0.16);
+    for (const px of [-width * 0.42, 0, width * 0.42]) {
+      const p = new THREE.Mesh(postGeo, postMat);
+      p.position.set(px, porchH * 0.5 + 0.1, depth * 0.5 + porchDepth - 0.12);
+      p.castShadow = true;
+      group.add(p);
+    }
+
+    // Porch awning roof canopy (strictly attached structure)
+    const canopyGeo = new THREE.BoxGeometry(width + 0.3, 0.12, porchDepth + 0.15);
+    const canopyMesh = new THREE.Mesh(canopyGeo, roofMat);
+    canopyMesh.position.set(0, porchH + 0.1, depth * 0.5 + porchDepth * 0.5);
+    canopyMesh.castShadow = true;
+    group.add(canopyMesh);
+    chunk.roofMeshes.push(canopyMesh);
+
+    // Warm glowing front windows
+    const glowTex = TextureGenerator.getWindowGlowTexture();
+    const winMat = new THREE.MeshStandardMaterial({
+      map: glowTex,
+      roughness: 0.35,
+      emissive: 0x5a3416,
+      emissiveIntensity: 0.5
+    });
+    for (const wx of [-width * 0.28, width * 0.28]) {
+      const win = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.4, 0.05), winMat);
+      win.position.set(wx, 1.4, depth * 0.5 + 0.02);
+      group.add(win);
+    }
   }
 
   /**
