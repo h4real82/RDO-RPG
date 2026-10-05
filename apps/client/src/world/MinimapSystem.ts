@@ -42,6 +42,7 @@ export class MinimapSystem {
 
   // Continuous zoom in meters
   public currentZoomMeters: number = 90.0;
+  public currentRegionName: string = 'VALENTINE';
 
   // Interactive Pan Offsets (meters)
   public panOffsetX: number = 0.0;
@@ -49,6 +50,12 @@ export class MinimapSystem {
   private isDragging: boolean = false;
   private dragStartX: number = 0;
   private dragStartY: number = 0;
+  private hasMovedWhileDragging: boolean = false;
+
+  // Map Click Callback for fast travel & navigation
+  public onMapClick: ((worldX: number, worldZ: number) => void) | null = null;
+  private lastRenderedPlayerX: number = 0;
+  private lastRenderedPlayerZ: number = 0;
 
   // Detailed Valentine Map calibration constants
   // Image dimensions: 1714 x 1267, Center: (857.0, 633.5), Scale: 0.18 m/px
@@ -173,6 +180,7 @@ export class MinimapSystem {
           this.isDragging = true;
           this.dragStartX = e.clientX;
           this.dragStartY = e.clientY;
+          this.hasMovedWhileDragging = false;
         } else if (e.button === 2) {
           // Right-click re-centers on player
           this.panOffsetX = 0;
@@ -184,6 +192,11 @@ export class MinimapSystem {
         if (!this.isDragging) return;
         const dx = e.clientX - this.dragStartX;
         const dy = e.clientY - this.dragStartY;
+
+        if (Math.hypot(dx, dy) > 4) {
+          this.hasMovedWhileDragging = true;
+        }
+
         this.dragStartX = e.clientX;
         this.dragStartY = e.clientY;
 
@@ -192,7 +205,33 @@ export class MinimapSystem {
         this.panOffsetZ -= dy / pixelsPerMeter;
       });
 
-      window.addEventListener('mouseup', () => {
+      window.addEventListener('mouseup', (e) => {
+        if (this.isDragging && !this.hasMovedWhileDragging && e.button === 0) {
+          // Pure click without dragging: trigger onMapClick
+          const rect = this.canvas.getBoundingClientRect();
+          if (
+            e.clientX >= rect.left &&
+            e.clientX <= rect.right &&
+            e.clientY >= rect.top &&
+            e.clientY <= rect.bottom
+          ) {
+            const clickCanvasX = e.clientX - rect.left;
+            const clickCanvasY = e.clientY - rect.top;
+            const cx = this.canvas.width / 2;
+            const cy = this.canvas.height / 2;
+            const pixelsPerMeter = this.canvas.width / this.currentZoomMeters;
+
+            const dMetersX = (clickCanvasX - cx) / pixelsPerMeter;
+            const dMetersZ = (clickCanvasY - cy) / pixelsPerMeter;
+
+            const targetWorldX = this.lastRenderedPlayerX + this.panOffsetX + dMetersX;
+            const targetWorldZ = this.lastRenderedPlayerZ + this.panOffsetZ + dMetersZ;
+
+            if (this.onMapClick) {
+              this.onMapClick(targetWorldX, targetWorldZ);
+            }
+          }
+        }
         this.isDragging = false;
       });
 
@@ -308,7 +347,7 @@ export class MinimapSystem {
       }
       if (this.infoBadge) {
         const modeText = this.config.compassMode ? 'ROT' : 'N-UP';
-        const terrName = this.currentZoomMeters > 1500 ? 'RDO WORLD' : 'VALENTINE';
+        const terrName = this.currentRegionName;
         this.infoBadge.textContent = `${terrName} · ${zoomText} · ${modeText}`;
       }
     } catch (err) {
@@ -326,6 +365,9 @@ export class MinimapSystem {
     _cameraZoomDist: number,
     remotePlayers: Map<string, CowboyCharacter>
   ): void {
+    this.lastRenderedPlayerX = playerX;
+    this.lastRenderedPlayerZ = playerZ;
+
     const ctx = this.ctx;
     const w = this.canvas.width;
     const h = this.canvas.height;
@@ -344,13 +386,15 @@ export class MinimapSystem {
     }
     ctx.clip();
 
-    // 2. Base Dark Parchment Background
-    ctx.fillStyle = '#16120e';
+    // 2. Base Parchment Background (Warm frontier map tone to prevent any black edges)
+    ctx.fillStyle = '#d3b791';
     ctx.fillRect(0, 0, w, h);
 
     // Effective center (incorporates interactive drag pan)
     const effectiveX = playerX + this.panOffsetX;
     const effectiveZ = playerZ + this.panOffsetZ;
+
+    this.updateCurrentRegionName(effectiveX, effectiveZ);
 
     const visibleMeters = this.currentZoomMeters;
     const pixelsPerMeter = w / visibleMeters;
@@ -358,16 +402,13 @@ export class MinimapSystem {
     // Rotation
     const mapRotation = this.config.compassMode ? playerHeading - Math.PI : 0;
 
-    // 3. Render World Map in Center Space
+    // 3. Render World Map in Center Space (GLOBAL MAP MANDATE)
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(mapRotation);
 
-    const useGlobalMap = visibleMeters > 300 || !this.detailedMapLoaded;
-
-    if (useGlobalMap && this.globalMapLoaded && this.globalMapImage) {
-      // Complete Red Dead Online Global Map
-      // Map Dimensions: 1638 x 1180
+    // GLOBAL MAP MANDATE: Complete RDO Global Map is ALWAYS rendered as base texture
+    if (this.globalMapLoaded && this.globalMapImage) {
       const totalWidthMeters = this.globalMaxX - this.globalMinX; // 9900m
       const totalHeightMeters = this.globalMaxZ - this.globalMinZ; // 6500m
 
@@ -378,20 +419,39 @@ export class MinimapSystem {
 
       ctx.save();
       ctx.scale(scale, scale);
+
+      // Clamp-to-edge: draw clamped border skirts so if view exceeds map bounds it doesn't show black
+      // Bottom edge skirt (using South map border color #d3b791)
+      ctx.fillStyle = '#d3b791';
+      ctx.fillRect(-pxX - 4000, -pxY + this.globalHeight, this.globalWidth + 8000, 4000);
+      // Top edge skirt (pale glacier blue-grey #497ab1)
+      ctx.fillStyle = '#497ab1';
+      ctx.fillRect(-pxX - 4000, -pxY - 4000, this.globalWidth + 8000, 4000);
+      // Left edge skirt
+      ctx.fillStyle = '#d3b791';
+      ctx.fillRect(-pxX - 4000, -pxY, 4000, this.globalHeight);
+      // Right edge skirt
+      ctx.fillRect(-pxX + this.globalWidth, -pxY, 4000, this.globalHeight);
+
+      // Draw Main Global Complete Map
       ctx.drawImage(this.globalMapImage, -pxX, -pxY);
       ctx.restore();
-    } else if (this.detailedMapLoaded && this.detailedMapImage) {
-      // Local Detailed Valentine Map
+    } else {
+      this.drawProceduralFallback(ctx, effectiveX, effectiveZ, pixelsPerMeter);
+    }
+
+    // Optional Local Overlay: Detailed Valentine map ONLY as an overlay when close and in Valentine
+    const isNearValentine = Math.hypot(effectiveX - (-300.0), effectiveZ - 750.0) < 650.0;
+    if (isNearValentine && visibleMeters <= 250 && this.detailedMapLoaded && this.detailedMapImage) {
       const imgScale = pixelsPerMeter * this.detailedMetersPerPx;
       const playerPx = this.detailedCenterX + effectiveX / this.detailedMetersPerPx;
       const playerPy = this.detailedCenterY + effectiveZ / this.detailedMetersPerPx;
 
       ctx.save();
+      ctx.globalAlpha = 0.92;
       ctx.scale(imgScale, imgScale);
       ctx.drawImage(this.detailedMapImage, -playerPx, -playerPy);
       ctx.restore();
-    } else {
-      this.drawProceduralFallback(ctx, effectiveX, effectiveZ, pixelsPerMeter);
     }
 
     // 4. Overlays: Building footprints (at close to mid zoom)
@@ -568,6 +628,44 @@ export class MinimapSystem {
       ctx.moveTo(-200, y);
       ctx.lineTo(200, y);
       ctx.stroke();
+    }
+  }
+
+  /**
+   * Dynamically determines region / settlement name from in-game coordinates.
+   */
+  private updateCurrentRegionName(gx: number, gz: number): void {
+    if (Math.hypot(gx - (-300.0), gz - 750.0) < 650.0) {
+      this.currentRegionName = 'VALENTINE';
+    } else if (Math.hypot(gx - 2667.0, gz - (-1467.0)) < 850.0) {
+      this.currentRegionName = 'SAINT DENIS';
+    } else if (Math.hypot(gx - (-744.0), gz - (-1247.0)) < 650.0) {
+      this.currentRegionName = 'BLACKWATER';
+    } else if (Math.hypot(gx - 1247.0, gz - (-1292.0)) < 550.0) {
+      this.currentRegionName = 'RHODES';
+    } else if (Math.hypot(gx - (-1738.0), gz - (-414.0)) < 550.0) {
+      this.currentRegionName = 'STRAWBERRY';
+    } else if (Math.hypot(gx - 2928.0, gz - 1296.0)) {
+      if (Math.hypot(gx - 2928.0, gz - 1296.0) < 550.0) {
+        this.currentRegionName = 'ANNESBURG';
+        return;
+      }
+    }
+    
+    if (Math.hypot(gx - (-3726.0), gz - (-2628.0)) < 550.0) {
+      this.currentRegionName = 'ARMADILLO';
+    } else if (Math.hypot(gx - (-5442.0), gz - (-2946.0)) < 550.0) {
+      this.currentRegionName = 'TUMBLEWEED';
+    } else if (Math.hypot(gx - 1515.0, gz - 438.0) < 500.0) {
+      this.currentRegionName = 'EMERALD RANCH';
+    } else if (gx < -2000.0 && gz < -1000.0) {
+      this.currentRegionName = 'NEW AUSTIN';
+    } else if (gz > 1700.0) {
+      this.currentRegionName = 'AMBARINO';
+    } else if (gx > 1600.0 && gz < -600.0) {
+      this.currentRegionName = 'LEMOYNE';
+    } else {
+      this.currentRegionName = this.currentZoomMeters > 1500 ? 'RDO WORLD' : 'NEW HANOVER';
     }
   }
 }

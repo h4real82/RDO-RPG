@@ -1,0 +1,182 @@
+[
+  {
+    "id": "fasttravel.annesburg",
+    "name": "Annesburg",
+    "game_x": 2928.8,
+    "game_y": 1296.3,
+    "elevation": 44.66,
+    "three_pos": [
+      2928.8,
+      44.66,
+      1296.3
+    ]
+  },
+  {
+    "id": "fasttravel.armadillo",
+    "name": "Armadillo",
+    "game_x": -3726.5,
+    "game_y": -2628.2,
+    "elevation": -12.85,
+    "three_pos": [
+      -3726.5,
+      -12.85,
+      -2628.2
+    ]
+  },
+  {
+    "id": "fasttravel.blackwater",
+    "name": "Blackwater",
+    "game_x": -743.9,
+    "game_y": -1247.3,
+    "elevation": 44.59,
+    "three_pos": [
+      -743.9,
+      44.59,
+      -1247.3
+    ]
+  },
+  {
+    "id": "fasttravel.colter",
+    "name": "Colter",
+    "game_x": -1305.1,
+    "game_y": 2423.2,
+    "elevation": 308.73,
+    "three_pos": [
+      -1305.1,
+      308.73,
+      2423.2
+    ]
+  },
+  {
+    "id": "fasttravel.emerald",
+    "name": "Emerald",
+    "game_x": 1515.0,
+    "game_y": 437.9,
+    "elevation": 90.1,
+    "three_pos": [
+      1515.0,
+      90.1,
+      437.9
+    ]
+  },
+  {
+    "id": "fasttravel.lagras",
+    "name": "Lagras",
+    "game_x": 2097.9,
+    "game_y": -582.3,
+    "elevation": 41.04,
+    "three_pos": [
+      2097.9,
+      41.04,
+      -582.3
+    ]
+  },
+  {
+    "id": "fasttravel.macfarlanes",
+    "name": "Macfarlanes",
+    "game_x": -2502.2,
+    "game_y": -2444.43,
+    "elevation": 61.69,
+    "three_pos": [
+      -2502.2,
+      61.69,
+      -2444.43
+    ]
+  },
+  {
+    "id": "fasttravel.manzanita",
+    "name": "Manzanita",
+    "game_x": -1963.8,
+    "game_y": -1609.9,
+    "elevation": 117.61,
+    "three_pos": [
+      -1963.8,
+      117.61,
+      -1609.9
+    ]
+  },
+  {
+    "id": "fasttravel.rhodes",
+    "name": "Rhodes",
+    "game_x": 1247.0,
+    "game_y": -1292.1,
+    "elevation": 76.67,
+    "three_pos": [
+      1247.0,
+      76.67,
+      -1292.1
+    ]
+  },
+  {
+    "id": "fasttravel.saint_denis",
+    "name": "Saint Denis",
+    "game_x": 2667.5,
+    "game_y": -1467.7,
+    "elevation": 48.45,
+    "three_pos": [
+      2667.5,
+      48.45,
+      -1467.7
+    ]
+  },
+  {
+    "id": "fasttravel.strawberry",
+    "name": "Strawberry",
+    "game_x": -1737.78,
+    "game_y": -414.3,
+    "elevation": 158.89,
+    "three_pos": [
+      -1737.78,
+      158.89,
+      -414.3
+    ]
+  },
+  {
+    "id": "fasttravel.tumbleweed",
+    "name": "Tumbleweed",
+    "game_x": -5441.9,
+    "game_y": -2946.34,
+    "elevation": 6.46,
+    "three_pos": [
+      -5441.9,
+      6.46,
+      -2946.34
+    ]
+  },
+  {
+    "id": "fasttravel.valentine",
+    "name": "Valentine",
+    "game_x": -186.4,
+    "game_y": 644.2,
+    "elevation": 113.82,
+    "three_pos": [
+      -186.4,
+      113.82,
+      644.2
+    ]
+  },
+  {
+    "id": "fasttravel.van_horn",
+    "name": "Van Horn",
+    "game_x": 2901.69,
+    "game_y": 635.25,
+    "elevation": 56.77,
+    "three_pos": [
+      2901.69,
+      56.77,
+      635.25
+    ]
+  },
+  {
+    "id": "fasttravel.wapiti",
+    "name": "Wapiti",
+    "game_x": 484.38,
+    "game_y": 2178.27,
+    "elevation": 244.8,
+    "three_pos": [
+      484.38,
+      244.8,
+      2178.27
+    ]
+  }
+]

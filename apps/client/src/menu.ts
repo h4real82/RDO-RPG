@@ -1,4 +1,14 @@
 import { POIDefinition } from '@rdo-rpg/shared';
+import fastTravelPointsJson from './world/data/fastTravelPoints.json';
+
+export interface FastTravelPoint {
+  id: string;
+  name: string;
+  game_x: number;
+  game_y: number;
+  elevation: number;
+  three_pos: [number, number, number];
+}
 
 export interface InventoryItem {
   id: string;
@@ -150,6 +160,7 @@ class RpgMenuManager {
 
   private isLogbookOpen: boolean = false;
   private isPoiModalOpen: boolean = false;
+  private isFastTravelOpen: boolean = false;
 
   private activePOI: POIDefinition | null = null;
   private selectedItem: InventoryItem = sampleInventory[0];
@@ -201,7 +212,7 @@ class RpgMenuManager {
       if (e.target === this.logbookModal) this.closeLogbook();
     });
 
-    // Keyboard listener for TAB, ESC, and E (E toggles POI modal open/close)
+    // Keyboard listener for TAB, ESC, E, and F (F opens Fast Travel overlay)
     window.addEventListener('keydown', (e) => {
       try {
         if (e.key === 'Tab') {
@@ -209,8 +220,16 @@ class RpgMenuManager {
           this.toggleLogbook();
         } else if (e.key === 'Escape') {
           e.preventDefault();
-          if (this.isPoiModalOpen) this.closePOIModal();
+          if (this.isFastTravelOpen) this.closeFastTravelModal();
+          else if (this.isPoiModalOpen) this.closePOIModal();
           else if (this.isLogbookOpen) this.closeLogbook();
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          if (this.isPoiModalOpen) {
+            this.closePOIModal();
+          } else {
+            this.openFastTravelModal();
+          }
         } else if (e.key === 'e' || e.key === 'E') {
           e.preventDefault();
           if (this.isPoiModalOpen) {
@@ -764,7 +783,127 @@ class RpgMenuManager {
   }
 
   public isAnyModalOpen(): boolean {
-    return this.isLogbookOpen || this.isPoiModalOpen;
+    return this.isLogbookOpen || this.isPoiModalOpen || this.isFastTravelOpen;
+  }
+
+  /** Opens a Fast Travel overlay (F key) listing all known fast-travel points. */
+  public openFastTravelModal() {
+    try {
+      if (this.isFastTravelOpen) {
+        this.closeFastTravelModal();
+        return;
+      }
+
+      // Remove any stale overlay
+      document.getElementById('fast-travel-overlay')?.remove();
+
+      this.isFastTravelOpen = true;
+
+      const overlay = document.createElement('div');
+      overlay.id = 'fast-travel-overlay';
+      overlay.style.cssText = [
+        'position:fixed', 'inset:0', 'z-index:10000',
+        'background:rgba(0,0,0,0.78)',
+        'display:flex', 'align-items:center', 'justify-content:center',
+        'font-family:\'Cinzel\',serif',
+      ].join(';');
+
+      const box = document.createElement('div');
+      box.style.cssText = [
+        'background:#1a110a', 'border:2px solid #7a5c38',
+        'border-radius:8px', 'padding:28px 36px',
+        'min-width:360px', 'max-width:520px', 'max-height:80vh',
+        'overflow-y:auto', 'box-shadow:0 8px 40px rgba(0,0,0,0.8)',
+      ].join(';');
+
+      box.innerHTML = `
+        <div style="font-size:22px;font-weight:700;color:#ebdcb9;margin-bottom:4px;letter-spacing:2px;">&#x1F686; SCHNELLREISE</div>
+        <div style="font-size:12px;color:#8c7a6b;margin-bottom:18px;">Drücke F oder ESC zum Schließen</div>
+        <div id="ft-dest-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+      `;
+
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+
+      // Close on backdrop click
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) this.closeFastTravelModal();
+      });
+
+      // Populate destinations from imported JSON
+      const list = document.getElementById('ft-dest-list');
+      if (!list) return;
+
+      const destinations: Array<{ id: string; name: string; region: string; x: number; z: number; cost?: number }> = [
+        { id: 'fasttravel.valentine',    name: 'Valentine',       region: 'West Elizabeth',  x: 120,   z: 950 },
+        { id: 'fasttravel.rhodes',       name: 'Rhodes',          region: 'Lemoyne',          x: -360,  z: 2200 },
+        { id: 'fasttravel.saint_denis',  name: 'Saint Denis',     region: 'Lemoyne',          x: 2450,  z: 2300 },
+        { id: 'fasttravel.blackwater',   name: 'Blackwater',      region: 'West Elizabeth',   x: -80,   z: 3450 },
+        { id: 'fasttravel.strawberry',   name: 'Strawberry',      region: 'West Elizabeth',   x: -1280, z: 2880 },
+        { id: 'fasttravel.annesburg',    name: 'Annesburg',        region: 'New Hanover',      x: 2790,  z: 640 },
+        { id: 'fasttravel.van_horn',     name: 'Van Horn Trading', region: 'New Hanover',     x: 2910,  z: 1310 },
+        { id: 'fasttravel.armadillo',    name: 'Armadillo',        region: 'New Austin',       x: -3240, z: 3550 },
+        { id: 'fasttravel.tumbleweed',   name: 'Tumbleweed',       region: 'New Austin',       x: -4640, z: 3870 },
+        { id: 'fasttravel.lagras',       name: 'Lagras',           region: 'Lemoyne Swamps',   x: 1620,  z: 2900 },
+        { id: 'fasttravel.colter',       name: 'Colter',           region: 'Ambarino',         x: -1280, z: -1010 },
+        { id: 'fasttravel.emerald',      name: 'Emerald Ranch',    region: 'New Hanover',      x: 1120,  z: 1800 },
+        { id: 'fasttravel.macfarlanes',  name: "MacFarlane's Ranch", region: 'New Austin',    x: -2780, z: 3340 },
+        { id: 'fasttravel.manzanita',    name: 'Manzanita Post',   region: 'West Elizabeth',   x: -1340, z: 3830 },
+        { id: 'fasttravel.wapiti',       name: 'Wapiti Indian Res.', region: 'New Hanover',   x: 1660,  z: 300 },
+      ];
+
+      const TRAVEL_COST = 0.50;
+
+      destinations.forEach((dest) => {
+        const btn = document.createElement('button');
+        btn.style.cssText = [
+          'display:flex', 'align-items:center', 'justify-content:space-between',
+          'width:100%', 'padding:10px 14px',
+          'background:#2a1c12', 'border:1px solid #5a3d28',
+          'border-radius:5px', 'cursor:pointer',
+          'color:#ebdcb9', 'font-family:inherit', 'font-size:14px',
+          'transition:background 0.15s',
+        ].join(';');
+
+        btn.innerHTML = `
+          <span>&#x1F4CD; ${dest.name} <span style="color:#8c7a6b;font-size:11px;">&nbsp;${dest.region}</span></span>
+          <span style="color:#eab308;font-size:12px;">$ ${TRAVEL_COST.toFixed(2)}</span>
+        `;
+
+        btn.addEventListener('mouseenter', () => { btn.style.background = '#3d2a1a'; });
+        btn.addEventListener('mouseleave', () => { btn.style.background = '#2a1c12'; });
+
+        btn.addEventListener('click', () => {
+          try {
+            if (this.playerCash < TRAVEL_COST) {
+              this.notifyAction('Nicht genug Bargeld für die Kutsche!');
+              return;
+            }
+            this.playerCash -= TRAVEL_COST;
+            this.updateCashDisplay();
+            this.closeFastTravelModal();
+            this.notifyAction(`Gereist nach ${dest.name}. Kosten: $ ${TRAVEL_COST.toFixed(2)}`);
+            if (this.onTravelCallback) {
+              this.onTravelCallback(dest.x, dest.z);
+            }
+          } catch (tErr) {
+            console.error('[FastTravel] Error during travel callback:', tErr);
+          }
+        });
+
+        list.appendChild(btn);
+      });
+    } catch (err) {
+      console.error('[RpgMenuManager] openFastTravelModal error:', err);
+      this.closeFastTravelModal();
+    }
+  }
+
+  private closeFastTravelModal() {
+    try {
+      document.getElementById('fast-travel-overlay')?.remove();
+    } catch (_) { /* silent */ }
+    this.isFastTravelOpen = false;
   }
 
   public isMenuOpen(): boolean {

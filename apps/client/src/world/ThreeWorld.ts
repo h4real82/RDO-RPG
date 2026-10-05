@@ -125,15 +125,37 @@ export class ThreeWorld {
 
     // Fast travel callback from menu
     rpgMenuManager.setOnTravel((destX, destY) => {
-      this.posX = destX * ValentineCity.SCALE;
-      this.posZ = destY * ValentineCity.SCALE;
-      this.localPlayer.setPosition(this.posX, 0, this.posZ);
-      this.clickNavDestination = null;
-      if (this.clickMarker) {
-        this.scene.remove(this.clickMarker.mesh);
-        this.clickMarker = null;
+      try {
+        this.posX = destX * ValentineCity.SCALE;
+        this.posZ = destY * ValentineCity.SCALE;
+
+        // Query proper terrain elevation at destination
+        const groundY = this.chunkManager
+          ? this.chunkManager.getGroundHeightAt(this.posX, this.posZ)
+          : (this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0);
+
+        this.localPlayer.setPosition(this.posX, groundY, this.posZ);
+        this.clickNavDestination = null;
+        if (this.clickMarker) {
+          this.scene.remove(this.clickMarker.mesh);
+          this.clickMarker = null;
+        }
+
+        // Atomic chunk flush + reload at destination
+        if (this.chunkManager) {
+          this.chunkManager.teleport(this.posX, this.posZ, this.camera);
+        }
+
+        // Recenter camera and shadow immediately
+        this.updateCameraPosition(true);
+        this.recenterShadowCamera();
+        this.camera.updateProjectionMatrix();
+
+        this.sendNetworkPosition(0, 0);
+        console.log(`[ThreeWorld] Fast travel to (${this.posX.toFixed(1)}, ${this.posZ.toFixed(1)}), groundY=${groundY.toFixed(1)}`);
+      } catch (err) {
+        console.error('[ThreeWorld] Error during fast travel:', err);
       }
-      this.sendNetworkPosition(0, 0);
     });
 
     // Start 60 FPS Render Loop
@@ -141,16 +163,37 @@ export class ThreeWorld {
   }
 
   public teleport(x: number, z: number) {
-    this.posX = x;
-    this.posZ = z;
-    this.localPlayer.setPosition(this.posX, 0, this.posZ);
-    this.clickNavDestination = null;
-    if (this.clickMarker) {
-      this.scene.remove(this.clickMarker.mesh);
-      this.clickMarker = null;
+    try {
+      this.posX = x;
+      this.posZ = z;
+
+      // Query proper terrain elevation at destination
+      const groundY = this.chunkManager
+        ? this.chunkManager.getGroundHeightAt(this.posX, this.posZ)
+        : (this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0);
+
+      this.localPlayer.setPosition(this.posX, groundY, this.posZ);
+      this.clickNavDestination = null;
+      if (this.clickMarker) {
+        this.scene.remove(this.clickMarker.mesh);
+        this.clickMarker = null;
+      }
+
+      // Atomic chunk flush + reload at destination
+      if (this.chunkManager) {
+        this.chunkManager.teleport(this.posX, this.posZ, this.camera);
+      }
+
+      // Recenter camera and shadow immediately
+      this.updateCameraPosition(true);
+      this.recenterShadowCamera();
+      this.camera.updateProjectionMatrix();
+
+      this.sendNetworkPosition(0, 0);
+      console.log(`[ThreeWorld] Teleport to (${this.posX.toFixed(1)}, ${this.posZ.toFixed(1)}), groundY=${groundY.toFixed(1)}`);
+    } catch (err) {
+      console.error('[ThreeWorld] Error during teleport:', err);
     }
-    this.updateCameraPosition(true);
-    this.sendNetworkPosition(0, 0);
   }
 
   private initThree() {
@@ -161,7 +204,8 @@ export class ThreeWorld {
     const height = this.container.clientHeight || window.innerHeight;
 
     // Tactical RPG Perspective Camera (Steep overview, wider zoom)
-    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.5, 400);
+    // Near 0.3 prevents z-fighting on close geometry; far 2000 covers full world streaming range
+    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.3, 2000);
     this.updateCameraPosition(true);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -223,8 +267,9 @@ export class ThreeWorld {
     this.sunLight.shadow.mapSize.width = 2048;
     this.sunLight.shadow.mapSize.height = 2048;
     this.sunLight.shadow.camera.near = 0.5;
-    this.sunLight.shadow.camera.far = 180;
-    this.sunLight.shadow.bias = -0.0004;
+    this.sunLight.shadow.camera.far = 250;
+    this.sunLight.shadow.bias = -0.0003;
+    this.sunLight.shadow.normalBias = 0.02;
 
     const shadowDist = 45;
     this.sunLight.shadow.camera.left = -shadowDist;
@@ -1006,6 +1051,40 @@ export class ThreeWorld {
     // Keep directional sunlight centered around player for sharp shadow map resolution
     if (this.sunLight) {
       this.sunLight.target.position.set(this.posX, groundY, this.posZ);
+      this.sunLight.target.updateMatrixWorld();
+    }
+  }
+
+  /**
+   * Recenters the DirectionalLight shadow camera frustum around the current player position.
+   * Called after teleport to prevent shadow map tearing/artifacts from stale frustum bounds.
+   */
+  private recenterShadowCamera(): void {
+    try {
+      if (!this.sunLight) return;
+
+      const groundY = this.valentineCity
+        ? this.valentineCity.getGroundHeight(this.posX, this.posZ)
+        : 0;
+
+      // Recenter sun position relative to new player position
+      // Preserve the directional offset from applyTimeOfDay
+      const sunOffset = this.sunLight.position.clone().sub(this.sunLight.target.position);
+      this.sunLight.target.position.set(this.posX, groundY, this.posZ);
+      this.sunLight.position.copy(this.sunLight.target.position).add(sunOffset);
+
+      // Expand shadow frustum to cover the streaming area around new position
+      const shadowDist = 55;
+      this.sunLight.shadow.camera.left = -shadowDist;
+      this.sunLight.shadow.camera.right = shadowDist;
+      this.sunLight.shadow.camera.top = shadowDist;
+      this.sunLight.shadow.camera.bottom = -shadowDist;
+      this.sunLight.shadow.camera.updateProjectionMatrix();
+
+      this.sunLight.target.updateMatrixWorld();
+      this.sunLight.updateMatrixWorld();
+    } catch (err) {
+      console.error('[ThreeWorld] Error recentering shadow camera:', err);
     }
   }
 

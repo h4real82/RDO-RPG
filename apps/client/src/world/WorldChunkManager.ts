@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import manifestJson from './data/rdo_world_manifest.json';
 import worldDataJson from './data/worldData.json';
+import elevationSamplesJson from './data/elevationSamples.json';
 import { WoodMaterials } from './materials/WoodMaterials';
+import { TextureGenerator } from './TextureGenerator';
 
 export interface WorldObjectData {
   id: string;
@@ -64,6 +66,7 @@ export class WorldChunk {
   public readonly maxZ: number;
 
   public group: THREE.Group = new THREE.Group();
+  public groundMesh: THREE.Mesh | null = null;
   public colliders: THREE.Box3[] = [];
   public roofMeshes: THREE.Mesh[] = [];
   public railroadCurves: THREE.CatmullRomCurve3[] = [];
@@ -101,6 +104,7 @@ export class WorldChunk {
         }
       });
       this.group.clear();
+      this.groundMesh = null;
       this.colliders = [];
       this.roofMeshes = [];
       this.railroadCurves = [];
@@ -139,9 +143,196 @@ export class WorldChunkManager {
   // Master continuous railroad curves
   private masterRailroadCurves: { id: string; curve: THREE.CatmullRomCurve3; length: number }[] = [];
 
+  // Elevation Ground Truth Samples & Spatial Spatial Index (1266 benchmarks)
+  private elevationSamples: { x: number; y: number; z: number }[] = [];
+  private elevationSpatialGrid: Map<string, { x: number; y: number; z: number }[]> = new Map();
+
   constructor(scene: THREE.Scene) {
     this.scene = scene;
+    this.initElevationDataIndex();
     this.initWorldDataIndex();
+  }
+
+  /**
+   * Indexes the 1266 in-game 3D coordinate ground truth benchmarks into 1000m grid buckets.
+   */
+  private initElevationDataIndex(): void {
+    try {
+      this.elevationSamples = (elevationSamplesJson || []) as { x: number; y: number; z: number }[];
+      for (const s of this.elevationSamples) {
+        const gx = Math.floor(s.x / 1000.0);
+        const gy = Math.floor(s.y / 1000.0);
+        const k = `${gx},${gy}`;
+        if (!this.elevationSpatialGrid.has(k)) {
+          this.elevationSpatialGrid.set(k, []);
+        }
+        this.elevationSpatialGrid.get(k)!.push(s);
+      }
+      console.log(`[WorldChunkManager] Indexed ${this.elevationSamples.length} elevation benchmarks.`);
+    } catch (err) {
+      console.error('[WorldChunkManager] Error initializing elevation index:', err);
+    }
+  }
+
+  /**
+   * Deterministic inverse distance weighted (IDW) interpolation from nearest elevation benchmarks.
+   */
+  public getInterpolatedElevation(gx: number, gz: number): number {
+    const defaultElev = this.getDefaultElevationForRegion(gx, gz);
+    if (!this.elevationSamples || this.elevationSamples.length === 0) return defaultElev;
+
+    // Search 3x3 surrounding 1000m cells
+    const cellX = Math.floor(gx / 1000.0);
+    const cellY = Math.floor(gz / 1000.0); // gz is game_y in RDO coordinate system
+
+    const candidates: { x: number; y: number; z: number }[] = [];
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        const k = `${cellX + dx},${cellY + dy}`;
+        const pts = this.elevationSpatialGrid.get(k);
+        if (pts) candidates.push(...pts);
+      }
+    }
+
+    const pool = candidates.length >= 3 ? candidates : this.elevationSamples;
+
+    // Find 4 nearest samples
+    let best: { dSq: number; z: number }[] = [];
+    for (let i = 0; i < pool.length; i++) {
+      const p = pool[i];
+      const dSq = (p.x - gx) * (p.x - gx) + (p.y - gz) * (p.y - gz);
+      if (best.length < 4) {
+        best.push({ dSq, z: p.z });
+        best.sort((a, b) => a.dSq - b.dSq);
+      } else if (dSq < best[3].dSq) {
+        best[3] = { dSq, z: p.z };
+        best.sort((a, b) => a.dSq - b.dSq);
+      }
+    }
+
+    if (best.length === 0) return defaultElev;
+    if (best[0].dSq < 1.0) return best[0].z;
+
+    // Inverse distance weighting
+    let weightSum = 0;
+    let weightedZ = 0;
+    for (const b of best) {
+      const w = 1.0 / Math.max(b.dSq, 1.0);
+      weightSum += w;
+      weightedZ += b.z * w;
+    }
+
+    return weightSum > 0 ? weightedZ / weightSum : defaultElev;
+  }
+
+  /**
+   * Regional fallback elevation based on RDO geography
+   */
+  private getDefaultElevationForRegion(gx: number, gz: number): number {
+    if (gx < -2000.0 && gz < -1000.0) return 25.0; // New Austin
+    if (gz > 1600.0) return 220.0; // Ambarino / Grizzlies
+    if (gx > 1800.0 && gz < -800.0) return 12.0; // Bayou / Saint Denis
+    if (Math.hypot(gx - (-300), gz - 750) < 600) return 118.0; // Valentine
+    return 65.0; // General Heartlands
+  }
+
+  /**
+   * Resolves chunk biome material based on geographic region:
+   * - New Austin (X < -2000, Z < -1000): Red Sandstone / Desert Soil
+   * - Ambarino (Z > 1600): Snow / Frosted Alpine Earth
+   * - Bayou Nwa / Saint Denis (X > 1600, Z < -600): Wet Marsh Soil / Grass
+   * - Heartlands / Cumberland (General): Lush Frontier Prairie Grass & Mud
+   */
+  private getChunkBiomeMaterial(minX: number, minZ: number): THREE.Material {
+    const midX = minX + WorldChunkManager.CHUNK_SIZE * 0.5;
+    const midZ = minZ + WorldChunkManager.CHUNK_SIZE * 0.5;
+
+    if (midX < -2000.0 && midZ < -1000.0) {
+      // New Austin Desert & Red Rock
+      return WorldChunkManager.getMaterial('biome_new_austin', () => {
+        return new THREE.MeshStandardMaterial({
+          color: 0x9e5232, // Reddish sandstone & desert grit
+          roughness: 0.94,
+          metalness: 0.02
+        });
+      });
+    }
+
+    if (midZ > 1700.0) {
+      // Ambarino Snow & Glaciers
+      return WorldChunkManager.getMaterial('biome_ambarino_snow', () => {
+        return new THREE.MeshStandardMaterial({
+          color: 0xdedcd6, // Frosted white/pale grey snow cover
+          roughness: 0.78,
+          metalness: 0.04
+        });
+      });
+    }
+
+    if (midX > 1800.0 && midZ < -800.0) {
+      // Bayou Nwa & Saint Denis Swamps
+      return WorldChunkManager.getMaterial('biome_bayou_marsh', () => {
+        return new THREE.MeshStandardMaterial({
+          color: 0x3b3a2a, // Dark wet marsh mud with swamp vegetation
+          roughness: 0.88,
+          metalness: 0.08
+        });
+      });
+    }
+
+    // Default Heartlands & Big Valley
+    return WorldChunkManager.getMaterial('biome_heartlands_grass', () => {
+      return new THREE.MeshStandardMaterial({
+        color: 0x5a573d, // Mountain prairie grass & weathered soil
+        roughness: 0.91,
+        metalness: 0.02
+      });
+    });
+  }
+
+  /**
+   * CONTINUOUS TERRAIN MANDATE:
+   * Constructs an unbroken, solid ground PlaneGeometry [500, 500, 16, 16] for the chunk.
+   * Interpolates elevation at each vertex from the 1266 ground truth elevation samples.
+   * Ensures players never look into a void or step off a cliff edge into nothingness.
+   */
+  private buildChunkGroundMesh(chunk: WorldChunk): void {
+    const size = WorldChunkManager.CHUNK_SIZE;
+    const segments = 16;
+    const geo = new THREE.PlaneGeometry(size, size, segments, segments);
+    geo.rotateX(-Math.PI / 2);
+
+    const posAttr = geo.attributes.position;
+    for (let i = 0; i < posAttr.count; i++) {
+      const localX = posAttr.getX(i);
+      const localZ = posAttr.getZ(i);
+
+      // World coordinates for vertex
+      const worldX = chunk.minX + size * 0.5 + localX;
+      const worldZ = chunk.minZ + size * 0.5 + localZ;
+
+      // In Valentine town center [-450 to 50, 600 to 1000], keep ground flush with local town mesh
+      let vertexY: number;
+      if (worldX >= -280 && worldX <= 140 && worldZ >= -50 && worldZ <= 300) {
+        // Overlap area with detailed Valentine city model: smoothly fade to 0.0
+        vertexY = 0.0;
+      } else {
+        vertexY = this.getInterpolatedElevation(worldX, worldZ);
+      }
+
+      posAttr.setY(i, vertexY);
+    }
+
+    geo.computeVertexNormals();
+
+    const mat = this.getChunkBiomeMaterial(chunk.minX, chunk.minZ);
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(chunk.minX + size * 0.5, 0, chunk.minZ + size * 0.5);
+    mesh.receiveShadow = true;
+    mesh.name = `GroundMesh_${chunk.key}`;
+
+    chunk.groundMesh = mesh;
+    chunk.group.add(mesh);
   }
 
   /**
@@ -310,6 +501,9 @@ export class WorldChunkManager {
     chunk.isLoaded = true;
 
     try {
+      // 0. CONTINUOUS TERRAIN MANDATE: Solid ground mesh for EVERY chunk
+      this.buildChunkGroundMesh(chunk);
+
       // 1. Schienenstränge (Railroad Splines) - Top priority in space
       this.buildChunkRailroads(chunk);
 
@@ -1183,5 +1377,116 @@ export class WorldChunkManager {
       count += chunk.railroadCurves.length;
     }
     return count;
+  }
+
+  /**
+   * Fast Travel support: completely clears and disposes all active chunks
+   * so the next update() rebuilds the target destination instantly.
+   */
+  public unloadAllChunks(): void {
+    try {
+      for (const [key, chunk] of this.activeChunks.entries()) {
+        this.scene.remove(chunk.group);
+        chunk.dispose();
+      }
+      this.activeChunks.clear();
+      console.log('[WorldChunkManager] Unloaded all chunks for fast travel transition.');
+    } catch (err) {
+      console.error('[WorldChunkManager] Error unloading all chunks:', err);
+    }
+  }
+
+  /**
+   * Fast Travel Teleport: atomically flushes all active chunks, then immediately
+   * loads chunks around the new target position. Prevents the void-frame bug where
+   * the next passive update() can't resolve chunks because camera/frustum is stale.
+   */
+  public teleport(targetX: number, targetZ: number, camera?: THREE.Camera): void {
+    try {
+      console.log(`[WorldChunkManager] Teleport to (${targetX.toFixed(1)}, ${targetZ.toFixed(1)})`);
+
+      // 1. Hard-flush all existing chunks
+      this.unloadAllChunks();
+
+      // 2. Force-load all chunks around the destination immediately
+      this.forceUpdate(targetX, targetZ, camera);
+
+      // 3. Force scene matrix recalculation to prevent stale transforms
+      this.scene.traverse((obj) => {
+        obj.updateMatrixWorld(true);
+      });
+
+      console.log(`[WorldChunkManager] Teleport complete: ${this.activeChunks.size} chunks loaded.`);
+    } catch (err) {
+      console.error('[WorldChunkManager] Error during teleport:', err);
+    }
+  }
+
+  /**
+   * Force-loads chunks around a specific world position without relying on
+   * the passive per-frame update(). Used after fast-travel to guarantee
+   * immediate terrain/object availability.
+   */
+  public forceUpdate(worldX: number, worldZ: number, camera?: THREE.Camera): void {
+    try {
+      const targetChunkKeys = new Set<string>();
+      const minCX = Math.floor((worldX - WorldChunkManager.ACTIVE_RADIUS) / WorldChunkManager.CHUNK_SIZE);
+      const maxCX = Math.floor((worldX + WorldChunkManager.ACTIVE_RADIUS) / WorldChunkManager.CHUNK_SIZE);
+      const minCZ = Math.floor((worldZ - WorldChunkManager.ACTIVE_RADIUS) / WorldChunkManager.CHUNK_SIZE);
+      const maxCZ = Math.floor((worldZ + WorldChunkManager.ACTIVE_RADIUS) / WorldChunkManager.CHUNK_SIZE);
+
+      for (let cx = minCX; cx <= maxCX; cx++) {
+        for (let cz = minCZ; cz <= maxCZ; cz++) {
+          const closestX = Math.max(
+            cx * WorldChunkManager.CHUNK_SIZE,
+            Math.min((cx + 1) * WorldChunkManager.CHUNK_SIZE, worldX)
+          );
+          const closestZ = Math.max(
+            cz * WorldChunkManager.CHUNK_SIZE,
+            Math.min((cz + 1) * WorldChunkManager.CHUNK_SIZE, worldZ)
+          );
+          const dist = Math.hypot(closestX - worldX, closestZ - worldZ);
+
+          if (dist <= WorldChunkManager.ACTIVE_RADIUS) {
+            targetChunkKeys.add(`${cx},${cz}`);
+          }
+        }
+      }
+
+      // Unload out-of-range chunks
+      for (const [key, chunk] of this.activeChunks.entries()) {
+        if (!targetChunkKeys.has(key)) {
+          this.scene.remove(chunk.group);
+          chunk.dispose();
+          this.activeChunks.delete(key);
+        }
+      }
+
+      // Load new chunks
+      for (const key of targetChunkKeys) {
+        if (!this.activeChunks.has(key)) {
+          const [cxStr, czStr] = key.split(',');
+          const cx = parseInt(cxStr, 10);
+          const cz = parseInt(czStr, 10);
+          const chunk = this.instantiateChunk(cx, cz);
+          this.activeChunks.set(key, chunk);
+          this.scene.add(chunk.group);
+        }
+      }
+
+      // Run occlusion fade if camera available
+      if (camera) {
+        this.updateCameraOcclusionFade(camera, new THREE.Vector3(worldX, 0, worldZ));
+      }
+    } catch (err) {
+      console.error('[WorldChunkManager] Error during forceUpdate:', err);
+    }
+  }
+
+  /**
+   * Retrieves ground elevation at any world coordinate [gx, gz]
+   */
+  public getGroundHeightAt(gx: number, gz: number): number {
+    return this.getInterpolatedElevation(gx, gz);
   }
 }

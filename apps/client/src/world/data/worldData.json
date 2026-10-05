@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "crs": "in_game_meters",
-  "total_objects": 337,
+  "total_objects": 420,
   "objects": [
     {
       "id": "corral_pigs_001",
@@ -8181,6 +8181,1832 @@
       "zone": "shop_bay",
       "sources": [
         "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_barber_-816_-1365",
+      "name": "Blk Barber",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -815.84,
+        44.97,
+        -1365.02
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_barber_2656_-1180",
+      "name": "Sdn Barber",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2656.4,
+        54.27,
+        -1180.01
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_barber_-308_812",
+      "name": "Val Barber",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -308.18,
+        120.65,
+        812.2
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_butcher_-753_-1285",
+      "name": "Blk Butcher",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -753.09,
+        44.88,
+        -1284.72
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_butcher_1298_-1278",
+      "name": "Rho Butcher",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1297.67,
+        80.42,
+        -1277.63
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_butcher_2820_-1331",
+      "name": "Sdn Butcher",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2819.51,
+        47.19,
+        -1331.34
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_str_butcher_-1752_-393",
+      "name": "Str Butcher",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1751.93,
+        162.52,
+        -393.46
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_butcher_-5509_-2946",
+      "name": "Tbl Butcher",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5508.96,
+        1.8,
+        -2946.32
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_butcher_-340_766",
+      "name": "Val Butcher",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -339.66,
+        119.68,
+        766.32
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_doctor_2721_-1232",
+      "name": "Sdn Doctor",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2721.17,
+        51.98,
+        -1231.66
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_doctor_-288_804",
+      "name": "Val Doctor",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -287.9,
+        121.69,
+        804.15
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_emr_fence_1417_274",
+      "name": "Emr Fence",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1417.34,
+        97.68,
+        273.64
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_fence_1319_-1142",
+      "name": "Rho Fence",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1319.43,
+        81.92,
+        -1142.08
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_fence_2860_-1202",
+      "name": "Sdn Fence",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2859.5,
+        46.8,
+        -1202.12
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_van_fence_3026_562",
+      "name": "Van Fence",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        3025.72,
+        44.96,
+        562.38
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_thl_fence_-1402_-2317",
+      "name": "Thl Fence",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1401.69,
+        44.31,
+        -2317.16
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_amd_general_store_-3687_-2623",
+      "name": "Amd General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3687.3,
+        -12.24,
+        -2623.39
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_general_store_-784_-1322",
+      "name": "Blk General Store",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -784.48,
+        48.41,
+        -1322.26
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_general_store_1330_-1294",
+      "name": "Rho General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1329.61,
+        80.03,
+        -1294.37
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_general_store_2825_-1319",
+      "name": "Sdn General Store",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2824.74,
+        47.62,
+        -1319.45
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_str_general_store_-1790_-388",
+      "name": "Str General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1790.02,
+        160.53,
+        -388.29
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_general_store_-5486_-2938",
+      "name": "Tbl General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5485.91,
+        0.68,
+        -2938.13
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_general_store_-324_804",
+      "name": "Val General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -324.0,
+        120.36,
+        803.72
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_wal_general_store_-1302_393",
+      "name": "Wal General Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1301.81,
+        94.48,
+        393.48
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_asb_gunsmith_2948_1319",
+      "name": "Asb Gunsmith",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2948.23,
+        43.95,
+        1319.47
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_gunsmith_1322_-1323",
+      "name": "Rho Gunsmith",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1322.25,
+        79.6,
+        -1322.96
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_gunsmith_2717_-1287",
+      "name": "Sdn Gunsmith",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2716.68,
+        49.85,
+        -1287.07
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_gunsmith_-5507_-2964",
+      "name": "Tbl Gunsmith",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5506.57,
+        1.78,
+        -2963.89
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_gunsmith_-282_779",
+      "name": "Val Gunsmith",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -281.8,
+        119.75,
+        779.06
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_amd_honor_mp_-3639_-2779",
+      "name": "Amd Honor Mp",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3638.65,
+        -12.8,
+        -2778.65
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_boj_honor_mp_-1249_-607",
+      "name": "Boj Honor Mp",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1249.16,
+        97.94,
+        -607.22
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_roj_honor_mp_2626_1329",
+      "name": "Roj Honor Mp",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2625.55,
+        91.97,
+        1328.57
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_photo_studio_-813_-1372",
+      "name": "Blk Photo Studio",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -813.46,
+        43.7,
+        -1371.77
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_photo_studio_2733_-1121",
+      "name": "Sdn Photo Studio",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2732.67,
+        48.96,
+        -1120.57
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_amd_post_office_-3733_-2598",
+      "name": "Amd Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3732.6,
+        -12.19,
+        -2598.1
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_asb_post_office_2939_1287",
+      "name": "Asb Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2939.09,
+        43.57,
+        1287.06
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_ben_post_office_-5227_-3469",
+      "name": "Ben Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5227.36,
+        -13.88,
+        -3469.14
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_post_office_-875_-1327",
+      "name": "Blk Post Office",
+      "type": "station",
+      "primary_material": "brick",
+      "position": [
+        -875.05,
+        47.27,
+        -1327.27
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_emr_post_office_1522_441",
+      "name": "Emr Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        1521.91,
+        90.13,
+        441.15
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rgg_post_office_-1093_-576",
+      "name": "Rgg Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1092.87,
+        84.63,
+        -575.69
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_post_office_1227_-1295",
+      "name": "Rho Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        1226.68,
+        75.95,
+        -1295.07
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_post_office_2749_-1398",
+      "name": "Sdn Post Office",
+      "type": "station",
+      "primary_material": "brick",
+      "position": [
+        2748.79,
+        46.9,
+        -1398.22
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_str_post_office_-1764_-385",
+      "name": "Str Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1763.92,
+        164.22,
+        -385.12
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_post_office_-178_628",
+      "name": "Val Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -178.0,
+        113.52,
+        628.11
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_van_post_office_2986_570",
+      "name": "Van Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2986.24,
+        45.15,
+        570.12
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_wal_post_office_-1300_401",
+      "name": "Wal Post Office",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1299.81,
+        93.97,
+        400.86
+      ],
+      "bounds": [
+        18.0,
+        26.0,
+        8.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_amd_bartender_-3699_-2596",
+      "name": "Amd Bartender",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3699.01,
+        -10.69,
+        -2595.52
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_bartender_-818_-1320",
+      "name": "Blk Bartender",
+      "type": "saloon",
+      "primary_material": "brick",
+      "position": [
+        -817.81,
+        48.31,
+        -1320.2
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_bartender_1339_-1375",
+      "name": "Rho Bartender",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        1339.22,
+        81.5,
+        -1375.3
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_bartender_2640_-1223",
+      "name": "Sdn Bartender",
+      "type": "saloon",
+      "primary_material": "brick",
+      "position": [
+        2639.92,
+        59.44,
+        -1222.94
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_bartender_slum_2793_-1167",
+      "name": "Sdn Bartender Slum",
+      "type": "saloon",
+      "primary_material": "brick",
+      "position": [
+        2793.23,
+        47.93,
+        -1166.77
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_bartender_-5519_-2906",
+      "name": "Tbl Bartender",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5518.91,
+        -0.07,
+        -2906.42
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_bartender_-314_808",
+      "name": "Val Bartender",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -313.89,
+        120.57,
+        807.68
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_bartender_keane_-238_769",
+      "name": "Val Bartender Keane",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -238.49,
+        117.66,
+        769.08
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_van_bartender_2948_529",
+      "name": "Van Bartender",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        2947.67,
+        48.32,
+        529.06
+      ],
+      "bounds": [
+        20.0,
+        28.0,
+        9.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_horse_shop_-868_-1366",
+      "name": "Blk Horse Shop",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -868.34,
+        45.81,
+        -1366.2
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_horse_shop_2508_-1450",
+      "name": "Sdn Horse Shop",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2508.27,
+        46.44,
+        -1449.65
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_str_horse_shop_-1817_-564",
+      "name": "Str Horse Shop",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1817.05,
+        155.1,
+        -564.06
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_horse_shop_-5522_-3044",
+      "name": "Tbl Horse Shop",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5521.67,
+        -2.9,
+        -3043.99
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_horse_shop_-370_788",
+      "name": "Val Horse Shop",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -369.53,
+        119.61,
+        787.91
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_van_horse_shop_2964_796",
+      "name": "Van Horse Shop",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2964.15,
+        58.5,
+        795.98
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_scm_horse_shop_1209_-193",
+      "name": "Scm Horse Shop",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1209.05,
+        97.97,
+        -193.18
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_lag_bait_store_2164_-619",
+      "name": "Lag Bait Store",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2163.55,
+        41.86,
+        -618.94
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_blk_tailor_-762_-1293",
+      "name": "Blk Tailor",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        -762.13,
+        45.5,
+        -1293.49
+      ],
+      "bounds": [
+        20.0,
+        26.0,
+        10.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "blackwater",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_tailor_2555_-1167",
+      "name": "Sdn Tailor",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2555.22,
+        52.0,
+        -1167.04
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_trapper_2829_-1223",
+      "name": "Sdn Trapper",
+      "type": "building",
+      "primary_material": "brick",
+      "position": [
+        2829.47,
+        46.76,
+        -1223.24
+      ],
+      "bounds": [
+        22.0,
+        30.0,
+        11.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "saint_denis",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_trapper_1_-2840_137",
+      "name": "Bgv Trapper 1",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2840.46,
+        184.15,
+        137.04
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_trapper_2_-1007_-544",
+      "name": "Bgv Trapper 2",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1007.35,
+        82.11,
+        -544.42
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_roa_trapper_2075_1004",
+      "name": "Roa Trapper",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2074.66,
+        121.36,
+        1004.11
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tal_trapper_-2255_-1911",
+      "name": "Tal Trapper",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2255.19,
+        115.51,
+        -1911.09
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_cho_trapper_-4728_-2941",
+      "name": "Cho Trapper",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -4728.45,
+        -18.02,
+        -2940.5
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_hen_harriet_-2186_-2132",
+      "name": "Hen Harriet",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2185.63,
+        58.87,
+        -2132.35
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_harriet_-1574_486",
+      "name": "Bgv Harriet",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1574.34,
+        105.97,
+        485.71
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bay_harriet_1967_-528",
+      "name": "Bay Harriet",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1966.68,
+        40.77,
+        -527.6
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bay_wardrobe_saint_denis_2554_-1161",
+      "name": "Bay Wardrobe Saint Denis",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2554.38,
+        52.16,
+        -1161.23
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_wardrobe_strawberry_-1793_-392",
+      "name": "Bgv Wardrobe Strawberry",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1792.82,
+        159.61,
+        -391.57
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_wardrobe_wallace_station_-1299_397",
+      "name": "Bgv Wardrobe Wallace Station",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1299.01,
+        94.1,
+        397.28
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_cho_wardrobe_armadillo_-3689_-2632",
+      "name": "Cho Wardrobe Armadillo",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3689.15,
+        -12.92,
+        -2631.62
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_gap_wardrobe_tumbleweed_-5483_-2936",
+      "name": "Gap Wardrobe Tumbleweed",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5483.2,
+        1.87,
+        -2935.79
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_grt_wardrobe_blackwater_-767_-1293",
+      "name": "Grt Wardrobe Blackwater",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -766.77,
+        45.56,
+        -1293.49
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_hrt_wardrobe_valentine_-326_807",
+      "name": "Hrt Wardrobe Valentine",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -325.98,
+        120.37,
+        807.18
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "valentine",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_roa_wardrobe_vanhornpost_3025_561",
+      "name": "Roa Wardrobe Vanhornpost",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        3024.73,
+        44.97,
+        561.49
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "general_frontier",
+      "sources": [
+        "data/raw/rdomap/shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_scm_wardrobe_rhodes_1323_-1292",
+      "name": "Scm Wardrobe Rhodes",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1323.44,
+        80.18,
+        -1291.66
+      ],
+      "bounds": [
+        16.0,
+        22.0,
+        8.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "rhodes",
+      "sources": [
+        "data/raw/rdomap/shops.json"
       ]
     },
     {
