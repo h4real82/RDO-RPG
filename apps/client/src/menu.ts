@@ -10,6 +10,36 @@ export interface InventoryItem {
   actionText: string;
 }
 
+export interface BountyPoster {
+  id: string;
+  name: string;
+  reward: number;
+  icon: string;
+  desc: string;
+  condition: 'dead_or_alive' | 'alive_only' | 'hunt';
+  posterUrl?: string; // external or mock image URL / SVG placeholder
+}
+
+/**
+ * Generates a lightweight, embedded SVG data-URI placeholder for bounty posters
+ * avoiding binary asset repository bloating.
+ */
+export function generatePosterPlaceholder(name: string, reward: number): string {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="260" viewBox="0 0 200 260">
+    <rect width="100%" height="100%" fill="#e8d8b8" stroke="#5a3d28" stroke-width="6"/>
+    <rect x="8" y="8" width="184" height="244" fill="none" stroke="#8b5a2b" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <text x="100" y="32" font-family="serif" font-size="20" font-weight="900" fill="#2d1e12" text-anchor="middle">WANTED</text>
+    <line x1="30" y1="38" x2="170" y2="38" stroke="#2d1e12" stroke-width="2"/>
+    <rect x="35" y="48" width="130" height="110" fill="#c4b08e" stroke="#2d1e12" stroke-width="2"/>
+    <circle cx="100" cy="90" r="28" fill="#5a3d28"/>
+    <ellipse cx="100" cy="140" rx="42" ry="22" fill="#5a3d28"/>
+    <text x="100" y="180" font-family="serif" font-size="13" font-weight="bold" fill="#1c120a" text-anchor="middle">${name.toUpperCase()}</text>
+    <text x="100" y="210" font-family="serif" font-size="16" font-weight="900" fill="#8b0000" text-anchor="middle">REWARD $${reward.toFixed(0)}</text>
+    <text x="100" y="235" font-family="serif" font-size="9" font-weight="bold" fill="#4a3520" text-anchor="middle">DEAD OR ALIVE</text>
+  </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 export const sampleInventory: InventoryItem[] = [
   {
     id: 'cattleman',
@@ -163,20 +193,41 @@ class RpgMenuManager {
       });
     });
 
-    // Keyboard listener for TAB, ESC, and E
+    // Click on backdrop to close modals
+    this.poiModal?.addEventListener('click', (e) => {
+      if (e.target === this.poiModal) this.closePOIModal();
+    });
+    this.logbookModal?.addEventListener('click', (e) => {
+      if (e.target === this.logbookModal) this.closeLogbook();
+    });
+
+    // Keyboard listener for TAB, ESC, and E (E toggles POI modal open/close)
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        this.toggleLogbook();
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        if (this.isPoiModalOpen) this.closePOIModal();
-        else if (this.isLogbookOpen) this.closeLogbook();
-      } else if (e.key === 'e' || e.key === 'E') {
-        if (!this.isAnyModalOpen() && this.activePOI) {
+      try {
+        if (e.key === 'Tab') {
           e.preventDefault();
-          this.openPOIModal(this.activePOI);
+          this.toggleLogbook();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          if (this.isPoiModalOpen) this.closePOIModal();
+          else if (this.isLogbookOpen) this.closeLogbook();
+        } else if (e.key === 'e' || e.key === 'E') {
+          e.preventDefault();
+          if (this.isPoiModalOpen) {
+            this.closePOIModal();
+          } else if (!this.isAnyModalOpen() && this.activePOI) {
+            const targetPoi = this.activePOI;
+            setTimeout(() => {
+              try {
+                this.openPOIModal(targetPoi);
+              } catch (openErr) {
+                console.error('[RpgMenuManager] Error opening POI modal asynchronously:', openErr);
+              }
+            }, 0);
+          }
         }
+      } catch (err) {
+        console.error('[RpgMenuManager] Error in keydown handler:', err);
       }
     });
 
@@ -192,51 +243,119 @@ class RpgMenuManager {
     this.activePOI = poi;
     if (!this.poiPromptBanner || !this.poiPromptText) return;
 
-    if (poi && !this.isAnyModalOpen()) {
-      this.poiPromptText.textContent = `${poi.name}: [E] ${poi.promptText}`;
-      this.poiPromptBanner.classList.add('active');
-    } else {
-      this.poiPromptBanner.classList.remove('active');
+    try {
+      if (poi && !this.isAnyModalOpen()) {
+        this.poiPromptText.textContent = `[E] Interagieren mit ${poi.name}`;
+        this.poiPromptBanner.classList.add('active');
+        this.poiPromptBanner.style.display = 'flex';
+      } else {
+        this.poiPromptBanner.classList.remove('active');
+        this.poiPromptBanner.style.display = 'none';
+      }
+    } catch (err) {
+      console.error('[RpgMenuManager] Error updating POI prompt banner:', err);
     }
   }
 
   public openPOIModal(poi: POIDefinition) {
-    if (!this.poiModal) return;
-    this.isPoiModalOpen = true;
-    this.poiModal.classList.add('active');
-    this.showPOIPrompt(null);
+    try {
+      if (!this.poiModal) {
+        console.warn('[RpgMenuManager] poiModal DOM element not found.');
+        return;
+      }
+      this.activePOI = poi;
+      this.isPoiModalOpen = true;
+      this.poiModal.classList.add('active');
+      this.poiModal.style.display = 'flex';
+      this.poiModal.style.zIndex = '9999';
+      if (this.poiPromptBanner) {
+        this.poiPromptBanner.classList.remove('active');
+        this.poiPromptBanner.style.display = 'none';
+      }
 
-    const titleEl = document.getElementById('poi-modal-title');
-    const contentEl = document.getElementById('poi-modal-content');
-    if (titleEl) titleEl.textContent = `★ ${poi.name.toUpperCase()}`;
-    if (!contentEl) return;
+      // Asynchrone, unblockierte Entkopplung für Audio-Playback
+      setTimeout(() => {
+        try {
+          if (typeof (window as any).__playPOISound === 'function') {
+            (window as any).__playPOISound(poi);
+          }
+        } catch (audioErr) {
+          console.warn('[RpgMenuManager] Defensive catch on async POI audio playback:', audioErr);
+        }
+      }, 0);
 
-    contentEl.innerHTML = '';
+      const titleEl = document.getElementById('poi-modal-title');
+      const contentEl = document.getElementById('poi-modal-content');
+      if (titleEl) titleEl.textContent = `★ ${(poi.name || 'UNBEKANNTER ORT').toUpperCase()}`;
+      if (!contentEl) return;
 
-    // Render content according to category
-    switch (poi.category) {
-      case 'saloon':
-        this.renderSaloonMenu(contentEl);
-        break;
-      case 'sheriff':
-        this.renderSheriffBoard(contentEl);
-        break;
-      case 'store':
-        this.renderGeneralStore(contentEl);
-        break;
-      case 'stable':
-        this.renderStableMenu(contentEl);
-        break;
-      case 'travel':
-        this.renderTravelMenu(contentEl, poi);
-        break;
+      contentEl.innerHTML = '';
+
+      // Render content according to category with safe fallback
+      switch (poi.category) {
+        case 'saloon':
+          this.renderSaloonMenu(contentEl);
+          break;
+        case 'sheriff':
+          this.renderSheriffBoard(contentEl);
+          break;
+        case 'store':
+          this.renderGeneralStore(contentEl);
+          break;
+        case 'doctor':
+          this.renderDoctorClinic(contentEl);
+          break;
+        case 'stable':
+          this.renderStableMenu(contentEl);
+          break;
+        case 'church':
+          this.renderChurchMenu(contentEl);
+          break;
+        case 'station':
+          this.renderStationMenu(contentEl);
+          break;
+        case 'travel':
+          this.renderTravelMenu(contentEl, poi);
+          break;
+        default:
+          this.renderGenericMenu(contentEl, poi);
+          break;
+      }
+    } catch (err) {
+      console.error('[RpgMenuManager] Error opening POI modal:', err);
+      // Ensure we don't remain stuck in an unclickable or frozen state
+      this.closePOIModal();
     }
+  }
+
+  private renderGenericMenu(container: HTMLElement, poi: POIDefinition) {
+    const box = document.createElement('div');
+    box.style.display = 'flex';
+    box.style.flexDirection = 'column';
+    box.style.alignItems = 'center';
+    box.style.justifyContent = 'center';
+    box.style.padding = '24px';
+    box.style.textAlign = 'center';
+
+    box.innerHTML = `
+      <div style="font-size: 48px; margin-bottom: 12px;">${poi.icon || '📍'}</div>
+      <div style="font-family:'Cinzel',serif; font-size:20px; font-weight:700; color:#ebdcb9;">${poi.name}</div>
+      <div style="font-size:14px; color:#c5b8a5; max-width:440px; margin-top:10px; line-height:1.5;">${poi.description || 'Ein interessanter Ort in Valentine.'}</div>
+      <button id="close-generic-poi-btn" class="item-action-btn" style="margin-top:20px; padding:10px 24px;">Schließen</button>
+    `;
+
+    box.querySelector('#close-generic-poi-btn')?.addEventListener('click', () => {
+      this.closePOIModal();
+    });
+
+    container.appendChild(box);
   }
 
   public closePOIModal() {
     if (!this.poiModal) return;
     this.isPoiModalOpen = false;
     this.poiModal.classList.remove('active');
+    this.poiModal.style.display = 'none';
     if (this.activePOI) this.showPOIPrompt(this.activePOI);
   }
 
@@ -271,7 +390,7 @@ class RpgMenuManager {
           this.updateCashDisplay();
           this.notifyAction(`${d.name} getrunken! Ausdauer & Gesundheit regeneriert.`);
         } else {
-          alert('Nicht genug Bargeld in der Tasche!');
+          this.notifyAction('Nicht genug Bargeld in der Tasche!');
         }
       });
 
@@ -282,27 +401,54 @@ class RpgMenuManager {
   }
 
   private renderSheriffBoard(container: HTMLElement) {
-    const bounties = [
-      { name: 'Blackwater Bill', reward: 35.00, icon: '⭐', desc: 'Gesucht wegen Postkutschen-Raubes. Zuletzt bei den Cumberland Falls gesehen. Tot oder lebendig.' },
-      { name: 'Kojotenplage (Farmer-Schutz)', reward: 30.00, icon: '🐺', desc: 'Beseitige 5 Kojoten auf den Weiden östlich von Valentine. Belohnung wird sofort bar ausgezahlt.' },
-      { name: 'Six-Shooter Sam', reward: 50.00, icon: '💀', desc: 'Gefährlicher Falschspieler und Desperado. Hat einen Deputy im Saloon erschossen. Nur LEBENDIG!' }
+    const bounties: BountyPoster[] = [
+      {
+        id: 'bill',
+        name: 'Blackwater Bill',
+        reward: 35.00,
+        icon: '⭐',
+        desc: 'Gesucht wegen Postkutschen-Raubes. Zuletzt bei den Cumberland Falls gesehen. Tot oder lebendig.',
+        condition: 'dead_or_alive'
+      },
+      {
+        id: 'coyotes',
+        name: 'Kojotenplage (Farmer-Schutz)',
+        reward: 30.00,
+        icon: '🐺',
+        desc: 'Beseitige 5 Kojoten auf den Weiden östlich von Valentine. Belohnung wird sofort bar ausgezahlt.',
+        condition: 'hunt'
+      },
+      {
+        id: 'sam',
+        name: 'Six-Shooter Sam',
+        reward: 50.00,
+        icon: '💀',
+        desc: 'Gefährlicher Falschspieler und Desperado. Hat einen Deputy im Saloon erschossen. Nur LEBENDIG!',
+        condition: 'alive_only'
+      }
     ];
 
     const grid = document.createElement('div');
     grid.className = 'poi-card-grid';
 
     bounties.forEach((b) => {
+      const posterSrc = b.posterUrl || generatePosterPlaceholder(b.name, b.reward);
       const card = document.createElement('div');
       card.className = 'poi-item-card';
       card.innerHTML = `
-        <div class="poi-item-header">
-          <span class="poi-item-icon">${b.icon}</span>
-          <div>
-            <div class="poi-item-title">${b.name}</div>
-            <div class="poi-item-cost" style="color:#eab308;">Kopfgeld: $ ${b.reward.toFixed(2)}</div>
+        <div style="display:flex; gap:12px; margin-bottom:8px;">
+          <img src="${posterSrc}" alt="${b.name}" style="width:64px; height:84px; object-fit:contain; border-radius:3px; border:1px solid #5a3d28; background:#e8d8b8; flex-shrink:0;" />
+          <div style="flex:1;">
+            <div class="poi-item-header" style="margin-bottom:4px;">
+              <span class="poi-item-icon">${b.icon}</span>
+              <div>
+                <div class="poi-item-title">${b.name}</div>
+                <div class="poi-item-cost" style="color:#eab308;">Kopfgeld: $ ${b.reward.toFixed(2)}</div>
+              </div>
+            </div>
+            <div class="poi-item-desc" style="font-size:11px;">${b.desc}</div>
           </div>
         </div>
-        <div class="poi-item-desc">${b.desc}</div>
         <button class="poi-action-btn">Kopfgeld annehmen</button>
       `;
 
@@ -351,7 +497,49 @@ class RpgMenuManager {
           this.updateCashDisplay();
           this.notifyAction(`${g.name} gekauft und ins Inventar gelegt!`);
         } else {
-          alert('Nicht genug Bargeld!');
+          this.notifyAction('Nicht genug Bargeld im Beutel!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderDoctorClinic(container: HTMLElement) {
+    const remedies = [
+      { name: 'Wundbehandlung & Naht', cost: 2.50, icon: '🩺', desc: 'Chirurgische Erstversorgung durch Dr. Barnes. Stellt die Lebensenergie vollständig wieder her.' },
+      { name: 'Starke Arznei', cost: 3.50, icon: '🧪', desc: 'Wirksame Heiltinktur. Heilt Schusswunden und schützt 10 Minuten vor Infektionen.' },
+      { name: 'Original Schlangenöl', cost: 2.75, icon: '🏺', desc: 'Stellt Dead-Eye-Konzentration wieder her und schärft die Schusspräzision.' },
+      { name: 'Wundertrank (Spezialrezeptur)', cost: 5.00, icon: '✨', desc: 'Goldene Medizinflasche. Verleiht einen goldenen Überbalken für Ausdauer und Gesundheit.' }
+    ];
+
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    remedies.forEach((r) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${r.icon}</span>
+          <div>
+            <div class="poi-item-title">${r.name}</div>
+            <div class="poi-item-cost">$ ${r.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${r.desc}</div>
+        <button class="poi-action-btn">Behandeln / Kaufen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= r.cost) {
+          this.playerCash -= r.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${r.name} erhalten! Volle Vitalität wiederhergestellt.`);
+        } else {
+          this.notifyAction('Nicht genug Bargeld für die Behandlung!');
         }
       });
 
@@ -392,7 +580,89 @@ class RpgMenuManager {
           this.updateCashDisplay();
           this.notifyAction(`${s.name} aktiviert!`);
         } else {
-          alert('Nicht genug Geld im Beutel!');
+          this.notifyAction('Nicht genug Geld im Beutel!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderChurchMenu(container: HTMLElement) {
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    const churchOpts = [
+      { name: 'Andacht halten & Kerze stiften', cost: 0.50, icon: '🕯️', desc: 'Zünde eine Votivkerze in der Kirche an. Stellt alle Lebensenergie- und Dead-Eye-Kerne vollständig her.' },
+      { name: 'Priestersegen von Pfarrer Thomas', cost: 1.00, icon: '✝️', desc: 'Empfange die Absolution. Erhöht deine Ehre (Honor) und verringert deinen Bekanntheitsgrad bei Gesetzeshütern.' },
+      { name: 'Kirchturm-Glockengeläut spenden', cost: 2.00, icon: '🔔', desc: 'Die Bronzeglocken im Turm läuten feierlich über ganz Valentine und hallen durch das Tal.' }
+    ];
+
+    churchOpts.forEach((c) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${c.icon}</span>
+          <div>
+            <div class="poi-item-title">${c.name}</div>
+            <div class="poi-item-cost">$ ${c.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${c.desc}</div>
+        <button class="poi-action-btn">Empfangen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= c.cost) {
+          this.playerCash -= c.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${c.name} gewährt! Wohlwollen und Segen erhalten.`);
+        } else {
+          this.notifyAction('Nicht genug Geld im Beutel!');
+        }
+      });
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  }
+
+  private renderStationMenu(container: HTMLElement) {
+    const grid = document.createElement('div');
+    grid.className = 'poi-card-grid';
+
+    const stationOpts = [
+      { name: 'Zugfahrkarte nach Saint Denis', cost: 5.00, icon: '🚂', desc: 'Schnellzug-Fahrkarte in die Metropole Saint Denis in Lemoyne mit Speisewagen.' },
+      { name: 'Zugfahrkarte nach Rhodes & Flatneck', cost: 3.50, icon: '🎫', desc: 'Fahrt über die großen Viehweiden und den Flatiron Lake nach Scarlett Meadows.' },
+      { name: 'Telegrafenamt: Telegramm versenden', cost: 1.00, icon: '✉️', desc: 'Sende ein dringendes Telegrafen-Kabel an die Pinkerton National Detective Agency.' }
+    ];
+
+    stationOpts.forEach((s) => {
+      const card = document.createElement('div');
+      card.className = 'poi-item-card';
+      card.innerHTML = `
+        <div class="poi-item-header">
+          <span class="poi-item-icon">${s.icon}</span>
+          <div>
+            <div class="poi-item-title">${s.name}</div>
+            <div class="poi-item-cost">$ ${s.cost.toFixed(2)}</div>
+          </div>
+        </div>
+        <div class="poi-item-desc">${s.desc}</div>
+        <button class="poi-action-btn">Fahrkarte lösen</button>
+      `;
+
+      card.querySelector('button')?.addEventListener('click', () => {
+        if (this.playerCash >= s.cost) {
+          this.playerCash -= s.cost;
+          this.updateCashDisplay();
+          this.notifyAction(`${s.name} gebucht! Schaffner pfeift zur Abfahrt.`);
+        } else {
+          this.notifyAction('Nicht genug Geld für die Fahrkarte!');
         }
       });
 

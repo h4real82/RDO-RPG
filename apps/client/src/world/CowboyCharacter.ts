@@ -301,10 +301,10 @@ export class CowboyCharacter {
   }
 
   public setHeading(headingRad: number, delta: number = 0.016) {
+    if (!Number.isFinite(headingRad)) return;
     // Three.js Y rotation: 0 = facing +Z (South), Math.PI/2 = facing +X (East), etc.
     let diff = headingRad - this.currentHeading;
-    while (diff < -Math.PI) diff += Math.PI * 2;
-    while (diff > Math.PI) diff -= Math.PI * 2;
+    diff = ((((diff + Math.PI) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) - Math.PI;
 
     this.currentHeading += diff * Math.min(1.0, 16.0 * delta);
     this.root.rotation.y = this.currentHeading;

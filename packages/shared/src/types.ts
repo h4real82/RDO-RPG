@@ -73,7 +73,7 @@ export interface MapData {
 export interface POIDefinition {
   id: string;
   name: string;
-  category: 'saloon' | 'sheriff' | 'store' | 'stable' | 'travel';
+  category: 'saloon' | 'sheriff' | 'store' | 'doctor' | 'stable' | 'travel' | 'church' | 'station';
   x: number;
   y: number;
   radius: number;

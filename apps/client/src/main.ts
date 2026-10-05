@@ -39,6 +39,7 @@ async function bootstrap() {
 
     // Initialize Red Dead RPG Logbook Menu
     rpgMenuManager.init();
+    (window as any).__rpgMenuManager = rpgMenuManager;
     const menuCharName = document.getElementById('menu-char-name');
     if (menuCharName) menuCharName.textContent = profile.username;
 

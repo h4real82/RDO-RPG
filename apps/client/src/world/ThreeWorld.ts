@@ -20,9 +20,11 @@ import {
 import { pois } from '@rdo-rpg/content';
 import { UserProfile } from '../discord';
 import { rpgMenuManager } from '../menu';
-import { ValentineBuilder } from './ValentineBuilder';
+import { ValentineCity } from './ValentineCity';
+import { WorldChunkManager } from './WorldChunkManager';
 import { CowboyCharacter } from './CowboyCharacter';
 import { TextureGenerator } from './TextureGenerator';
+import { MinimapSystem } from './MinimapSystem';
 
 interface ClickTargetMarker {
   x: number;
@@ -42,7 +44,8 @@ export class ThreeWorld {
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private cameraTarget: THREE.Vector3 = new THREE.Vector3(72, 0, 46.4);
-  private valentineBuilder!: ValentineBuilder;
+  private valentineCity!: ValentineCity;
+  public chunkManager!: WorldChunkManager;
 
   // Lighting & Atmosphere
   private sunLight!: THREE.DirectionalLight;
@@ -58,20 +61,37 @@ export class ThreeWorld {
 
   // Local Player
   private localPlayer!: CowboyCharacter;
-  private posX: number = DEFAULT_SPAWN_X * ValentineBuilder.SCALE;
-  private posZ: number = DEFAULT_SPAWN_Y * ValentineBuilder.SCALE;
-  private heading: number = Math.PI / 2;
+  private posX: number = 0;
+  private posZ: number = 0;
+  private heading: number = Math.PI;
   private isMoving: boolean = false;
   private currentGait: GaitMode = GaitMode.JOG;
   private isSprinting: boolean = false;
   private stamina: number = 100;
   private maxStamina: number = 100;
+  private noclip: boolean = false; // Solid AABB mesh collision active by default
+
+  // Camera Zoom & Orbit
+  // Default: 7.0m behind and 2.8m above player (distance ~7.535m)
+  private cameraZoomDistance: number = Math.hypot(7.0, 2.8);
+  private readonly cameraMinZoom: number = 4.0;
+  private readonly cameraMaxZoom: number = 45.0; // Expanded to 45m for full bird-eye view of all districts
+  private cameraYaw: number = 0; // Relative horizontal rotation around player
+  private cameraPitch: number = Math.atan2(2.8, 7.0); // Relative elevation angle (~21.8°)
+  private isOrbiting: boolean = false;
+  private lastMouseX: number = 0;
+  private lastMouseY: number = 0;
+
+  // Collision Debug Wireframe Visualizer ('C' key)
+  private debugCollisionVisible: boolean = false;
+  private debugCollisionGroup: THREE.Group = new THREE.Group();
 
   // Remote Players
   private remotePlayers: Map<string, CowboyCharacter> = new Map();
 
-  // Navigation
+  // Navigation & Line-of-sight
   private raycaster: THREE.Raycaster = new THREE.Raycaster();
+  private occlusionRaycaster: THREE.Raycaster = new THREE.Raycaster();
   private mousePos: THREE.Vector2 = new THREE.Vector2();
   private clickMarker: ClickTargetMarker | null = null;
   private clickNavDestination: THREE.Vector3 | null = null;
@@ -81,9 +101,8 @@ export class ThreeWorld {
   private lastNetworkTick: number = 0;
   private clock: THREE.Clock = new THREE.Clock();
 
-  // Minimap Radar
-  private minimapCanvas: HTMLCanvasElement | null = null;
-  private minimapCtx: CanvasRenderingContext2D | null = null;
+  // Minimap Squircle System
+  private minimapSystem: MinimapSystem | null = null;
 
   // POI Proximity
   private currentNearbyPOI: POIDefinition | null = null;
@@ -106,8 +125,8 @@ export class ThreeWorld {
 
     // Fast travel callback from menu
     rpgMenuManager.setOnTravel((destX, destY) => {
-      this.posX = destX * ValentineBuilder.SCALE;
-      this.posZ = destY * ValentineBuilder.SCALE;
+      this.posX = destX * ValentineCity.SCALE;
+      this.posZ = destY * ValentineCity.SCALE;
       this.localPlayer.setPosition(this.posX, 0, this.posZ);
       this.clickNavDestination = null;
       if (this.clickMarker) {
@@ -121,6 +140,19 @@ export class ThreeWorld {
     this.animate();
   }
 
+  public teleport(x: number, z: number) {
+    this.posX = x;
+    this.posZ = z;
+    this.localPlayer.setPosition(this.posX, 0, this.posZ);
+    this.clickNavDestination = null;
+    if (this.clickMarker) {
+      this.scene.remove(this.clickMarker.mesh);
+      this.clickMarker = null;
+    }
+    this.updateCameraPosition(true);
+    this.sendNetworkPosition(0, 0);
+  }
+
   private initThree() {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x0c0907);
@@ -128,8 +160,8 @@ export class ThreeWorld {
     const width = this.container.clientWidth || window.innerWidth;
     const height = this.container.clientHeight || window.innerHeight;
 
-    // Tactical RPG Perspective Camera (Phoenix Point / Wasteland 3 style)
-    this.camera = new THREE.PerspectiveCamera(38, width / height, 0.5, 350);
+    // Tactical RPG Perspective Camera (Steep overview, wider zoom)
+    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.5, 400);
     this.updateCameraPosition(true);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -140,14 +172,19 @@ export class ThreeWorld {
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.toneMappingExposure = 1.0;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // Clear any existing children in game container and append Three canvas
-    this.container.innerHTML = '';
-    this.container.appendChild(this.renderer.domElement);
+    // Prepend Three canvas behind UI elements
+    this.renderer.domElement.style.position = 'absolute';
+    this.renderer.domElement.style.top = '0';
+    this.renderer.domElement.style.left = '0';
+    this.renderer.domElement.style.width = '100%';
+    this.renderer.domElement.style.height = '100%';
+    this.renderer.domElement.style.zIndex = '0';
+    this.container.prepend(this.renderer.domElement);
 
     window.addEventListener('resize', () => {
       const w = this.container.clientWidth || window.innerWidth;
@@ -158,8 +195,17 @@ export class ThreeWorld {
     });
 
     // Build Valentine 3D World
-    this.valentineBuilder = new ValentineBuilder(this.scene);
-    this.valentineBuilder.buildValentineWorld();
+    this.valentineCity = new ValentineCity(this.scene);
+    this.valentineCity.buildValentineWorld();
+
+    // RDO Master Manifest Chunk Streaming (500m chunks, 1000m LOD radius)
+    this.chunkManager = new WorldChunkManager(this.scene);
+    this.chunkManager.update(new THREE.Vector3(this.posX, 0, this.posZ), this.camera);
+
+    // Debug Collision Group
+    this.debugCollisionGroup.name = 'DebugCollisionWireframes';
+    this.debugCollisionGroup.visible = false;
+    this.scene.add(this.debugCollisionGroup);
   }
 
   private initEnvironment() {
@@ -167,8 +213,8 @@ export class ThreeWorld {
     this.hemiLight = new THREE.HemisphereLight(0x78a7d8, 0x44301c, 0.85);
     this.scene.add(this.hemiLight);
 
-    // 2. Base Ambient Light (ensures night remains readable)
-    this.ambientLight = new THREE.AmbientLight(0x221a14, 0.35);
+    // 2. Base Ambient Light (ensures dark corners and night remain readable, at least 0.6)
+    this.ambientLight = new THREE.AmbientLight(0x403226, 0.65);
     this.scene.add(this.ambientLight);
 
     // 3. Directional Sun/Moon with Shadow Map
@@ -233,8 +279,37 @@ export class ThreeWorld {
 
   private initLocalPlayer() {
     this.localPlayer = new CowboyCharacter(this.profile.username, true);
-    this.localPlayer.setPosition(this.posX, 0, this.posZ);
-    this.scene.add(this.localPlayer.root);
+    
+    // 1. SPAWN-PUNKT ERZWINGEN:
+    // Setze die Startposition des Spielers hart auf die freie Straße:
+    const safeX = 0;
+    const safeZ = 0;
+    const getTerrainHeight = (x: number, z: number) => {
+      if (this.valentineCity && typeof this.valentineCity.getGroundHeight === 'function') {
+        return this.valentineCity.getGroundHeight(x, z);
+      }
+      return 0;
+    };
+    const safeY = (typeof getTerrainHeight === 'function' ? getTerrainHeight(safeX, safeZ) : 0) + 1.8;
+
+    this.posX = safeX;
+    this.posZ = safeZ;
+    this.localPlayer.setPosition(safeX, safeY, safeZ);
+    this.localPlayer.root.position.set(safeX, safeY, safeZ);
+    this.localPlayer.root.visible = true;
+
+    this.heading = Math.PI; // Face towards Z = -20 (Saloon)
+    this.localPlayer.setHeading(this.heading, 1.0);
+    
+    // 2. MESH-CHECK & RENDER-STATUS:
+    // Stelle sicher, dass das Mesh des Spielers wirklich mit 'scene.add(player)' in der Szene landet
+    if (!this.scene.children.includes(this.localPlayer.root)) {
+      this.scene.add(this.localPlayer.root);
+    }
+
+    // 3. KAMERA-RESET:
+    // Standardabstand: 4.5 Meter hinter und 2.0 Meter über dem Charakter:
+    this.updateCameraPosition(true);
   }
 
   private applyTimeOfDay(tod: TimeOfDay) {
@@ -290,8 +365,8 @@ export class ThreeWorld {
     if (weather === WeatherState.CLEAR) {
       this.scene.fog = null;
       this.weatherParticles.visible = false;
-      if (this.valentineBuilder.groundMesh) {
-        (this.valentineBuilder.groundMesh.material as THREE.MeshStandardMaterial).roughness = 0.85;
+      if (this.valentineCity.groundMesh) {
+        (this.valentineCity.groundMesh.material as THREE.MeshStandardMaterial).roughness = 0.85;
       }
     } else if (weather === WeatherState.DUST_STORM) {
       this.scene.fog = new THREE.FogExp2(0xa07548, 0.018);
@@ -306,8 +381,8 @@ export class ThreeWorld {
       pMat.size = 0.16;
       pMat.opacity = 0.75;
       // Make ground wet & specular
-      if (this.valentineBuilder.groundMesh) {
-        (this.valentineBuilder.groundMesh.material as THREE.MeshStandardMaterial).roughness = 0.25;
+      if (this.valentineCity.groundMesh) {
+        (this.valentineCity.groundMesh.material as THREE.MeshStandardMaterial).roughness = 0.25;
       }
     }
 
@@ -338,49 +413,173 @@ export class ThreeWorld {
   private initInputListeners() {
     // Keyboard inputs
     window.addEventListener('keydown', (e) => {
-      if (rpgMenuManager.isMenuOpen()) return;
+      try {
+        if (!e || !e.code) return;
+        if (rpgMenuManager?.isMenuOpen()) return;
 
-      this.keysPressed.add(e.code);
+        this.keysPressed.add(e.code);
 
-      // Cancel click destination when player uses keyboard
-      if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
-        this.clearClickNav();
+        // Cancel click destination when player uses keyboard
+        if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+          this.clearClickNav();
+        }
+
+        // Toggle Time of Day (L)
+        if (e.code === 'KeyL') {
+          this.cycleTimeOfDay();
+        }
+
+        // Toggle Weather (K)
+        if (e.code === 'KeyK') {
+          this.cycleWeather();
+        }
+
+        // Toggle Gait (G or CapsLock)
+        if (e.code === 'KeyG' || e.code === 'CapsLock') {
+          this.toggleGait();
+        }
+
+        // Toggle Collision Wireframe Debug Mesh ('C')
+        if (e.code === 'KeyC') {
+          this.toggleCollisionDebug();
+        }
+
+        // Toggle Minimap Zoom ('N')
+        if (e.code === 'KeyN') {
+          this.minimapSystem?.cycleZoom();
+        }
+
+        // Minimap Zoom In / Out ('+' / '-')
+        if (e.code === 'Equal' || e.code === 'NumpadAdd') {
+          this.minimapSystem?.zoomIn();
+        }
+        if (e.code === 'Minus' || e.code === 'NumpadSubtract') {
+          this.minimapSystem?.zoomOut();
+        }
+
+        // Toggle Minimap Compass Mode vs North-Up ('U')
+        if (e.code === 'KeyU') {
+          this.minimapSystem?.toggleCompassMode();
+        }
+
+        // Toggle Minimap Building Footprints ('B')
+        if (e.code === 'KeyB') {
+          this.minimapSystem?.toggleBuildings();
+        }
+
+        // Adjust Minimap Opacity ('[' and ']')
+        if (e.code === 'BracketLeft') {
+          this.minimapSystem?.adjustOpacity(-0.15);
+        }
+        if (e.code === 'BracketRight') {
+          this.minimapSystem?.adjustOpacity(0.15);
+        }
+      } catch (err) {
+        console.error('[ThreeWorld] Error in keydown listener:', err);
       }
+    });
 
-      // Toggle Time of Day (L)
-      if (e.code === 'KeyL') {
-        this.cycleTimeOfDay();
+    // Mouse-Wheel Zoom: Stufenloser Kameraabstand zwischen 4.0m und 20.0m
+    this.renderer.domElement.addEventListener('wheel', (e: WheelEvent) => {
+      try {
+        if (!e) return;
+        e.preventDefault();
+        const zoomDelta = e.deltaY * 0.008;
+        this.cameraZoomDistance = THREE.MathUtils.clamp(
+          this.cameraZoomDistance + zoomDelta,
+          this.cameraMinZoom,
+          this.cameraMaxZoom
+        );
+      } catch (err) {
+        console.error('[ThreeWorld] Error in wheel zoom handler:', err);
       }
+    }, { passive: false });
 
-      // Toggle Weather (K)
-      if (e.code === 'KeyK') {
-        this.cycleWeather();
-      }
-
-      // Toggle Gait (G or CapsLock)
-      if (e.code === 'KeyG' || e.code === 'CapsLock') {
-        this.toggleGait();
-      }
+    // Prevent default context menu for smooth right-click camera orbit
+    this.renderer.domElement.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
     });
 
     window.addEventListener('keyup', (e) => {
-      this.keysPressed.delete(e.code);
+      try {
+        if (!e || !e.code) return;
+        this.keysPressed.delete(e.code);
+      } catch (err) {
+        console.error('[ThreeWorld] Error in keyup listener:', err);
+      }
     });
 
-    // Point-and-Click on 3D Ground
-    this.renderer.domElement.addEventListener('pointerdown', (e) => {
-      if (e.button !== 0 || rpgMenuManager.isMenuOpen()) return;
+    // Pointer events: Left click for navigation, Right click for Orbit / Pitch / Yaw
+    this.renderer.domElement.addEventListener('pointerdown', (e: PointerEvent) => {
+      try {
+        if (!e || rpgMenuManager?.isMenuOpen()) return;
 
-      const rect = this.renderer.domElement.getBoundingClientRect();
-      this.mousePos.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      this.mousePos.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+        if (e.button === 2) {
+          // Right-click: start free camera orbit
+          this.isOrbiting = true;
+          this.lastMouseX = e.clientX;
+          this.lastMouseY = e.clientY;
+          return;
+        }
 
-      this.raycaster.setFromCamera(this.mousePos, this.camera);
-      const intersects = this.raycaster.intersectObject(this.valentineBuilder.groundMesh, false);
+        if (e.button === 0) {
+          const rect = this.renderer.domElement.getBoundingClientRect();
+          if (!rect || rect.width === 0 || rect.height === 0) return;
 
-      if (intersects.length > 0) {
-        const hit = intersects[0].point;
-        this.setClickTarget(hit.x, hit.z);
+          this.mousePos.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          this.mousePos.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+          this.raycaster.setFromCamera(this.mousePos, this.camera);
+          const intersects = this.valentineCity?.groundMesh
+            ? this.raycaster.intersectObject(this.valentineCity.groundMesh, false)
+            : [];
+
+          if (intersects.length > 0 && intersects[0]?.point) {
+            const hit = intersects[0].point;
+            this.setClickTarget(hit.x, hit.z);
+          } else {
+            // Fallback to ground plane (y=0) intersection
+            const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const planeHit = new THREE.Vector3();
+            if (this.raycaster.ray.intersectPlane(groundPlane, planeHit)) {
+              const maxW = WORLD_MAP_WIDTH * ValentineCity.SCALE;
+              const maxH = WORLD_MAP_HEIGHT * ValentineCity.SCALE;
+              const targetX = Math.max(1, Math.min(maxW - 1, planeHit.x));
+              const targetZ = Math.max(1, Math.min(maxH - 1, planeHit.z));
+              this.setClickTarget(targetX, targetZ);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('[ThreeWorld] Error in pointerdown handler:', err);
+      }
+    });
+
+    window.addEventListener('pointermove', (e: PointerEvent) => {
+      try {
+        if (!this.isOrbiting) return;
+        const dx = e.clientX - this.lastMouseX;
+        const dy = e.clientY - this.lastMouseY;
+        this.lastMouseX = e.clientX;
+        this.lastMouseY = e.clientY;
+
+        // Yaw: horizontal orbit around player
+        this.cameraYaw -= dx * 0.005;
+
+        // Pitch: elevation angle (clamp between 0.1 rad (~5°) and 1.45 rad (~83°))
+        this.cameraPitch = THREE.MathUtils.clamp(
+          this.cameraPitch + dy * 0.004,
+          0.1,
+          1.45
+        );
+      } catch (err) {
+        console.error('[ThreeWorld] Error in pointermove orbit handler:', err);
+      }
+    });
+
+    window.addEventListener('pointerup', (e: PointerEvent) => {
+      if (e.button === 2) {
+        this.isOrbiting = false;
       }
     });
   }
@@ -443,6 +642,33 @@ export class ThreeWorld {
     }
   }
 
+  /**
+   * Toggles the debug wireframe visualization of all active AABB obstacle collision boxes ('C' key)
+   */
+  private toggleCollisionDebug() {
+    this.debugCollisionVisible = !this.debugCollisionVisible;
+
+    // Clear previous helpers
+    while (this.debugCollisionGroup.children.length > 0) {
+      const child = this.debugCollisionGroup.children[0];
+      this.debugCollisionGroup.remove(child);
+      if ((child as any).geometry) (child as any).geometry.dispose();
+      if ((child as any).material) (child as any).material.dispose();
+    }
+
+    if (this.debugCollisionVisible && this.valentineCity) {
+      for (const box of this.valentineCity.obstacleBoxes) {
+        const helper = new THREE.Box3Helper(box, new THREE.Color(0xff2222));
+        this.debugCollisionGroup.add(helper);
+      }
+      this.debugCollisionGroup.visible = true;
+      console.log(`[ThreeWorld] Collision debug wireframes ENABLED (${this.valentineCity.obstacleBoxes.length} boxes)`);
+    } else {
+      this.debugCollisionGroup.visible = false;
+      console.log('[ThreeWorld] Collision debug wireframes DISABLED');
+    }
+  }
+
   private cycleTimeOfDay() {
     const list = [TimeOfDay.NOON, TimeOfDay.GOLDEN_HOUR, TimeOfDay.NIGHT];
     const idx = (list.indexOf(this.currentTimeOfDay) + 1) % list.length;
@@ -463,22 +689,19 @@ export class ThreeWorld {
     // Other players sync
     this.room.state.players.onAdd((player, sessionId) => {
       if (sessionId === this.room.sessionId) {
-        // Initial spawn pos from server
-        this.posX = player.position.x * ValentineBuilder.SCALE;
-        this.posZ = player.position.y * ValentineBuilder.SCALE;
-        this.localPlayer.setPosition(this.posX, 0, this.posZ);
+        // Only adopt server pos if not overriding the initial hard spawn
         return;
       }
 
       console.log(`[ThreeWorld] Remote player joined: ${sessionId} (${player.username})`);
       const remoteCowboy = new CowboyCharacter(player.username, false);
-      remoteCowboy.setPosition(player.position.x * ValentineBuilder.SCALE, 0, player.position.y * ValentineBuilder.SCALE);
+      remoteCowboy.setPosition(player.position.x * ValentineCity.SCALE, 0, player.position.y * ValentineCity.SCALE);
       this.remotePlayers.set(sessionId, remoteCowboy);
       this.scene.add(remoteCowboy.root);
 
       player.position.onChange(() => {
-        const targetX = player.position.x * ValentineBuilder.SCALE;
-        const targetZ = player.position.y * ValentineBuilder.SCALE;
+        const targetX = player.position.x * ValentineCity.SCALE;
+        const targetZ = player.position.y * ValentineCity.SCALE;
         remoteCowboy.setPosition(targetX, 0, targetZ);
         if (player.position.heading !== undefined) {
           remoteCowboy.setHeading(player.position.heading, 0.05);
@@ -510,11 +733,9 @@ export class ThreeWorld {
   }
 
   private initMinimap() {
-    this.minimapCanvas = document.getElementById('rdr-minimap-canvas') as HTMLCanvasElement;
-    if (this.minimapCanvas) {
-      this.minimapCanvas.width = 150;
-      this.minimapCanvas.height = 150;
-      this.minimapCtx = this.minimapCanvas.getContext('2d');
+    const canvas = document.getElementById('rdr-minimap-canvas') as HTMLCanvasElement;
+    if (canvas) {
+      this.minimapSystem = new MinimapSystem(canvas);
     }
   }
 
@@ -524,32 +745,43 @@ export class ThreeWorld {
   private animate = () => {
     requestAnimationFrame(this.animate);
 
-    const delta = Math.min(this.clock.getDelta(), 0.1);
-    const now = performance.now();
+    try {
+      const delta = Math.min(this.clock.getDelta(), 0.1);
+      const now = performance.now();
 
-    this.updatePlayerMovement(delta);
-    this.updateCameraPosition(false);
-    this.updateWeatherParticles(delta);
-    this.valentineBuilder.update(now * 0.001);
-    this.updateClickMarker(now);
-    this.checkPOIProximity();
-    this.renderMinimap();
+      this.updatePlayerMovement(delta);
+      this.updateCameraPosition(false);
 
-    // 20Hz server position sync
-    if (now - this.lastNetworkTick >= 50) {
-      this.lastNetworkTick = now;
-      this.sendNetworkPosition(0, 0);
+      this.updateWeatherParticles(delta);
+      this.valentineCity.update(new THREE.Vector3(this.posX, 0, this.posZ));
+      if (this.chunkManager) {
+        this.chunkManager.update(new THREE.Vector3(this.posX, 0, this.posZ), this.camera);
+      }
+      this.updateClickMarker(now);
+      this.checkPOIProximity();
+      this.renderMinimap();
+
+      // 20Hz server position sync
+      if (now - this.lastNetworkTick >= 50) {
+        this.lastNetworkTick = now;
+        this.sendNetworkPosition(0, 0);
+      }
+
+      this.renderer.render(this.scene, this.camera);
+    } catch (err) {
+      console.error('[ThreeWorld] Render loop protected from fatal exception:', err);
     }
-
-    this.renderer.render(this.scene, this.camera);
   };
 
   /**
-   * Continuous movement calculation with 3D obstacle bounding-box sliding
+   * Continuous movement calculation strictly aligned to camera screen-space (W=up, S=down, A=left, D=right)
+   * with 3D obstacle bounding-box sliding
    */
   private updatePlayerMovement(delta: number) {
     if (rpgMenuManager.isMenuOpen()) {
       this.isMoving = false;
+      this.keysPressed.clear();
+      this.clearClickNav();
       this.localPlayer.update(delta, false, this.currentGait, 1.0);
       return;
     }
@@ -574,118 +806,197 @@ export class ThreeWorld {
       staminaBar.style.width = `${(this.stamina / this.maxStamina) * 100}%`;
     }
 
-    let speed = (PLAYER_JOG_SPEED * ValentineBuilder.SCALE);
+    let speed = (PLAYER_JOG_SPEED * ValentineCity.SCALE);
     let activeGait = GaitMode.JOG;
 
     if (this.isSprinting) {
-      speed = (PLAYER_SPRINT_SPEED * ValentineBuilder.SCALE);
+      speed = (PLAYER_SPRINT_SPEED * ValentineCity.SCALE);
       activeGait = GaitMode.SPRINT;
     } else if (this.currentGait === GaitMode.WALK) {
-      speed = (PLAYER_WALK_SPEED * ValentineBuilder.SCALE);
+      speed = (PLAYER_WALK_SPEED * ValentineCity.SCALE);
       activeGait = GaitMode.WALK;
     }
 
-    let inputX = 0;
-    let inputZ = 0;
+    // 1. Calculate camera forward and right vectors projected onto the horizontal ground plane (XZ)
+    const camForward = new THREE.Vector3(
+      this.cameraTarget.x - this.camera.position.x,
+      0,
+      this.cameraTarget.z - this.camera.position.z
+    ).normalize();
+    const camRight = new THREE.Vector3().crossVectors(camForward, new THREE.Vector3(0, 1, 0)).normalize();
 
-    // 1. Keyboard Input
-    if (this.keysPressed.has('KeyW') || this.keysPressed.has('ArrowUp')) inputZ -= 1;
-    if (this.keysPressed.has('KeyS') || this.keysPressed.has('ArrowDown')) inputZ += 1;
-    if (this.keysPressed.has('KeyA') || this.keysPressed.has('ArrowLeft')) inputX -= 1;
-    if (this.keysPressed.has('KeyD') || this.keysPressed.has('ArrowRight')) inputX += 1;
+    const moveDir = new THREE.Vector3(0, 0, 0);
 
-    // 2. Point-and-Click Input
-    if (this.clickNavDestination && inputX === 0 && inputZ === 0) {
+    // Keyboard Input strictly aligned to the camera screen space
+    // W = straight UP in viewport, S = straight DOWN, D = straight RIGHT, A = straight LEFT
+    if (this.keysPressed.has('KeyW') || this.keysPressed.has('ArrowUp')) moveDir.add(camForward);
+    if (this.keysPressed.has('KeyS') || this.keysPressed.has('ArrowDown')) moveDir.sub(camForward);
+    if (this.keysPressed.has('KeyD') || this.keysPressed.has('ArrowRight')) moveDir.add(camRight);
+    if (this.keysPressed.has('KeyA') || this.keysPressed.has('ArrowLeft')) moveDir.sub(camRight);
+
+    // 2. Point-and-Click Input (if no keyboard keys pressed)
+    if (this.clickNavDestination && moveDir.lengthSq() === 0) {
       const dx = this.clickNavDestination.x - this.posX;
       const dz = this.clickNavDestination.z - this.posZ;
       const dist = Math.hypot(dx, dz);
 
       if (dist > 0.4) {
-        inputX = dx / dist;
-        inputZ = dz / dist;
+        moveDir.set(dx / dist, 0, dz / dist);
       } else {
         this.clearClickNav();
       }
     }
 
-    if (inputX !== 0 || inputZ !== 0) {
-      const len = Math.hypot(inputX, inputZ);
-      const normX = (inputX / len) * speed * delta;
-      const normZ = (inputZ / len) * speed * delta;
+    if (moveDir.lengthSq() > 0.0001) {
+      moveDir.normalize();
+      const moveDistance = speed * delta;
+      const moveVec = new THREE.Vector3(moveDir.x * moveDistance, 0, moveDir.z * moveDistance);
 
-      // Smooth Heading
-      this.heading = Math.atan2(inputX, inputZ);
-      this.localPlayer.setHeading(this.heading, delta);
+      const groundY = this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0;
+      const sphereRadius = 0.45; // 0.45m bounding sphere radius
 
-      // Perform 3D collision check with wall sliding
-      const charRadius = 0.65; // ~6.5px in 3D meters
+      // Resolve collision with sliding response against massive Box3 obstacles
+      const newPos = this.resolveSphereCollisions(
+        new THREE.Vector3(this.posX, groundY, this.posZ),
+        moveVec,
+        sphereRadius,
+        groundY
+      );
 
-      // Try moving on both axes
-      const nextX = this.posX + normX;
-      const nextZ = this.posZ + normZ;
+      this.posX = newPos.x;
+      this.posZ = newPos.z;
 
-      const collidesBoth = this.checkCollision(nextX, nextZ, charRadius);
+      // Free exploration across all streamed chunks (artificial boundary clamp removed)
 
-      if (!collidesBoth) {
-        this.posX = nextX;
-        this.posZ = nextZ;
+      // Heading aligns with actual movement vector or intended direction
+      if (moveVec.lengthSq() > 0.00001) {
+        this.heading = Math.atan2(moveVec.x, moveVec.z);
       } else {
-        // Slide on X alone
-        if (!this.checkCollision(nextX, this.posZ, charRadius)) {
-          this.posX = nextX;
-        }
-        // Slide on Z alone
-        else if (!this.checkCollision(this.posX, nextZ, charRadius)) {
-          this.posZ = nextZ;
-        }
+        this.heading = Math.atan2(moveDir.x, moveDir.z);
       }
-
-      // Restrict to world boundaries
-      const maxW = WORLD_MAP_WIDTH * ValentineBuilder.SCALE;
-      const maxH = WORLD_MAP_HEIGHT * ValentineBuilder.SCALE;
-      this.posX = Math.max(charRadius, Math.min(maxW - charRadius, this.posX));
-      this.posZ = Math.max(charRadius, Math.min(maxH - charRadius, this.posZ));
+      this.localPlayer.setHeading(this.heading, delta);
 
       this.isMoving = true;
     } else {
       this.isMoving = false;
     }
 
-    this.localPlayer.setPosition(this.posX, 0, this.posZ);
-    this.localPlayer.update(delta, this.isMoving, activeGait, speed / (PLAYER_JOG_SPEED * ValentineBuilder.SCALE));
+    const groundY = this.valentineCity.getGroundHeight(this.posX, this.posZ);
+    this.localPlayer.setPosition(this.posX, groundY, this.posZ);
+    this.localPlayer.update(delta, this.isMoving, activeGait, speed / (PLAYER_JOG_SPEED * ValentineCity.SCALE));
   }
 
   /**
-   * Checks if player position intersects any 3D obstacle bounding box
+   * Resolves obstacle collision using a Bounding Sphere (radius 0.45m) with smooth wall sliding.
+   * Nullifies movement component perpendicular to walls while preserving parallel gliding.
    */
-  private checkCollision(x: number, z: number, radius: number): boolean {
-    const playerBox = new THREE.Box3(
-      new THREE.Vector3(x - radius, 0, z - radius),
-      new THREE.Vector3(x + radius, 2.0, z + radius)
+  private resolveSphereCollisions(
+    currentPos: THREE.Vector3,
+    moveVec: THREE.Vector3,
+    radius: number = 0.45,
+    groundY: number
+  ): THREE.Vector3 {
+    const chunkObstacles = this.chunkManager ? this.chunkManager.getActiveObstacleBoxes() : [];
+    const valObstacles = this.valentineCity ? this.valentineCity.obstacleBoxes : [];
+    const allObstacles = [...valObstacles, ...chunkObstacles];
+
+    if (this.noclip || allObstacles.length === 0) {
+      return currentPos.clone().add(moveVec);
+    }
+
+    // Step position with desired movement
+    const sphereCenter = new THREE.Vector3(
+      currentPos.x + moveVec.x,
+      groundY + 0.9,
+      currentPos.z + moveVec.z
     );
 
-    for (const obs of this.valentineBuilder.obstacleBoxes) {
-      if (playerBox.intersectsBox(obs)) {
-        return true;
+    const closest = new THREE.Vector3();
+    const diff = new THREE.Vector3();
+    const normal = new THREE.Vector3();
+
+    // Iterative resolution (up to 3 passes for corners and complex geometries)
+    for (let iter = 0; iter < 3; iter++) {
+      let collided = false;
+
+      for (const box of allObstacles) {
+        // Vertical check: only collide with obstacles that intersect player height cylinder
+        if (box.max.y < groundY + 0.1 || box.min.y > groundY + 1.8) {
+          continue;
+        }
+
+        // Clamp sphere center to closest point on obstacle Box3
+        box.clampPoint(sphereCenter, closest);
+        diff.subVectors(sphereCenter, closest);
+        diff.y = 0; // Horizontal sliding on ground plane
+
+        const dist = diff.length();
+
+        if (dist < radius) {
+          collided = true;
+
+          if (dist > 0.0001) {
+            normal.copy(diff).multiplyScalar(1 / dist);
+          } else {
+            // Sphere center penetrated inside box: find shallowest exit normal
+            const dxMin = Math.abs(sphereCenter.x - box.min.x);
+            const dxMax = Math.abs(box.max.x - sphereCenter.x);
+            const dzMin = Math.abs(sphereCenter.z - box.min.z);
+            const dzMax = Math.abs(box.max.z - sphereCenter.z);
+            const minAxisDist = Math.min(dxMin, dxMax, dzMin, dzMax);
+
+            if (minAxisDist === dxMin) normal.set(-1, 0, 0);
+            else if (minAxisDist === dxMax) normal.set(1, 0, 0);
+            else if (minAxisDist === dzMin) normal.set(0, 0, -1);
+            else normal.set(0, 0, 1);
+          }
+
+          // Push sphere center out of obstacle along contact normal
+          const penetration = radius - dist;
+          sphereCenter.addScaledVector(normal, penetration);
+
+          // Wall-sliding response:
+          // Project moveVec onto normal. If moving towards obstacle (dot < 0), cancel normal component
+          const dot = moveVec.dot(normal);
+          if (dot < 0) {
+            moveVec.sub(normal.clone().multiplyScalar(dot));
+          }
+        }
       }
+
+      if (!collided) break;
     }
-    return false;
+
+    return new THREE.Vector3(sphereCenter.x, groundY, sphereCenter.z);
   }
 
   /**
-   * Smoothly lerps tactical RPG isometric camera following player
+   * Smoothly updates camera following player:
+   * - Default distance: 7.0m behind and 2.8m above player
+   * - Zoom range: 4.0m to 20.0m
+   * - Smooth lerp damping: 0.1
+   * - Pitch/Yaw free orbit with right mouse drag, focus point at player.y + 1.2
    */
   private updateCameraPosition(immediate: boolean = false) {
-    // Tactical isometric camera offset (Framing Main Street from South-West looking down the street)
-    const targetLookAt = new THREE.Vector3(this.posX, 1.4, this.posZ);
-    const cameraOffset = new THREE.Vector3(-10.0, 16.0, 13.0);
+    const groundY = this.valentineCity ? this.valentineCity.getGroundHeight(this.posX, this.posZ) : 0;
+    const playerPos = new THREE.Vector3(this.posX, groundY, this.posZ);
+    const targetLookAt = playerPos.clone().add(new THREE.Vector3(0, 1.2, 0));
 
-    const desiredCamPos = new THREE.Vector3().addVectors(targetLookAt, cameraOffset);
+    // Spherical coordinates around targetLookAt
+    // cameraPitch: elevation angle above horizontal plane (clamped 0.1 to 1.45 rad)
+    // cameraYaw: azimuthal angle around the vertical axis
+    const hDist = this.cameraZoomDistance * Math.cos(this.cameraPitch);
+    const vDist = this.cameraZoomDistance * Math.sin(this.cameraPitch);
+    const offsetX = Math.sin(this.cameraYaw) * hDist;
+    const offsetZ = Math.cos(this.cameraYaw) * hDist;
+    const offsetY = vDist;
+
+    const desiredCamPos = targetLookAt.clone().add(new THREE.Vector3(offsetX, offsetY, offsetZ));
 
     if (immediate) {
       this.cameraTarget.copy(targetLookAt);
       this.camera.position.copy(desiredCamPos);
-      this.camera.lookAt(this.cameraTarget);
+      this.camera.lookAt(targetLookAt);
     } else {
       this.cameraTarget.lerp(targetLookAt, 0.1);
       this.camera.position.lerp(desiredCamPos, 0.1);
@@ -694,9 +1005,11 @@ export class ThreeWorld {
 
     // Keep directional sunlight centered around player for sharp shadow map resolution
     if (this.sunLight) {
-      this.sunLight.target.position.set(this.posX, 0, this.posZ);
+      this.sunLight.target.position.set(this.posX, groundY, this.posZ);
     }
   }
+
+
 
   private updateWeatherParticles(delta: number) {
     if (!this.weatherParticles.visible) return;
@@ -730,23 +1043,28 @@ export class ThreeWorld {
    * Check distance to POIs and toggle interaction prompt banner
    */
   private checkPOIProximity() {
-    let closestPOI: POIDefinition | null = null;
-    let minDist = Infinity;
+    try {
+      let closestPOI: POIDefinition | null = null;
+      let minDist = Infinity;
 
-    for (const poi of pois) {
-      const poiX = poi.x * ValentineBuilder.SCALE;
-      const poiZ = poi.y * ValentineBuilder.SCALE;
-      const d = Math.hypot(this.posX - poiX, this.posZ - poiZ);
+      for (const poi of pois) {
+        const poiX = poi.x * ValentineCity.SCALE;
+        const poiZ = poi.y * ValentineCity.SCALE;
+        const d = Math.hypot(this.posX - poiX, this.posZ - poiZ);
+        const effectiveRadius = Math.max(poi.radius * ValentineCity.SCALE, 7.5);
 
-      if (d < (poi.radius * ValentineBuilder.SCALE) && d < minDist) {
-        minDist = d;
-        closestPOI = poi;
+        if (d < effectiveRadius && d < minDist) {
+          minDist = d;
+          closestPOI = poi;
+        }
       }
-    }
 
-    if (closestPOI !== this.currentNearbyPOI) {
-      this.currentNearbyPOI = closestPOI;
-      rpgMenuManager.showPOIPrompt(closestPOI);
+      if (closestPOI !== this.currentNearbyPOI) {
+        this.currentNearbyPOI = closestPOI;
+        rpgMenuManager.showPOIPrompt(closestPOI);
+      }
+    } catch (err) {
+      console.error('[ThreeWorld] Error in checkPOIProximity:', err);
     }
   }
 
@@ -757,8 +1075,8 @@ export class ThreeWorld {
     if (!this.room) return;
 
     const payload: MoveIntentMessage = {
-      x: Math.round(this.posX / ValentineBuilder.SCALE),
-      y: Math.round(this.posZ / ValentineBuilder.SCALE),
+      x: Math.round(this.posX / ValentineCity.SCALE),
+      y: Math.round(this.posZ / ValentineCity.SCALE),
       vx,
       vy,
       heading: this.heading,
@@ -771,80 +1089,16 @@ export class ThreeWorld {
   }
 
   /**
-   * Render real-time Circular RDR Radar Minimap
+   * Render real-time RDO Squircle Minimap with zoom, rotation and overlays
    */
   private renderMinimap() {
-    if (!this.minimapCtx || !this.minimapCanvas) return;
-    const ctx = this.minimapCtx;
-    const w = this.minimapCanvas.width;
-    const h = this.minimapCanvas.height;
-    const cx = w / 2;
-    const cy = h / 2;
-    const r = 68;
-
-    ctx.clearRect(0, 0, w, h);
-
-    // Dark parchment radar disc
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.clip();
-
-    ctx.fillStyle = '#18120c';
-    ctx.fillRect(0, 0, w, h);
-
-    // Grid rings
-    ctx.strokeStyle = 'rgba(168, 140, 93, 0.25)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r * 0.5, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // Map bounds representation
-    const scale = 0.6; // zoom level
-    const playerWorldX = this.posX;
-    const playerWorldZ = this.posZ;
-
-    // Draw POIs
-    pois.forEach((poi) => {
-      const px = poi.x * ValentineBuilder.SCALE;
-      const pz = poi.y * ValentineBuilder.SCALE;
-      const screenX = cx + (px - playerWorldX) * scale;
-      const screenY = cy + (pz - playerWorldZ) * scale;
-
-      ctx.fillStyle = '#d4af37';
-      ctx.beginPath();
-      ctx.arc(screenX, screenY, 3.5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Draw other players
-    this.remotePlayers.forEach((cowboy) => {
-      const rx = cowboy.root.position.x;
-      const rz = cowboy.root.position.z;
-      const screenX = cx + (rx - playerWorldX) * scale;
-      const screenY = cy + (rz - playerWorldZ) * scale;
-
-      ctx.fillStyle = '#ef4444';
-      ctx.beginPath();
-      ctx.arc(screenX, screenY, 3, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Draw local player arrow at center
-    ctx.fillStyle = '#f1ede4';
-    ctx.beginPath();
-    ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-    ctx.fill();
-
-    // View heading cone
-    ctx.strokeStyle = '#22c55e';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(cx + Math.sin(this.heading) * 12, cy + Math.cos(this.heading) * 12);
-    ctx.stroke();
-
-    ctx.restore();
+    if (!this.minimapSystem) return;
+    this.minimapSystem.render(
+      this.posX,
+      this.posZ,
+      this.heading,
+      this.cameraZoomDistance,
+      this.remotePlayers
+    );
   }
 }

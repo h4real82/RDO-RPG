@@ -1,0 +1,1660 @@
+[
+  {
+    "id": "shop_barber_-816_-1365",
+    "name": "shop_blk_barber",
+    "type": "building",
+    "position_game": [
+      -815.84,
+      40.0,
+      -1365.02
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_barber"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_barber_2656_-1180",
+    "name": "shop_sdn_barber",
+    "type": "building",
+    "position_game": [
+      2656.4,
+      40.0,
+      -1180.01
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_barber"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_barber_-308_812",
+    "name": "shop_val_barber",
+    "type": "building",
+    "position_game": [
+      -308.18,
+      118.0,
+      812.2
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_barber"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_-753_-1285",
+    "name": "shop_blk_butcher",
+    "type": "building",
+    "position_game": [
+      -753.09,
+      40.0,
+      -1284.72
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_1298_-1278",
+    "name": "shop_rho_butcher",
+    "type": "building",
+    "position_game": [
+      1297.67,
+      40.0,
+      -1277.63
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_2820_-1331",
+    "name": "shop_sdn_butcher",
+    "type": "building",
+    "position_game": [
+      2819.51,
+      40.0,
+      -1331.34
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_-1752_-393",
+    "name": "shop_str_butcher",
+    "type": "building",
+    "position_game": [
+      -1751.93,
+      40.0,
+      -393.46
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_-5509_-2946",
+    "name": "shop_tbl_butcher",
+    "type": "building",
+    "position_game": [
+      -5508.96,
+      40.0,
+      -2946.32
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_butcher_-340_766",
+    "name": "shop_val_butcher",
+    "type": "building",
+    "position_game": [
+      -339.66,
+      118.0,
+      766.32
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_butcher"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_doctor_2721_-1232",
+    "name": "shop_sdn_doctor",
+    "type": "building",
+    "position_game": [
+      2721.17,
+      40.0,
+      -1231.66
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_doctor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_doctor_-288_804",
+    "name": "shop_val_doctor",
+    "type": "building",
+    "position_game": [
+      -287.9,
+      118.0,
+      804.15
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_doctor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_fence_1417_274",
+    "name": "shop_emr_fence",
+    "type": "building",
+    "position_game": [
+      1417.34,
+      40.0,
+      273.64
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_fence"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_fence_1319_-1142",
+    "name": "shop_rho_fence",
+    "type": "building",
+    "position_game": [
+      1319.43,
+      40.0,
+      -1142.08
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_fence"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_fence_2860_-1202",
+    "name": "shop_sdn_fence",
+    "type": "building",
+    "position_game": [
+      2859.5,
+      40.0,
+      -1202.12
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_fence"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_fence_3026_562",
+    "name": "shop_van_fence",
+    "type": "building",
+    "position_game": [
+      3025.72,
+      40.0,
+      562.38
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_fence"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_fence_-1402_-2317",
+    "name": "shop_thl_fence",
+    "type": "building",
+    "position_game": [
+      -1401.69,
+      40.0,
+      -2317.16
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_fence"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-3687_-2623",
+    "name": "shop_amd_general_store",
+    "type": "building",
+    "position_game": [
+      -3687.3,
+      40.0,
+      -2623.39
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-784_-1322",
+    "name": "shop_blk_general_store",
+    "type": "building",
+    "position_game": [
+      -784.48,
+      40.0,
+      -1322.26
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_1330_-1294",
+    "name": "shop_rho_general_store",
+    "type": "building",
+    "position_game": [
+      1329.61,
+      40.0,
+      -1294.37
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_2825_-1319",
+    "name": "shop_sdn_general_store",
+    "type": "building",
+    "position_game": [
+      2824.74,
+      40.0,
+      -1319.45
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-1790_-388",
+    "name": "shop_str_general_store",
+    "type": "building",
+    "position_game": [
+      -1790.02,
+      40.0,
+      -388.29
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-5486_-2938",
+    "name": "shop_tbl_general_store",
+    "type": "building",
+    "position_game": [
+      -5485.91,
+      40.0,
+      -2938.13
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-324_804",
+    "name": "shop_val_general_store",
+    "type": "building",
+    "position_game": [
+      -324.0,
+      118.0,
+      803.72
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_general_store_-1302_393",
+    "name": "shop_wal_general_store",
+    "type": "building",
+    "position_game": [
+      -1301.81,
+      40.0,
+      393.48
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_general_store"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_gunsmith_2948_1319",
+    "name": "shop_asb_gunsmith",
+    "type": "building",
+    "position_game": [
+      2948.23,
+      40.0,
+      1319.47
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_gunsmith"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_gunsmith_1322_-1323",
+    "name": "shop_rho_gunsmith",
+    "type": "building",
+    "position_game": [
+      1322.25,
+      40.0,
+      -1322.96
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_gunsmith"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_gunsmith_2717_-1287",
+    "name": "shop_sdn_gunsmith",
+    "type": "building",
+    "position_game": [
+      2716.68,
+      40.0,
+      -1287.07
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_gunsmith"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_gunsmith_-5507_-2964",
+    "name": "shop_tbl_gunsmith",
+    "type": "building",
+    "position_game": [
+      -5506.57,
+      40.0,
+      -2963.89
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_gunsmith"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_gunsmith_-282_779",
+    "name": "shop_val_gunsmith",
+    "type": "building",
+    "position_game": [
+      -281.8,
+      118.0,
+      779.06
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_gunsmith"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_honor_-3639_-2779",
+    "name": "shop_amd_honor_mp",
+    "type": "building",
+    "position_game": [
+      -3638.65,
+      40.0,
+      -2778.65
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_honor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_honor_-1249_-607",
+    "name": "shop_boj_honor_mp",
+    "type": "building",
+    "position_game": [
+      -1249.16,
+      40.0,
+      -607.22
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_honor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_honor_2626_1329",
+    "name": "shop_roj_honor_mp",
+    "type": "building",
+    "position_game": [
+      2625.55,
+      40.0,
+      1328.57
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_honor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_photo_studio_-813_-1372",
+    "name": "shop_blk_photo_studio",
+    "type": "building",
+    "position_game": [
+      -813.46,
+      40.0,
+      -1371.77
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_photo_studio"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_photo_studio_2733_-1121",
+    "name": "shop_sdn_photo_studio",
+    "type": "building",
+    "position_game": [
+      2732.67,
+      40.0,
+      -1120.57
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_photo_studio"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-3733_-2598",
+    "name": "shop_amd_post_office",
+    "type": "station",
+    "position_game": [
+      -3732.6,
+      40.0,
+      -2598.1
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_2939_1287",
+    "name": "shop_asb_post_office",
+    "type": "station",
+    "position_game": [
+      2939.09,
+      40.0,
+      1287.06
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-5227_-3469",
+    "name": "shop_ben_post_office",
+    "type": "station",
+    "position_game": [
+      -5227.36,
+      40.0,
+      -3469.14
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-875_-1327",
+    "name": "shop_blk_post_office",
+    "type": "station",
+    "position_game": [
+      -875.05,
+      40.0,
+      -1327.27
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_1522_441",
+    "name": "shop_emr_post_office",
+    "type": "station",
+    "position_game": [
+      1521.91,
+      40.0,
+      441.15
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-1093_-576",
+    "name": "shop_rgg_post_office",
+    "type": "station",
+    "position_game": [
+      -1092.87,
+      40.0,
+      -575.69
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_1227_-1295",
+    "name": "shop_rho_post_office",
+    "type": "station",
+    "position_game": [
+      1226.68,
+      40.0,
+      -1295.07
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_2749_-1398",
+    "name": "shop_sdn_post_office",
+    "type": "station",
+    "position_game": [
+      2748.79,
+      40.0,
+      -1398.22
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-1764_-385",
+    "name": "shop_str_post_office",
+    "type": "station",
+    "position_game": [
+      -1763.92,
+      40.0,
+      -385.12
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-178_628",
+    "name": "shop_val_post_office",
+    "type": "station",
+    "position_game": [
+      -178.0,
+      118.0,
+      628.11
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_2986_570",
+    "name": "shop_van_post_office",
+    "type": "station",
+    "position_game": [
+      2986.24,
+      40.0,
+      570.12
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_post_office_-1300_401",
+    "name": "shop_wal_post_office",
+    "type": "station",
+    "position_game": [
+      -1299.81,
+      40.0,
+      400.86
+    ],
+    "rage_archetype": "ARCH_TRAIN_STATION_DEPOT_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_station",
+    "tags": [
+      "#station",
+      "#depot",
+      "#railroad",
+      "#travel",
+      "#loc_post_office"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_-3699_-2596",
+    "name": "shop_amd_bartender",
+    "type": "saloon",
+    "position_game": [
+      -3699.01,
+      40.0,
+      -2595.52
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_-818_-1320",
+    "name": "shop_blk_bartender",
+    "type": "saloon",
+    "position_game": [
+      -817.81,
+      40.0,
+      -1320.2
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_1339_-1375",
+    "name": "shop_rho_bartender",
+    "type": "saloon",
+    "position_game": [
+      1339.22,
+      40.0,
+      -1375.3
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_2640_-1223",
+    "name": "shop_sdn_bartender",
+    "type": "saloon",
+    "position_game": [
+      2639.92,
+      40.0,
+      -1222.94
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_2793_-1167",
+    "name": "shop_sdn_bartender_slum",
+    "type": "saloon",
+    "position_game": [
+      2793.23,
+      40.0,
+      -1166.77
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_-5519_-2906",
+    "name": "shop_tbl_bartender",
+    "type": "saloon",
+    "position_game": [
+      -5518.91,
+      40.0,
+      -2906.42
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_-314_808",
+    "name": "shop_val_bartender",
+    "type": "saloon",
+    "position_game": [
+      -313.89,
+      118.0,
+      807.68
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_-238_769",
+    "name": "shop_val_bartender_keane",
+    "type": "saloon",
+    "position_game": [
+      -238.49,
+      118.0,
+      769.08
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_saloon_2948_529",
+    "name": "shop_van_bartender",
+    "type": "saloon",
+    "position_game": [
+      2947.67,
+      40.0,
+      529.06
+    ],
+    "rage_archetype": "ARCH_SALOON_SMITHFIELD_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_saloon",
+    "tags": [
+      "#saloon",
+      "#bar",
+      "#social",
+      "#western",
+      "#loc_saloon"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_-868_-1366",
+    "name": "shop_blk_horse_shop",
+    "type": "stable",
+    "position_game": [
+      -868.34,
+      40.0,
+      -1366.2
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_2508_-1450",
+    "name": "shop_sdn_horse_shop",
+    "type": "stable",
+    "position_game": [
+      2508.27,
+      40.0,
+      -1449.65
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_-1817_-564",
+    "name": "shop_str_horse_shop",
+    "type": "stable",
+    "position_game": [
+      -1817.05,
+      40.0,
+      -564.06
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_-5522_-3044",
+    "name": "shop_tbl_horse_shop",
+    "type": "stable",
+    "position_game": [
+      -5521.67,
+      40.0,
+      -3043.99
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_-370_788",
+    "name": "shop_val_horse_shop",
+    "type": "stable",
+    "position_game": [
+      -369.53,
+      118.0,
+      787.91
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_2964_796",
+    "name": "shop_van_horse_shop",
+    "type": "stable",
+    "position_game": [
+      2964.15,
+      40.0,
+      795.98
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_stable_1209_-193",
+    "name": "shop_scm_horse_shop",
+    "type": "stable",
+    "position_game": [
+      1209.05,
+      40.0,
+      -193.18
+    ],
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#livestock",
+      "#horses",
+      "#loc_stable"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_tackle_2164_-619",
+    "name": "shop_lag_bait_store",
+    "type": "building",
+    "position_game": [
+      2163.55,
+      40.0,
+      -618.94
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_tackle"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_tailor_-762_-1293",
+    "name": "shop_blk_tailor",
+    "type": "building",
+    "position_game": [
+      -762.13,
+      40.0,
+      -1293.49
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_tailor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_tailor_2555_-1167",
+    "name": "shop_sdn_tailor",
+    "type": "building",
+    "position_game": [
+      2555.22,
+      40.0,
+      -1167.04
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_tailor"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_2829_-1223",
+    "name": "shop_sdn_trapper",
+    "type": "building",
+    "position_game": [
+      2829.47,
+      40.0,
+      -1223.24
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_-2840_137",
+    "name": "shop_bgv_trapper_1",
+    "type": "building",
+    "position_game": [
+      -2840.46,
+      40.0,
+      137.04
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_-1007_-544",
+    "name": "shop_bgv_trapper_2",
+    "type": "building",
+    "position_game": [
+      -1007.35,
+      40.0,
+      -544.42
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_2075_1004",
+    "name": "shop_roa_trapper",
+    "type": "building",
+    "position_game": [
+      2074.66,
+      40.0,
+      1004.11
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_-2255_-1911",
+    "name": "shop_tal_trapper",
+    "type": "building",
+    "position_game": [
+      -2255.19,
+      40.0,
+      -1911.09
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_trapper_-4728_-2940",
+    "name": "shop_cho_trapper",
+    "type": "building",
+    "position_game": [
+      -4728.45,
+      40.0,
+      -2940.5
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_trapper"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_harriet_-2186_-2132",
+    "name": "shop_hen_harriet",
+    "type": "building",
+    "position_game": [
+      -2185.63,
+      40.0,
+      -2132.35
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_harriet"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_harriet_-1574_486",
+    "name": "shop_bgv_harriet",
+    "type": "building",
+    "position_game": [
+      -1574.34,
+      40.0,
+      485.71
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_harriet"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_harriet_1967_-528",
+    "name": "shop_bay_harriet",
+    "type": "building",
+    "position_game": [
+      1966.68,
+      40.0,
+      -527.6
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_harriet"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_2554_-1161",
+    "name": "shop_bay_wardrobe_saint_denis",
+    "type": "building",
+    "position_game": [
+      2554.38,
+      40.0,
+      -1161.23
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-1793_-392",
+    "name": "shop_bgv_wardrobe_strawberry",
+    "type": "building",
+    "position_game": [
+      -1792.82,
+      40.0,
+      -391.57
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-1299_397",
+    "name": "shop_bgv_wardrobe_wallace_station",
+    "type": "building",
+    "position_game": [
+      -1299.01,
+      40.0,
+      397.28
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-3689_-2632",
+    "name": "shop_cho_wardrobe_armadillo",
+    "type": "building",
+    "position_game": [
+      -3689.15,
+      40.0,
+      -2631.62
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-5483_-2936",
+    "name": "shop_gap_wardrobe_tumbleweed",
+    "type": "building",
+    "position_game": [
+      -5483.2,
+      40.0,
+      -2935.79
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-767_-1293",
+    "name": "shop_grt_wardrobe_blackwater",
+    "type": "building",
+    "position_game": [
+      -766.77,
+      40.0,
+      -1293.49
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_-326_807",
+    "name": "shop_hrt_wardrobe_valentine",
+    "type": "building",
+    "position_game": [
+      -325.98,
+      118.0,
+      807.18
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_3025_561",
+    "name": "shop_roa_wardrobe_vanhornpost",
+    "type": "building",
+    "position_game": [
+      3024.73,
+      40.0,
+      561.49
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "shop_wardrobe_1323_-1292",
+    "name": "shop_scm_wardrobe_rhodes",
+    "type": "building",
+    "position_game": [
+      1323.44,
+      40.0,
+      -1291.66
+    ],
+    "rage_archetype": "ARCH_FRONTIER_COMMERCIAL_STORE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_shop",
+    "tags": [
+      "#building",
+      "#commercial",
+      "#facade",
+      "#loc_wardrobe"
+    ],
+    "source": "data/raw/rdomap/shops.json"
+  },
+  {
+    "id": "valentine_auction_yard_barn",
+    "name": "Valentine Auction Yard & Big Livery Barn",
+    "type": "stable",
+    "position_game": [
+      -360.0,
+      118.0,
+      720.0
+    ],
+    "bounds": [
+      32.0,
+      48.0,
+      9.5
+    ],
+    "orientation_deg": 105.0,
+    "orientation_rad": 1.8326,
+    "rage_archetype": "ARCH_LIVERY_BARN_VALENTINE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_stable",
+    "tags": [
+      "#stable",
+      "#barn",
+      "#auction_yard",
+      "#livestock",
+      "#horses"
+    ],
+    "source": "Offline-Ground-Truth:Media/Valentine MAP.jpg"
+  },
+  {
+    "id": "val_church",
+    "name": "Valentine Church & Historic Cemetery",
+    "type": "church",
+    "position_game": [
+      -180.0,
+      126.0,
+      890.0
+    ],
+    "bounds": [
+      14.0,
+      22.0,
+      14.5
+    ],
+    "orientation_deg": 192.0,
+    "orientation_rad": 3.351,
+    "rage_archetype": "ARCH_CHURCH_WOOD_CLAPBOARD_STEEPLE_01",
+    "game_ui_id": "gameuidatabase.com/rdr2/icon_church",
+    "tags": [
+      "#church",
+      "#chapel",
+      "#cemetery",
+      "#north_hill"
+    ],
+    "source": "Offline-Ground-Truth:Media/Valentine MAP.jpg"
+  }
+]

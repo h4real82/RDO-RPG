@@ -1,0 +1,8210 @@
+{
+  "version": "1.0.0",
+  "crs": "in_game_meters",
+  "total_objects": 337,
+  "objects": [
+    {
+      "id": "corral_pigs_001",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3733.82,
+        -12.56,
+        -2571.93
+      ],
+      "bounds": [
+        16.0,
+        20.0,
+        1.6
+      ],
+      "orientation_deg": 93.3,
+      "orientation_rad": 1.628,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 4,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_002",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        893.72,
+        44.96,
+        -1897.05
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": -10.3,
+      "orientation_rad": -0.179,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_003",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -380.24,
+        86.06,
+        -352.53
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": -92.6,
+      "orientation_rad": -1.616,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_004",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2830.74,
+        46.86,
+        -1237.75
+      ],
+      "bounds": [
+        32.0,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": -105.4,
+      "orientation_rad": -1.84,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 21,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_trapper)"
+      ]
+    },
+    {
+      "id": "corral_sheep_005",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -264.98,
+        117.63,
+        647.82
+      ],
+      "bounds": [
+        26.53,
+        33.17,
+        1.6
+      ],
+      "orientation_deg": 157.5,
+      "orientation_rad": 2.749,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 11,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_006",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -291.0,
+        121.03,
+        841.34
+      ],
+      "bounds": [
+        16.0,
+        20.0,
+        1.6
+      ],
+      "orientation_deg": 176.6,
+      "orientation_rad": 3.082,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 4,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_007",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -426.33,
+        112.94,
+        657.17
+      ],
+      "bounds": [
+        16.0,
+        20.0,
+        1.6
+      ],
+      "orientation_deg": 72.4,
+      "orientation_rad": 1.263,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 4,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_008",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2553.38,
+        77.09,
+        798.7
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": 59.2,
+      "orientation_rad": 1.033,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_pigs_009",
+      "name": "Pigs Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2530.51,
+        75.4,
+        757.93
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": 87.4,
+      "orientation_rad": 1.526,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_010",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1380.43,
+        92.46,
+        279.06
+      ],
+      "bounds": [
+        28.84,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": -170.1,
+      "orientation_rad": -2.969,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 13,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_sheep_011",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1366.66,
+        88.9,
+        325.98
+      ],
+      "bounds": [
+        26.53,
+        33.17,
+        1.6
+      ],
+      "orientation_deg": -170.1,
+      "orientation_rad": -2.969,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 11,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_sheep_012",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -231.01,
+        117.2,
+        647.08
+      ],
+      "bounds": [
+        25.3,
+        31.62,
+        1.6
+      ],
+      "orientation_deg": 59.8,
+      "orientation_rad": 1.044,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 10,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_sheep_013",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -232.01,
+        116.95,
+        671.42
+      ],
+      "bounds": [
+        21.17,
+        26.46,
+        1.6
+      ],
+      "orientation_deg": 115.1,
+      "orientation_rad": 2.009,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 7,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_sheep_014",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -404.7,
+        125.72,
+        925.15
+      ],
+      "bounds": [
+        21.17,
+        26.46,
+        1.6
+      ],
+      "orientation_deg": 29.7,
+      "orientation_rad": 0.519,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 7,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_sheep_015",
+      "name": "Sheep Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -200.61,
+        114.12,
+        600.89
+      ],
+      "bounds": [
+        26.53,
+        33.17,
+        1.6
+      ],
+      "orientation_deg": 149.8,
+      "orientation_rad": 2.615,
+      "zone": "valentine_southwest_livestock_yards",
+      "animal_spawns_count": 11,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_016",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        815.89,
+        118.58,
+        874.38
+      ],
+      "bounds": [
+        28.84,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": -13.6,
+      "orientation_rad": -0.238,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 13,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_cows_017",
+      "name": "Cows Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        814.52,
+        119.18,
+        926.36
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": 24.1,
+      "orientation_rad": 0.421,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_cows_018",
+      "name": "Cows Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1404.01,
+        94.58,
+        295.99
+      ],
+      "bounds": [
+        13.86,
+        17.32,
+        1.6
+      ],
+      "orientation_deg": -174.3,
+      "orientation_rad": -3.042,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 3,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_cows_019",
+      "name": "Cows Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1439.14,
+        64.86,
+        -879.95
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": -6.0,
+      "orientation_rad": -0.106,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_cows_020",
+      "name": "Cows Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1434.06,
+        63.17,
+        -835.28
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": -6.0,
+      "orientation_rad": -0.106,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_021",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        467.27,
+        245.88,
+        2225.26
+      ],
+      "bounds": [
+        29.93,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": -68.5,
+      "orientation_rad": -1.196,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 14,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_022",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1893.64,
+        75.95,
+        301.87
+      ],
+      "bounds": [
+        32.0,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": 22.8,
+      "orientation_rad": 0.397,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 18,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_023",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3676.83,
+        -13.6,
+        -2544.25
+      ],
+      "bounds": [
+        21.17,
+        26.46,
+        1.6
+      ],
+      "orientation_deg": 86.3,
+      "orientation_rad": 1.506,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 7,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_024",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2071.29,
+        43.26,
+        -838.68
+      ],
+      "bounds": [
+        22.63,
+        28.28,
+        1.6
+      ],
+      "orientation_deg": 117.3,
+      "orientation_rad": 2.048,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 8,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_025",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2113.49,
+        41.76,
+        -584.09
+      ],
+      "bounds": [
+        19.6,
+        24.49,
+        1.6
+      ],
+      "orientation_deg": 133.1,
+      "orientation_rad": 2.322,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 6,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_026",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5200.37,
+        11.47,
+        -2139.38
+      ],
+      "bounds": [
+        21.17,
+        26.46,
+        1.6
+      ],
+      "orientation_deg": -140.4,
+      "orientation_rad": -2.45,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 7,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_027",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5187.23,
+        12.23,
+        -2120.14
+      ],
+      "bounds": [
+        13.86,
+        17.32,
+        1.6
+      ],
+      "orientation_deg": 137.5,
+      "orientation_rad": 2.4,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 3,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_028",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1409.62,
+        76.57,
+        -1126.06
+      ],
+      "bounds": [
+        19.6,
+        24.49,
+        1.6
+      ],
+      "orientation_deg": 9.3,
+      "orientation_rad": 0.162,
+      "zone": "rhodes_livestock_pens",
+      "animal_spawns_count": 6,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_029",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2858.24,
+        45.7,
+        -1099.38
+      ],
+      "bounds": [
+        19.6,
+        24.49,
+        1.6
+      ],
+      "orientation_deg": 106.8,
+      "orientation_rad": 1.864,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 6,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_chickens_030",
+      "name": "Chickens Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1823.06,
+        131.24,
+        648.79
+      ],
+      "bounds": [
+        30.98,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": 151.4,
+      "orientation_rad": 2.642,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 15,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_031",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3708.68,
+        -13.01,
+        -2552.93
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": 86.3,
+      "orientation_rad": 1.506,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_032",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -984.11,
+        50.96,
+        -1334.69
+      ],
+      "bounds": [
+        29.93,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": -145.4,
+      "orientation_rad": -2.538,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 14,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_033",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        991.23,
+        44.78,
+        -2061.12
+      ],
+      "bounds": [
+        10.0,
+        12.0,
+        1.6
+      ],
+      "orientation_deg": -41.9,
+      "orientation_rad": -0.732,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 1,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_034",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1390.67,
+        125.95,
+        -250.75
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": -74.6,
+      "orientation_rad": -1.301,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_035",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1862.76,
+        46.32,
+        -1358.58
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": 86.6,
+      "orientation_rad": 1.512,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_036",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1398.75,
+        88.54,
+        344.21
+      ],
+      "bounds": [
+        21.17,
+        26.46,
+        1.6
+      ],
+      "orientation_deg": -174.3,
+      "orientation_rad": -3.042,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 7,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_037",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2242.45,
+        42.62,
+        -757.53
+      ],
+      "bounds": [
+        10.0,
+        12.0,
+        1.6
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.296,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 1,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_038",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        353.47,
+        175.31,
+        1504.54
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_039",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1458.35,
+        79.77,
+        -1388.13
+      ],
+      "bounds": [
+        24.0,
+        30.0,
+        1.6
+      ],
+      "orientation_deg": -123.9,
+      "orientation_rad": -2.162,
+      "zone": "rhodes_livestock_pens",
+      "animal_spawns_count": 9,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_040",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -4826.49,
+        -14.5,
+        -2734.32
+      ],
+      "bounds": [
+        16.0,
+        20.0,
+        1.6
+      ],
+      "orientation_deg": -19.1,
+      "orientation_rad": -0.334,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 4,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_041",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -4792.89,
+        -14.04,
+        -2684.58
+      ],
+      "bounds": [
+        17.89,
+        22.36,
+        1.6
+      ],
+      "orientation_deg": -27.6,
+      "orientation_rad": -0.482,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 5,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_042",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1197.65,
+        97.61,
+        -216.03
+      ],
+      "bounds": [
+        24.0,
+        30.0,
+        1.6
+      ],
+      "orientation_deg": 27.6,
+      "orientation_rad": 0.482,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 9,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_043",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1773.69,
+        155.66,
+        -444.91
+      ],
+      "bounds": [
+        10.0,
+        12.0,
+        1.6
+      ],
+      "orientation_deg": 60.2,
+      "orientation_rad": 1.051,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 1,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_044",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5543.47,
+        -1.84,
+        -3040.51
+      ],
+      "bounds": [
+        13.86,
+        17.32,
+        1.6
+      ],
+      "orientation_deg": 106.1,
+      "orientation_rad": 1.852,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 3,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_045",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5600.06,
+        5.49,
+        -2980.17
+      ],
+      "bounds": [
+        10.0,
+        12.0,
+        1.6
+      ],
+      "orientation_deg": 98.3,
+      "orientation_rad": 1.715,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 1,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_046",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2650.76,
+        44.5,
+        -925.54
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": -72.5,
+      "orientation_rad": -1.265,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_047",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        2574.05,
+        42.67,
+        -845.92
+      ],
+      "bounds": [
+        10.0,
+        12.0,
+        1.6
+      ],
+      "orientation_deg": -57.6,
+      "orientation_rad": -1.005,
+      "zone": "saint_denis_stockyards",
+      "animal_spawns_count": 1,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_048",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1405.66,
+        42.86,
+        -2202.72
+      ],
+      "bounds": [
+        32.0,
+        36.0,
+        1.6
+      ],
+      "orientation_deg": 109.2,
+      "orientation_rad": 1.906,
+      "zone": "rural_pasture",
+      "animal_spawns_count": 16,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_049",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1438.47,
+        78.65,
+        -1294.21
+      ],
+      "bounds": [
+        11.31,
+        14.14,
+        1.6
+      ],
+      "orientation_deg": 107.2,
+      "orientation_rad": 1.872,
+      "zone": "rhodes_livestock_pens",
+      "animal_spawns_count": 2,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "corral_horse_corral_050",
+      "name": "Horse_corral Corral & Pen Enclosure",
+      "type": "corral",
+      "primary_material": "weathered_wood",
+      "position": [
+        1437.4,
+        81.07,
+        -1417.14
+      ],
+      "bounds": [
+        16.0,
+        20.0,
+        1.6
+      ],
+      "orientation_deg": -28.9,
+      "orientation_rad": -0.504,
+      "zone": "rhodes_livestock_pens",
+      "animal_spawns_count": 4,
+      "sources": [
+        "RDOMap:animal_spawns.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "station_annesburg",
+      "name": "Annesburg Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2928.8,
+        44.66,
+        1296.3
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": -17.9,
+      "orientation_rad": -0.312,
+      "zone": "annesburg_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png",
+        "RDOMap:shops.json (shop_asb_post_office)"
+      ]
+    },
+    {
+      "id": "station_armadillo",
+      "name": "Armadillo Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3726.5,
+        -12.85,
+        -2628.2
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": -175.2,
+      "orientation_rad": -3.058,
+      "zone": "armadillo_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_blackwater",
+      "name": "Blackwater Station",
+      "type": "station",
+      "primary_material": "brick",
+      "position": [
+        -743.9,
+        44.59,
+        -1247.3
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 13.4,
+      "orientation_rad": 0.234,
+      "zone": "blackwater_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_colter",
+      "name": "Colter Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1305.1,
+        308.73,
+        2423.2
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 94.9,
+      "orientation_rad": 1.657,
+      "zone": "colter_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_emerald",
+      "name": "Emerald Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        1515.0,
+        90.1,
+        437.9
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": -41.6,
+      "orientation_rad": -0.726,
+      "zone": "emerald_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png",
+        "RDOMap:shops.json (shop_emr_post_office)"
+      ]
+    },
+    {
+      "id": "station_lagras",
+      "name": "Lagras Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2097.9,
+        41.04,
+        -582.3
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 48.6,
+      "orientation_rad": 0.848,
+      "zone": "lagras_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_macfarlanes",
+      "name": "Macfarlanes Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2502.2,
+        61.7,
+        -2444.43
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 126.6,
+      "orientation_rad": 2.209,
+      "zone": "macfarlanes_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_manzanita",
+      "name": "Manzanita Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1963.8,
+        117.61,
+        -1609.9
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 17.8,
+      "orientation_rad": 0.31,
+      "zone": "manzanita_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_rhodes",
+      "name": "Rhodes Station",
+      "type": "station",
+      "primary_material": "red_barn_wood",
+      "position": [
+        1247.0,
+        76.67,
+        -1292.1
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 43.0,
+      "orientation_rad": 0.75,
+      "zone": "rhodes_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_saint_denis",
+      "name": "Saint Denis Station",
+      "type": "station",
+      "primary_material": "brick",
+      "position": [
+        2667.5,
+        48.44,
+        -1467.7
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": -1.3,
+      "orientation_rad": -0.023,
+      "zone": "saint_denis_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_strawberry",
+      "name": "Strawberry Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1737.78,
+        158.9,
+        -414.3
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 46.2,
+      "orientation_rad": 0.807,
+      "zone": "strawberry_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_tumbleweed",
+      "name": "Tumbleweed Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5441.9,
+        6.46,
+        -2946.34
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 148.1,
+      "orientation_rad": 2.585,
+      "zone": "tumbleweed_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_valentine",
+      "name": "Valentine Station",
+      "type": "station",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -186.4,
+        113.81,
+        644.2
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 45.0,
+      "orientation_rad": 0.785,
+      "zone": "valentine_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_van_horn",
+      "name": "Van Horn Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2901.69,
+        56.77,
+        635.25
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": 62.0,
+      "orientation_rad": 1.082,
+      "zone": "van_horn_transport_hub",
+      "rail_connected": true,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "station_wapiti",
+      "name": "Wapiti Station",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        484.38,
+        244.8,
+        2178.27
+      ],
+      "bounds": [
+        14.0,
+        24.0,
+        7.5
+      ],
+      "orientation_deg": -59.3,
+      "orientation_rad": -1.034,
+      "zone": "wapiti_transport_hub",
+      "rail_connected": false,
+      "sources": [
+        "RDOMap:fasttravels.json",
+        "RDR2CollectorsMap:railroads.json",
+        "Media:Valentine Station.png"
+      ]
+    },
+    {
+      "id": "church_valentine",
+      "name": "Valentine Church & Historic Cemetery",
+      "type": "church",
+      "primary_material": "painted_white_wood",
+      "position": [
+        -180.0,
+        126.0,
+        890.0
+      ],
+      "bounds": [
+        14.0,
+        22.0,
+        14.5
+      ],
+      "zone": "valentine_north_hill",
+      "sources": [
+        "packages/content/pois.json",
+        "Media:Valentine MAP.jpg",
+        "Media:Valentine Detailed MAP.png"
+      ],
+      "orientation_deg": 176.6,
+      "orientation_rad": 3.351
+    },
+    {
+      "id": "church_saint_denis",
+      "name": "Saint Denis Cathedral of Notre Dame",
+      "type": "church",
+      "primary_material": "stone",
+      "position": [
+        2470.0,
+        10.0,
+        -1180.0
+      ],
+      "bounds": [
+        32.0,
+        48.0,
+        26.0
+      ],
+      "zone": "saint_denis_cathedral_square",
+      "sources": [
+        "RDOMap:interiors.json",
+        "Media:Complete Red Dead Online Map.png"
+      ],
+      "orientation_deg": 0.3,
+      "orientation_rad": 0.005
+    },
+    {
+      "id": "church_rhodes",
+      "name": "Rhodes Baptist Chapel",
+      "type": "church",
+      "primary_material": "painted_white_wood",
+      "position": [
+        1380.0,
+        82.0,
+        -1370.0
+      ],
+      "bounds": [
+        14.0,
+        20.0,
+        12.0
+      ],
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:interiors.json"
+      ],
+      "orientation_deg": -68.8,
+      "orientation_rad": -1.201
+    },
+    {
+      "id": "church_armadillo",
+      "name": "Armadillo Mission Church",
+      "type": "church",
+      "primary_material": "painted_white_wood",
+      "position": [
+        -3680.0,
+        8.0,
+        -2980.0
+      ],
+      "bounds": [
+        12.0,
+        16.0,
+        10.0
+      ],
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:interiors.json"
+      ],
+      "orientation_deg": -11.3,
+      "orientation_rad": -0.197
+    },
+    {
+      "id": "church_blackwater",
+      "name": "Blackwater Town Chapel",
+      "type": "church",
+      "primary_material": "painted_white_wood",
+      "position": [
+        -810.0,
+        43.0,
+        -1320.0
+      ],
+      "bounds": [
+        14.0,
+        22.0,
+        11.0
+      ],
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:interiors.json",
+        "RDOMap:shops.json (shop_blk_bartender)"
+      ],
+      "orientation_deg": -90.0,
+      "orientation_rad": -1.571
+    },
+    {
+      "id": "build_adl_barn_int",
+      "name": "Adl Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -535.0,
+        318.35,
+        2670.0
+      ],
+      "bounds": [
+        12.74,
+        13.65,
+        8.0
+      ],
+      "orientation_deg": -78.2,
+      "orientation_rad": -1.365,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_adl_cabin01_int",
+      "name": "Adl Cabin01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -556.36,
+        319.87,
+        2702.78
+      ],
+      "bounds": [
+        7.87,
+        8.32,
+        6.5
+      ],
+      "orientation_deg": -78.2,
+      "orientation_rad": -1.365,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_agu_hut01_int",
+      "name": "Agu Hut01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1383.53,
+        41.9,
+        -7006.36
+      ],
+      "bounds": [
+        18.72,
+        9.49,
+        6.5
+      ],
+      "orientation_deg": -5.2,
+      "orientation_rad": -0.091,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_agu_tower_int",
+      "name": "Agu Tower Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1344.52,
+        49.86,
+        -6800.27
+      ],
+      "bounds": [
+        11.38,
+        11.44,
+        6.5
+      ],
+      "orientation_deg": -5.2,
+      "orientation_rad": -0.091,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ann_gunsmith_int",
+      "name": "Ann Gunsmith Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2948.09,
+        43.96,
+        1318.51
+      ],
+      "bounds": [
+        18.59,
+        12.09,
+        6.5
+      ],
+      "orientation_deg": 70.8,
+      "orientation_rad": 1.236,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_asb_gunsmith)"
+      ],
+      "subtype": "gunsmith"
+    },
+    {
+      "id": "build_ann_jail_int",
+      "name": "Ann Jail Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2905.84,
+        48.16,
+        1312.42
+      ],
+      "bounds": [
+        14.43,
+        10.92,
+        7.0
+      ],
+      "orientation_deg": -64.1,
+      "orientation_rad": -1.119,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ann_mine_int_main",
+      "name": "Ann Mine Int Main",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2745.91,
+        69.21,
+        1356.93
+      ],
+      "bounds": [
+        130.26,
+        174.2,
+        6.5
+      ],
+      "orientation_deg": -129.6,
+      "orientation_rad": -2.262,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ann_roomnbath_int",
+      "name": "Ann Roomnbath Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2948.93,
+        43.9,
+        1331.26
+      ],
+      "bounds": [
+        12.22,
+        15.86,
+        6.5
+      ],
+      "orientation_deg": 74.9,
+      "orientation_rad": 1.307,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ann_setlrs_reg_int",
+      "name": "Ann Setlrs Reg Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2920.3,
+        47.7,
+        1342.53
+      ],
+      "bounds": [
+        6.37,
+        11.57,
+        6.5
+      ],
+      "orientation_deg": 74.9,
+      "orientation_rad": 1.307,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ann_settlers_int",
+      "name": "Ann Settlers Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2920.3,
+        47.7,
+        1342.53
+      ],
+      "bounds": [
+        7.8,
+        15.47,
+        6.5
+      ],
+      "orientation_deg": 74.9,
+      "orientation_rad": 1.307,
+      "zone": "annesburg_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_arm_bank_int",
+      "name": "Arm Bank Int",
+      "type": "building",
+      "primary_material": "stone",
+      "position": [
+        -3665.42,
+        -13.18,
+        -2629.69
+      ],
+      "bounds": [
+        12.61,
+        24.12,
+        7.0
+      ],
+      "orientation_deg": -158.8,
+      "orientation_rad": -2.772,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_arm_genstore_int",
+      "name": "Arm Genstore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3686.07,
+        -12.45,
+        -2626.69
+      ],
+      "bounds": [
+        15.67,
+        13.85,
+        6.5
+      ],
+      "orientation_deg": 180.0,
+      "orientation_rad": 3.142,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_amd_general_store)",
+        "RDOMap:shops.json (shop_cho_wardrobe_armadillo)"
+      ]
+    },
+    {
+      "id": "build_arm_saloon_int",
+      "name": "Arm Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3702.65,
+        -10.87,
+        -2593.31
+      ],
+      "bounds": [
+        17.68,
+        23.98,
+        7.5
+      ],
+      "orientation_deg": 1.8,
+      "orientation_rad": 0.031,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_amd_bartender)"
+      ]
+    },
+    {
+      "id": "build_arm_sheriff_int",
+      "name": "Arm Sheriff Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3620.78,
+        -14.6,
+        -2602.96
+      ],
+      "bounds": [
+        12.61,
+        11.63,
+        6.5
+      ],
+      "orientation_deg": 53.6,
+      "orientation_rad": 0.935,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_arm_sheriff_int",
+      "name": "Arm Sheriff Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3620.78,
+        -14.6,
+        -2602.96
+      ],
+      "bounds": [
+        12.61,
+        11.63,
+        6.5
+      ],
+      "orientation_deg": 53.6,
+      "orientation_rad": 0.935,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_arm_trainstation_int",
+      "name": "Arm Trainstation Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3729.36,
+        -12.08,
+        -2604.58
+      ],
+      "bounds": [
+        10.53,
+        23.27,
+        6.5
+      ],
+      "orientation_deg": 91.1,
+      "orientation_rad": 1.589,
+      "zone": "armadillo_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_amd_post_office)"
+      ]
+    },
+    {
+      "id": "build_aur_shack01_int",
+      "name": "Aur Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2578.27,
+        148.06,
+        -1382.07
+      ],
+      "bounds": [
+        7.08,
+        9.43,
+        6.5
+      ],
+      "orientation_deg": -76.8,
+      "orientation_rad": -1.34,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bea_01_int",
+      "name": "Bea 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2296.27,
+        85.74,
+        1463.16
+      ],
+      "bounds": [
+        142.74,
+        147.68,
+        6.5
+      ],
+      "orientation_deg": -33.7,
+      "orientation_rad": -0.588,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bee_barn_int",
+      "name": "Bee Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -1601.46,
+        82.72,
+        -1412.62
+      ],
+      "bounds": [
+        12.74,
+        16.38,
+        8.0
+      ],
+      "orientation_deg": -123.0,
+      "orientation_rad": -2.147,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bee_house_int",
+      "name": "Bee House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1640.42,
+        83.8,
+        -1360.52
+      ],
+      "bounds": [
+        16.32,
+        22.69,
+        6.5
+      ],
+      "orientation_deg": -95.0,
+      "orientation_rad": -1.659,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ben_shack_int",
+      "name": "Ben Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5204.81,
+        -18.45,
+        -3490.85
+      ],
+      "bounds": [
+        6.17,
+        11.12,
+        6.5
+      ],
+      "orientation_deg": 76.2,
+      "orientation_rad": 1.33,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ben_train_int",
+      "name": "Ben Train Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5226.02,
+        -14.47,
+        -3471.74
+      ],
+      "bounds": [
+        10.72,
+        14.04,
+        6.5
+      ],
+      "orientation_deg": 76.2,
+      "orientation_rad": 1.33,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_ben_post_office)"
+      ]
+    },
+    {
+      "id": "build_bgv_devilcave_int",
+      "name": "Bgv Devilcave Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2665.91,
+        168.33,
+        689.56
+      ],
+      "bounds": [
+        94.25,
+        93.99,
+        6.5
+      ],
+      "orientation_deg": -121.3,
+      "orientation_rad": -2.116,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_bank_int",
+      "name": "Bla Bank Int",
+      "type": "building",
+      "primary_material": "stone",
+      "position": [
+        -814.74,
+        49.67,
+        -1276.58
+      ],
+      "bounds": [
+        17.68,
+        11.25,
+        7.0
+      ],
+      "orientation_deg": -90.4,
+      "orientation_rad": -1.578,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_barber_int",
+      "name": "Bla Barber Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -816.0,
+        44.64,
+        -1367.0
+      ],
+      "bounds": [
+        19.18,
+        9.29,
+        6.5
+      ],
+      "orientation_deg": -94.5,
+      "orientation_rad": -1.65,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_blk_barber)",
+        "RDOMap:shops.json (shop_blk_photo_studio)"
+      ],
+      "subtype": "barber"
+    },
+    {
+      "id": "build_bla_carriagehouse_int",
+      "name": "Bla Carriagehouse Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -868.33,
+        45.81,
+        -1366.19
+      ],
+      "bounds": [
+        31.59,
+        17.16,
+        8.0
+      ],
+      "orientation_deg": 177.5,
+      "orientation_rad": 3.098,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_blk_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_bla_fenceshop_int",
+      "name": "Bla Fenceshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -870.76,
+        44.28,
+        -1288.99
+      ],
+      "bounds": [
+        16.57,
+        11.77,
+        6.5
+      ],
+      "orientation_deg": -90.0,
+      "orientation_rad": -1.571,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_genstore_int",
+      "name": "Bla Genstore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -782.5,
+        48.27,
+        -1324.0
+      ],
+      "bounds": [
+        20.67,
+        10.72,
+        6.5
+      ],
+      "orientation_deg": 1.5,
+      "orientation_rad": 0.027,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_blk_general_store)"
+      ]
+    },
+    {
+      "id": "build_bla_jail_int",
+      "name": "Bla Jail Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -763.03,
+        44.3,
+        -1269.86
+      ],
+      "bounds": [
+        16.38,
+        15.86,
+        7.0
+      ],
+      "orientation_deg": 91.3,
+      "orientation_rad": 1.593,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_photo_int",
+      "name": "Bla Photo Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -814.04,
+        43.61,
+        -1374.27
+      ],
+      "bounds": [
+        13.2,
+        8.91,
+        6.5
+      ],
+      "orientation_deg": -94.7,
+      "orientation_rad": -1.653,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_saloon_int",
+      "name": "Bla Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -818.0,
+        48.71,
+        -1317.0
+      ],
+      "bounds": [
+        24.44,
+        21.25,
+        7.5
+      ],
+      "orientation_deg": -88.3,
+      "orientation_rad": -1.541,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_tailor_int",
+      "name": "Bla Tailor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -765.55,
+        45.48,
+        -1293.04
+      ],
+      "bounds": [
+        15.73,
+        9.49,
+        6.5
+      ],
+      "orientation_deg": 90.0,
+      "orientation_rad": 1.571,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_blk_butcher)",
+        "RDOMap:shops.json (shop_blk_tailor)",
+        "RDOMap:shops.json (shop_grt_wardrobe_blackwater)"
+      ],
+      "subtype": "butcher"
+    },
+    {
+      "id": "build_bla_theater_int",
+      "name": "Bla Theater Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -778.0,
+        48.43,
+        -1362.0
+      ],
+      "bounds": [
+        30.94,
+        12.74,
+        6.5
+      ],
+      "orientation_deg": -90.5,
+      "orientation_rad": -1.579,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bla_train_int",
+      "name": "Bla Train Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -875.21,
+        47.23,
+        -1333.0
+      ],
+      "bounds": [
+        12.35,
+        19.05,
+        6.5
+      ],
+      "orientation_deg": -86.7,
+      "orientation_rad": -1.514,
+      "zone": "blackwater_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_blk_post_office)"
+      ]
+    },
+    {
+      "id": "build_bpl_swampcabin_int",
+      "name": "Bpl Swampcabin Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1412.65,
+        42.14,
+        -2671.48
+      ],
+      "bounds": [
+        6.37,
+        9.23,
+        6.5
+      ],
+      "orientation_deg": -3.6,
+      "orientation_rad": -0.062,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_boathouse_int",
+      "name": "Bra Boathouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2020.99,
+        41.81,
+        -775.86
+      ],
+      "bounds": [
+        15.34,
+        14.95,
+        6.5
+      ],
+      "orientation_deg": 96.9,
+      "orientation_rad": 1.692,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_boathouse_int",
+      "name": "Bra Boathouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        903.0,
+        42.99,
+        -1790.0
+      ],
+      "bounds": [
+        15.34,
+        14.95,
+        6.5
+      ],
+      "orientation_deg": -146.7,
+      "orientation_rad": -2.561,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_cornmill_int",
+      "name": "Bra Cornmill Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        979.94,
+        46.37,
+        -2024.69
+      ],
+      "bounds": [
+        21.71,
+        26.0,
+        6.5
+      ],
+      "orientation_deg": -79.4,
+      "orientation_rad": -1.386,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_mansion_int",
+      "name": "Bra Mansion Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1011.0,
+        49.57,
+        -1771.0
+      ],
+      "bounds": [
+        30.36,
+        23.6,
+        6.5
+      ],
+      "orientation_deg": 4.8,
+      "orientation_rad": 0.083,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_stable_int",
+      "name": "Bra Stable Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        967.26,
+        47.58,
+        -1830.81
+      ],
+      "bounds": [
+        11.05,
+        21.58,
+        8.0
+      ],
+      "orientation_deg": -94.8,
+      "orientation_rad": -1.655,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bra_tre_house_int",
+      "name": "Bra Tre House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1118.0,
+        54.62,
+        -1988.0
+      ],
+      "bounds": [
+        10.34,
+        10.34,
+        6.5
+      ],
+      "orientation_deg": -84.3,
+      "orientation_rad": -1.471,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_brb_dockhouse_int",
+      "name": "Brb Dockhouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2023.76,
+        14.14,
+        -3033.19
+      ],
+      "bounds": [
+        7.41,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 55.2,
+      "orientation_rad": 0.963,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_bur_calaboose_int",
+      "name": "Bur Calaboose Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -326.46,
+        50.06,
+        -151.35
+      ],
+      "bounds": [
+        14.69,
+        14.43,
+        6.5
+      ],
+      "orientation_deg": 59.0,
+      "orientation_rad": 1.03,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_but_shack_int",
+      "name": "But Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2532.09,
+        223.29,
+        1174.3
+      ],
+      "bounds": [
+        6.11,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 59.8,
+      "orientation_rad": 1.044,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_but_shack_int",
+      "name": "But Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2717.21,
+        78.01,
+        710.13
+      ],
+      "bounds": [
+        6.11,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -72.4,
+      "orientation_rad": -1.263,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cal_carriage_house_int",
+      "name": "Cal Carriage House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1885.0,
+        47.22,
+        -1343.0
+      ],
+      "bounds": [
+        26.98,
+        31.46,
+        6.5
+      ],
+      "orientation_deg": 38.1,
+      "orientation_rad": 0.665,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cal_tobacco_int",
+      "name": "Cal Tobacco Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1833.0,
+        43.3,
+        -1276.0
+      ],
+      "bounds": [
+        18.53,
+        18.66,
+        6.5
+      ],
+      "orientation_deg": -125.0,
+      "orientation_rad": -2.182,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_can_manor_int",
+      "name": "Can Manor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2497.78,
+        43.31,
+        -421.01
+      ],
+      "bounds": [
+        11.12,
+        8.32,
+        6.5
+      ],
+      "orientation_deg": 25.9,
+      "orientation_rad": 0.452,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_car_barn_int",
+      "name": "Car Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        769.45,
+        120.72,
+        876.24
+      ],
+      "bounds": [
+        9.1,
+        13.65,
+        8.0
+      ],
+      "orientation_deg": 35.9,
+      "orientation_rad": 0.626,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_car_house_int",
+      "name": "Car House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        777.29,
+        118.68,
+        846.8
+      ],
+      "bounds": [
+        15.08,
+        12.94,
+        6.5
+      ],
+      "orientation_deg": 33.7,
+      "orientation_rad": 0.588,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cas_house_int",
+      "name": "Cas House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -443.9,
+        102.77,
+        497.06
+      ],
+      "bounds": [
+        8.38,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -143.1,
+      "orientation_rad": -2.498,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cat_house_01_int",
+      "name": "Cat House 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1319.0,
+        50.06,
+        -2281.0
+      ],
+      "bounds": [
+        22.95,
+        24.18,
+        6.5
+      ],
+      "orientation_deg": -43.6,
+      "orientation_rad": -0.761,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cat_shack01_int",
+      "name": "Cat Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1336.63,
+        49.74,
+        -2294.84
+      ],
+      "bounds": [
+        6.89,
+        7.74,
+        6.5
+      ],
+      "orientation_deg": -46.2,
+      "orientation_rad": -0.807,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_che_barn_int",
+      "name": "Che Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -415.03,
+        218.73,
+        1752.89
+      ],
+      "bounds": [
+        12.68,
+        13.52,
+        8.0
+      ],
+      "orientation_deg": 116.5,
+      "orientation_rad": 2.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_che_cabin1",
+      "name": "Che Cabin1",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -397.97,
+        216.52,
+        1729.68
+      ],
+      "bounds": [
+        21.58,
+        21.19,
+        6.5
+      ],
+      "orientation_deg": 116.5,
+      "orientation_rad": 2.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_che_shack1_int",
+      "name": "Che Shack1 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -423.0,
+        216.76,
+        1735.91
+      ],
+      "bounds": [
+        10.66,
+        7.87,
+        6.5
+      ],
+      "orientation_deg": 116.5,
+      "orientation_rad": 2.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cin_tor_int",
+      "name": "Cin Tor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        999.21,
+        49.86,
+        -6744.61
+      ],
+      "bounds": [
+        15.86,
+        27.82,
+        6.5
+      ],
+      "orientation_deg": -5.2,
+      "orientation_rad": -0.091,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_civ_cellar_int",
+      "name": "Civ Cellar Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2445.57,
+        67.19,
+        290.77
+      ],
+      "bounds": [
+        10.01,
+        13.0,
+        6.5
+      ],
+      "orientation_deg": -80.2,
+      "orientation_rad": -1.401,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_col_barn_int",
+      "name": "Col Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -1341.01,
+        307.05,
+        2398.9
+      ],
+      "bounds": [
+        17.42,
+        13.91,
+        8.0
+      ],
+      "orientation_deg": 71.6,
+      "orientation_rad": 1.249,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_col_bunkhouse_int",
+      "name": "Col Bunkhouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1359.94,
+        307.72,
+        2425.93
+      ],
+      "bounds": [
+        6.0,
+        8.78,
+        6.5
+      ],
+      "orientation_deg": 58.3,
+      "orientation_rad": 1.018,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_col_cabin_int",
+      "name": "Col Cabin Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1354.32,
+        307.85,
+        2438.25
+      ],
+      "bounds": [
+        18.72,
+        17.75,
+        6.5
+      ],
+      "orientation_deg": 58.4,
+      "orientation_rad": 1.019,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_col_school_int",
+      "name": "Col School Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1321.18,
+        309.31,
+        2438.54
+      ],
+      "bounds": [
+        9.43,
+        17.23,
+        6.5
+      ],
+      "orientation_deg": 155.4,
+      "orientation_rad": 2.712,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_com_farmhouse_int",
+      "name": "Com Farmhouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1265.03,
+        96.03,
+        -407.94
+      ],
+      "bounds": [
+        23.79,
+        13.33,
+        6.5
+      ],
+      "orientation_deg": -14.0,
+      "orientation_rad": -0.245,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_com_muleshed_int",
+      "name": "Com Muleshed Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1237.26,
+        90.53,
+        -440.05
+      ],
+      "bounds": [
+        10.66,
+        15.21,
+        6.5
+      ],
+      "orientation_deg": -14.0,
+      "orientation_rad": -0.245,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cor_factoryb_int",
+      "name": "Cor Factoryb Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        480.24,
+        119.16,
+        679.85
+      ],
+      "bounds": [
+        53.37,
+        21.12,
+        6.5
+      ],
+      "orientation_deg": -1.2,
+      "orientation_rad": -0.021,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_cro_house_int",
+      "name": "Cro House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1117.89,
+        96.96,
+        489.3
+      ],
+      "bounds": [
+        16.71,
+        15.86,
+        6.5
+      ],
+      "orientation_deg": 31.0,
+      "orientation_rad": 0.541,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dai_farmhouse01_int",
+      "name": "Dai Farmhouse01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1371.02,
+        70.38,
+        -872.91
+      ],
+      "bounds": [
+        18.53,
+        13.85,
+        6.5
+      ],
+      "orientation_deg": 11.5,
+      "orientation_rad": 0.201,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_din_barn_int",
+      "name": "Din Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        193.96,
+        189.84,
+        986.55
+      ],
+      "bounds": [
+        13.65,
+        12.61,
+        8.0
+      ],
+      "orientation_deg": -162.7,
+      "orientation_rad": -2.84,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_din_house_int",
+      "name": "Din House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        222.55,
+        190.69,
+        985.84
+      ],
+      "bounds": [
+        10.92,
+        14.43,
+        6.5
+      ],
+      "orientation_deg": -131.0,
+      "orientation_rad": -2.287,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dis_1rmchurch_int",
+      "name": "Dis 1Rmchurch Int",
+      "type": "church",
+      "primary_material": "painted_white_wood",
+      "position": [
+        2415.66,
+        41.36,
+        -738.75
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        12.0
+      ],
+      "orientation_deg": -62.1,
+      "orientation_rad": -1.085,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dis_grz_preskull_int",
+      "name": "Dis Grz Preskull Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        325.75,
+        165.68,
+        1714.05
+      ],
+      "bounds": [
+        11.57,
+        16.51,
+        6.5
+      ],
+      "orientation_deg": 26.6,
+      "orientation_rad": 0.464,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dis_grz_statue_int",
+      "name": "Dis Grz Statue Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        807.15,
+        259.46,
+        1923.75
+      ],
+      "bounds": [
+        48.36,
+        32.63,
+        6.5
+      ],
+      "orientation_deg": -52.5,
+      "orientation_rad": -0.917,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dis_stonehenge_int",
+      "name": "Dis Stonehenge Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2379.86,
+        95.82,
+        1693.69
+      ],
+      "bounds": [
+        46.87,
+        39.65,
+        6.5
+      ],
+      "orientation_deg": 142.2,
+      "orientation_rad": 2.482,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dis_tradepost_int",
+      "name": "Dis Tradepost Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        191.22,
+        86.67,
+        -412.47
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 173.4,
+      "orientation_rad": 3.026,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dov_lab_int",
+      "name": "Dov Lab Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2511.08,
+        177.63,
+        2286.77
+      ],
+      "bounds": [
+        12.68,
+        24.7,
+        6.5
+      ],
+      "orientation_deg": 51.5,
+      "orientation_rad": 0.899,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dow_barn_int",
+      "name": "Dow Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -861.0,
+        98.85,
+        338.0
+      ],
+      "bounds": [
+        16.71,
+        20.61,
+        8.0
+      ],
+      "orientation_deg": 156.5,
+      "orientation_rad": 2.732,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_dow_house_int",
+      "name": "Dow House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -817.18,
+        97.81,
+        354.38
+      ],
+      "bounds": [
+        13.33,
+        10.4,
+        6.5
+      ],
+      "orientation_deg": 156.5,
+      "orientation_rad": 2.732,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_eme_barn_int",
+      "name": "Eme Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        1409.76,
+        96.61,
+        273.67
+      ],
+      "bounds": [
+        13.78,
+        16.51,
+        8.0
+      ],
+      "orientation_deg": 90.0,
+      "orientation_rad": 1.571,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_emr_fence)"
+      ]
+    },
+    {
+      "id": "build_eme_genstore_int",
+      "name": "Eme Genstore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1420.0,
+        89.4,
+        378.0
+      ],
+      "bounds": [
+        12.16,
+        16.64,
+        6.5
+      ],
+      "orientation_deg": 74.3,
+      "orientation_rad": 1.297,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_eme_saloon_int",
+      "name": "Eme Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        1448.0,
+        89.77,
+        373.0
+      ],
+      "bounds": [
+        10.66,
+        12.87,
+        7.5
+      ],
+      "orientation_deg": 74.3,
+      "orientation_rad": 1.297,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_gap_cartstop_int",
+      "name": "Gap Cartstop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -6045.77,
+        -14.57,
+        -3259.52
+      ],
+      "bounds": [
+        11.63,
+        17.62,
+        6.5
+      ],
+      "orientation_deg": 144.2,
+      "orientation_rad": 2.517,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_gap_mine_int",
+      "name": "Gap Mine Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5976.01,
+        -13.73,
+        -3140.08
+      ],
+      "bounds": [
+        117.84,
+        143.52,
+        6.5
+      ],
+      "orientation_deg": -9.9,
+      "orientation_rad": -0.173,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_grh_house_int",
+      "name": "Grh House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -61.51,
+        67.32,
+        -392.33
+      ],
+      "bounds": [
+        8.38,
+        8.26,
+        6.5
+      ],
+      "orientation_deg": 46.6,
+      "orientation_rad": 0.814,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_gri_g1_shack_int",
+      "name": "Gri G1 Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1022.13,
+        244.37,
+        1691.8
+      ],
+      "bounds": [
+        6.83,
+        12.42,
+        6.5
+      ],
+      "orientation_deg": 27.8,
+      "orientation_rad": 0.485,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_gri_g2_shack_int",
+      "name": "Gri G2 Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1961.53,
+        327.64,
+        2158.68
+      ],
+      "bounds": [
+        7.74,
+        8.84,
+        6.5
+      ],
+      "orientation_deg": 150.1,
+      "orientation_rad": 2.62,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_han_barn_int",
+      "name": "Han Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -2218.03,
+        127.84,
+        733.28
+      ],
+      "bounds": [
+        29.64,
+        25.61,
+        8.0
+      ],
+      "orientation_deg": 140.0,
+      "orientation_rad": 2.443,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_han_house_int",
+      "name": "Han House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2177.04,
+        124.88,
+        718.88
+      ],
+      "bounds": [
+        15.41,
+        23.53,
+        6.5
+      ],
+      "orientation_deg": 142.1,
+      "orientation_rad": 2.481,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_hrs_02_shop01_int",
+      "name": "Hrs 02 Shop01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2964.52,
+        58.47,
+        795.68
+      ],
+      "bounds": [
+        20.28,
+        20.21,
+        6.5
+      ],
+      "orientation_deg": 137.9,
+      "orientation_rad": 2.407,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_van_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_j_14_cave01_int",
+      "name": "J 14 Cave01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2416.77,
+        88.34,
+        1758.23
+      ],
+      "bounds": [
+        37.63,
+        60.12,
+        6.5
+      ],
+      "orientation_deg": -124.0,
+      "orientation_rad": -2.164,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_jum_horseshop_int",
+      "name": "Jum Horseshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1207.81,
+        97.94,
+        -193.72
+      ],
+      "bounds": [
+        16.64,
+        21.64,
+        6.5
+      ],
+      "orientation_deg": 27.6,
+      "orientation_rad": 0.482,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_scm_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_jum_horseshop_int",
+      "name": "Jum Horseshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1819.94,
+        155.19,
+        -560.07
+      ],
+      "bounds": [
+        16.64,
+        21.64,
+        6.5
+      ],
+      "orientation_deg": -115.9,
+      "orientation_rad": -2.023,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_str_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_l_07_cave_int",
+      "name": "L 07 Cave Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1517.59,
+        124.9,
+        735.74
+      ],
+      "bounds": [
+        17.68,
+        29.64,
+        6.5
+      ],
+      "orientation_deg": 95.6,
+      "orientation_rad": 1.668,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_l_14_cave",
+      "name": "L 14 Cave",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2296.64,
+        86.81,
+        1078.36
+      ],
+      "bounds": [
+        134.94,
+        249.67,
+        6.5
+      ],
+      "orientation_deg": -122.3,
+      "orientation_rad": -2.134,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lak_dockhouse_int",
+      "name": "Lak Dockhouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2230.0,
+        43.6,
+        -770.0
+      ],
+      "bounds": [
+        19.89,
+        14.62,
+        6.5
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.296,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lak_hideout_int",
+      "name": "Lak Hideout Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2253.45,
+        44.12,
+        -786.95
+      ],
+      "bounds": [
+        14.3,
+        21.84,
+        6.5
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.296,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lak_houseruined_int",
+      "name": "Lak Houseruined Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2260.41,
+        42.5,
+        -761.83
+      ],
+      "bounds": [
+        6.0,
+        7.48,
+        6.5
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.296,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lak_loveshack_int",
+      "name": "Lak Loveshack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2267.15,
+        43.7,
+        -781.73
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.296,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lar_house_int",
+      "name": "Lar House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        901.81,
+        115.84,
+        261.24
+      ],
+      "bounds": [
+        15.6,
+        10.34,
+        6.5
+      ],
+      "orientation_deg": -74.7,
+      "orientation_rad": -1.305,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ldj_shack01_int",
+      "name": "Ldj Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3400.61,
+        18.06,
+        -3305.39
+      ],
+      "bounds": [
+        7.93,
+        9.62,
+        6.5
+      ],
+      "orientation_deg": 73.0,
+      "orientation_rad": 1.274,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lnn_lonnie_shack_int",
+      "name": "Lnn Lonnie Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1622.0,
+        76.25,
+        -363.0
+      ],
+      "bounds": [
+        13.26,
+        10.01,
+        6.5
+      ],
+      "orientation_deg": -93.1,
+      "orientation_rad": -1.625,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lof_outpost_int",
+      "name": "Lof Outpost Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1935.15,
+        269.96,
+        1944.56
+      ],
+      "bounds": [
+        14.43,
+        15.54,
+        6.5
+      ],
+      "orientation_deg": -9.5,
+      "orientation_rad": -0.165,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_lon_mule_int",
+      "name": "Lon Mule Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -859.39,
+        55.56,
+        -743.2
+      ],
+      "bounds": [
+        12.61,
+        8.19,
+        6.5
+      ],
+      "orientation_deg": -165.7,
+      "orientation_rad": -2.891,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_luc_serial_house_int",
+      "name": "Luc Serial House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -614.0,
+        97.83,
+        528.0
+      ],
+      "bounds": [
+        17.75,
+        17.29,
+        6.5
+      ],
+      "orientation_deg": 115.1,
+      "orientation_rad": 2.009,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_m05_mine_int",
+      "name": "M05 Mine Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2342.57,
+        216.77,
+        107.87
+      ],
+      "bounds": [
+        69.88,
+        41.02,
+        6.5
+      ],
+      "orientation_deg": 52.0,
+      "orientation_rad": 0.907,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_mac_house01_int",
+      "name": "Mac House01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2235.93,
+        46.94,
+        -145.6
+      ],
+      "bounds": [
+        10.72,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 175.8,
+      "orientation_rad": 3.069,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_maco_shack01_int",
+      "name": "Maco Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1877.33,
+        42.63,
+        -738.03
+      ],
+      "bounds": [
+        8.06,
+        12.61,
+        6.5
+      ],
+      "orientation_deg": -90.5,
+      "orientation_rad": -1.58,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_man_cabin01_int",
+      "name": "Man Cabin01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1978.83,
+        117.65,
+        -1668.52
+      ],
+      "bounds": [
+        9.43,
+        10.6,
+        6.5
+      ],
+      "orientation_deg": -77.1,
+      "orientation_rad": -1.346,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_met_house01_int",
+      "name": "Met House01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2475.24,
+        167.12,
+        1998.76
+      ],
+      "bounds": [
+        10.72,
+        7.67,
+        6.5
+      ],
+      "orientation_deg": 162.0,
+      "orientation_rad": 2.827,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_mfr_blacksmith01_int",
+      "name": "Mfr Blacksmith01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2397.55,
+        61.56,
+        -2380.38
+      ],
+      "bounds": [
+        13.85,
+        13.97,
+        6.5
+      ],
+      "orientation_deg": 113.9,
+      "orientation_rad": 1.987,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_mfr_cottage01_int",
+      "name": "Mfr Cottage01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2366.89,
+        62.05,
+        -2392.16
+      ],
+      "bounds": [
+        6.63,
+        11.12,
+        6.5
+      ],
+      "orientation_deg": 113.8,
+      "orientation_rad": 1.986,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_mic_hideout_int",
+      "name": "Mic Hideout Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1491.61,
+        317.33,
+        1249.12
+      ],
+      "bounds": [
+        10.01,
+        9.88,
+        6.5
+      ],
+      "orientation_deg": 2.4,
+      "orientation_rad": 0.042,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_mil_shed_int",
+      "name": "Mil Shed Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1414.92,
+        225.33,
+        1132.84
+      ],
+      "bounds": [
+        9.49,
+        7.74,
+        6.5
+      ],
+      "orientation_deg": 86.1,
+      "orientation_rad": 1.503,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_miy_fort_int",
+      "name": "Miy Fort Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1776.45,
+        41.54,
+        -5968.71
+      ],
+      "bounds": [
+        18.59,
+        19.24,
+        6.5
+      ],
+      "orientation_deg": -5.2,
+      "orientation_rad": -0.091,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_art_int",
+      "name": "New Art Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2698.0,
+        54.31,
+        -1200.0
+      ],
+      "bounds": [
+        24.89,
+        34.97,
+        6.5
+      ],
+      "orientation_deg": -92.0,
+      "orientation_rad": -1.605,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_art_res",
+      "name": "New Art Res",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2739.71,
+        49.45,
+        -1209.1
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -119.0,
+      "orientation_rad": -2.076,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_barber_int",
+      "name": "New Barber Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2655.0,
+        54.2,
+        -1180.0
+      ],
+      "bounds": [
+        13.07,
+        9.04,
+        6.5
+      ],
+      "orientation_deg": -88.7,
+      "orientation_rad": -1.548,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_barber)"
+      ],
+      "subtype": "barber"
+    },
+    {
+      "id": "build_new_carriagehouse_int",
+      "name": "New Carriagehouse Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        2508.16,
+        46.44,
+        -1450.26
+      ],
+      "bounds": [
+        23.92,
+        39.07,
+        8.0
+      ],
+      "orientation_deg": -90.7,
+      "orientation_rad": -1.583,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_new_com_bank_int",
+      "name": "New Com Bank Int",
+      "type": "building",
+      "primary_material": "stone",
+      "position": [
+        2643.71,
+        51.27,
+        -1293.34
+      ],
+      "bounds": [
+        31.92,
+        34.84,
+        7.0
+      ],
+      "orientation_deg": -66.4,
+      "orientation_rad": -1.16,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_exotic_int",
+      "name": "New Exotic Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2588.63,
+        44.76,
+        -1009.61
+      ],
+      "bounds": [
+        10.66,
+        18.91,
+        6.5
+      ],
+      "orientation_deg": 5.1,
+      "orientation_rad": 0.089,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_gamble_int",
+      "name": "New Gamble Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2717.0,
+        49.81,
+        -1288.0
+      ],
+      "bounds": [
+        20.28,
+        18.91,
+        6.5
+      ],
+      "orientation_deg": -64.4,
+      "orientation_rad": -1.123,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_gunsmith)"
+      ],
+      "subtype": "gunsmith"
+    },
+    {
+      "id": "build_new_gang01_int",
+      "name": "New Gang01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1355.12,
+        40.01,
+        -2297.3
+      ],
+      "bounds": [
+        8.0,
+        10.14,
+        6.5
+      ],
+      "orientation_deg": 76.0,
+      "orientation_rad": 1.326,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_grocery_int",
+      "name": "New Grocery Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2826.67,
+        47.73,
+        -1316.56
+      ],
+      "bounds": [
+        22.75,
+        10.72,
+        6.5
+      ],
+      "orientation_deg": 49.8,
+      "orientation_rad": 0.869,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_general_store)"
+      ]
+    },
+    {
+      "id": "build_new_gunshop_int",
+      "name": "New Gunshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2714.09,
+        50.06,
+        -1285.94
+      ],
+      "bounds": [
+        16.9,
+        13.46,
+        6.5
+      ],
+      "orientation_deg": -64.4,
+      "orientation_rad": -1.123,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_hotel_3rd_floor_int",
+      "name": "New Hotel 3Rd Floor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2759.59,
+        47.79,
+        -1340.26
+      ],
+      "bounds": [
+        25.41,
+        20.41,
+        6.5
+      ],
+      "orientation_deg": -36.8,
+      "orientation_rad": -0.642,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_magic_es_int",
+      "name": "New Magic Es Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2696.15,
+        50.35,
+        -1354.79
+      ],
+      "bounds": [
+        28.41,
+        26.85,
+        6.5
+      ],
+      "orientation_deg": -50.9,
+      "orientation_rad": -0.889,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_magic_int",
+      "name": "New Magic Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2696.15,
+        50.35,
+        -1354.79
+      ],
+      "bounds": [
+        28.41,
+        26.85,
+        6.5
+      ],
+      "orientation_deg": -50.9,
+      "orientation_rad": -0.889,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_man_bronte",
+      "name": "New Man Bronte",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2372.0,
+        46.37,
+        -1216.0
+      ],
+      "bounds": [
+        36.92,
+        29.84,
+        6.5
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_man_gala_int",
+      "name": "New Man Gala Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2402.29,
+        47.59,
+        -1083.94
+      ],
+      "bounds": [
+        39.52,
+        32.95,
+        6.5
+      ],
+      "orientation_deg": 172.4,
+      "orientation_rad": 3.009,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_pharmacy_int",
+      "name": "New Pharmacy Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2719.12,
+        52.14,
+        -1230.74
+      ],
+      "bounds": [
+        11.7,
+        14.76,
+        6.5
+      ],
+      "orientation_deg": -88.1,
+      "orientation_rad": -1.537,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_doctor)"
+      ],
+      "subtype": "doctor"
+    },
+    {
+      "id": "build_new_photo_int",
+      "name": "New Photo Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2734.75,
+        47.84,
+        -1117.38
+      ],
+      "bounds": [
+        8.32,
+        11.51,
+        6.5
+      ],
+      "orientation_deg": -179.1,
+      "orientation_rad": -3.125,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_photo_studio)"
+      ]
+    },
+    {
+      "id": "build_new_pie_tunnel_int",
+      "name": "New Pie Tunnel Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2327.37,
+        42.06,
+        -1515.16
+      ],
+      "bounds": [
+        54.02,
+        40.69,
+        6.5
+      ],
+      "orientation_deg": 0.2,
+      "orientation_rad": 0.004,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_police_int",
+      "name": "New Police Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2501.95,
+        48.1,
+        -1308.82
+      ],
+      "bounds": [
+        30.75,
+        23.07,
+        6.5
+      ],
+      "orientation_deg": -89.0,
+      "orientation_rad": -1.553,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_res_doctor_int",
+      "name": "New Res Doctor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2725.5,
+        51.72,
+        -1230.4
+      ],
+      "bounds": [
+        27.23,
+        18.91,
+        6.5
+      ],
+      "orientation_deg": 2.7,
+      "orientation_rad": 0.047,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_saloon01_int_main",
+      "name": "New Saloon01 Int Main",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        2633.98,
+        58.76,
+        -1227.09
+      ],
+      "bounds": [
+        19.7,
+        19.63,
+        7.5
+      ],
+      "orientation_deg": -1.0,
+      "orientation_rad": -0.017,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_bartender)"
+      ]
+    },
+    {
+      "id": "build_new_saloon02_int",
+      "name": "New Saloon02 Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        2798.8,
+        47.9,
+        -1169.15
+      ],
+      "bounds": [
+        14.37,
+        18.91,
+        7.5
+      ],
+      "orientation_deg": -29.6,
+      "orientation_rad": -0.517,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_bartender_slum)"
+      ]
+    },
+    {
+      "id": "build_new_shady_shop_int",
+      "name": "New Shady Shop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2857.07,
+        47.13,
+        -1199.85
+      ],
+      "bounds": [
+        11.18,
+        11.05,
+        6.5
+      ],
+      "orientation_deg": 93.8,
+      "orientation_rad": 1.637,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_fence)"
+      ]
+    },
+    {
+      "id": "build_new_stairwell01_int",
+      "name": "New Stairwell01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2677.82,
+        55.01,
+        -1186.55
+      ],
+      "bounds": [
+        15.41,
+        17.42,
+        6.5
+      ],
+      "orientation_deg": -88.7,
+      "orientation_rad": -1.548,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_tailor01_int_main",
+      "name": "New Tailor01 Int Main",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2552.64,
+        52.0,
+        -1164.34
+      ],
+      "bounds": [
+        16.12,
+        25.22,
+        6.5
+      ],
+      "orientation_deg": -0.8,
+      "orientation_rad": -0.014,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_tailor)",
+        "RDOMap:shops.json (shop_bay_wardrobe_saint_denis)"
+      ]
+    },
+    {
+      "id": "build_new_theater_int",
+      "name": "New Theater Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2546.0,
+        47.8,
+        -1297.76
+      ],
+      "bounds": [
+        30.81,
+        55.71,
+        6.5
+      ],
+      "orientation_deg": -89.0,
+      "orientation_rad": -1.553,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_traindepot_int",
+      "name": "New Traindepot Int",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2367.3,
+        45.76,
+        -1458.72
+      ],
+      "bounds": [
+        35.69,
+        28.02,
+        7.5
+      ],
+      "orientation_deg": -32.5,
+      "orientation_rad": -0.567,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_new_trolleydepot",
+      "name": "New Trolleydepot",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2739.58,
+        47.22,
+        -1399.18
+      ],
+      "bounds": [
+        29.12,
+        16.71,
+        7.5
+      ],
+      "orientation_deg": 26.0,
+      "orientation_rad": 0.454,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_sdn_post_office)"
+      ]
+    },
+    {
+      "id": "build_old_cptquarter_int",
+      "name": "Old Cptquarter Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        339.68,
+        173.04,
+        1505.88
+      ],
+      "bounds": [
+        11.83,
+        11.96,
+        6.5
+      ],
+      "orientation_deg": -134.9,
+      "orientation_rad": -2.354,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_jailsmth_int",
+      "name": "Old Jailsmth Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        344.18,
+        172.54,
+        1473.91
+      ],
+      "bounds": [
+        13.13,
+        13.97,
+        7.0
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_stable_int",
+      "name": "Old Stable Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        357.02,
+        176.0,
+        1505.67
+      ],
+      "bounds": [
+        13.33,
+        16.19,
+        8.0
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_storage_int",
+      "name": "Old Storage Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        365.18,
+        175.83,
+        1490.81
+      ],
+      "bounds": [
+        10.99,
+        10.79,
+        6.5
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_tower02_int",
+      "name": "Old Tower02 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        366.67,
+        175.25,
+        1473.67
+      ],
+      "bounds": [
+        12.16,
+        10.46,
+        6.5
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_tower03_int",
+      "name": "Old Tower03 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        321.17,
+        170.06,
+        1510.5
+      ],
+      "bounds": [
+        6.44,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -146.3,
+      "orientation_rad": -2.554,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_tower04_int",
+      "name": "Old Tower04 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        361.97,
+        178.09,
+        1516.0
+      ],
+      "bounds": [
+        12.35,
+        10.72,
+        6.5
+      ],
+      "orientation_deg": 95.7,
+      "orientation_rad": 1.67,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_old_tower1_int",
+      "name": "Old Tower1 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        346.94,
+        173.78,
+        1458.92
+      ],
+      "bounds": [
+        6.57,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 135.0,
+      "orientation_rad": 2.356,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ora_house_01_int",
+      "name": "Ora House 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2067.85,
+        43.35,
+        -851.6
+      ],
+      "bounds": [
+        12.61,
+        11.83,
+        6.5
+      ],
+      "orientation_deg": 90.9,
+      "orientation_rad": 1.587,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pai_barn_int",
+      "name": "Pai Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -630.17,
+        83.16,
+        -64.88
+      ],
+      "bounds": [
+        16.12,
+        27.43,
+        8.0
+      ],
+      "orientation_deg": -1.5,
+      "orientation_rad": -0.026,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pai_house_int",
+      "name": "Pai House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -611.8,
+        84.35,
+        -26.35
+      ],
+      "bounds": [
+        14.56,
+        21.25,
+        6.5
+      ],
+      "orientation_deg": 9.5,
+      "orientation_rad": 0.165,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pho_houseboat_int",
+      "name": "Pho Houseboat Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2309.54,
+        41.68,
+        -330.46
+      ],
+      "bounds": [
+        9.23,
+        7.41,
+        6.5
+      ],
+      "orientation_deg": 44.3,
+      "orientation_rad": 0.774,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ple_house01_int",
+      "name": "Ple House01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -4368.85,
+        19.51,
+        -2416.52
+      ],
+      "bounds": [
+        7.87,
+        7.35,
+        6.5
+      ],
+      "orientation_deg": 176.4,
+      "orientation_rad": 3.078,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_privatearmoured_int",
+      "name": "Privatearmoured Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -394.32,
+        159.1,
+        1316.13
+      ],
+      "bounds": [
+        6.0,
+        18.98,
+        6.5
+      ],
+      "orientation_deg": -112.2,
+      "orientation_rad": -1.957,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pro_barn_int",
+      "name": "Pro Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -2548.72,
+        148.92,
+        399.51
+      ],
+      "bounds": [
+        32.83,
+        28.93,
+        8.0
+      ],
+      "orientation_deg": -100.1,
+      "orientation_rad": -1.747,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pro_mansion_int",
+      "name": "Pro Mansion Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2571.42,
+        151.52,
+        349.66
+      ],
+      "bounds": [
+        32.3,
+        22.3,
+        6.5
+      ],
+      "orientation_deg": 7.9,
+      "orientation_rad": 0.138,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pro_worker_house_int",
+      "name": "Pro Worker House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2595.0,
+        143.55,
+        457.0
+      ],
+      "bounds": [
+        11.77,
+        14.69,
+        6.5
+      ],
+      "orientation_deg": -95.4,
+      "orientation_rad": -1.664,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_pro_workshop_int",
+      "name": "Pro Workshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2592.87,
+        146.46,
+        408.43
+      ],
+      "bounds": [
+        14.5,
+        14.17,
+        6.5
+      ],
+      "orientation_deg": -100.1,
+      "orientation_rad": -1.747,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_qua_shack01_int",
+      "name": "Qua Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1199.89,
+        43.34,
+        -1938.87
+      ],
+      "bounds": [
+        6.89,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -123.3,
+      "orientation_rad": -2.152,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_qua_shack02_int",
+      "name": "Qua Shack02 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1164.77,
+        41.9,
+        -1941.39
+      ],
+      "bounds": [
+        6.0,
+        10.01,
+        6.5
+      ],
+      "orientation_deg": -2.6,
+      "orientation_rad": -0.046,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rad_house_01_int",
+      "name": "Rad House 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1113.94,
+        64.54,
+        -1301.28
+      ],
+      "bounds": [
+        17.42,
+        21.45,
+        6.5
+      ],
+      "orientation_deg": 113.4,
+      "orientation_rad": 1.979,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rdl_house_01_int",
+      "name": "Rdl House 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3484.19,
+        -0.68,
+        -3468.79
+      ],
+      "bounds": [
+        7.93,
+        7.54,
+        6.5
+      ],
+      "orientation_deg": 52.1,
+      "orientation_rad": 0.91,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rho_bank_int",
+      "name": "Rho Bank Int",
+      "type": "building",
+      "primary_material": "stone",
+      "position": [
+        1288.91,
+        81.25,
+        -1303.31
+      ],
+      "bounds": [
+        25.94,
+        30.81,
+        7.0
+      ],
+      "orientation_deg": -39.0,
+      "orientation_rad": -0.681,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rho_fenceshop_int",
+      "name": "Rho Fenceshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1316.59,
+        81.84,
+        -1143.57
+      ],
+      "bounds": [
+        8.71,
+        8.91,
+        6.5
+      ],
+      "orientation_deg": -111.0,
+      "orientation_rad": -1.937,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rho_fence)"
+      ]
+    },
+    {
+      "id": "build_rho_genstore_int",
+      "name": "Rho Genstore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1326.35,
+        80.23,
+        -1291.64
+      ],
+      "bounds": [
+        14.62,
+        10.53,
+        6.5
+      ],
+      "orientation_deg": -119.7,
+      "orientation_rad": -2.09,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rho_general_store)",
+        "RDOMap:shops.json (shop_scm_wardrobe_rhodes)"
+      ]
+    },
+    {
+      "id": "build_rho_graysecret_int",
+      "name": "Rho Graysecret Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1356.61,
+        79.98,
+        -1248.24
+      ],
+      "bounds": [
+        9.04,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": -92.9,
+      "orientation_rad": -1.622,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rho_gunsmith_int",
+      "name": "Rho Gunsmith Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1324.72,
+        79.58,
+        -1321.7
+      ],
+      "bounds": [
+        15.54,
+        13.13,
+        6.5
+      ],
+      "orientation_deg": -15.4,
+      "orientation_rad": -0.268,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rho_gunsmith)"
+      ],
+      "subtype": "gunsmith"
+    },
+    {
+      "id": "build_rho_saloon_int",
+      "name": "Rho Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        1342.36,
+        81.31,
+        -1374.62
+      ],
+      "bounds": [
+        21.97,
+        33.34,
+        7.5
+      ],
+      "orientation_deg": -68.8,
+      "orientation_rad": -1.201,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rho_bartender)"
+      ]
+    },
+    {
+      "id": "build_rho_sheriff_int",
+      "name": "Rho Sheriff Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1359.81,
+        78.01,
+        -1300.12
+      ],
+      "bounds": [
+        15.02,
+        13.59,
+        6.5
+      ],
+      "orientation_deg": -33.3,
+      "orientation_rad": -0.581,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rho_slum_player_int",
+      "name": "Rho Slum Player Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1295.87,
+        81.29,
+        -1133.07
+      ],
+      "bounds": [
+        10.08,
+        11.44,
+        6.5
+      ],
+      "orientation_deg": -25.6,
+      "orientation_rad": -0.447,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_rho_train_int",
+      "name": "Rho Train Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1234.66,
+        76.22,
+        -1294.09
+      ],
+      "bounds": [
+        29.51,
+        32.24,
+        6.5
+      ],
+      "orientation_deg": 43.0,
+      "orientation_rad": 0.75,
+      "zone": "rhodes_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rho_post_office)"
+      ]
+    },
+    {
+      "id": "build_rig_station_int",
+      "name": "Rig Station Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1095.05,
+        83.69,
+        -575.01
+      ],
+      "bounds": [
+        10.92,
+        10.92,
+        6.5
+      ],
+      "orientation_deg": -31.6,
+      "orientation_rad": -0.552,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_rgg_post_office)"
+      ]
+    },
+    {
+      "id": "build_roc_house_int",
+      "name": "Roc House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2991.03,
+        166.49,
+        2190.39
+      ],
+      "bounds": [
+        21.78,
+        20.87,
+        6.5
+      ],
+      "orientation_deg": -57.7,
+      "orientation_rad": -1.008,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_scr_shack_int",
+      "name": "Scr Shack Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5850.25,
+        -25.37,
+        -3743.91
+      ],
+      "bounds": [
+        12.22,
+        7.61,
+        6.5
+      ],
+      "orientation_deg": 16.9,
+      "orientation_rad": 0.295,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_sha_mansion_int",
+      "name": "Sha Mansion Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1897.0,
+        46.57,
+        -1863.0
+      ],
+      "bounds": [
+        30.88,
+        31.07,
+        6.5
+      ],
+      "orientation_deg": -28.7,
+      "orientation_rad": -0.501,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_ai_int",
+      "name": "Shack Ai Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        3027.89,
+        83.97,
+        1778.8
+      ],
+      "bounds": [
+        13.26,
+        9.55,
+        6.5
+      ],
+      "orientation_deg": 56.7,
+      "orientation_rad": 0.989,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_b_a_int",
+      "name": "Shack B A Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1551.19,
+        113.27,
+        252.9
+      ],
+      "bounds": [
+        14.76,
+        12.29,
+        6.5
+      ],
+      "orientation_deg": 53.5,
+      "orientation_rad": 0.934,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_b_b_int",
+      "name": "Shack B B Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1455.41,
+        69.59,
+        -1578.23
+      ],
+      "bounds": [
+        14.5,
+        13.46,
+        6.5
+      ],
+      "orientation_deg": -29.8,
+      "orientation_rad": -0.521,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_b_c_int",
+      "name": "Shack B C Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1784.77,
+        110.11,
+        463.0
+      ],
+      "bounds": [
+        13.2,
+        13.71,
+        6.5
+      ],
+      "orientation_deg": -39.2,
+      "orientation_rad": -0.683,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_bv_int",
+      "name": "Shack Bv Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2459.88,
+        141.75,
+        841.23
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 68.8,
+      "orientation_rad": 1.2,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_cwb_int",
+      "name": "Shack Cwb Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1983.14,
+        171.04,
+        1191.9
+      ],
+      "bounds": [
+        13.13,
+        7.8,
+        6.5
+      ],
+      "orientation_deg": -58.6,
+      "orientation_rad": -1.022,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_dr_int",
+      "name": "Shack Dr Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -156.32,
+        116.29,
+        1491.24
+      ],
+      "bounds": [
+        9.81,
+        10.34,
+        6.5
+      ],
+      "orientation_deg": -174.9,
+      "orientation_rad": -3.053,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_hb_int",
+      "name": "Shack Hb Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2370.0,
+        131.95,
+        473.0
+      ],
+      "bounds": [
+        7.21,
+        7.8,
+        6.5
+      ],
+      "orientation_deg": -105.9,
+      "orientation_rad": -1.849,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_hf_int",
+      "name": "Shack Hf Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1888.43,
+        76.04,
+        301.66
+      ],
+      "bounds": [
+        7.35,
+        10.66,
+        6.5
+      ],
+      "orientation_deg": 22.8,
+      "orientation_rad": 0.397,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_it_01_int",
+      "name": "Shack It 01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2836.15,
+        129.78,
+        1686.33
+      ],
+      "bounds": [
+        13.13,
+        8.38,
+        6.5
+      ],
+      "orientation_deg": 55.0,
+      "orientation_rad": 0.96,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_it_02_int",
+      "name": "Shack It 02 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2625.28,
+        115.51,
+        1695.86
+      ],
+      "bounds": [
+        13.2,
+        8.32,
+        6.5
+      ],
+      "orientation_deg": -118.6,
+      "orientation_rad": -2.07,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_lt_int",
+      "name": "Shack Lt Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1134.57,
+        69.41,
+        -979.48
+      ],
+      "bounds": [
+        13.07,
+        9.36,
+        6.5
+      ],
+      "orientation_deg": -79.5,
+      "orientation_rad": -1.387,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_pl_int",
+      "name": "Shack Pl Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2543.26,
+        80.42,
+        696.89
+      ],
+      "bounds": [
+        9.43,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 108.9,
+      "orientation_rad": 1.9,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_rarefish_int",
+      "name": "Shack Rarefish Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        342.15,
+        42.1,
+        -667.05
+      ],
+      "bounds": [
+        11.7,
+        15.02,
+        6.5
+      ],
+      "orientation_deg": -168.2,
+      "orientation_rad": -2.936,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_rc_int",
+      "name": "Shack Rc Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2174.25,
+        191.36,
+        -251.17
+      ],
+      "bounds": [
+        13.13,
+        9.55,
+        6.5
+      ],
+      "orientation_deg": 28.7,
+      "orientation_rad": 0.501,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_sc_int",
+      "name": "Shack Sc Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -690.02,
+        134.24,
+        1043.7
+      ],
+      "bounds": [
+        12.22,
+        12.94,
+        6.5
+      ],
+      "orientation_deg": -106.9,
+      "orientation_rad": -1.866,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_sk2_int",
+      "name": "Shack Sk2 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1707.38,
+        42.98,
+        -1005.4
+      ],
+      "bounds": [
+        8.26,
+        8.64,
+        6.5
+      ],
+      "orientation_deg": -70.9,
+      "orientation_rad": -1.237,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_sp_int",
+      "name": "Shack Sp Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1389.0,
+        50.78,
+        -2082.0
+      ],
+      "bounds": [
+        12.48,
+        16.96,
+        6.5
+      ],
+      "orientation_deg": 32.1,
+      "orientation_rad": 0.56,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_sw_int",
+      "name": "Shack Sw Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2370.73,
+        43.12,
+        -862.59
+      ],
+      "bounds": [
+        11.89,
+        12.03,
+        6.5
+      ],
+      "orientation_deg": 17.0,
+      "orientation_rad": 0.297,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_shack_urr_int",
+      "name": "Shack Urr Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1185.39,
+        94.76,
+        -101.49
+      ],
+      "bounds": [
+        15.67,
+        7.35,
+        6.5
+      ],
+      "orientation_deg": -104.3,
+      "orientation_rad": -1.821,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_sil_house_int",
+      "name": "Sil House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5552.85,
+        -8.38,
+        -2398.81
+      ],
+      "bounds": [
+        11.18,
+        7.15,
+        6.5
+      ],
+      "orientation_deg": 41.7,
+      "orientation_rad": 0.728,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_six_cabin_int",
+      "name": "Six Cabin Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -62.4,
+        170.75,
+        1237.83
+      ],
+      "bounds": [
+        16.57,
+        14.82,
+        6.5
+      ],
+      "orientation_deg": 66.6,
+      "orientation_rad": 1.163,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_sod_house_int",
+      "name": "Sod House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1866.86,
+        113.23,
+        585.01
+      ],
+      "bounds": [
+        16.57,
+        14.24,
+        6.5
+      ],
+      "orientation_deg": -7.3,
+      "orientation_rad": -0.127,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_sol_basement_int",
+      "name": "Sol Basement Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5395.82,
+        -22.49,
+        -3668.86
+      ],
+      "bounds": [
+        7.35,
+        18.53,
+        6.5
+      ],
+      "orientation_deg": -80.4,
+      "orientation_rad": -1.403,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_doctor_int",
+      "name": "Str Doctor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1805.0,
+        158.51,
+        -432.0
+      ],
+      "bounds": [
+        13.52,
+        14.62,
+        6.5
+      ],
+      "orientation_deg": 60.3,
+      "orientation_rad": 1.052,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_dressingroom_int",
+      "name": "Str Dressingroom Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1793.65,
+        157.96,
+        -394.45
+      ],
+      "bounds": [
+        6.63,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 141.5,
+      "orientation_rad": 2.47,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_str_general_store)",
+        "RDOMap:shops.json (shop_bgv_wardrobe_strawberry)"
+      ]
+    },
+    {
+      "id": "build_str_frt_int",
+      "name": "Str Frt Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1765.0,
+        164.76,
+        -383.0
+      ],
+      "bounds": [
+        13.13,
+        11.89,
+        6.5
+      ],
+      "orientation_deg": 141.5,
+      "orientation_rad": 2.47,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_str_post_office)"
+      ]
+    },
+    {
+      "id": "build_str_genst_int",
+      "name": "Str Genst Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1791.87,
+        160.9,
+        -386.65
+      ],
+      "bounds": [
+        8.91,
+        12.03,
+        6.5
+      ],
+      "orientation_deg": 142.5,
+      "orientation_rad": 2.487,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_jailpost_int",
+      "name": "Str Jailpost Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1811.0,
+        161.28,
+        -351.0
+      ],
+      "bounds": [
+        15.79,
+        17.23,
+        7.0
+      ],
+      "orientation_deg": -88.2,
+      "orientation_rad": -1.54,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_mayorshouse_int",
+      "name": "Str Mayorshouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1784.74,
+        164.81,
+        -358.14
+      ],
+      "bounds": [
+        9.04,
+        9.81,
+        6.5
+      ],
+      "orientation_deg": -88.3,
+      "orientation_rad": -1.541,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_nemi_int",
+      "name": "Str Nemi Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1767.64,
+        154.74,
+        -432.13
+      ],
+      "bounds": [
+        12.8,
+        13.46,
+        6.5
+      ],
+      "orientation_deg": 36.9,
+      "orientation_rad": 0.644,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_res02_int_main",
+      "name": "Str Res02 Int Main",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1781.89,
+        158.66,
+        -398.64
+      ],
+      "bounds": [
+        15.08,
+        11.38,
+        6.5
+      ],
+      "orientation_deg": 78.1,
+      "orientation_rad": 1.363,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_str_whore_int",
+      "name": "Str Whore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1815.15,
+        165.2,
+        -370.29
+      ],
+      "bounds": [
+        16.32,
+        13.13,
+        6.5
+      ],
+      "orientation_deg": -127.1,
+      "orientation_rad": -2.219,
+      "zone": "strawberry_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_swa_depot01_int",
+      "name": "Swa Depot01 Int",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        -332.49,
+        88.81,
+        -359.77
+      ],
+      "bounds": [
+        20.35,
+        12.48,
+        7.5
+      ],
+      "orientation_deg": -92.6,
+      "orientation_rad": -1.616,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_swc_shack01_int",
+      "name": "Swc Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1810.83,
+        58.8,
+        -2393.07
+      ],
+      "bounds": [
+        6.0,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 64.7,
+      "orientation_rad": 1.129,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_tan_house_int",
+      "name": "Tan House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2377.15,
+        143.76,
+        -1589.72
+      ],
+      "bounds": [
+        7.74,
+        10.4,
+        6.5
+      ],
+      "orientation_deg": -154.4,
+      "orientation_rad": -2.694,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_tax_house_int",
+      "name": "Tax House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1680.78,
+        172.83,
+        -338.7
+      ],
+      "bounds": [
+        19.7,
+        8.38,
+        6.5
+      ],
+      "orientation_deg": 45.0,
+      "orientation_rad": 0.785,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_the_ticketoffice_int",
+      "name": "The Ticketoffice Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1399.9,
+        43.8,
+        -2297.51
+      ],
+      "bounds": [
+        9.49,
+        9.81,
+        6.5
+      ],
+      "orientation_deg": 76.0,
+      "orientation_rad": 1.326,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_tum_barn_int",
+      "name": "Tum Barn Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -5519.18,
+        -2.99,
+        -3045.54
+      ],
+      "bounds": [
+        21.97,
+        23.66,
+        8.0
+      ],
+      "orientation_deg": 167.4,
+      "orientation_rad": 2.921,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_tbl_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_tum_genstore_int",
+      "name": "Tum Genstore Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5487.32,
+        0.7,
+        -2937.27
+      ],
+      "bounds": [
+        16.77,
+        9.17,
+        6.5
+      ],
+      "orientation_deg": 6.6,
+      "orientation_rad": 0.115,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_tbl_general_store)",
+        "RDOMap:shops.json (shop_gap_wardrobe_tumbleweed)"
+      ]
+    },
+    {
+      "id": "build_tum_gunsmith_int",
+      "name": "Tum Gunsmith Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5507.65,
+        2.75,
+        -2965.7
+      ],
+      "bounds": [
+        8.38,
+        12.22,
+        6.5
+      ],
+      "orientation_deg": -33.1,
+      "orientation_rad": -0.578,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_tbl_gunsmith)"
+      ],
+      "subtype": "gunsmith"
+    },
+    {
+      "id": "build_tum_jail_int",
+      "name": "Tum Jail Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5529.61,
+        1.07,
+        -2927.84
+      ],
+      "bounds": [
+        9.55,
+        18.14,
+        7.0
+      ],
+      "orientation_deg": -69.0,
+      "orientation_rad": -1.205,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_tum_roomnbath_int",
+      "name": "Tum Roomnbath Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5515.3,
+        1.92,
+        -2972.21
+      ],
+      "bounds": [
+        12.09,
+        7.93,
+        6.5
+      ],
+      "orientation_deg": -33.1,
+      "orientation_rad": -0.578,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_tum_saloon_int",
+      "name": "Tum Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5512.34,
+        1.13,
+        -2912.47
+      ],
+      "bounds": [
+        14.3,
+        20.8,
+        7.5
+      ],
+      "orientation_deg": -69.0,
+      "orientation_rad": -1.205,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_tbl_bartender)"
+      ]
+    },
+    {
+      "id": "build_twi_shack01_int",
+      "name": "Twi Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3956.78,
+        -3.8,
+        -2124.63
+      ],
+      "bounds": [
+        19.57,
+        9.88,
+        6.5
+      ],
+      "orientation_deg": 87.8,
+      "orientation_rad": 1.532,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_bank_int_main",
+      "name": "Val Bank Int Main",
+      "type": "building",
+      "primary_material": "stone",
+      "position": [
+        -306.42,
+        119.69,
+        772.29
+      ],
+      "bounds": [
+        18.27,
+        26.39,
+        7.0
+      ],
+      "orientation_deg": 7.0,
+      "orientation_rad": 0.122,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_carriagehouse_int",
+      "name": "Val Carriagehouse Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -273.46,
+        118.08,
+        688.96
+      ],
+      "bounds": [
+        41.66,
+        18.72,
+        8.0
+      ],
+      "orientation_deg": 109.1,
+      "orientation_rad": 1.905,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_doctor_int",
+      "name": "Val Doctor Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -286.21,
+        122.15,
+        809.32
+      ],
+      "bounds": [
+        15.54,
+        21.78,
+        6.5
+      ],
+      "orientation_deg": 10.7,
+      "orientation_rad": 0.187,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_doctor)"
+      ],
+      "subtype": "doctor"
+    },
+    {
+      "id": "build_val_genstore",
+      "name": "Val Genstore",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -323.53,
+        120.36,
+        801.73
+      ],
+      "bounds": [
+        14.88,
+        18.46,
+        6.5
+      ],
+      "orientation_deg": 3.8,
+      "orientation_rad": 0.067,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_general_store)",
+        "RDOMap:shops.json (shop_val_bartender)",
+        "RDOMap:shops.json (shop_hrt_wardrobe_valentine)"
+      ]
+    },
+    {
+      "id": "build_val_gunsmith_int_main",
+      "name": "Val Gunsmith Int Main",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -279.66,
+        119.88,
+        782.29
+      ],
+      "bounds": [
+        12.54,
+        11.31,
+        6.5
+      ],
+      "orientation_deg": 10.7,
+      "orientation_rad": 0.187,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_gunsmith)"
+      ],
+      "subtype": "gunsmith"
+    },
+    {
+      "id": "build_val_hotel_int_main",
+      "name": "Val Hotel Int Main",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -324.24,
+        118.51,
+        766.97
+      ],
+      "bounds": [
+        22.55,
+        26.59,
+        6.5
+      ],
+      "orientation_deg": 17.8,
+      "orientation_rad": 0.311,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_butcher)"
+      ],
+      "subtype": "butcher"
+    },
+    {
+      "id": "build_val_jail_int",
+      "name": "Val Jail Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -275.41,
+        122.43,
+        807.46
+      ],
+      "bounds": [
+        14.37,
+        14.69,
+        7.0
+      ],
+      "orientation_deg": 106.6,
+      "orientation_rad": 1.86,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_magiclantern_int",
+      "name": "Val Magiclantern Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -348.94,
+        116.87,
+        695.77
+      ],
+      "bounds": [
+        15.41,
+        21.25,
+        6.5
+      ],
+      "orientation_deg": 117.2,
+      "orientation_rad": 2.045,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_res_01_f_int",
+      "name": "Val Res 01 F Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -260.28,
+        118.13,
+        736.22
+      ],
+      "bounds": [
+        8.26,
+        8.97,
+        6.5
+      ],
+      "orientation_deg": 119.2,
+      "orientation_rad": 2.08,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_res_a_int",
+      "name": "Val Res A Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -289.36,
+        120.23,
+        866.1
+      ],
+      "bounds": [
+        10.86,
+        8.38,
+        6.5
+      ],
+      "orientation_deg": 176.6,
+      "orientation_rad": 3.082,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_val_saloon_int",
+      "name": "Val Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -309.31,
+        120.74,
+        808.43
+      ],
+      "bounds": [
+        21.12,
+        32.37,
+        7.5
+      ],
+      "orientation_deg": 7.0,
+      "orientation_rad": 0.122,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_barber)"
+      ]
+    },
+    {
+      "id": "build_val_saloon2_int",
+      "name": "Val Saloon2 Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        -241.59,
+        117.77,
+        769.9
+      ],
+      "bounds": [
+        18.46,
+        16.38,
+        7.5
+      ],
+      "orientation_deg": 103.5,
+      "orientation_rad": 1.806,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_bartender_keane)"
+      ]
+    },
+    {
+      "id": "build_val_stable_int",
+      "name": "Val Stable Int",
+      "type": "shelter",
+      "primary_material": "red_barn_wood",
+      "position": [
+        -367.65,
+        119.62,
+        786.04
+      ],
+      "bounds": [
+        21.52,
+        21.19,
+        8.0
+      ],
+      "orientation_deg": -42.9,
+      "orientation_rad": -0.749,
+      "zone": "valentine_town",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_val_horse_shop)"
+      ]
+    },
+    {
+      "id": "build_van_depot_int",
+      "name": "Van Depot Int",
+      "type": "station",
+      "primary_material": "weathered_wood",
+      "position": [
+        2982.29,
+        45.11,
+        572.6
+      ],
+      "bounds": [
+        19.57,
+        9.23,
+        7.5
+      ],
+      "orientation_deg": -1.9,
+      "orientation_rad": -0.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_van_post_office)"
+      ]
+    },
+    {
+      "id": "build_van_exoticgoods_int",
+      "name": "Van Exoticgoods Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        3024.03,
+        44.97,
+        561.68
+      ],
+      "bounds": [
+        17.36,
+        14.3,
+        6.5
+      ],
+      "orientation_deg": -1.9,
+      "orientation_rad": -0.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_van_fence)",
+        "RDOMap:shops.json (shop_roa_wardrobe_vanhornpost)"
+      ]
+    },
+    {
+      "id": "build_van_farmhse01_int",
+      "name": "Van Farmhse01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2782.31,
+        71.05,
+        534.22
+      ],
+      "bounds": [
+        24.96,
+        24.38,
+        6.5
+      ],
+      "orientation_deg": -109.9,
+      "orientation_rad": -1.918,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_fenceshop_int",
+      "name": "Van Fenceshop Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2933.0,
+        46.1,
+        560.11
+      ],
+      "bounds": [
+        11.63,
+        17.68,
+        6.5
+      ],
+      "orientation_deg": -107.2,
+      "orientation_rad": -1.872,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_hobo_int",
+      "name": "Van Hobo Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2975.28,
+        48.41,
+        498.38
+      ],
+      "bounds": [
+        11.12,
+        15.86,
+        6.5
+      ],
+      "orientation_deg": 97.6,
+      "orientation_rad": 1.704,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_hotel_int",
+      "name": "Van Hotel Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2947.36,
+        49.45,
+        540.16
+      ],
+      "bounds": [
+        28.41,
+        25.35,
+        6.5
+      ],
+      "orientation_deg": 88.5,
+      "orientation_rad": 1.545,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_van_bartender)"
+      ]
+    },
+    {
+      "id": "build_van_lighthouse_int",
+      "name": "Van Lighthouse Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        3035.55,
+        55.47,
+        432.13
+      ],
+      "bounds": [
+        7.74,
+        8.26,
+        6.5
+      ],
+      "orientation_deg": 87.5,
+      "orientation_rad": 1.528,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_mansion_int",
+      "name": "Van Mansion Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2823.76,
+        48.73,
+        274.41
+      ],
+      "bounds": [
+        18.53,
+        14.56,
+        6.5
+      ],
+      "orientation_deg": 28.0,
+      "orientation_rad": 0.489,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_roomnbath_int",
+      "name": "Van Roomnbath Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        2982.24,
+        45.11,
+        573.07
+      ],
+      "bounds": [
+        19.7,
+        9.1,
+        6.5
+      ],
+      "orientation_deg": -1.9,
+      "orientation_rad": -0.034,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_van_saloon_int",
+      "name": "Van Saloon Int",
+      "type": "saloon",
+      "primary_material": "weathered_wood",
+      "position": [
+        2946.42,
+        46.78,
+        523.39
+      ],
+      "bounds": [
+        18.79,
+        21.32,
+        7.5
+      ],
+      "orientation_deg": 91.3,
+      "orientation_rad": 1.593,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_ven_shack01_int",
+      "name": "Ven Shack01 Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3552.17,
+        10.92,
+        -3009.89
+      ],
+      "bounds": [
+        13.2,
+        7.0,
+        6.5
+      ],
+      "orientation_deg": 119.5,
+      "orientation_rad": 2.086,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_vet_house_int",
+      "name": "Vet House Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        1700.9,
+        137.94,
+        1511.27
+      ],
+      "bounds": [
+        10.21,
+        8.91,
+        6.5
+      ],
+      "orientation_deg": -31.8,
+      "orientation_rad": -0.555,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "build_wal_trainstation_int",
+      "name": "Wal Trainstation Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1303.3,
+        94.56,
+        395.25
+      ],
+      "bounds": [
+        19.05,
+        13.46,
+        6.5
+      ],
+      "orientation_deg": 177.9,
+      "orientation_rad": 3.105,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png",
+        "RDOMap:shops.json (shop_wal_general_store)",
+        "RDOMap:shops.json (shop_wal_post_office)",
+        "RDOMap:shops.json (shop_bgv_wardrobe_wallace_station)"
+      ]
+    },
+    {
+      "id": "build_wat_cabin_int",
+      "name": "Wat Cabin Int",
+      "type": "building",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1817.71,
+        131.86,
+        658.42
+      ],
+      "bounds": [
+        8.58,
+        8.58,
+        6.5
+      ],
+      "orientation_deg": 151.4,
+      "orientation_rad": 2.642,
+      "zone": "frontier_territory",
+      "sources": [
+        "RDOMap:overlays_beta.json",
+        "RDOMap:interiors.json",
+        "Media:Valentine Detailed MAP.png"
+      ]
+    },
+    {
+      "id": "shop_shop_rho_butcher",
+      "name": "Rho Butcher",
+      "type": "building",
+      "subtype": "butcher",
+      "primary_material": "weathered_wood",
+      "position": [
+        1297.67,
+        80.42,
+        -1277.63
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_rho",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_sdn_butcher",
+      "name": "Sdn Butcher",
+      "type": "building",
+      "subtype": "butcher",
+      "primary_material": "weathered_wood",
+      "position": [
+        2819.51,
+        47.19,
+        -1331.34
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_sdn",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_str_butcher",
+      "name": "Str Butcher",
+      "type": "building",
+      "subtype": "butcher",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1751.93,
+        162.52,
+        -393.46
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_str",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tbl_butcher",
+      "name": "Tbl Butcher",
+      "type": "building",
+      "subtype": "butcher",
+      "primary_material": "weathered_wood",
+      "position": [
+        -5508.96,
+        1.79,
+        -2946.32
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_tbl",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_thl_fence",
+      "name": "Thl Fence",
+      "type": "building",
+      "subtype": "fence",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1401.69,
+        44.31,
+        -2317.16
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_thl",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_amd_honor_mp",
+      "name": "Amd Honor Mp",
+      "type": "building",
+      "subtype": "honor",
+      "primary_material": "weathered_wood",
+      "position": [
+        -3638.65,
+        -12.8,
+        -2778.65
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_amd",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_boj_honor_mp",
+      "name": "Boj Honor Mp",
+      "type": "building",
+      "subtype": "honor",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1249.16,
+        97.93,
+        -607.22
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_boj",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_roj_honor_mp",
+      "name": "Roj Honor Mp",
+      "type": "building",
+      "subtype": "honor",
+      "primary_material": "weathered_wood",
+      "position": [
+        2625.55,
+        91.97,
+        1328.57
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_roj",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_val_post_office",
+      "name": "Val Post Office",
+      "type": "building",
+      "subtype": "post_office",
+      "primary_material": "weathered_wood",
+      "position": [
+        -178.0,
+        113.52,
+        628.11
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_val",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_lag_bait_store",
+      "name": "Lag Bait Store",
+      "type": "building",
+      "subtype": "tackle",
+      "primary_material": "weathered_wood",
+      "position": [
+        2163.55,
+        41.86,
+        -618.94
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_lag",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_trapper_1",
+      "name": "Bgv Trapper 1",
+      "type": "building",
+      "subtype": "trapper",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2840.46,
+        184.15,
+        137.04
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_bgv",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_trapper_2",
+      "name": "Bgv Trapper 2",
+      "type": "building",
+      "subtype": "trapper",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1007.35,
+        82.11,
+        -544.42
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_bgv",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_roa_trapper",
+      "name": "Roa Trapper",
+      "type": "building",
+      "subtype": "trapper",
+      "primary_material": "weathered_wood",
+      "position": [
+        2074.66,
+        121.36,
+        1004.11
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_roa",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_tal_trapper",
+      "name": "Tal Trapper",
+      "type": "building",
+      "subtype": "trapper",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2255.19,
+        115.52,
+        -1911.09
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_tal",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_cho_trapper",
+      "name": "Cho Trapper",
+      "type": "building",
+      "subtype": "trapper",
+      "primary_material": "weathered_wood",
+      "position": [
+        -4728.45,
+        -18.02,
+        -2940.5
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_cho",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_hen_harriet",
+      "name": "Hen Harriet",
+      "type": "building",
+      "subtype": "harriet",
+      "primary_material": "weathered_wood",
+      "position": [
+        -2185.63,
+        58.87,
+        -2132.35
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_hen",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bgv_harriet",
+      "name": "Bgv Harriet",
+      "type": "building",
+      "subtype": "harriet",
+      "primary_material": "weathered_wood",
+      "position": [
+        -1574.34,
+        105.97,
+        485.71
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_bgv",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "shop_shop_bay_harriet",
+      "name": "Bay Harriet",
+      "type": "building",
+      "subtype": "harriet",
+      "primary_material": "weathered_wood",
+      "position": [
+        1966.68,
+        40.77,
+        -527.6
+      ],
+      "bounds": [
+        8.0,
+        10.0,
+        6.0
+      ],
+      "orientation_deg": 0.0,
+      "orientation_rad": 0.0,
+      "zone": "shop_bay",
+      "sources": [
+        "RDOMap:shops.json"
+      ]
+    },
+    {
+      "id": "valentine_auction_yard_barn",
+      "name": "Valentine Auction Yard & Big Livery Barn",
+      "type": "shelter",
+      "primary_material": "weathered_wood",
+      "position": [
+        -360.0,
+        118.0,
+        720.0
+      ],
+      "bounds": [
+        32.0,
+        48.0,
+        9.5
+      ],
+      "orientation_deg": 105.0,
+      "orientation_rad": 1.8326,
+      "zone": "valentine_southwest_livestock_yards",
+      "sources": [
+        "Media/Valentine MAP.jpg",
+        "Media/Valentine Screenshot RDO with all buildings.jpg"
+      ]
+    }
+  ]
+}

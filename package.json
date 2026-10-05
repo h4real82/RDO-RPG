@@ -12,9 +12,11 @@
     "build:content": "pnpm --filter @rdo-rpg/content build",
     "build:server": "pnpm --filter @rdo-rpg/server build",
     "build:client": "pnpm --filter @rdo-rpg/client build",
+    "test:e2e": "node scripts/e2e-check.mjs",
     "clean": "pnpm -r exec rm -rf dist node_modules"
   },
   "devDependencies": {
+    "playwright": "^1.63.0",
     "typescript": "^5.4.5"
   },
   "packageManager": "pnpm@9.1.0"
