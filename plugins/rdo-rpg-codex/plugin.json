@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "rdo-rpg-codex",
+  "version": "0.1.0",
+  "description": "Ground-truth RDO-RPG reconstruction, asset pipeline, and Obsidian vault workflows for Codex.",
+  "author": {
+    "name": "RDO-RPG"
+  }
+}

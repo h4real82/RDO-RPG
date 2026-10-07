@@ -1,0 +1,20 @@
+{
+  "name": "rdo-rpg-local",
+  "interface": {
+    "displayName": "RDO-RPG Local Plugins"
+  },
+  "plugins": [
+    {
+      "name": "rdo-rpg-codex",
+      "source": {
+        "source": "local",
+        "path": "./plugins/rdo-rpg-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
