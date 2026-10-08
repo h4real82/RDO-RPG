@@ -78,7 +78,11 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
             texture = pointer(texture_array + slot * 8, nullable=True)
             textures.append({'parameterHash': f"0x{read('<I', parameter):08x}",
                              'slot': slot, 'name': name(texture)})
-        shaders.append({'hash': f"0x{read('<I', shader):08x}", 'textures': textures})
+        # RDR3 grcInstanceData layout, not GTA V's shader layout.
+        # Preserve raw bucket metadata; it alone does not prove visibility.
+        shaders.append({'hash': f"0x{read('<I', shader):08x}", 'textures': textures,
+                        'drawBucket': read('<B', shader + 57),
+                        'drawBucketMask': read('<I', shader + 60)})
 
     geometries = []
     for lod_index in range(4):

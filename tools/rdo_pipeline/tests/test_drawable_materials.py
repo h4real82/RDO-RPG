@@ -39,7 +39,7 @@ def decoder():
 
 def test_decodes_exact_geometry_shader_texture_parameter_binding():
     result = decoder()(fixture_drawable())
-    assert result['shaders'] == [{'hash': '0x12345678', 'textures': [
+    assert result['shaders'] == [{'hash': '0x12345678', 'drawBucket': 0, 'drawBucketMask': 0, 'textures': [
         {'parameterHash': '0xc8e8c282', 'slot': 0, 'name': 'fixture_al'},
     ]}]
     assert result['geometries'] == [
@@ -53,6 +53,15 @@ def test_rejects_out_of_bounds_resource_pointer():
     struct.pack_into('<Q', data, 16, 0x50002000)
     with pytest.raises(ValueError, match='bounds'):
         decoder()(data)
+
+
+def test_preserves_rdr3_shader_render_bucket_without_inventing_visibility():
+    data = fixture_drawable()
+    data[0x180 + 57] = 7
+    struct.pack_into('<I', data, 0x180 + 60, 0xff80)
+    shader = decoder()(data)['shaders'][0]
+    assert shader.get('drawBucket') == 7
+    assert shader.get('drawBucketMask') == 0xff80
 
 
 def test_rejects_geometry_shader_index_outside_shader_table():
