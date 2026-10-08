@@ -21,7 +21,8 @@ export class Hud {
     const detail = nearbyPoiName
       ? `Valentine · ${nearbyPoiName} · E: Interagieren`
       : `Valentine · X ${position.x.toFixed(1)} · Z ${position.z.toFixed(1)} · Karte ${minimap?.x.toFixed(1) ?? '?'} / ${minimap?.y.toFixed(1) ?? '?'}`;
-    this.element.textContent = missingModelCount > 0 ? `${detail} · Teilvorschau: ${missingModelCount} Modelle fehlen` : detail;
+    const controls = ' · Zoom: Mausrad / + / − · 0: Zurücksetzen';
+    this.element.textContent = (missingModelCount > 0 ? `${detail} · Teilvorschau: ${missingModelCount} Modelle fehlen` : detail) + controls;
   }
 
   dispose(): void {

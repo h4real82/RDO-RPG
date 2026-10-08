@@ -1,4 +1,4 @@
-import { type Material, type Object3D, type Raycaster } from 'three';
+import { Box3, Vector3, type Material, type Object3D, type Raycaster } from 'three';
 
 interface MaterialState {
   opacity: number;
@@ -8,13 +8,26 @@ interface MaterialState {
 
 export class OcclusionController {
   private readonly active = new Map<Material, MaterialState>();
+  private readonly bounds = new WeakMap<Object3D, Box3>();
+  private readonly hitPoint = new Vector3();
 
   constructor(private readonly occluders: readonly Object3D[]) {}
 
   update(ray: Raycaster): void {
     const visible = new Set<Material>();
     try {
-      for (const intersection of ray.intersectObjects([...this.occluders], true)) {
+      const nearby = this.occluders.filter((object) => {
+        let box = this.bounds.get(object);
+        if (!box) {
+          box = new Box3().setFromObject(object);
+          this.bounds.set(object, box);
+        }
+        if (box.isEmpty()) return false;
+        if (box.containsPoint(ray.ray.origin)) return true;
+        const point = ray.ray.intersectBox(box, this.hitPoint);
+        return point !== null && ray.ray.origin.distanceToSquared(point) <= ray.far * ray.far;
+      });
+      for (const intersection of ray.intersectObjects(nearby, true)) {
         let node: Object3D | null = intersection.object;
         let rendered = true;
         while (node) {

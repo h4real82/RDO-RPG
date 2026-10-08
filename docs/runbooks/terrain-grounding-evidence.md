@@ -23,3 +23,17 @@ Remaining: incomplete terrain coverage and materials, helper geometry rendered
 as opaque surfaces, simplified building collision and no separate walkable
 boardwalk/interior surface solver. On missing terrain the previous elevation is
 retained; this does not establish walkability or accurate ground there.
+
+## Coverage follow-up
+
+The existing `l_09__hd_0_0_0` geometry probe is now integrated using its original
+`l_09__strm_0_ymap.xml` transform. The local manifest contains five terrain tiles
+and 599 total placements. No additional geometry was generated.
+
+The adjacent `l_09__hd_0_-1_-1` is present as an HD entity in that YMAP at
+approximately game XY (-288, 736). Its initially missing export was supplied
+by the user and converted from the 626464-byte `.ydr.full`, preserving 24 source
+color channels on six meshes. Integration uses the original YMAP transform;
+the manifest now contains six terrain tiles and 600 total placements. Raw files
+remain unchanged. Additional neighbouring tiles may still be required for full
+camera coverage; terrain material fidelity remains unresolved.

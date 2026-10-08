@@ -26,7 +26,7 @@ describe('world presentation', () => {
 
     expect(controller.camera).toBeInstanceOf(OrthographicCamera);
     expect(controller.camera.position.x).toBe(12);
-    expect(controller.camera.top - controller.camera.bottom).toBe(90);
+    expect(controller.camera.top - controller.camera.bottom).toBe(36);
   });
 
   it('fades intersecting occluders and restores them after the ray clears', () => {
@@ -54,5 +54,22 @@ describe('world presentation', () => {
     occlusion.dispose();
     roof.geometry.dispose();
     material.dispose();
+  });
+  it('keeps a nearby roof fading when unrelated distant geometry cannot be raycast', () => {
+    const material = new MeshBasicMaterial();
+    const roof = new Mesh(new BoxGeometry(1, 1, 1), material);
+    const distant = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicMaterial());
+    distant.position.set(100, 0, 0);
+    distant.raycast = () => { throw new Error('distant geometry must not be visited'); };
+    roof.updateWorldMatrix(true, false);
+    distant.updateWorldMatrix(true, false);
+    const occlusion = new OcclusionController([roof, distant]);
+    occlusion.update(new Raycaster(new Vector3(0, 0, 2), new Vector3(0, 0, -1), 0, 4));
+    expect(material.opacity).toBeLessThan(1);
+    occlusion.dispose();
+    roof.geometry.dispose();
+    distant.geometry.dispose();
+    material.dispose();
+    (distant.material as MeshBasicMaterial).dispose();
   });
 });

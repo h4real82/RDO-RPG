@@ -14,6 +14,7 @@ import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
 import { selectHighestDrawableLod } from './world/DrawableLod';
 import { TerrainGround } from './world/TerrainGround';
+import { VisibleMeshCollision } from './world/VisibleMeshCollision';
 
 export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: number; z: number } {
   const placement = manifest.placements.find((candidate) => candidate.layer !== 'terrain') ?? manifest.placements[0];
@@ -65,15 +66,6 @@ export function applyPlacementTransform(instance: Group, placement: Pick<WorldPl
   instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
 }
 
-function overlapsFootprint(bounds: Box3, position: { x: number; y: number; z: number }): boolean {
-  const radius = 0.35;
-  const height = 1.8;
-  if (bounds.max.y < position.y || bounds.min.y > position.y + height) return false;
-  const nearestX = Math.max(bounds.min.x, Math.min(position.x, bounds.max.x));
-  const nearestZ = Math.max(bounds.min.z, Math.min(position.z, bounds.max.z));
-  return Math.hypot(position.x - nearestX, position.z - nearestZ) < radius;
-}
-
 interface RuntimePoi {
   id: string;
   name: string;
@@ -88,7 +80,7 @@ declare global {
       teleport(position: { x: number; y: number; z: number }): void;
       setReferenceCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }): void;
       waitForChunks(): Promise<void>;
-      getState(): { frame: number; player: { x: number; y: number; z: number }; cameraType: string };
+      getState(): { frame: number; player: { x: number; y: number; z: number }; cameraType: string; viewHeight: number };
     };
   }
 }
@@ -132,14 +124,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   scene.add(sunlight);
 
   const spawn = selectSpawnPosition(manifest);
-  const collisionBounds = new Map<Group, Box3>();
+  const collision = new VisibleMeshCollision();
   const ground = new TerrainGround();
   let player: PlayerController | undefined;
   const canOccupy = (position: { x: number; y: number; z: number }): boolean => {
-    for (const bounds of collisionBounds.values()) {
-      if (overlapsFootprint(bounds, position) && (!player || !overlapsFootprint(bounds, player.position))) return false;
-    }
-    return true;
+    return !player || !collision.blocksTransition(player.position, position);
   };
   player = new PlayerController(spawn, 6, canOccupy);
   const playerMarker = new Mesh(new SphereGeometry(0.4, 16, 12), new MeshStandardMaterial({ color: '#caa05d' }));
@@ -163,12 +152,12 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     if (placementBlocksPlayerAndCamera(placement)) occluders.push(instance);
     instance.updateWorldMatrix(true, true);
     if (placement.layer === 'terrain') ground.add(instance);
-    if (placementBlocksPlayerAndCamera(placement)) collisionBounds.set(instance, new Box3().setFromObject(instance));
+    if (placementBlocksPlayerAndCamera(placement)) collision.add(instance);
     return { dispose: () => {
       scene.remove(instance);
       const index = occluders.indexOf(instance);
       if (index >= 0) occluders.splice(index, 1);
-      collisionBounds.delete(instance);
+      collision.remove(instance);
       if (placement.layer === 'terrain') ground.remove(instance);
       lease.dispose();
     } };
@@ -191,11 +180,22 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       cameraController.setReferencePose(position, target);
     },
     waitForChunks: () => world.waitForIdle(),
-    getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type }),
+    getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type,
+      viewHeight: (cameraController.camera.top - cameraController.camera.bottom) / cameraController.camera.zoom }),
   };
   const pressed = new Set<string>();
   const onKeyDown = (event: KeyboardEvent): void => {
     try {
+      const target = event.target;
+      if (target instanceof Element && target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if (!menu.isOpen && !event.ctrlKey && !event.metaKey && !event.altKey) {
+        if (['+', '=', '-', '0'].includes(event.key)) {
+          event.preventDefault();
+          if (event.key === '0') cameraController.resetZoom();
+          else cameraController.adjustZoom(event.key === '-' ? 120 : -120);
+          return;
+        }
+      }
       if (!menu.isOpen) pressed.add(event.key.toLowerCase());
       interactions.handleKey(event);
       if (menu.isOpen) pressed.clear();
@@ -216,6 +216,16 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     catch (error) { console.error('Could not process game visibility.', error); }
   };
   window.addEventListener('keydown', onKeyDown);
+  const onWheel = (event: WheelEvent): void => {
+    try {
+      if (menu.isOpen || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (!(event.target instanceof Element) || !event.target.closest('canvas')) return;
+      event.preventDefault();
+      const scale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? Math.max(root.clientHeight, 1) : 1;
+      cameraController.adjustZoom(event.deltaY * scale);
+    } catch (error) { console.error('Could not process camera zoom.', error); }
+  };
+  root.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', clearMovement);
   document.addEventListener('visibilitychange', onVisibilityChange);
@@ -236,7 +246,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount);
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
-    cameraController.update(target);
+    cameraController.update(target, delta);
     const ray = createOcclusionRay(cameraController.camera.position, target);
     occlusion.update(ray);
     renderer.setSize(Math.max(root.clientWidth, 1), Math.max(root.clientHeight, 1), false);
@@ -253,6 +263,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     disposed = true;
     cancelAnimationFrame(frame);
     window.removeEventListener('keydown', onKeyDown);
+    root.removeEventListener('wheel', onWheel);
     window.removeEventListener('keyup', onKeyUp);
     window.removeEventListener('blur', clearMovement);
     document.removeEventListener('visibilitychange', onVisibilityChange);

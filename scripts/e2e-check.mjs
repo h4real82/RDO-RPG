@@ -1,5 +1,6 @@
 import { execFileSync, spawn } from 'node:child_process';
 import http from 'node:http';
+import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -41,6 +42,19 @@ async function main() {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#game-container')?.getAttribute('data-game-ready') === 'true');
     const before = await page.evaluate(() => window.__rdoPreview?.getState());
+    const screenshots = path.join(root, 'data/runtime/valentine/test-artifacts/zoom');
+    await mkdir(screenshots, { recursive: true });
+    await page.screenshot({ path: path.join(screenshots, 'default.png') });
+    await page.locator('canvas').hover();
+    await page.mouse.wheel(0, -1000);
+    await page.waitForFunction(() => window.__rdoPreview?.getState().viewHeight < 13);
+    await page.screenshot({ path: path.join(screenshots, 'near.png') });
+    await page.keyboard.press('-');
+    await page.waitForFunction(() => window.__rdoPreview?.getState().viewHeight > 14);
+    await page.keyboard.press('+');
+    await page.waitForFunction(() => window.__rdoPreview?.getState().viewHeight < 13);
+    await page.keyboard.press('0');
+    await page.waitForFunction(() => Math.abs(window.__rdoPreview.getState().viewHeight - 36) < 0.01);
     await page.keyboard.down('w');
     await page.waitForTimeout(200);
     await page.keyboard.up('w');
@@ -57,6 +71,11 @@ async function main() {
     await page.keyboard.press('e');
     await page.waitForSelector('section[role="dialog"]');
     const dialogPosition = await page.evaluate(() => window.__rdoPreview?.getState().player);
+    await page.keyboard.press('+');
+    await page.locator('canvas').dispatchEvent('wheel', { deltaY: -1000, bubbles: true });
+    await page.waitForTimeout(500);
+    const menuHeight = await page.evaluate(() => window.__rdoPreview.getState().viewHeight);
+    if (Math.abs(menuHeight - 36) > 0.02) throw new Error('Zoom changed behind an open menu.');
     await page.keyboard.down('w');
     await page.waitForTimeout(200);
     await page.keyboard.up('w');
