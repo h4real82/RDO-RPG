@@ -1,6 +1,10 @@
 export class FallbackMenu {
   private panel: HTMLElement | undefined;
 
+  get isOpen(): boolean {
+    return Boolean(this.panel?.isConnected);
+  }
+
   open(message: string): void {
     try {
       this.close();

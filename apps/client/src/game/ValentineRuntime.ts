@@ -146,8 +146,9 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const pressed = new Set<string>();
   const onKeyDown = (event: KeyboardEvent): void => {
     try {
-      pressed.add(event.key.toLowerCase());
+      if (!menu.isOpen) pressed.add(event.key.toLowerCase());
       interactions.handleKey(event);
+      if (menu.isOpen) pressed.clear();
     } catch (error) {
       console.error('Could not process game keydown.', error);
     }
@@ -177,7 +178,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     if (disposed) return;
     const delta = Math.min((now - previous) / 1000, 0.1);
     previous = now;
-    player.setMovement({ forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
+    player.setMovement(menu.isOpen ? { forward: 0, right: 0 } : { forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
     hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount);

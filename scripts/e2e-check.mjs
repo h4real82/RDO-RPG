@@ -56,6 +56,12 @@ async function main() {
     await page.evaluate(() => window.__rdoPreview?.teleport({ x: -259.0177, y: 120.1503, z: 741.3681 }));
     await page.keyboard.press('e');
     await page.waitForSelector('section[role="dialog"]');
+    const dialogPosition = await page.evaluate(() => window.__rdoPreview?.getState().player);
+    await page.keyboard.down('w');
+    await page.waitForTimeout(200);
+    await page.keyboard.up('w');
+    const dialogAfter = await page.evaluate(() => window.__rdoPreview?.getState().player);
+    if (JSON.stringify(dialogPosition) !== JSON.stringify(dialogAfter)) throw new Error('Player moved while the POI dialog was open.');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('section[role="dialog"]'));
     if (!before || !after || after.frame <= before.frame || after.player.z === before.player.z || after.cameraType !== 'OrthographicCamera' || errors.length) {
