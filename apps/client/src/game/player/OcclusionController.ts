@@ -33,12 +33,21 @@ export class OcclusionController {
       this.active.delete(material);
     }
     for (const material of visible) {
-      if (this.active.has(material)) continue;
-      this.active.set(material, { opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite });
-      material.opacity = 0.15;
+      if (!this.active.has(material)) this.active.set(material, { opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite });
+      material.opacity += (0.15 - material.opacity) * 0.35;
       material.transparent = true;
       material.depthWrite = false;
       material.needsUpdate = true;
     }
+  }
+
+  dispose(): void {
+    for (const [material, state] of this.active) {
+      material.opacity = state.opacity;
+      material.transparent = state.transparent;
+      material.depthWrite = state.depthWrite;
+      material.needsUpdate = true;
+    }
+    this.active.clear();
   }
 }

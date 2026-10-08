@@ -1,12 +1,14 @@
-import { AmbientLight, Color, DirectionalLight, Mesh, MeshStandardMaterial, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
+import { AmbientLight, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Quaternion, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
 import { FallbackMenu } from './interaction/FallbackMenu';
 import { InteractionRuntime } from './interaction/InteractionRuntime';
 import { OrthographicFollowCamera } from './player/OrthographicFollowCamera';
+import { OcclusionController } from './player/OcclusionController';
 import { PlayerController } from './player/PlayerController';
 import { Hud } from './presentation/Hud';
+import { Minimap } from './presentation/Minimap';
 import { disposeObjectResources } from './world/ResourceDisposer';
 import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
@@ -16,16 +18,13 @@ export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: nu
   return placement ? { ...placement.position } : { x: 0, y: 0, z: 0 };
 }
 
-interface PlacementInstance {
-  position: { set(x: number, y: number, z: number): void };
-  rotation: { set(x: number, y: number, z: number): void };
-  scale: { set(x: number, y: number, z: number): void };
-}
-
-export function applyPlacementTransform(instance: PlacementInstance, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
+export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
-  instance.rotation.set(Math.PI / 2, placement.rotation.y, 0);
-  instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
+  // Exported GLBs are Z-up. Rotate that basis first, then rotate around world Y.
+  const zUpToYUp = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
+  const worldHeading = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), placement.rotation.y);
+  instance.quaternion.copy(worldHeading).multiply(zUpToYUp);
+  instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
 }
 
 interface RuntimePoi {
@@ -38,7 +37,12 @@ interface RuntimePoi {
 
 declare global {
   interface Window {
-    __rdoPreview?: { teleport(position: { x: number; y: number; z: number }): void };
+    __rdoPreview?: {
+      teleport(position: { x: number; y: number; z: number }): void;
+      setReferenceCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }): void;
+      waitForChunks(): Promise<void>;
+      getState(): { frame: number; player: { x: number; y: number; z: number }; cameraType: string };
+    };
   }
 }
 
@@ -46,7 +50,14 @@ async function loadPois(): Promise<RuntimePoi[]> {
   try {
     const response = await fetch('/runtime/valentine/pois.json');
     const payload: unknown = await response.json();
-    return Array.isArray(payload) ? payload.filter((poi): poi is RuntimePoi => Boolean(poi && typeof poi === 'object' && 'id' in poi && 'name' in poi && 'position' in poi && 'radius' in poi && 'category' in poi)) : [];
+    return Array.isArray(payload) ? payload.filter((poi): poi is RuntimePoi => {
+      if (!poi || typeof poi !== 'object') return false;
+      const value = poi as Record<string, unknown>;
+      const position = value.position as Record<string, unknown> | undefined;
+      return typeof value.id === 'string' && typeof value.name === 'string' && typeof value.category === 'string'
+        && typeof value.radius === 'number' && Number.isFinite(value.radius) && value.radius > 0
+        && Boolean(position) && ['x', 'y', 'z'].every((axis) => typeof position?.[axis] === 'number' && Number.isFinite(position[axis] as number));
+    }) : [];
   } catch (error) {
     console.error('Could not load Valentine POIs.', error);
     return [];
@@ -70,13 +81,17 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   scene.add(playerMarker);
   const cameraController = new OrthographicFollowCamera(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
   const loader = new GLTFLoader();
+  const occluders: Group[] = [];
   const world = new WorldChunkManager(manifest, async (placement: WorldPlacement) => {
     const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${placement.asset}`);
     const instance = gltf.scene;
     applyPlacementTransform(instance, placement);
     scene.add(instance);
+    occluders.push(instance);
     return { dispose: () => {
       scene.remove(instance);
+      const index = occluders.indexOf(instance);
+      if (index >= 0) occluders.splice(index, 1);
       disposeObjectResources(instance);
     } };
   });
@@ -84,6 +99,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
 
   const menu = new FallbackMenu();
   const hud = new Hud(root);
+  const minimap = new Minimap();
+  const occlusion = new OcclusionController(occluders);
   const nearbyPoi = (): RuntimePoi | undefined => pois.find((poi) => Math.hypot(player.position.x - poi.position.x, player.position.z - poi.position.z) <= poi.radius);
   const interactions = new InteractionRuntime({ getActivePoi: () => nearbyPoi(), menu });
   window.__rdoPreview = {
@@ -92,6 +109,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       player.position.y = position.y;
       player.position.z = position.z;
     },
+    setReferenceCamera(position, target): void {
+      cameraController.setReferencePose(position, target);
+    },
+    waitForChunks: () => world.waitForIdle(),
+    getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type }),
   };
   const pressed = new Set<string>();
   const onKeyDown = (event: KeyboardEvent): void => {
@@ -103,7 +125,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     }
   };
   const onKeyUp = (event: KeyboardEvent): void => {
-    pressed.delete(event.key.toLowerCase());
+    try { pressed.delete(event.key.toLowerCase()); }
+    catch (error) { console.error('Could not process game keyup.', error); }
   };
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
@@ -111,6 +134,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   let frame = 0;
   let previous = performance.now();
   let disposed = false;
+  let frameCount = 0;
   const render = (now: number): void => {
     if (disposed) return;
     const delta = Math.min((now - previous) / 1000, 0.1);
@@ -118,12 +142,17 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     player.setMovement({ forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
-    hud.update(player.position, nearbyPoi()?.name);
+    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position));
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target);
+    const toPlayer = target.clone().sub(cameraController.camera.position);
+    const ray = new Raycaster(cameraController.camera.position, toPlayer.normalize(), 0, toPlayer.length());
+    occlusion.update(ray);
     renderer.setSize(Math.max(root.clientWidth, 1), Math.max(root.clientHeight, 1), false);
+    cameraController.resize(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
     renderer.render(scene, cameraController.camera);
+    frameCount += 1;
     frame = requestAnimationFrame(render);
   };
   root.dataset.gameReady = 'true';
@@ -138,6 +167,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     menu.close();
     hud.dispose();
     world.dispose();
+    occlusion.dispose();
     playerMarker.geometry.dispose();
     playerMarker.material.dispose();
     delete root.dataset.gameReady;

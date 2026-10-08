@@ -9,6 +9,7 @@ export interface GameRenderer {
 
 export interface GameBootstrapOptions {
   createRenderer?: () => GameRenderer;
+  onStartupError?: (error: unknown) => void;
 }
 
 export interface GameSession {
@@ -34,7 +35,10 @@ export function bootstrapGame(root: HTMLElement, options: GameBootstrapOptions):
     void startValentineRuntime(root, renderer.nativeRenderer).then((stop) => {
       if (disposed) stop();
       else stopRuntime = stop;
-    }).catch((error) => console.error('Could not start Valentine runtime.', error));
+    }).catch((error) => {
+      console.error('Could not start Valentine runtime.', error);
+      if (!disposed) options.onStartupError?.(error);
+    });
   }
 
   return {

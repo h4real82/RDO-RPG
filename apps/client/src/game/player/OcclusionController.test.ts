@@ -22,7 +22,9 @@ describe('world presentation', () => {
     const ray = new Raycaster(new Vector3(0, 0, 2), new Vector3(0, 0, -1));
 
     occlusion.update(ray);
-    expect(material.opacity).toBe(0.15);
+    expect(material.opacity).toBeLessThan(1);
+    for (let index = 0; index < 20; index += 1) occlusion.update(ray);
+    expect(material.opacity).toBeCloseTo(0.15, 3);
     expect(material.depthWrite).toBe(false);
 
     ray.set(new Vector3(10, 0, 2), new Vector3(0, 0, -1));

@@ -9,6 +9,8 @@ export type PlacementFactory = (placement: WorldPlacement) => Promise<ChunkResou
 export class WorldChunkManager {
   private readonly placementsByChunk = new Map<string, WorldPlacement[]>();
   private readonly loadedChunks = new Map<string, ChunkResource[]>();
+  private updateQueue: Promise<void> = Promise.resolve();
+  private disposed = false;
 
   constructor(private readonly manifest: WorldManifest, private readonly instantiate: PlacementFactory) {
     for (const placement of manifest.placements) {
@@ -19,18 +21,23 @@ export class WorldChunkManager {
   }
 
   async update(playerX: number, playerZ: number): Promise<void> {
+    const next = this.updateQueue.then(() => this.applyUpdate(playerX, playerZ));
+    this.updateQueue = next.catch((error) => console.error('Could not update world chunks.', error));
+    return next;
+  }
+
+  private async applyUpdate(playerX: number, playerZ: number): Promise<void> {
+    if (this.disposed) return;
     const wanted = this.getNeighbourhood(playerX, playerZ);
     for (const chunkId of wanted) {
       if (this.loadedChunks.has(chunkId)) continue;
       const resources: ChunkResource[] = [];
       for (const placement of this.placementsByChunk.get(chunkId) ?? []) {
-        try {
-          resources.push(await this.instantiate(placement));
-        } catch (error) {
-          console.error(`Could not instantiate world placement ${placement.id}.`, error);
-        }
+        try { resources.push(await this.instantiate(placement)); }
+        catch (error) { console.error(`Could not instantiate world placement ${placement.id}.`, error); }
       }
-      this.loadedChunks.set(chunkId, resources);
+      if (this.disposed || !wanted.has(chunkId)) this.disposeResources(resources);
+      else this.loadedChunks.set(chunkId, resources);
     }
     for (const [chunkId, resources] of this.loadedChunks) {
       if (wanted.has(chunkId)) continue;
@@ -40,8 +47,13 @@ export class WorldChunkManager {
   }
 
   dispose(): void {
+    this.disposed = true;
     for (const resources of this.loadedChunks.values()) this.disposeResources(resources);
     this.loadedChunks.clear();
+  }
+
+  async waitForIdle(): Promise<void> {
+    await this.updateQueue;
   }
 
   private getNeighbourhood(playerX: number, playerZ: number): Set<string> {

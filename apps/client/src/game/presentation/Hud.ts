@@ -1,4 +1,5 @@
 import type { PlayerPosition } from '../player/PlayerController';
+import type { MinimapPoint } from './Minimap';
 
 export class Hud {
   private readonly element: HTMLElement | undefined;
@@ -15,11 +16,11 @@ export class Hud {
     }
   }
 
-  update(position: PlayerPosition, nearbyPoiName?: string): void {
+  update(position: PlayerPosition, nearbyPoiName?: string, minimap?: MinimapPoint): void {
     if (!this.element) return;
     this.element.textContent = nearbyPoiName
       ? `Valentine · ${nearbyPoiName} · E: Interagieren`
-      : `Valentine · X ${position.x.toFixed(1)} · Z ${position.z.toFixed(1)}`;
+      : `Valentine · X ${position.x.toFixed(1)} · Z ${position.z.toFixed(1)} · Karte ${minimap?.x.toFixed(1) ?? '?'} / ${minimap?.y.toFixed(1) ?? '?'}`;
   }
 
   dispose(): void {

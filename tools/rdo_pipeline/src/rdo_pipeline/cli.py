@@ -8,6 +8,7 @@ from .inventory import build_inventory
 from .manifest import build_manifest, write_runtime_manifest
 from .placements import adapt_rdo_placements
 from .validate import validate_runtime
+from .pois import validate_pois
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -41,6 +42,7 @@ def main() -> int:
     build.add_argument('--allow-incomplete', action='store_true')
     validate = commands.add_parser('validate-valentine')
     validate.add_argument('--runtime-root', type=Path, required=True)
+    validate.add_argument('--pois', type=Path)
     args = parser.parse_args()
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
@@ -54,9 +56,15 @@ def main() -> int:
             asset_root=args.asset_root, placement_inputs=[args.placements],
         )
         if missing:
+            (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2), encoding='utf-8')
             print(f'partial runtime: {len(missing)} placement models unresolved')
         return 0
     report = validate_runtime(args.runtime_root)
+    if args.pois:
+        poi_report = validate_pois(approved_runtime_root(args.runtime_root), args.pois)
+        if not poi_report.valid:
+            print(','.join(poi_report.errors))
+            return 1
     if report.valid:
         return 0
     print(','.join(report.errors))

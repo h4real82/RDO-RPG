@@ -31,6 +31,23 @@ describe('WorldChunkManager', () => {
     expect(instantiate.mock.calls.map(([placement]) => placement.id)).toEqual(['saloon', 'station']);
   });
 
+  it('coalesces concurrent updates and disposes late resources after shutdown', async () => {
+    let completeLoad: ((resource: { dispose(): void }) => void) | undefined;
+    const resource = { dispose: vi.fn() };
+    const instantiate = vi.fn<[WorldPlacement], Promise<{ dispose(): void }>>(() => new Promise((resolve) => { completeLoad = resolve; }));
+    const manager = new WorldChunkManager({ ...manifest, placements: [manifest.placements[0]] }, instantiate);
+
+    const first = manager.update(1, 1);
+    const second = manager.update(1, 1);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(instantiate).toHaveBeenCalledTimes(1);
+    manager.dispose();
+    completeLoad?.(resource);
+    await Promise.all([first, second]);
+
+    expect(resource.dispose).toHaveBeenCalledTimes(1);
+  });
+
   it('disposes chunk resources once after the player leaves their neighbourhood', async () => {
     const saloon = { dispose: vi.fn() };
     const station = { dispose: vi.fn() };
@@ -48,13 +65,15 @@ describe('WorldChunkManager', () => {
   it('disposes geometry and material resources exactly once', () => {
     const geometry = { dispose: vi.fn() };
     const material = { dispose: vi.fn() };
+    const texture = { dispose: vi.fn() };
     const object = {
-      traverse: (visit: (node: { geometry: typeof geometry; material: typeof material }) => void) => visit({ geometry, material }),
+      traverse: (visit: (node: { geometry: typeof geometry; material: typeof material & { map: typeof texture } }) => void) => visit({ geometry, material: { ...material, map: texture } }),
     };
 
     disposeObjectResources(object);
 
     expect(geometry.dispose).toHaveBeenCalledTimes(1);
     expect(material.dispose).toHaveBeenCalledTimes(1);
+    expect(texture.dispose).toHaveBeenCalledTimes(1);
   });
 });

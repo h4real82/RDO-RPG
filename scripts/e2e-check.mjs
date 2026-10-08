@@ -40,16 +40,19 @@ async function main() {
     page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#game-container')?.getAttribute('data-game-ready') === 'true');
+    const before = await page.evaluate(() => window.__rdoPreview?.getState());
     await page.keyboard.down('w');
     await page.waitForTimeout(200);
     await page.keyboard.up('w');
+    const after = await page.evaluate(() => window.__rdoPreview?.getState());
     await page.evaluate(() => window.__rdoPreview?.teleport({ x: -259.0177, y: 120.1503, z: 741.3681 }));
     await page.keyboard.press('e');
     await page.waitForSelector('section[role="dialog"]');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('section[role="dialog"]'));
-    const loopActive = await page.evaluate(() => new Promise((resolve) => requestAnimationFrame((first) => requestAnimationFrame((second) => resolve(second > first)))));
-    if (!loopActive || errors.length) throw new Error(`Preview errors: ${errors.join('; ')}`);
+    if (!before || !after || after.frame <= before.frame || after.player.z === before.player.z || after.cameraType !== 'OrthographicCamera' || errors.length) {
+      throw new Error(`Preview errors: ${errors.join('; ')}`);
+    }
     console.log('Valentine vertical-slice browser smoke test passed.');
   } finally {
     await browser.close();

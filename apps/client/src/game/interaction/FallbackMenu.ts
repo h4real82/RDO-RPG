@@ -7,7 +7,12 @@ export class FallbackMenu {
       const panel = document.createElement('section');
       panel.setAttribute('role', 'dialog');
       panel.setAttribute('aria-modal', 'true');
-      panel.innerHTML = `<p>${message}</p><button type="button">Schließen</button>`;
+      const text = document.createElement('p');
+      text.textContent = message;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = 'Schließen';
+      panel.append(text, button);
       panel.querySelector('button')?.addEventListener('click', () => {
         try {
           this.close();

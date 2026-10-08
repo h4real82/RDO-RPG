@@ -1,5 +1,5 @@
 import { execFileSync, spawn } from 'node:child_process';
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import http from 'node:http';
@@ -8,6 +8,7 @@ import { chromium } from 'playwright';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const url = 'http://127.0.0.1:4174';
 const output = path.join(root, 'data/runtime/valentine/test-artifacts/reference-renders');
+const baseline = process.env.REFERENCE_BASELINE_DIR;
 let server;
 
 function stopServer() {
@@ -40,9 +41,20 @@ try {
     await page.waitForFunction(() => document.querySelector('#game-container')?.getAttribute('data-game-ready') === 'true');
     for (const pose of poses.poses) {
       if (pose.projection !== 'orthographic') throw new Error(`Pose ${pose.id} is not orthographic.`);
-      await page.evaluate((target) => window.__rdoPreview?.teleport(target), pose.target);
-      await page.waitForTimeout(500);
+      await page.evaluate(async (referencePose) => {
+        window.__rdoPreview?.teleport(referencePose.target);
+        window.__rdoPreview?.setReferenceCamera(referencePose.position, referencePose.target);
+        await window.__rdoPreview?.waitForChunks();
+      }, pose);
+      const state = await page.evaluate(() => window.__rdoPreview?.getState());
+      if (!state || state.cameraType !== 'OrthographicCamera') throw new Error(`Pose ${pose.id} has no orthographic runtime camera.`);
       await page.screenshot({ path: path.join(output, `${pose.id}.png`) });
+      if (baseline) {
+        const candidate = path.join(baseline, `${pose.id}.png`);
+        await access(candidate);
+        const [actual, expected] = await Promise.all([readFile(path.join(output, `${pose.id}.png`)), readFile(candidate)]);
+        if (!actual.equals(expected)) throw new Error(`Reference baseline mismatch: ${pose.id}`);
+      }
     }
   } finally { await browser.close(); }
   console.log(`Captured ${poses.poses.length} deterministic Valentine reference renders.`);

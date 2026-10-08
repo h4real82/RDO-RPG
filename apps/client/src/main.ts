@@ -6,8 +6,12 @@ function showStartupError(message: string): void {
     panel.setAttribute('role', 'alert');
     panel.setAttribute('aria-live', 'assertive');
     panel.tabIndex = -1;
-    panel.innerHTML = `<p>${message}</p><button type="button">Schließen</button>`;
-    const closeButton = panel.querySelector('button');
+    const text = document.createElement('p');
+    text.textContent = message;
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.textContent = 'Schließen';
+    panel.append(text, closeButton);
     closeButton?.addEventListener('click', () => {
       try {
         panel.remove();
@@ -25,7 +29,7 @@ function showStartupError(message: string): void {
 try {
   const root = document.getElementById('game-container');
   if (!root) throw new Error('Game root is required');
-  bootstrapGame(root, {});
+  bootstrapGame(root, { onStartupError: () => showStartupError('Der lokale Spielstart ist fehlgeschlagen. Bitte Seite neu laden.') });
 } catch (error) {
   console.error('Could not start the game.', error);
   showStartupError('Der lokale Spielstart ist fehlgeschlagen. Bitte Seite neu laden.');

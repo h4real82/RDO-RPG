@@ -1,4 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
+import { Group, Vector3 } from 'three';
+import { describe, expect, it } from 'vitest';
 import type { WorldManifest } from '@rdo-rpg/world-contracts';
 
 import { applyPlacementTransform, selectSpawnPosition } from './ValentineRuntime';
@@ -13,21 +14,18 @@ describe('selectSpawnPosition', () => {
   });
 });
 
-it('converts Z-up GLB local axes to the world contract orientation', () => {
-  const instance = {
-    position: { set: vi.fn() },
-    rotation: { set: vi.fn() },
-    scale: { set: vi.fn() },
-  };
+it('keeps Z-up GLB geometry upright while applying a world-Y heading', () => {
+  const instance = new Group();
   const placement = {
     position: { x: 1, y: 2, z: 3 },
-    rotation: { x: 0, y: 0.5, z: 0 },
+    rotation: { x: 0, y: Math.PI / 2, z: 0 },
     scale: { x: 4, y: 5, z: 6 },
   };
 
   applyPlacementTransform(instance, placement);
 
-  expect(instance.position.set).toHaveBeenCalledWith(1, 2, 3);
-  expect(instance.rotation.set).toHaveBeenCalledWith(Math.PI / 2, 0.5, 0);
-  expect(instance.scale.set).toHaveBeenCalledWith(4, 5, -6);
+  expect(instance.position).toMatchObject({ x: 1, y: 2, z: 3 });
+  expect(new Vector3(0, 0, 1).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 1, 0));
+  expect(new Vector3(1, 0, 0).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 0, -1));
+  expect(instance.scale).toMatchObject({ x: 4, y: 5, z: 6 });
 });
