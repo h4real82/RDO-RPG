@@ -10,6 +10,25 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-08-rdo-rpg-restart-design.md`
 
+## Ausführungsstatus – 2026-10-08
+
+- **Verträge und Grundlage:** umgesetzt und durch Workspace-Build validiert.
+- **Asset-Pipeline:** umgesetzt; die lokale Preview ist reproduzierbar, aber
+  ausdrücklich unvollständig. Aktuell sind 405 von 4.451 YMAP-Entitäten
+  renderbar, 1.595 Modelltypen fehlen noch. `coverage.json`,
+  `missing-models.json` und `texture-coverage.json` sind die autoritativen
+  Lückenberichte.
+- **World Runtime:** umgesetzt; 250-m-Chunk-Streaming, orthografische Kamera,
+  manifestbasierte Mesh-Kollision und der Sichtschutz laufen im Browser.
+- **Vertical Slice und Governance:** umgesetzt und geprüft. Die versionierte
+  Obsidian-MCP-Hülle startet im jeweiligen Checkout, begrenzt den Zugriff auf
+  `docs/Obsidian` und stellt Lese-/Schreibwerkzeuge bereit.
+
+Der Durchlauf bleibt offen, bis die fehlenden, in OpenIV eindeutig
+identifizierten Drawables und ihre belegten Materialbindungen exportiert und
+über die reguläre Pipeline validiert sind. Diese Lücke darf nicht durch
+prozedurale oder geschätzte Weltgeometrie ersetzt werden.
+
 ## Global Constraints
 
 - `data/raw/` wird nicht verändert.
