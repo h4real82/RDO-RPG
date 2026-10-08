@@ -36,6 +36,12 @@ interface RuntimePoi {
   category: string;
 }
 
+declare global {
+  interface Window {
+    __rdoPreview?: { teleport(position: { x: number; y: number; z: number }): void };
+  }
+}
+
 async function loadPois(): Promise<RuntimePoi[]> {
   try {
     const response = await fetch('/runtime/valentine/pois.json');
@@ -80,6 +86,13 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const hud = new Hud(root);
   const nearbyPoi = (): RuntimePoi | undefined => pois.find((poi) => Math.hypot(player.position.x - poi.position.x, player.position.z - poi.position.z) <= poi.radius);
   const interactions = new InteractionRuntime({ getActivePoi: () => nearbyPoi(), menu });
+  window.__rdoPreview = {
+    teleport(position): void {
+      player.position.x = position.x;
+      player.position.y = position.y;
+      player.position.z = position.z;
+    },
+  };
   const pressed = new Set<string>();
   const onKeyDown = (event: KeyboardEvent): void => {
     try {
@@ -128,5 +141,6 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     playerMarker.geometry.dispose();
     playerMarker.material.dispose();
     delete root.dataset.gameReady;
+    delete window.__rdoPreview;
   };
 }
