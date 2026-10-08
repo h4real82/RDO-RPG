@@ -14,6 +14,7 @@ from .infrastructure import build_valentine_traces
 from .texture_references import build_texture_reference_report
 from .drawable_materials import decode_drawable_materials
 from .export_targets import build_export_targets
+from .vertex_colors import decode_drawable_vertex_colors
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -60,6 +61,9 @@ def main() -> int:
     drawable_inspect = commands.add_parser('inspect-drawable-materials')
     drawable_inspect.add_argument('--drawable', type=Path, required=True)
     drawable_inspect.add_argument('--runtime-root', type=Path, required=True)
+    colors = commands.add_parser('inspect-vertex-colors')
+    colors.add_argument('--drawable', type=Path, required=True)
+    colors.add_argument('--runtime-root', type=Path, required=True)
     mlo_inventory = commands.add_parser('inspect-mlo')
     mlo_inventory.add_argument('--archetype-root', type=Path, required=True)
     mlo_inventory.add_argument('--runtime-root', type=Path, required=True)
@@ -82,6 +86,16 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'inspect-vertex-colors':
+        raw = args.drawable.read_bytes()
+        geometries = decode_drawable_vertex_colors(raw)
+        runtime_root = approved_runtime_root(args.runtime_root)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        report = {'version': 1, 'sourceFile': args.drawable.name,
+                  'sourceSha256': sha256(raw).hexdigest(), 'geometries': geometries}
+        (runtime_root / 'vertex-colors.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+        print(f'decoded vertex colors for {len(geometries)} geometries')
+        return 0
     if args.command == 'inspect-drawable-materials':
         raw = args.drawable.read_bytes()
         bindings = decode_drawable_materials(raw)

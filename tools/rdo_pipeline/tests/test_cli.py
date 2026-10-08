@@ -7,6 +7,23 @@ from rdo_pipeline import cli
 from rdo_pipeline.cli import approved_runtime_root, build_coverage_report, load_placements
 
 
+def test_vertex_color_cli_reports_source_provenance_without_mutating_input(tmp_path, monkeypatch):
+    import hashlib
+    source = tmp_path / 'empty.ydr.full'
+    raw = bytes(112)
+    source.write_bytes(raw)
+    runtime = tmp_path / 'runtime'
+    monkeypatch.setattr(cli, 'approved_runtime_root', lambda candidate: runtime)
+    monkeypatch.setattr('sys.argv', ['rdo-pipeline', 'inspect-vertex-colors',
+                                   '--drawable', str(source), '--runtime-root', str(runtime)])
+    assert cli.main() == 0
+    report = json.loads((runtime / 'vertex-colors.json').read_text())
+    assert report['sourceSha256'] == hashlib.sha256(raw).hexdigest()
+    assert report['sourceFile'] == 'empty.ydr.full'
+    assert report['geometries'] == []
+    assert source.read_bytes() == raw
+
+
 def test_export_targets_cli_writes_search_candidates_with_input_provenance(tmp_path, monkeypatch):
     names = tmp_path / 'names'
     names.mkdir()
