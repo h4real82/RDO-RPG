@@ -3,12 +3,76 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from typing import Any, Mapping
+from pathlib import Path
+import xml.etree.ElementTree as ET
 
 
 @dataclass(frozen=True)
 class PlacementAdaptation:
     placements: tuple[dict[str, Any], ...]
     missing_models: tuple[str, ...]
+
+
+def read_mlo_archetypes(paths: list[Path]) -> dict[str, dict[str, Any]]:
+    """Read local-space MLO members, preserving optional sets separately.
+
+    No world transform or entity-set activation is inferred by this reader.
+    """
+    def text(node: ET.Element, key: str) -> str:
+        value = node.findtext(key, '').strip().lower()
+        if not value:
+            raise ValueError(f'missing MLO {key}')
+        return value
+
+    def vector(node: ET.Element, key: str, axes: str) -> list[float]:
+        element = node.find(key)
+        if element is None or any(axis not in element.attrib for axis in axes):
+            raise ValueError(f'missing MLO {key}')
+        values = [float(element.attrib[axis]) for axis in axes]
+        if not all(math.isfinite(value) for value in values):
+            raise ValueError(f'non-finite MLO {key}')
+        return values
+
+    def scalar(node: ET.Element, key: str) -> float:
+        element = node.find(key)
+        if element is None or 'value' not in element.attrib:
+            raise ValueError(f'missing MLO {key}')
+        value = float(element.attrib['value'])
+        if not math.isfinite(value):
+            raise ValueError(f'non-finite MLO {key}')
+        return value
+
+    def members(node: ET.Element, source: Path) -> list[dict[str, Any]]:
+        result = []
+        for entity in node.findall('./entities/Item'):
+            if entity.get('type') != 'CEntityDef':
+                raise ValueError('unsupported MLO entity type')
+            xy, z = scalar(entity, 'scaleXY'), scalar(entity, 'scaleZ')
+            result.append({
+                'modelName': text(entity, 'archetypeName'),
+                'position': vector(entity, 'position', 'xyz'),
+                'rotation': vector(entity, 'rotation', 'xyzw'),
+                'scale': [xy, xy, z], 'sourceFile': source.name, 'isInterior': True,
+            })
+        return result
+
+    result: dict[str, dict[str, Any]] = {}
+    for path in sorted(paths):
+        root = ET.parse(path).getroot()
+        if root.tag != 'CMapTypes':
+            raise ValueError(f'not a CMapTypes export: {path.name}')
+        for node in root.findall('./archetypes/Item'):
+            if node.get('type') != 'CMloArchetypeDef':
+                continue
+            name = text(node, 'name')
+            if name in result:
+                raise ValueError(f'duplicate MLO archetype: {name}')
+            result[name] = {
+                'sourceFile': path.name, 'entities': members(node, path),
+                'entitySets': [{'name': text(entity_set, 'name'), 'entities': members(entity_set, path)}
+                               for entity_set in node.findall('./entitySets/Item')],
+            }
+    return result
 
 
 def _rotation_xyz(rotation: list[float]) -> dict[str, float]:

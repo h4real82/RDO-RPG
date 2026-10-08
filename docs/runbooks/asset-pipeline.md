@@ -24,3 +24,17 @@ version und Quellpfad werden erfasst; nach der Korrektur im Tool wird der Lauf
 aus denselben Rohdaten wiederholt. Fehlende Assets, ungültige Koordinaten und
 unbekannte Layer werden in späteren Validierungsschritten als harte Fehler
 behandelt.
+
+## Innenraum-Archetypen (YTYP)
+
+```powershell
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli inspect-mlo `
+  --archetype-root 'D:/Projects/RDO-RPG/data/raw/ymap' `
+  --runtime-root 'data/runtime/valentine/local-preview'
+```
+
+`mlo-archetypes.json` erhält lokale Positionen, Quaternionen und Skalierungen
+der Basisobjekte getrennt von optionalen Entity-Sets. Es ist ein Diagnoseartefakt
+(`renderable: false`), kein Weltmanifest. Fehlende Transformationen sind Fehler;
+optionale Sets werden nicht automatisch aktiviert. MLO-Namen dürfen nicht
+durch ähnlich benannte Außenmodelle ersetzt werden.

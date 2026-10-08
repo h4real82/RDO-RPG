@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .inventory import build_inventory
 from .manifest import build_manifest, write_runtime_manifest
-from .placements import adapt_rdo_placements
+from .placements import adapt_rdo_placements, read_mlo_archetypes
 from .validate import validate_runtime
 from .pois import validate_pois
 from .infrastructure import build_valentine_traces
@@ -50,6 +50,9 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    mlo_inventory = commands.add_parser('inspect-mlo')
+    mlo_inventory.add_argument('--archetype-root', type=Path, required=True)
+    mlo_inventory.add_argument('--runtime-root', type=Path, required=True)
     build = commands.add_parser('build-valentine')
     build.add_argument('--asset-root', type=Path, required=True)
     build.add_argument('--placements', type=Path, required=True)
@@ -68,6 +71,15 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'inspect-mlo':
+        archetypes = read_mlo_archetypes(list(args.archetype_root.glob('*ytyp.xml')))
+        runtime_root = approved_runtime_root(args.runtime_root)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        report = {'version': 1, 'coordinateSpace': 'game-local', 'renderable': False,
+                  'archetypes': archetypes}
+        (runtime_root / 'mlo-archetypes.json').write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(f'MLO definitions: {len(archetypes)}; local-space only, no optional sets activated')
+        return 0
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
         available_models = {Path(item.path).stem for item in inventory.items if item.category == 'model'}
