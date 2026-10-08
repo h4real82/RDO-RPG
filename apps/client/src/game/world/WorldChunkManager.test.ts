@@ -20,6 +20,24 @@ const manifest: WorldManifest = {
 };
 
 describe('WorldChunkManager', () => {
+  it('skips an obsolete queued neighbourhood while a model is loading', async () => {
+    let finish: (() => void) | undefined;
+    const loaded: string[] = [];
+    const placements = [0, 4, 8].map((chunk, index) => ({ ...manifest.placements[0], id: `model-${index}`, chunkId: `${chunk}:0` }));
+    const manager = new WorldChunkManager({ ...manifest, placements }, async (placement) => {
+      loaded.push(placement.id);
+      if (placement.id === 'model-0') await new Promise<void>((resolve) => { finish = resolve; });
+      return { dispose() {} };
+    });
+    const first = manager.update(1, 1);
+    await Promise.resolve();
+    const obsolete = manager.update(1001, 1);
+    const latest = manager.update(2001, 1);
+    finish?.();
+    await Promise.all([first, obsolete, latest]);
+    expect(loaded).toEqual(['model-0', 'model-2']);
+    manager.dispose();
+  });
   it('loads the player chunk and available neighbours only once', async () => {
     const instantiate = vi.fn<[WorldPlacement], Promise<{ dispose(): void }>>(async () => ({ dispose: vi.fn() }));
     const manager = new WorldChunkManager(manifest, instantiate);

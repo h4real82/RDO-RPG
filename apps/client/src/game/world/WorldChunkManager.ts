@@ -10,6 +10,8 @@ export class WorldChunkManager {
   private readonly placementsByChunk = new Map<string, WorldPlacement[]>();
   private readonly loadedChunks = new Map<string, ChunkResource[]>();
   private updateQueue: Promise<void> = Promise.resolve();
+  private pendingPosition: { x: number; z: number } | undefined;
+  private updating = false;
   private disposed = false;
 
   constructor(private readonly manifest: WorldManifest, private readonly instantiate: PlacementFactory) {
@@ -21,9 +23,25 @@ export class WorldChunkManager {
   }
 
   async update(playerX: number, playerZ: number): Promise<void> {
-    const next = this.updateQueue.then(() => this.applyUpdate(playerX, playerZ));
-    this.updateQueue = next.catch((error) => console.error('Could not update world chunks.', error));
-    return next;
+    if (this.disposed) return;
+    this.pendingPosition = { x: playerX, z: playerZ };
+    if (!this.updating) {
+      this.updating = true;
+      this.updateQueue = Promise.resolve().then(async () => {
+        try {
+          while (this.pendingPosition && !this.disposed) {
+            const position = this.pendingPosition;
+            this.pendingPosition = undefined;
+            await this.applyUpdate(position.x, position.z);
+          }
+        } catch (error) {
+          console.error('Could not update world chunks.', error);
+        } finally {
+          this.updating = false;
+        }
+      });
+    }
+    return this.updateQueue;
   }
 
   private async applyUpdate(playerX: number, playerZ: number): Promise<void> {
@@ -48,6 +66,7 @@ export class WorldChunkManager {
 
   dispose(): void {
     this.disposed = true;
+    this.pendingPosition = undefined;
     for (const resources of this.loadedChunks.values()) this.disposeResources(resources);
     this.loadedChunks.clear();
   }
