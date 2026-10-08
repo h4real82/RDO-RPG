@@ -49,3 +49,4 @@ docs/Obsidian/.obsidian/plugins/obsidian-local-rest-api/data.json
 tools/rdo_pipeline/.venv/
 __pycache__/
 *.pyc
+*.egg-info/
