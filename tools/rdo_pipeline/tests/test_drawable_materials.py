@@ -60,3 +60,18 @@ def test_rejects_geometry_shader_index_outside_shader_table():
     struct.pack_into('<H', data, 0x3c0, 1)
     with pytest.raises(ValueError, match='shader index'):
         decoder()(data)
+
+
+def test_diffuse_plan_uses_parameter_hash_and_rejects_ambiguous_files():
+    from rdo_pipeline import drawable_materials
+    assert callable(getattr(drawable_materials, 'diffuse_texture_plan', None))
+    bindings = {'shaders': [
+        {'hash': '0x12345678', 'textures': [{'parameterHash': '0xc8e8c282', 'slot': 0, 'name': 'wall_al'}]},
+        {'hash': '0x12345678', 'textures': [{'parameterHash': '0x00000001', 'slot': 0, 'name': 'wall_al'}]},
+    ]}
+    plan = drawable_materials.diffuse_texture_plan(bindings, {'wall_al': ['wall.png']})
+    assert plan[0]['path'] == 'wall.png'
+    assert plan[1]['path'] is None
+    ambiguous = drawable_materials.diffuse_texture_plan(bindings, {'wall_al': ['one.png', 'two.png']})
+    assert ambiguous[0]['path'] is None
+    assert ambiguous[0]['reason'] == 'ambiguous-texture'

@@ -10,6 +10,20 @@ import struct
 from typing import Any
 
 
+def diffuse_texture_plan(bindings: dict[str, Any], texture_files: dict[str, list[str]]) -> list[dict[str, Any]]:
+    """Only resolve a single exact DiffuseTex parameter; no suffix inference."""
+    plan = []
+    for shader in bindings['shaders']:
+        diffuse = [entry['name'] for entry in shader['textures']
+                   if entry['parameterHash'] == '0xc8e8c282' and entry['name']]
+        paths = texture_files.get(diffuse[0].lower(), []) if len(diffuse) == 1 else []
+        reason = ('unsupported-diffuse-binding' if len(diffuse) != 1 else
+                  'missing-texture' if not paths else 'ambiguous-texture' if len(paths) != 1 else None)
+        plan.append({'path': paths[0] if reason is None else None, 'reason': reason,
+                     'shaderHash': shader['hash'], 'sourceTextures': shader['textures']})
+    return plan
+
+
 def decode_drawable_materials(data: bytes) -> dict[str, Any]:
     def read(fmt: str, offset: int):
         size = struct.calcsize(fmt)
