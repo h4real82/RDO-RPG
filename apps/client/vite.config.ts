@@ -13,6 +13,9 @@ export default defineConfig({
         if (!candidate.startsWith(`${runtimeRoot}${sep}`) || !existsSync(candidate) || !statSync(candidate).isFile()) return next();
         createReadStream(candidate).pipe(response);
       });
+      server.middlewares.use('/runtime/valentine/pois.json', (_request, response) => {
+        createReadStream(resolve(__dirname, '../../data/runtime/valentine/pois.json')).pipe(response);
+      });
     },
   }],
   server: {

@@ -6,6 +6,7 @@ import { FallbackMenu } from './interaction/FallbackMenu';
 import { InteractionRuntime } from './interaction/InteractionRuntime';
 import { OrthographicFollowCamera } from './player/OrthographicFollowCamera';
 import { PlayerController } from './player/PlayerController';
+import { Hud } from './presentation/Hud';
 import { disposeObjectResources } from './world/ResourceDisposer';
 import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
@@ -27,8 +28,28 @@ export function applyPlacementTransform(instance: PlacementInstance, placement: 
   instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
 }
 
+interface RuntimePoi {
+  id: string;
+  name: string;
+  position: { x: number; y: number; z: number };
+  radius: number;
+  category: string;
+}
+
+async function loadPois(): Promise<RuntimePoi[]> {
+  try {
+    const response = await fetch('/runtime/valentine/pois.json');
+    const payload: unknown = await response.json();
+    return Array.isArray(payload) ? payload.filter((poi): poi is RuntimePoi => Boolean(poi && typeof poi === 'object' && 'id' in poi && 'name' in poi && 'position' in poi && 'radius' in poi && 'category' in poi)) : [];
+  } catch (error) {
+    console.error('Could not load Valentine POIs.', error);
+    return [];
+  }
+}
+
 export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRenderer): Promise<() => void> {
   const manifest = await loadValentineManifest('/runtime/valentine/local-preview/rdo_world_manifest.json');
+  const pois = await loadPois();
   const scene = new Scene();
   scene.background = new Color('#17130e');
   scene.add(new AmbientLight('#d7c5a0', 2.4));
@@ -56,7 +77,9 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   await world.update(player.position.x, player.position.z);
 
   const menu = new FallbackMenu();
-  const interactions = new InteractionRuntime({ getActivePoi: () => undefined, menu });
+  const hud = new Hud(root);
+  const nearbyPoi = (): RuntimePoi | undefined => pois.find((poi) => Math.hypot(player.position.x - poi.position.x, player.position.z - poi.position.z) <= poi.radius);
+  const interactions = new InteractionRuntime({ getActivePoi: () => nearbyPoi(), menu });
   const pressed = new Set<string>();
   const onKeyDown = (event: KeyboardEvent): void => {
     try {
@@ -82,6 +105,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     player.setMovement({ forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
+    hud.update(player.position, nearbyPoi()?.name);
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target);
@@ -99,6 +123,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     window.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('keyup', onKeyUp);
     menu.close();
+    hud.dispose();
     world.dispose();
     playerMarker.geometry.dispose();
     playerMarker.material.dispose();
