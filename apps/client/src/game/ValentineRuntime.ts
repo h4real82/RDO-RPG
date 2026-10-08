@@ -9,7 +9,7 @@ import { OcclusionController } from './player/OcclusionController';
 import { PlayerController } from './player/PlayerController';
 import { Hud } from './presentation/Hud';
 import { Minimap } from './presentation/Minimap';
-import { disposeObjectResources } from './world/ResourceDisposer';
+import { ModelAssetCache } from './world/ModelAssetCache';
 import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
 import { selectHighestDrawableLod } from './world/DrawableLod';
@@ -113,11 +113,15 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   scene.add(playerMarker);
   const cameraController = new OrthographicFollowCamera(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
   const loader = new GLTFLoader();
+  const assets = new ModelAssetCache(async (asset) => {
+    const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${asset}`);
+    selectHighestDrawableLod(gltf.scene);
+    return gltf.scene;
+  });
   const occluders: Group[] = [];
   const world = new WorldChunkManager(manifest, async (placement: WorldPlacement) => {
-    const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${placement.asset}`);
-    const instance = gltf.scene;
-    selectHighestDrawableLod(instance);
+    const lease = await assets.acquire(placement.asset);
+    const instance = lease.instance;
     applyPlacementTransform(instance, placement);
     scene.add(instance);
     occluders.push(instance);
@@ -128,7 +132,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       const index = occluders.indexOf(instance);
       if (index >= 0) occluders.splice(index, 1);
       collisionBounds.delete(instance);
-      disposeObjectResources(instance);
+      lease.dispose();
     } };
   });
   await world.update(player.position.x, player.position.z);
