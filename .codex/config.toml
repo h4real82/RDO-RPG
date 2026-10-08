@@ -1,0 +1,8 @@
+# Loaded by Codex for trusted projects. Override the global rdo-vault entry
+# so an isolated checkout never silently edits another checkout's documents.
+[mcp_servers.rdo-vault]
+command = "node"
+args = ["tools/obsidian-filesystem-mcp.mjs"]
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+enabled = true
