@@ -44,7 +44,15 @@ describe('world presentation', () => {
 
     ray.set(new Vector3(10, 0, 2), new Vector3(0, 0, -1));
     occlusion.update(ray);
+    expect(material.opacity).toBeGreaterThan(0.15);
+    expect(material.opacity).toBeLessThan(1);
+    expect(material.depthWrite).toBe(false);
+    for (let index = 0; index < 30; index += 1) occlusion.update(ray);
     expect(material.opacity).toBe(1);
     expect(material.depthWrite).toBe(true);
+    expect(material.transparent).toBe(false);
+    occlusion.dispose();
+    roof.geometry.dispose();
+    material.dispose();
   });
 });

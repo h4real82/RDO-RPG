@@ -33,6 +33,8 @@ export class OcclusionController {
 
     for (const [material, state] of this.active) {
       if (visible.has(material)) continue;
+      material.opacity += (state.opacity - material.opacity) * 0.35;
+      if (Math.abs(state.opacity - material.opacity) > 0.001) continue;
       material.opacity = state.opacity;
       material.transparent = state.transparent;
       material.depthWrite = state.depthWrite;
