@@ -62,14 +62,32 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
         shader = pointer(shader_array + index * 8)
         parameters = pointer(shader + 32)
         texture_count = read('<B', parameters + 1)
+        buffer_count = read('<B', parameters)
+        buffer_array = pointer(shader + 8, nullable=buffer_count == 0)
         texture_array = pointer(shader + 16, nullable=texture_count == 0)
         parameter_count = read('<I', parameters + 4)
         if parameter_count > (len(data) - parameters - 8) // 8:
             raise ValueError('shader parameter array outside resource bounds')
         textures = []
+        constants = []
         for parameter_index in range(parameter_count):
             parameter = parameters + 8 + parameter_index * 8
             packed = read('<I', parameter + 4)
+            if packed & 3 == 3:
+                # Cfx sgaShaderParamName: 2-bit class, 6-bit cbuffer,
+                # 12-bit byte offset and 12-bit byte length. No type guessing.
+                buffer_index = (packed >> 2) & 63
+                if buffer_index >= buffer_count:
+                    raise ValueError('constant buffer index outside shader table')
+                start = pointer(buffer_array + buffer_index * 8)
+                offset = (packed >> 8) & 4095
+                length = packed >> 20
+                if start + offset + length > len(data):
+                    raise ValueError('constant bytes outside resource bounds')
+                constants.append({'parameterHash': f"0x{read('<I', parameter):08x}",
+                                  'buffer': buffer_index, 'offset': offset,
+                                  'bytes': data[start + offset:start + offset + length].hex()})
+                continue
             if packed & 3 != 0:
                 continue
             slot = (packed >> 2) & 255
@@ -81,6 +99,7 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
         # RDR3 grcInstanceData layout, not GTA V's shader layout.
         # Preserve raw bucket metadata; it alone does not prove visibility.
         shaders.append({'hash': f"0x{read('<I', shader):08x}", 'textures': textures,
+                        'constants': constants,
                         'drawBucket': read('<B', shader + 57),
                         'drawBucketMask': read('<I', shader + 60)})
 

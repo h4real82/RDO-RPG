@@ -71,6 +71,17 @@ Rohordners kopiert. Texturen sind im GLB eingebettet.
 `missing-texture`, `ambiguous-texture` und `unsupported-diffuse-binding`.
 Ein erfolgreicher Export belegt weder vollständige PBR-Materialien noch korrekte
 Transparenz, Mehrschichtshader oder die Renderrolle von Hilfsgeometrie.
+
+`inspect-drawable-materials` erhält zusätzlich die Konstanten der RDR3-
+Shaderparameter: Parameterhash, Bufferindex, Byteoffset und unveränderte
+Hexbytes. Das Format folgt `sgaShaderParamName` in der oben verlinkten
+Cfx-Layoutreferenz (6 Bit Bufferindex, je 12 Bit Offset und Länge).
+Es werden keine Float-, Farb- oder UV-Semantiken geraten. Ungültige Indizes
+und Bytebereiche brechen den Decoder ab. Ein lesender Bestandscheck am
+2026-10-08 dekodierte alle 527 vorhandenen `.ydr.full`-Dateien: 2249 Shader,
+72120 Konstanten, keine Decoderfehler. Diese Daten sind noch nicht als
+Materialsteuerung im GLB-Exporter oder Browser implementiert.
+
 `val_lights_holder_05` verdeckt derzeit Teile der Vorschau: Ein isolierter
 Browservergleich ohne dieses Objekt beseitigte die große Fläche. Renderbucket
 und untersuchte Materialkonstanten entsprechen jedoch normalen sichtbaren

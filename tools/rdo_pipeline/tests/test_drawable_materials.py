@@ -39,7 +39,7 @@ def decoder():
 
 def test_decodes_exact_geometry_shader_texture_parameter_binding():
     result = decoder()(fixture_drawable())
-    assert result['shaders'] == [{'hash': '0x12345678', 'drawBucket': 0, 'drawBucketMask': 0, 'textures': [
+    assert result['shaders'] == [{'hash': '0x12345678', 'constants': [], 'drawBucket': 0, 'drawBucketMask': 0, 'textures': [
         {'parameterHash': '0xc8e8c282', 'slot': 0, 'name': 'fixture_al'},
     ]}]
     assert result['geometries'] == [
@@ -53,6 +53,39 @@ def test_reads_model_render_mask_separately_from_shader_bucket():
     data[0x380 + 52] = 0xe0
     result = decoder()(data)
     assert result.get('models') == [{'lod': 0, 'model': 0, 'renderMask': 224}]
+
+
+def constant_fixture():
+    data = fixture_drawable()
+    data[0x200] = 1
+    struct.pack_into('<Q', data, 0x188, 0x50000260)
+    struct.pack_into('<Q', data, 0x260, 0x500002c0)
+    struct.pack_into('<I', data, 0x204, 2)
+    struct.pack_into('<II', data, 0x210, 0x1234abcd, 3 | (4 << 8) | (16 << 20))
+    struct.pack_into('<4f', data, 0x2c4, 1, 2, 3, 0)
+    return data
+
+
+def test_preserves_constant_buffer_bytes_and_parameter_identity():
+    shader = decoder()(constant_fixture())['shaders'][0]
+    assert shader.get('constants') == [{
+        'parameterHash': '0x1234abcd', 'buffer': 0, 'offset': 4,
+        'bytes': '0000803f000000400000404000000000',
+    }]
+
+
+def test_rejects_constant_buffer_index_outside_table():
+    data = constant_fixture()
+    struct.pack_into('<I', data, 0x214, 3 | (1 << 2) | (16 << 20))
+    with pytest.raises(ValueError, match='constant buffer index'):
+        decoder()(data)
+
+
+def test_rejects_constant_bytes_outside_resource():
+    data = constant_fixture()
+    struct.pack_into('<I', data, 0x214, 3 | (4095 << 8) | (16 << 20))
+    with pytest.raises(ValueError, match='constant bytes'):
+        decoder()(data)
 
 
 def test_rejects_out_of_bounds_resource_pointer():
