@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from hashlib import sha256
 
 from .inventory import build_inventory
 from .manifest import build_manifest, write_runtime_manifest
@@ -11,6 +12,7 @@ from .validate import validate_runtime
 from .pois import validate_pois
 from .infrastructure import build_valentine_traces
 from .texture_references import build_texture_reference_report
+from .drawable_materials import decode_drawable_materials
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -50,6 +52,9 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    drawable_inspect = commands.add_parser('inspect-drawable-materials')
+    drawable_inspect.add_argument('--drawable', type=Path, required=True)
+    drawable_inspect.add_argument('--runtime-root', type=Path, required=True)
     mlo_inventory = commands.add_parser('inspect-mlo')
     mlo_inventory.add_argument('--archetype-root', type=Path, required=True)
     mlo_inventory.add_argument('--runtime-root', type=Path, required=True)
@@ -72,6 +77,15 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'inspect-drawable-materials':
+        raw = args.drawable.read_bytes()
+        bindings = decode_drawable_materials(raw)
+        runtime_root = approved_runtime_root(args.runtime_root)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        report = {'version': 1, 'sourceFile': args.drawable.name, 'sourceSha256': sha256(raw).hexdigest(), **bindings}
+        (runtime_root / 'drawable-material-bindings.json').write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(f"decoded {len(bindings['geometries'])} geometry bindings and {len(bindings['shaders'])} shaders")
+        return 0
     if args.command == 'inspect-mlo':
         archetypes = read_mlo_archetypes(list(args.archetype_root.glob('*ytyp.xml')))
         runtime_root = approved_runtime_root(args.runtime_root)
