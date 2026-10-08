@@ -14,7 +14,7 @@ describe('selectSpawnPosition', () => {
   });
 });
 
-it('keeps Z-up GLB geometry upright while applying a world-Y heading', () => {
+it('keeps Blender-exported Y-up GLB geometry upright while applying a world-Y heading', () => {
   const instance = new Group();
   const placement = {
     position: { x: 1, y: 2, z: 3 },
@@ -25,7 +25,7 @@ it('keeps Z-up GLB geometry upright while applying a world-Y heading', () => {
   applyPlacementTransform(instance, placement);
 
   expect(instance.position).toMatchObject({ x: 1, y: 2, z: 3 });
-  expect(new Vector3(0, 0, 1).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 1, 0));
+  expect(new Vector3(0, 1, 0).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 1, 0));
   expect(new Vector3(1, 0, 0).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 0, -1));
   expect(instance.scale).toMatchObject({ x: 4, y: 5, z: 6 });
 });

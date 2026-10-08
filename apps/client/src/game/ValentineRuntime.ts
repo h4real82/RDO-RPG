@@ -1,4 +1,4 @@
-import { AmbientLight, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Quaternion, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
+import { AmbientLight, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
@@ -20,10 +20,8 @@ export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: nu
 
 export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
-  // Exported GLBs are Z-up. Rotate that basis first, then rotate around world Y.
-  const zUpToYUp = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
-  const worldHeading = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), placement.rotation.y);
-  instance.quaternion.copy(worldHeading).multiply(zUpToYUp);
+  // Blender's glTF exporter has already converted the imported drawable to Y-up.
+  instance.rotation.set(0, placement.rotation.y, 0);
   instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
 }
 
