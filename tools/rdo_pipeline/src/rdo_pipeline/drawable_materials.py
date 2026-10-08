@@ -85,6 +85,7 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
                         'drawBucketMask': read('<I', shader + 60)})
 
     geometries = []
+    models = []
     for lod_index in range(4):
         lod = pointer(80 + lod_index * 8, nullable=True)
         if not lod:
@@ -93,6 +94,9 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
         model_array = pointer(lod, nullable=model_count == 0)
         for model_index in range(model_count):
             model = pointer(model_array + model_index * 8)
+            # grmModel's mask byte is distinct from the material draw bucket.
+            models.append({'lod': lod_index, 'model': model_index,
+                           'renderMask': read('<B', model + 52)})
             geometry_count = read('<H', model + 16)
             index_count = read('<H', model + 54)
             if index_count != geometry_count:
@@ -104,4 +108,4 @@ def decode_drawable_materials(data: bytes) -> dict[str, Any]:
                     raise ValueError('geometry shader index outside shader table')
                 geometries.append({'lod': lod_index, 'model': model_index,
                                    'geometry': geometry_index, 'shader': shader_index})
-    return {'shaders': shaders, 'geometries': geometries}
+    return {'shaders': shaders, 'geometries': geometries, 'models': models}

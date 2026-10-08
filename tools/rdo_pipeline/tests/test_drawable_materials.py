@@ -48,6 +48,13 @@ def test_decodes_exact_geometry_shader_texture_parameter_binding():
     ]
 
 
+def test_reads_model_render_mask_separately_from_shader_bucket():
+    data = fixture_drawable()
+    data[0x380 + 52] = 0xe0
+    result = decoder()(data)
+    assert result.get('models') == [{'lod': 0, 'model': 0, 'renderMask': 224}]
+
+
 def test_rejects_out_of_bounds_resource_pointer():
     data = fixture_drawable()
     struct.pack_into('<Q', data, 16, 0x50002000)
