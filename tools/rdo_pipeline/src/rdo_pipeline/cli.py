@@ -33,6 +33,19 @@ def load_placements(path: Path, available_models: set[str]) -> tuple[list[dict[s
     raise ValueError('placements JSON must be an array or object with placements')
 
 
+def build_coverage_report(payload: object, placements: tuple[dict[str, object], ...] | list[dict[str, object]], missing_models: tuple[str, ...]) -> dict[str, object]:
+    entities = payload.get('entities', []) if isinstance(payload, dict) else []
+    entity_count = len(entities) if isinstance(entities, list) else 0
+    return {
+        'version': 1,
+        'entityCount': entity_count,
+        'renderableEntityCount': len(placements),
+        'unresolvedEntityCount': max(0, entity_count - len(placements)),
+        'uniqueUnresolvedModelCount': len(missing_models),
+        'missingModels': list(missing_models),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
@@ -52,6 +65,7 @@ def main() -> int:
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
         available_models = {Path(item.path).stem for item in inventory.items if item.category == 'model'}
+        source_payload = json.loads(args.placements.read_text(encoding='utf-8'))
         placements, missing = load_placements(args.placements, available_models)
         if missing and not args.allow_incomplete:
             raise ValueError(f'{len(missing)} placement models are unresolved; pass --allow-incomplete only for an explicitly partial test runtime')
@@ -63,6 +77,7 @@ def main() -> int:
         if missing:
             (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2), encoding='utf-8')
             print(f'partial runtime: {len(missing)} placement models unresolved')
+        (approved_runtime_root(args.runtime_root) / 'coverage.json').write_text(json.dumps(build_coverage_report(source_payload, placements, missing), indent=2) + '\n', encoding='utf-8')
         return 0
     if args.command == 'extract-valentine-traces':
         runtime_root = approved_runtime_root(args.runtime_root)
