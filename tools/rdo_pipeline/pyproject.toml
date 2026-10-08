@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "rdo-pipeline"
 version = "0.1.0"
 requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.0"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

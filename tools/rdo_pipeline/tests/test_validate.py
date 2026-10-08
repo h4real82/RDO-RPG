@@ -35,4 +35,15 @@ def test_runtime_validator_reports_precise_contract_errors(tmp_path: Path) -> No
     report = validate_runtime(_runtime(tmp_path, [missing, non_finite, invalid_layer, wrong_chunk]))
 
     assert report.valid is False
-    assert report.errors == ('ASSET_MISSING', 'POSITION_NON_FINITE', 'LAYER_INVALID', 'CHUNK_MISMATCH')
+    assert report.errors == ('MANIFEST_SCHEMA_INVALID', 'ASSET_MISSING', 'POSITION_NON_FINITE', 'LAYER_INVALID', 'CHUNK_MISMATCH')
+
+
+def test_runtime_validator_rejects_a_manifest_that_breaks_the_public_contract(tmp_path: Path) -> None:
+    runtime = tmp_path / 'runtime'
+    runtime.mkdir()
+    (runtime / 'rdo_world_manifest.json').write_text('{}', encoding='utf-8')
+
+    report = validate_runtime(runtime)
+
+    assert report.valid is False
+    assert report.errors == ('MANIFEST_SCHEMA_INVALID',)

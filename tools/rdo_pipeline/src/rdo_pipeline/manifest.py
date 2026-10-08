@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from hashlib import sha256
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -16,8 +17,12 @@ def _chunk_id(position: Mapping[str, float]) -> str:
 
 
 def _placement_id(placement: Mapping[str, Any]) -> str:
-    canonical = json.dumps(placement, sort_keys=True, separators=(',', ':'), ensure_ascii=True)
+    canonical = json.dumps(_world_key(placement), sort_keys=True, separators=(',', ':'), ensure_ascii=True)
     return f"valentine:{sha256(canonical.encode('utf-8')).hexdigest()[:16]}"
+
+
+def _world_key(placement: Mapping[str, Any]) -> dict[str, Any]:
+    return {key: placement[key] for key in ('asset', 'position', 'rotation', 'scale', 'layer', 'lod', 'interior')}
 
 
 def build_manifest(inventory: AssetInventory, placement_sources: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
@@ -30,9 +35,9 @@ def build_manifest(inventory: AssetInventory, placement_sources: Sequence[Mappin
             raise ValueError(f'asset missing from inventory: {asset}')
         if source['layer'] not in _LAYERS:
             raise ValueError(f"invalid layer: {source['layer']}")
-        key = json.dumps(source, sort_keys=True, separators=(',', ':'), ensure_ascii=True)
+        key = json.dumps(_world_key(source), sort_keys=True, separators=(',', ':'), ensure_ascii=True)
         if key in seen:
-            raise ValueError('duplicate placement')
+            continue
         seen.add(key)
         position = source['position']
         placements.append({
@@ -56,11 +61,31 @@ def _atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
     temporary.replace(path)
 
 
-def write_runtime_manifest(manifest: Mapping[str, Any], inventory: AssetInventory, runtime_root: Path) -> None:
+def write_runtime_manifest(
+    manifest: Mapping[str, Any], inventory: AssetInventory, runtime_root: Path, *, asset_root: Path | None = None,
+    placement_inputs: Sequence[Path] = (),
+) -> None:
     runtime_root.mkdir(parents=True, exist_ok=True)
+    if asset_root is not None:
+        source_root = asset_root.resolve()
+        for placement in manifest['placements']:
+            relative = Path(placement['asset'])
+            source = (source_root / relative).resolve()
+            if source_root not in source.parents or not source.is_file():
+                raise ValueError(f'asset missing from asset root: {relative.as_posix()}')
+            destination = runtime_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
     _atomic_json(runtime_root / 'rdo_world_manifest.json', manifest)
+    from .validate import validate_runtime
+    validation = validate_runtime(runtime_root)
     _atomic_json(runtime_root / 'provenance.json', {
         'manifestVersion': manifest['version'],
         'world': manifest['world'],
+        'toolVersion': '0.1.0',
         'assets': [{'path': item.path, 'sha256': item.sha256} for item in inventory.items],
+        'placementInputs': [{'path': path.name, 'sha256': sha256(path.read_bytes()).hexdigest()} for path in placement_inputs],
+        'validation': {'valid': validation.valid, 'errors': list(validation.errors)},
     })
+    if not validation.valid:
+        raise ValueError(f"runtime validation failed: {','.join(validation.errors)}")

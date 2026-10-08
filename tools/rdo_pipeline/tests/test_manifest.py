@@ -33,11 +33,33 @@ def test_manifest_is_stable_sorted_and_chunked(tmp_path: Path) -> None:
     assert manifest['placements'][0]['layer'] == 'buildings'
     assert manifest['placements'][0]['id'].startswith('valentine:')
 
-    write_runtime_manifest(manifest, _inventory(), tmp_path)
+    asset_root = tmp_path / 'assets'
+    source = asset_root / 'models/valentine/saloon.glb'
+    source.parent.mkdir(parents=True)
+    source.write_bytes(b'glb')
+    write_runtime_manifest(manifest, _inventory(), tmp_path, asset_root=asset_root)
     assert (tmp_path / 'rdo_world_manifest.json').read_text(encoding='utf-8').endswith('\n')
     assert (tmp_path / 'provenance.json').exists()
 
 
 def test_manifest_rejects_duplicate_placement_keys() -> None:
-    with pytest.raises(ValueError, match='duplicate placement'):
-        build_manifest(_inventory(), [_placement(), _placement()])
+    duplicate_from_another_source = _placement() | {'source': 'val_04__ymap.xml'}
+
+    manifest = build_manifest(_inventory(), [_placement(), duplicate_from_another_source])
+
+    assert len(manifest['placements']) == 1
+
+
+def test_runtime_write_stages_manifest_assets_and_provenance(tmp_path: Path) -> None:
+    asset_root = tmp_path / 'assets'
+    source = asset_root / 'models/valentine/saloon.glb'
+    source.parent.mkdir(parents=True)
+    source.write_bytes(b'glb')
+    runtime = tmp_path / 'runtime'
+
+    write_runtime_manifest(build_manifest(_inventory(), [_placement()]), _inventory(), runtime, asset_root=asset_root, placement_inputs=[])
+
+    assert (runtime / 'models/valentine/saloon.glb').read_bytes() == b'glb'
+    provenance = (runtime / 'provenance.json').read_text(encoding='utf-8')
+    assert 'toolVersion' in provenance
+    assert 'validation' in provenance

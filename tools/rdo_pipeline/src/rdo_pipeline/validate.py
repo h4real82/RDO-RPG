@@ -5,6 +5,7 @@ import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
+from jsonschema import Draft7Validator
 
 from .manifest import CHUNK_SIZE, _LAYERS
 
@@ -22,6 +23,10 @@ def _chunk_id(position: Mapping[str, Any]) -> str:
 def validate_runtime(runtime_root: Path) -> ValidationReport:
     manifest = json.loads((runtime_root / 'rdo_world_manifest.json').read_text(encoding='utf-8'))
     errors: list[str] = []
+    schema_path = Path(__file__).resolve().parents[4] / 'packages' / 'world-contracts' / 'schema' / 'world-manifest.schema.json'
+    schema = json.loads(schema_path.read_text(encoding='utf-8'))
+    if list(Draft7Validator(schema).iter_errors(manifest)):
+        errors.append('MANIFEST_SCHEMA_INVALID')
     for placement in manifest.get('placements', []):
         if not (runtime_root / placement.get('asset', '')).is_file():
             errors.append('ASSET_MISSING')

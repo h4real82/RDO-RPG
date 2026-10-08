@@ -9,6 +9,15 @@ from .manifest import build_manifest, write_runtime_manifest
 from .validate import validate_runtime
 
 
+def approved_runtime_root(candidate: Path) -> Path:
+    repository = Path(__file__).resolve().parents[4]
+    approved = (repository / 'data' / 'runtime').resolve()
+    resolved = candidate.resolve()
+    if resolved != approved and approved not in resolved.parents:
+        raise ValueError('runtime output must be within repository data/runtime')
+    return resolved
+
+
 def _placements(path: Path) -> list[dict[str, object]]:
     payload = json.loads(path.read_text(encoding='utf-8'))
     if isinstance(payload, list):
@@ -31,7 +40,10 @@ def main() -> int:
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root)
         manifest = build_manifest(inventory, _placements(args.placements))
-        write_runtime_manifest(manifest, inventory, args.runtime_root)
+        write_runtime_manifest(
+            manifest, inventory, approved_runtime_root(args.runtime_root),
+            asset_root=args.asset_root, placement_inputs=[args.placements],
+        )
         return 0
     report = validate_runtime(args.runtime_root)
     if report.valid:
