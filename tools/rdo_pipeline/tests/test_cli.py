@@ -1,8 +1,26 @@
 from pathlib import Path
 
 import pytest
+import json
+from rdo_pipeline import cli
 
 from rdo_pipeline.cli import approved_runtime_root, build_coverage_report, load_placements
+
+
+def test_complete_rebuild_clears_the_previous_missing_model_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    assets = tmp_path / 'assets'
+    assets.mkdir()
+    runtime = tmp_path / 'runtime'
+    placements = tmp_path / 'placements.json'
+    placements.write_text(json.dumps({'entities': [{'modelName': 'missing'}]}), encoding='utf-8')
+    monkeypatch.setattr(cli, 'approved_runtime_root', lambda candidate: runtime)
+    monkeypatch.setattr('sys.argv', ['rdo-pipeline', 'build-valentine', '--asset-root', str(assets), '--placements', str(placements), '--runtime-root', str(runtime), '--allow-incomplete'])
+    assert cli.main() == 0
+    assert json.loads((runtime / 'missing-models.json').read_text())['missingModels'] == ['missing']
+
+    placements.write_text(json.dumps({'entities': []}), encoding='utf-8')
+    assert cli.main() == 0
+    assert json.loads((runtime / 'missing-models.json').read_text())['missingModels'] == []
 
 
 def test_cli_rejects_runtime_output_outside_repository_runtime_directory(tmp_path: Path) -> None:

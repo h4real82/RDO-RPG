@@ -80,8 +80,8 @@ def main() -> int:
             manifest, inventory, approved_runtime_root(args.runtime_root),
             asset_root=args.asset_root, placement_inputs=[args.placements],
         )
+        (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2) + '\n', encoding='utf-8')
         if missing:
-            (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2), encoding='utf-8')
             print(f'partial runtime: {len(missing)} placement models unresolved')
         (approved_runtime_root(args.runtime_root) / 'coverage.json').write_text(json.dumps(build_coverage_report(source_payload, placements, missing), indent=2) + '\n', encoding='utf-8')
         return 0
