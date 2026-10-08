@@ -28,7 +28,7 @@ export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vect
 export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
   // Blender's glTF exporter has already converted the imported drawable to Y-up.
-  instance.rotation.set(0, placement.rotation.y, 0);
+  instance.rotation.set(placement.rotation.x, placement.rotation.y, placement.rotation.z, 'XYZ');
   instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
 }
 
