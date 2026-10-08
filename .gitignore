@@ -39,3 +39,10 @@ logs/
 # Caddy & Docker
 caddy_data/
 caddy_config/
+
+# RDO-RPG restart: generated local-only artifacts
+data/runtime/**/cache/
+data/runtime/**/reference-renders/
+data/runtime/**/test-artifacts/
+docs/Obsidian/.obsidian/workspace*.json
+docs/Obsidian/.obsidian/plugins/obsidian-local-rest-api/data.json
