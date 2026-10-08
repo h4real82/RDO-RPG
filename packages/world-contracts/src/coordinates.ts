@@ -1,4 +1,4 @@
-import { CHUNK_SIZE } from './constants';
+import { CHUNK_SIZE } from './constants.js';
 
 export interface GameCoordinates {
   x: number;

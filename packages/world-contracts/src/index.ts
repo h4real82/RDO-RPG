@@ -1,3 +1,3 @@
-export * from './constants';
-export * from './coordinates';
-export * from './manifest';
+export * from './constants.js';
+export * from './coordinates.js';
+export * from './manifest.js';

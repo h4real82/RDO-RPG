@@ -10,9 +10,10 @@ Die RDO-RPG-Neuimplementierung erfolgt ausschließlich in einer separaten Git-
 Worktree-Branch. Der vorhandene Hauptarbeitsbaum enthält aktive Altänderungen
 und wird weder bereinigt noch mit Neustart-Commits vermischt.
 
-`data/raw/` ist ein unveränderliches OpenIV-Quellarchiv. Tools und der Browser-
-Client dürfen daraus lesen, aber nie schreiben. Jede daraus abgeleitete Datei
-entsteht reproduzierbar unter `data/runtime/`. Runtime-Manifeste und
+`data/raw/` ist ein unveränderliches OpenIV-Quellarchiv. Ausschließlich
+Offline-Pipeline-Tools dürfen daraus lesen; der Browser-Client konsumiert nur
+validierte Artefakte unter `data/runtime/`. Jede abgeleitete Datei entsteht
+reproduzierbar unter `data/runtime/`. Runtime-Manifeste und
 Prüfberichte sind versionierte Projektartefakte; temporäre Caches,
 Referenzrender und Testartefakte bleiben lokal ignoriert.
 

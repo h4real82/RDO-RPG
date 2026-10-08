@@ -20,9 +20,11 @@ describe('world manifest schema', () => {
 
   it.each([
     ['missing asset', { ...placement, asset: '' }],
+    ['a raw-data traversal asset path', { ...placement, asset: '../../data/raw/saloon.ydr' }],
     ['invalid layer', { ...placement, layer: 'water' }],
     ['non-finite transform', { ...placement, position: { ...placement.position, x: Number.POSITIVE_INFINITY } }],
     ['missing height', { ...placement, position: { x: 10, z: -20 } }],
+    ['an unknown object field', { ...placement, objectType: 'unrecognized' }],
   ])('rejects a placement with %s', (_reason, invalidPlacement) => {
     expect(() => worldManifestSchema.parse({ version: 1, world: 'valentine', placements: [invalidPlacement] }))
       .toThrow();

@@ -2,6 +2,7 @@
   "name": "@rdo-rpg/world-contracts",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,11 +14,12 @@
     }
   },
   "scripts": {
-    "build": "tsc",
-    "test": "vitest run"
+    "build": "tsc && node ./scripts/write-schema.mjs",
+    "test": "pnpm run build && vitest run && node --test test/public-entry.test.mjs test/schema-artifact.test.mjs"
   },
   "dependencies": {
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.24.5"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
