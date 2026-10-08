@@ -27,6 +27,27 @@ sichtbar. Der Cache behebt diese grafischen Fehler nicht.
 
 ## Offene Abnahme
 
+### Isolierter Straßentest, 2026-10-08
+
+Ein testseitig gefiltertes Manifest mit ausschließlich 22 Platzierungen
+von `val_03_road_d_*` wurde mit den Textur-GLBs an der Referenzpose
+`main-street-s-curve` gerendert. Keine JavaScript- oder Konsolenfehler.
+Bild: `data/runtime/valentine/test-artifacts/full-textured-reference/isolated-road-decals.png`.
+Die hellen Fahrspuren bleiben auch ohne Gebäude und Hilfsbox sichtbar.
+Die exakt referenzierte PNG
+`std_annesburg_muddyroad_03_abstd_annesburg_muddyroad_03_al.png` ist selbst
+grau-weiß; `nbx_ground_road02_abal.png` enthält dagegen dunklen Boden.
+Eine fehlende oder ersatzweise weiße Textur erklärt die Fahrspuren damit nicht.
+
+Der Shader `0xec8e6107` hat Renderbucket 2. Seine aus dem Rohmodell gelesenen
+Konstanten wurden anhand der librdr3-Parameterliste benannt:
+`DecalBlendOpacityGBuffer0 = 0`, `...1 = 1`, `...2 = 1`, `...3 = 0`.
+Dies stützt eine Decal-/GBuffer-Rolle, beweist aber noch keine vollständige
+Portierung dieser Shadersemantik. Kein dauerhaftes Ausblenden, Umfärben
+oder Ersetzen durch geratenes Terrain wurde vorgenommen.
+Parameterreferenz:
+https://github.com/Sage-of-Mirrors/librdr3/blob/master/include/drawable/shaderparamnames.hpp
+
 Die Version ist **nicht** grafisch abgenommen und nicht vollständig.
 Es fehlen weiterhin 1581 referenzierte Modelltypen. Erforderlich bleiben
 belegte Shader-/Renderrollen, Terrain, vollständige Assetabdeckung,
