@@ -9,6 +9,7 @@ from .manifest import build_manifest, write_runtime_manifest
 from .placements import adapt_rdo_placements
 from .validate import validate_runtime
 from .pois import validate_pois
+from .infrastructure import build_valentine_traces
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -43,6 +44,10 @@ def main() -> int:
     validate = commands.add_parser('validate-valentine')
     validate.add_argument('--runtime-root', type=Path, required=True)
     validate.add_argument('--pois', type=Path)
+    traces = commands.add_parser('extract-valentine-traces')
+    traces.add_argument('--runtime-root', type=Path, required=True)
+    traces.add_argument('--roads', type=Path, required=True)
+    traces.add_argument('--rails', type=Path, required=True)
     args = parser.parse_args()
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
@@ -58,6 +63,22 @@ def main() -> int:
         if missing:
             (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2), encoding='utf-8')
             print(f'partial runtime: {len(missing)} placement models unresolved')
+        return 0
+    if args.command == 'extract-valentine-traces':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        manifest = json.loads((runtime_root / 'rdo_world_manifest.json').read_text(encoding='utf-8'))
+        positions = [placement['position'] for placement in manifest.get('placements', [])]
+        if not positions:
+            raise ValueError('runtime manifest has no placements for a deterministic Valentine trace boundary')
+        padding = 250.0
+        bounds = (
+            min(position['x'] for position in positions) - padding,
+            max(position['x'] for position in positions) + padding,
+            min(position['z'] for position in positions) - padding,
+            max(position['z'] for position in positions) + padding,
+        )
+        trace_payload = {'version': 1, 'world': 'valentine', 'bounds': {'minX': bounds[0], 'maxX': bounds[1], 'minZ': bounds[2], 'maxZ': bounds[3]}, 'traces': build_valentine_traces(args.roads, args.rails, bounds=bounds)}
+        (runtime_root / 'ground-truth-traces.json').write_text(json.dumps(trace_payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
         return 0
     report = validate_runtime(args.runtime_root)
     if args.pois:
