@@ -16,11 +16,12 @@ export class Hud {
     }
   }
 
-  update(position: PlayerPosition, nearbyPoiName?: string, minimap?: MinimapPoint): void {
+  update(position: PlayerPosition, nearbyPoiName?: string, minimap?: MinimapPoint, missingModelCount = 0): void {
     if (!this.element) return;
-    this.element.textContent = nearbyPoiName
+    const detail = nearbyPoiName
       ? `Valentine · ${nearbyPoiName} · E: Interagieren`
       : `Valentine · X ${position.x.toFixed(1)} · Z ${position.z.toFixed(1)} · Karte ${minimap?.x.toFixed(1) ?? '?'} / ${minimap?.y.toFixed(1) ?? '?'}`;
+    this.element.textContent = missingModelCount > 0 ? `${detail} · Teilvorschau: ${missingModelCount} Modelle fehlen` : detail;
   }
 
   dispose(): void {

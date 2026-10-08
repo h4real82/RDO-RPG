@@ -64,9 +64,19 @@ async function loadPois(): Promise<RuntimePoi[]> {
   }
 }
 
+async function loadMissingModelCount(): Promise<number> {
+  try {
+    const response = await fetch('/runtime/valentine/local-preview/missing-models.json');
+    if (!response.ok) return 0;
+    const payload: unknown = await response.json();
+    const models = payload && typeof payload === 'object' ? (payload as { missingModels?: unknown }).missingModels : undefined;
+    return Array.isArray(models) ? models.length : 0;
+  } catch { return 0; }
+}
+
 export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRenderer): Promise<() => void> {
   const manifest = await loadValentineManifest('/runtime/valentine/local-preview/rdo_world_manifest.json');
-  const pois = await loadPois();
+  const [pois, missingModelCount] = await Promise.all([loadPois(), loadMissingModelCount()]);
   const scene = new Scene();
   scene.background = new Color('#17130e');
   scene.add(new AmbientLight('#d7c5a0', 2.4));
@@ -142,7 +152,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     player.setMovement({ forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
-    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position));
+    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount);
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target);
