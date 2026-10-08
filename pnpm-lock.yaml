@@ -26,6 +26,9 @@ importers:
       '@rdo-rpg/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@rdo-rpg/world-contracts':
+        specifier: workspace:*
+        version: link:../../packages/world-contracts
       colyseus.js:
         specifier: ^0.15.17
         version: 0.15.28

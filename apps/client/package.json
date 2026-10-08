@@ -12,6 +12,7 @@
     "@discord/embedded-app-sdk": "^1.1.0",
     "@rdo-rpg/content": "workspace:*",
     "@rdo-rpg/shared": "workspace:*",
+    "@rdo-rpg/world-contracts": "workspace:*",
     "colyseus.js": "^0.15.17",
     "three": "^0.186.1"
   },
