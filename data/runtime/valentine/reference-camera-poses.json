@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "world": "valentine",
+  "poses": [
+    {"id":"station","projection":"orthographic","position":{"x":-170.0,"y":150.0,"z":610.0},"target":{"x":-180.8372,"y":113.2691,"z":626.5492},"reference":"Media/Valentine Station.png"},
+    {"id":"main-street-s-curve","projection":"orthographic","position":{"x":-290.0,"y":160.0,"z":750.0},"target":{"x":-306.4235,"y":120.6122,"z":771.1453},"reference":"Media/Valentine MAP.jpg"},
+    {"id":"hotel-bank","projection":"orthographic","position":{"x":-300.0,"y":165.0,"z":755.0},"target":{"x":-322.7087,"y":121.7168,"z":767.6314},"reference":"Media/Valentine Saints Hotel and Bank.jpg"},
+    {"id":"saloon","projection":"orthographic","position":{"x":-295.0,"y":165.0,"z":790.0},"target":{"x":-309.3108,"y":117.964,"z":808.4357},"reference":"Media/Valentine Screenshot RDO street with Sheriff office Saloon and other buildings.jpg"},
+    {"id":"livery-barn","projection":"orthographic","position":{"x":-350.0,"y":155.0,"z":770.0},"target":{"x":-367.6526,"y":114.4891,"z":786.0361},"reference":"Media/Valentine Screenshot RDO with all buildings.jpg"}
+  ]
+}
