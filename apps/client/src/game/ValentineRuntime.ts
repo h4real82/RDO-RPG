@@ -18,6 +18,12 @@ export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: nu
   return placement ? { ...placement.position } : { x: 0, y: 0, z: 0 };
 }
 
+export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vector3): Raycaster {
+  const direction = playerPosition.clone().sub(cameraPosition);
+  const distance = direction.length();
+  return new Raycaster(cameraPosition, direction.normalize(), 0, distance);
+}
+
 export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
   // Blender's glTF exporter has already converted the imported drawable to Y-up.
@@ -185,8 +191,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target);
-    const toPlayer = target.clone().sub(cameraController.camera.position);
-    const ray = new Raycaster(cameraController.camera.position, toPlayer.normalize(), 0, toPlayer.length());
+    const ray = createOcclusionRay(cameraController.camera.position, target);
     occlusion.update(ray);
     renderer.setSize(Math.max(root.clientWidth, 1), Math.max(root.clientHeight, 1), false);
     cameraController.resize(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
