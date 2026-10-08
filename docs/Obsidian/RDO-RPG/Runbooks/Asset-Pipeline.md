@@ -24,6 +24,12 @@ Shader-zu-Primitive-Beziehung ist im vorhandenen Export nicht belegt und darf
 nicht geraten werden. Das Ergebnis `texture-coverage.json` trennt daher
 nachweisbar verfügbare Texturen von noch fehlenden Exporten.
 
+Die momentan verwendete RedDeadBlend2-Importbibliothek stellt UVs und
+Vertexdaten bereit, aber keine Shader- oder Materialzuordnung pro Geometrie.
+Ein zukünftig eingesetzter Importer muss diese Beziehung aus dem Originalformat
+nachweisbar liefern, bevor die Runtime Albedo-, Normal- oder Maskentexturen
+bindet.
+
 ```powershell
 & 'tools/rdo_pipeline/.venv/Scripts/python.exe' -m rdo_pipeline.cli texture-coverage `
   --asset-root 'D:/Projects/RDO-RPG/data/processed/models_glb' `
