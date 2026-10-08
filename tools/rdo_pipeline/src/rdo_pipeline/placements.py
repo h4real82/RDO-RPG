@@ -75,6 +75,46 @@ def read_mlo_archetypes(paths: list[Path]) -> dict[str, dict[str, Any]]:
     return result
 
 
+def compose_mlo_entity(parent: Mapping[str, Any], child: Mapping[str, Any]) -> dict[str, Any]:
+    """Compose game-space MLO orientation with inverse-oriented CEntityDef.
+
+    Kept separate from the renderer until coordinate-basis validation is complete.
+    A TRS-only manifest cannot represent shear from nonuniform parent scaling.
+    """
+    scales = [float(value) for value in parent['scale']]
+    if not all(math.isfinite(value) for value in scales):
+        raise ValueError('invalid MLO parent scale')
+    if max(scales) - min(scales) > 1e-7:
+        raise ValueError('nonuniform MLO parent scale requires a matrix transform')
+
+    def unit(values: list[float]) -> list[float]:
+        norm = math.sqrt(sum(float(value)**2 for value in values))
+        if not math.isfinite(norm) or norm == 0:
+            raise ValueError('invalid MLO quaternion')
+        return [float(value)/norm for value in values]
+
+    px, py, pz, pw = unit(parent['rotation'])
+    cx, cy, cz, cw = unit(child['rotation'])
+    vx, vy, vz = [float(value)*scales[index] for index, value in enumerate(child['position'])]
+    tx, ty, tz = 2*(py*vz-pz*vy), 2*(pz*vx-px*vz), 2*(px*vy-py*vx)
+    offset = [vx+pw*tx+py*tz-pz*ty, vy+pw*ty+pz*tx-px*tz, vz+pw*tz+px*ty-py*tx]
+    # Stored world rotation = inverse(parent * inverse(child))
+    #                       = child * inverse(parent).
+    ax, ay, az = -px, -py, -pz
+    rotation = [cw*ax+cx*pw+cy*az-cz*ay,
+                cw*ay-cx*az+cy*pw+cz*ax,
+                cw*az+cx*ay-cy*ax+cz*pw,
+                cw*pw-cx*ax-cy*ay-cz*az]
+    result = dict(child)
+    result['position'] = [float(parent['position'][index])+offset[index] for index in range(3)]
+    result['rotation'] = rotation
+    result['scale'] = [float(value)*scales[index] for index, value in enumerate(child['scale'])]
+    if not all(math.isfinite(value) for value in result['position'] + result['scale']):
+        raise ValueError('non-finite MLO world transform')
+    result['isInterior'] = True
+    return result
+
+
 def _rotation_xyz(rotation: list[float]) -> dict[str, float]:
     game_x, game_y, game_z, w = (float(value) for value in rotation)
     # Same basis as Blender's glTF exporter: (x, y, z) -> (x, z, -y).

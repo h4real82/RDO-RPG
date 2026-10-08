@@ -1,5 +1,6 @@
 from rdo_pipeline import placements
 import pytest
+import math
 
 
 ENTITY = '''<Item type="CEntityDef"><archetypeName>0xABCDEF12</archetypeName>
@@ -35,3 +36,25 @@ def test_mlo_parser_rejects_missing_transform_instead_of_guessing(tmp_path):
     assert callable(getattr(placements, 'read_mlo_archetypes', None))
     with pytest.raises(ValueError, match='position'):
         placements.read_mlo_archetypes([source])
+
+
+def test_mlo_world_transform_scales_rotates_then_translates_child():
+    assert callable(getattr(placements, 'compose_mlo_entity', None))
+    half = math.sqrt(0.5)
+    parent = {'position': [10, 20, 30], 'rotation': [0, 0, half, half], 'scale': [2, 2, 2]}
+    child = {'modelName': 'prop', 'position': [1, 0, 3], 'rotation': [0, 0, 0, 1],
+             'scale': [1, 1, 3], 'sourceFile': 'interior.xml', 'isInterior': True}
+    world = placements.compose_mlo_entity(parent, child)
+    assert world['position'] == pytest.approx([10, 22, 36])
+    # Normal CEntityDef quaternions store inverse orientation; MLO roots do not.
+    assert world['rotation'] == pytest.approx([0, 0, -half, half])
+    assert world['scale'] == [2, 2, 6]
+    assert child['position'] == [1, 0, 3]
+
+
+def test_mlo_transform_rejects_nonuniform_parent_scale_that_can_introduce_shear():
+    assert callable(getattr(placements, 'compose_mlo_entity', None))
+    parent = {'position': [0, 0, 0], 'rotation': [0, 0, 0, 1], 'scale': [1, 1, 2]}
+    child = {'position': [1, 0, 0], 'rotation': [0, 0, 0, 1], 'scale': [1, 1, 1]}
+    with pytest.raises(ValueError, match='nonuniform'):
+        placements.compose_mlo_entity(parent, child)
