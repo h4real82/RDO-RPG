@@ -44,6 +44,7 @@ caddy_config/
 data/runtime/**/cache/
 data/runtime/**/reference-renders/
 data/runtime/**/test-artifacts/
+data/runtime/**/local-preview/
 docs/Obsidian/.obsidian/workspace*.json
 docs/Obsidian/.obsidian/plugins/obsidian-local-rest-api/data.json
 tools/rdo_pipeline/.venv/

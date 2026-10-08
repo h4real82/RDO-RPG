@@ -1,6 +1,20 @@
 import { defineConfig } from 'vite';
+import { createReadStream, existsSync, statSync } from 'node:fs';
+import { resolve, sep } from 'node:path';
 
 export default defineConfig({
+  plugins: [{
+    name: 'local-valentine-runtime-preview',
+    configureServer(server) {
+      const runtimeRoot = resolve(__dirname, '../../data/runtime/valentine/local-preview');
+      server.middlewares.use('/runtime/valentine/local-preview', (request, response, next) => {
+        const pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname);
+        const candidate = resolve(runtimeRoot, `.${pathname}`);
+        if (!candidate.startsWith(`${runtimeRoot}${sep}`) || !existsSync(candidate) || !statSync(candidate).isFile()) return next();
+        createReadStream(candidate).pipe(response);
+      });
+    },
+  }],
   server: {
     port: 3000,
     strictPort: true,

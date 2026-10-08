@@ -8,7 +8,7 @@ interface ResourceNode {
 }
 
 interface TraversableResource {
-  traverse(visit: (node: ResourceNode) => void): void;
+  traverse(visit: (node: any) => void): void;
 }
 
 export function disposeObjectResources(object: TraversableResource): void {
@@ -19,7 +19,7 @@ export function disposeObjectResources(object: TraversableResource): void {
     resource.dispose();
   };
 
-  object.traverse((node) => {
+  object.traverse((node: ResourceNode) => {
     dispose(node.geometry);
     const materials = Array.isArray(node.material) ? node.material : [node.material];
     materials.forEach(dispose);
