@@ -47,8 +47,8 @@ Der Player Runtime veröffentlicht nur Position und Blickrichtung. Interaction R
 
 - [ ] **Step 3: Verify and commit**
 
-Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`  
-Expected: PASS.  
+Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "feat: add defensive player interactions"`
 
 ### Task 2: HUD, deterministische Minimap und POI-Daten anschließen
@@ -78,8 +78,8 @@ HUD und Minimap konsumieren Player-/POI-Zustand über schmale Datenmodelle. DOM-
 
 - [ ] **Step 4: Verify and commit**
 
-Run: `pnpm --filter @rdo-rpg/client test && python -m pytest tools/rdo_pipeline/tests/test_pois.py -q && npx pnpm -r build`  
-Expected: PASS.  
+Run: `pnpm --filter @rdo-rpg/client test && python -m pytest tools/rdo_pipeline/tests/test_pois.py -q && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "feat: add valentine hud and minimap"`
 
 ### Task 3: Browser- und visuelle Referenztests erstellen
@@ -108,8 +108,8 @@ Das Runbook beschreibt Baseline-Erzeugung, manuelle Referenzprüfung, tolerierte
 
 - [ ] **Step 4: Verify and commit**
 
-Run: `pnpm test:e2e && npx pnpm -r build`  
-Expected: PASS.  
+Run: `pnpm test:e2e && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "test: verify valentine vertical slice"`
 
 ### Task 4: Codex-/Obsidian-Governance abschließen und Antigravity-Logs entfernen
@@ -143,6 +143,6 @@ Lösche ausschließlich die zuvor gelisteten Alt-Logs. Prüfe danach mit `rg -n 
 
 - [ ] **Step 5: Verify and commit**
 
-Run: `npx pnpm -r build`  
-Expected: PASS.  
+Run: `npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "docs: migrate vault to codex workflow"`

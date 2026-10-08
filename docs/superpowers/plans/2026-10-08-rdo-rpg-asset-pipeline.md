@@ -43,7 +43,7 @@ Fixtures enthalten ein Modell, eine Textur, eine YMAP und eine unbekannte Erweit
 
 - [ ] **Step 2: Run pytest to verify failure**
 
-Run: `python -m pytest tools/rdo_pipeline/tests/test_inventory.py -q`  
+Run: `python -m pytest tools/rdo_pipeline/tests/test_inventory.py -q`
 Expected: FAIL because the package is absent.
 
 - [ ] **Step 3: Implement read-only inventory**
@@ -56,7 +56,7 @@ Dokumentiere Python-/Blender-Version, Eingaben, Ausgaben, Speicherbedarf, Fehler
 
 - [ ] **Step 5: Verify**
 
-Run: `python -m pytest tools/rdo_pipeline/tests/test_inventory.py -q && npx pnpm -r build`  
+Run: `python -m pytest tools/rdo_pipeline/tests/test_inventory.py -q && npx pnpm -r build`
 Expected: PASS.
 
 - [ ] **Step 6: Commit**
@@ -95,7 +95,7 @@ Test fehlendes Asset, nicht endliche Koordinate, falscher Chunk und nicht erlaub
 
 - [ ] **Step 5: Verify a fixture build and the workspace**
 
-Run: `python -m pytest tools/rdo_pipeline/tests -q && npx pnpm -r build`  
+Run: `python -m pytest tools/rdo_pipeline/tests -q && npx pnpm -r build`
 Expected: PASS.
 
 - [ ] **Step 6: Commit**
@@ -122,6 +122,6 @@ Mindestens Bahnhof, Hauptstraßen-S-Kurve, Hotel/Bank, Saloon und Livery-Barn; j
 
 - [ ] **Step 3: Verify and commit**
 
-Run: `python -m pytest tools/rdo_pipeline/tests -q && npx pnpm -r build`  
-Expected: PASS.  
+Run: `python -m pytest tools/rdo_pipeline/tests -q && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "docs: define valentine visual reference set"`

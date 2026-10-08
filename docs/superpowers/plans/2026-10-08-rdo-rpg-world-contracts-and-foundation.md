@@ -44,7 +44,7 @@ Ignoriere Pipeline-Caches, temporäre Referenzrender und lokale Vault-Konfigurat
 
 - [ ] **Step 3: Prüfe die Arbeitsbasis**
 
-Run: `git status --short`  
+Run: `git status --short`
 Expected: Nur bekannte Altänderungen oder explizit neu angelegte Neustart-Dateien; keine Rohdatenänderung.
 
 - [ ] **Step 4: Commit**
@@ -74,7 +74,7 @@ Test `toGameCoordinates(111.29, -63.6)` returns `{ x: 0, z: 0 }`; test positive 
 
 - [ ] **Step 2: Run contract tests to verify failure**
 
-Run: `pnpm --filter @rdo-rpg/world-contracts test`  
+Run: `pnpm --filter @rdo-rpg/world-contracts test`
 Expected: FAIL because the workspace package and exports do not exist.
 
 - [ ] **Step 3: Implement constants and pure coordinate functions**
@@ -91,7 +91,7 @@ Use Zod to parse only JSON-safe primitives. A placement contains stable `id`, `a
 
 - [ ] **Step 6: Verify package and workspace build**
 
-Run: `pnpm --filter @rdo-rpg/world-contracts test && npx pnpm -r build`  
+Run: `pnpm --filter @rdo-rpg/world-contracts test && npx pnpm -r build`
 Expected: PASS.
 
 - [ ] **Step 7: Commit**

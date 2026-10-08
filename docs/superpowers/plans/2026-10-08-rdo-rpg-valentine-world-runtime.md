@@ -51,7 +51,7 @@ Ergänze nur die Client-Testkonfiguration und einen `test`-Script; Browser-Rende
 
 - [ ] **Step 4: Verify**
 
-Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`  
+Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`
 Expected: PASS.
 
 - [ ] **Step 5: Commit**
@@ -84,8 +84,8 @@ Nutze Chunk-IDs aus dem Vertragskern; jeder Three-Ressourceneigentümer wird bei
 
 - [ ] **Step 4: Verify and commit**
 
-Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`  
-Expected: PASS.  
+Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "feat: stream validated world chunks"`
 
 ### Task 3: Infrastruktur, Kamera und Sichtschutz implementieren
@@ -114,6 +114,6 @@ Die Kamera verwendet `THREE.OrthographicCamera`; nur der Player Runtime darf sie
 
 - [ ] **Step 4: Verify and commit**
 
-Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`  
-Expected: PASS.  
+Run: `pnpm --filter @rdo-rpg/client test && npx pnpm -r build`
+Expected: PASS.
 Commit: `git commit -m "feat: add orthographic world presentation"`
