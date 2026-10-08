@@ -24,6 +24,26 @@ Verified on the source test drawable: ten geometries. Pipeline suite: 51 tests.
 
 ## Exact test model provenance
 
+### Reference-target coverage check
+
+Axis-aligned XY bounds from the exported YTYPs, translated/scaled by original
+identity-rotation YMAP entities, identify these HD tiles at the current reference
+camera target points (Three.js X/Z converted to game X/Y):
+
+| Reference target | Original HD drawable |
+| --- | --- |
+| station | l_09__hd_0_-3_1 |
+| main-street-s-curve | l_09__hd_0_0_-1 |
+| hotel-bank | l_09__hd_0_-1_-2 |
+| saloon | l_09__hd_0_0_-1 |
+| livery-barn | l_09__hd_0_0_-2 |
+
+The exported test tile l_09__hd_0_0_0 does not cover these target points.
+These are point-in-archetype-AABB matches, not triangle ground intersections or
+coverage of entire camera frustums. Additional adjoining tiles may be needed.
+l_09_heighttracks_decals01 overlaps the street/hotel target bounds as an
+ORPHANHD entity; it must not be confused with an HD ground tile.
+
 JOAAT `l_09__hd_0_0_0` = `0x7f5c1633`.
 Archetype occurs in `jklm_7_10_lod_combine_metadata_005_strm_ytyp.xml`.
 Texture dictionary `0xd656f662` resolves to `l_09__bkt_3` in the local OpenIV strings database.
@@ -48,6 +68,19 @@ terrain requires multilayer semantics, not an arbitrary single texture.
 No production manifest or source asset was changed by this probe.
 
 ## Remaining gates
+
+### Collision header inspection
+
+The first exported collision source has SHA256
+`C1EB7CA3DF58C896E1D791DBD4B7CC800629BCCF9C240107C0ACC3D373747CFB`.
+Reading the RDR3 phBound header with Cfx's RDR3 layout gives type byte 6
+(Composite), AABB min approximately (-249.20914,511.99396,97.3062) and max
+(0.006000519,704.7611,154.83084). This is a header inspection only; child bounds,
+transforms, triangle vertices and material/collision flags remain unparsed.
+These extents do not contain the main street reference target XY
+(-306.4235,771.1453). This one exported source is therefore not evidence of
+collision coverage for the main street. Do not substitute its AABB as ground.
+Reference: https://github.com/citizenfx/fivem/blob/master/code/components/rage-formats-x/include/phBound.h
 
 ### Terrain shader identities
 
@@ -89,35 +122,43 @@ proof of the original engine's complete material equation: the inspected terrain
 function does not implement the exported HBBRange, blendSoftness, Pxm or
 lookupUVSet selection; our test model's lookupUVSet values differ by variant.
 Do not label that preview algorithm an original-faithful RDR shader port.
-No FXDB/FXC/HLSL/CSO shader exports currently exist under data/raw.
 Source: https://github.com/Sollumz/Sollumz_RDR/blob/main/ydr/shader_materials_RDR.py
+
+### Exported original shader database
+
+OpenIV export `data/raw/shaders/sga_win32_60_final.fxdb` is an SGD1 database.
+The local RDR2 install provides `oo2core_5_win64.dll`, which successfully
+decompresses its wrapped payloads. The bounded scanner recognizes 11,598 named
+program records, including 11,043 Oodle-compressed records. The reproducible
+CLI exports and validates DXBC blobs with a source SHA256 and per-blob SHA256:
+
+```powershell
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli inspect-shader-database --database 'D:/Projects/RDO-RPG/data/raw/shaders/sga_win32_60_final.fxdb' --runtime-root data/runtime/valentine/terrain-probe/shaders --oodle-dll 'C:/Program Files/Rockstar Games/Red Dead Redemption 2/oo2core_5_win64.dll' --name-filter Terrain
+```
+
+The current name-filter exports 88 programs. Microsoft D3DDisassemble accepts
+the extracted DXBC. The `terrain_uber_4lyr` family record has hash `0x2dd3` and
+explicitly indexes five vertex and thirteen pixel program entries. Its vertex
+indices resolve to named programs including `VS_TransformLit_Wrapped`; the
+first pixel index resolves to `PS_PedTextured_Eight_Wrapped`. This directly
+links the family record to program lists, but does not identify the exact active
+pass or full material equation. Treat the extracted code as original bytecode
+evidence, not a proven shader reconstruction. Oodle remains an external local
+dependency and is not copied into the repo.
 
 ### Vertex channel investigation
 
 The installed RedDeadBlend2 importer creates four FLOAT_COLOR/POINT attributes.
-On all ten meshes, color_1 and color_2 contain varying data; color_0 and color_3
-are uniformly zero. The bundled Blender 3.2 glTF exporter enumerates legacy
-mesh.vertex_colors, which excludes these attributes. Copying to FLOAT_COLOR/CORNER
-still yields zero legacy layers. An isolated BYTE_COLOR/CORNER copy allows export
-of COLOR_0 through COLOR_3. This is diagnostic only: byte storage/color-space
-conversion may alter numeric weights. Do not promote this copy to production
-without a source-to-export numeric comparison and established shader semantics.
-Measured BYTE_COLOR round-trip maximum absolute channel error is
-0.00401240587234497. A process-local exporter probe can bypass that staging
-conversion when reading the channels, but a strict float32 GLB accessor assertion
-then failed: the bundled exporter still packs colors into a non-float component
-type. This probe is not lossless-verified; Blender also returns exit code zero
-on this Python assertion failure, so its console error must not be ignored.
-Probe script/report/GLB are under ignored data/runtime/valentine/terrain-probe.
-
-A subsequent process-local probe bypasses both the byte staging read and ushort
-accessor packing, writing FLOAT/VEC4 colors directly. All 40 channel/mesh checks
-pass exact float value-set equality and exact (axis-transformed position, color)
-pair-set equality against the imported POINT attributes. This proves preservation
-of imported color data for this model, not fidelity of the importer's binary
-decoder or shader semantics. No installed addon or production converter was
-modified. Run Blender probes with `--python-exit-code 1` so Python failures are
-reported as process failures. The diagnostic is not yet a production solution.
+For the four exported terrain tiles, only channels 1 and 2 exist in the source;
+channels 0 and 3 are zero placeholders. The production fallback converter now
+checks every imported mesh identity, vertex count and RGBA value against the
+source YDR before export. It temporarily exposes corner attributes to Blender
+3.2's exporter and writes the verified values as FLOAT/VEC4 accessors; the
+exporter patch is restored after each export. This preserves imported channel
+values, but is not proof of the importer's decoder or original shader semantics.
+The runtime disables vertex-color multiplication for neutral geometry preview
+until the game blend is validated. Historical BYTE_COLOR/ushort results remain
+diagnostic only and are superseded by the exact source-to-float32 comparison.
 
 Direct binary check subsequently passed for every imported vertex in all ten
 meshes: format attributes 25 and 26 are RGBA8_UNORM (type 28, size 4), attributes
@@ -130,8 +171,27 @@ source presence metadata rather than silently treat all four as source data.
 Layout references: librdr3 src/drawable/vertexdata.cpp, loddata.cpp and
 include/drawable/vertexdata.hpp (upstream master inspected 2026-10-08).
 
-Verify vertex channels against source, exact terrain shader semantics and texture
-selection, browser rendering and reference alignment, then collision decoding.
-The single tile is not complete Valentine ground coverage and is not a playable
-slice acceptance result. Further source exports should follow evidence from this
-test rather than guessed archive names.
+Verify exact terrain shader semantics and texture selection, browser rendering
+and reference alignment, then collision decoding. The four HD drawable exports
+cover the reference targets, though point bounds are not full-frustum coverage.
+Their matching HD YMAP transforms are read from
+`data/raw/terrain/jklm_07_10/metadata/l_09__strm_0_ymap.xml`. The user-exported
+`.ydr.full` and `.ydr.sys` files were found in nested
+`data/raw/models/<drawable>_ydr/<drawable>_ydr/` folders; no separate `.gfx` was
+needed. The converter now discovers this nested layout while keeping source
+exports read-only.
+
+## Current browser verification
+
+On 2026-10-08, `pnpm test:e2e` passed the client boot, movement, orthographic
+camera, POI fallback and render-loop smoke checks. The reference render command
+captured all five fixed camera poses after adding the four terrain placements.
+The local preview manifest now contains 598 placements; terrain is excluded
+from spawn selection, player collision and camera occlusion. Visual inspection of
+`data/runtime/valentine/test-artifacts/reference-renders/main-street-s-curve.png`
+shows that ground geometry is now present, but it renders as neutral tan
+surfaces without the original terrain material; the HUD still reports 1,581
+missing models. These checks prove the client runs and controls respond, not
+that the world slice is visually complete or ready for playtesting. Next gates
+are exact terrain shader/texture binding and reducing critical missing models
+for the reference views.

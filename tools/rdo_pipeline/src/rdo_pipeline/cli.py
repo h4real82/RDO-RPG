@@ -15,6 +15,9 @@ from .texture_references import build_texture_reference_report
 from .drawable_materials import decode_drawable_materials
 from .export_targets import build_export_targets
 from .vertex_colors import decode_drawable_vertex_colors
+from .shader_database import LocalOodleDecoder, export_matching_programs
+from .terrain_placements import build_terrain_placements
+from .material_preview import apply_material_preview
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -31,7 +34,13 @@ def load_placements(path: Path, available_models: set[str]) -> tuple[list[dict[s
     if isinstance(payload, list):
         return payload, ()
     if isinstance(payload, dict) and isinstance(payload.get('placements'), list):
-        return payload['placements'], ()
+        placements = []
+        for item in payload['placements']:
+            placement = dict(item)
+            if 'interior' not in placement:
+                placement['interior'] = 'interior' in placement.get('tags', [])
+            placements.append(placement)
+        return placements, ()
     if isinstance(payload, dict) and isinstance(payload.get('entities'), list):
         adapted = adapt_rdo_placements(payload, available_models)
         return list(adapted.placements), adapted.missing_models
@@ -64,6 +73,11 @@ def main() -> int:
     colors = commands.add_parser('inspect-vertex-colors')
     colors.add_argument('--drawable', type=Path, required=True)
     colors.add_argument('--runtime-root', type=Path, required=True)
+    shaders = commands.add_parser('inspect-shader-database')
+    shaders.add_argument('--database', type=Path, required=True)
+    shaders.add_argument('--runtime-root', type=Path, required=True)
+    shaders.add_argument('--oodle-dll', type=Path)
+    shaders.add_argument('--name-filter', default='Terrain')
     mlo_inventory = commands.add_parser('inspect-mlo')
     mlo_inventory.add_argument('--archetype-root', type=Path, required=True)
     mlo_inventory.add_argument('--runtime-root', type=Path, required=True)
@@ -73,6 +87,14 @@ def main() -> int:
     build.add_argument('--runtime-root', type=Path, required=True)
     build.add_argument('--allow-incomplete', action='store_true')
     build.add_argument('--archetype-root', type=Path)
+    terrain = commands.add_parser('add-terrain-tiles')
+    terrain.add_argument('--asset-root', type=Path, required=True)
+    terrain.add_argument('--ymap', type=Path, action='append', required=True)
+    terrain.add_argument('--model', action='append', required=True)
+    terrain.add_argument('--runtime-root', type=Path, required=True)
+    materials = commands.add_parser('apply-material-preview')
+    materials.add_argument('--asset-root', type=Path, required=True)
+    materials.add_argument('--runtime-root', type=Path, required=True)
     validate = commands.add_parser('validate-valentine')
     validate.add_argument('--runtime-root', type=Path, required=True)
     validate.add_argument('--pois', type=Path)
@@ -86,6 +108,18 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'apply-material-preview':
+        report = apply_material_preview(args.asset_root, approved_runtime_root(args.runtime_root))
+        print(f"material previews applied: {report['promotedModelCount']}")
+        return 0
+    if args.command == 'inspect-shader-database':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        raw = args.database.read_bytes()
+        decoder = LocalOodleDecoder(args.oodle_dll) if args.oodle_dll else None
+        report = export_matching_programs(raw, runtime_root / 'shader-programs',
+                                          args.name_filter, args.database.name, decoder)
+        print(f"shader programs exported: {report['programCount']}")
+        return 0
     if args.command == 'inspect-vertex-colors':
         raw = args.drawable.read_bytes()
         geometries = decode_drawable_vertex_colors(raw)
@@ -141,6 +175,34 @@ def main() -> int:
         if missing:
             print(f'partial runtime: {len(missing)} placement models unresolved')
         (approved_runtime_root(args.runtime_root) / 'coverage.json').write_text(json.dumps(build_coverage_report(source_payload, placements, missing), indent=2) + '\n', encoding='utf-8')
+        return 0
+    if args.command == 'add-terrain-tiles':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        manifest_path = runtime_root / 'rdo_world_manifest.json'
+        base_payload = json.loads(manifest_path.read_text(encoding='utf-8'))
+        if not isinstance(base_payload, dict) or base_payload.get('world') != 'valentine':
+            raise ValueError('terrain integration requires an existing Valentine manifest')
+        base_manifest_hash = sha256(manifest_path.read_bytes()).hexdigest()
+        inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
+        available_models = {Path(item.path).stem for item in inventory.items if item.category == 'model'}
+        base_placements, missing = load_placements(manifest_path, available_models)
+        if missing:
+            raise ValueError('existing manifest contains unresolved models')
+        terrain_placements = build_terrain_placements(args.ymap, args.model)
+        manifest = build_manifest(inventory, [*base_placements, *terrain_placements])
+        write_runtime_manifest(manifest, inventory, runtime_root, asset_root=args.asset_root,
+                               placement_inputs=args.ymap)
+        report_path = runtime_root / 'terrain-placement-report.json'
+        report = {
+            'version': 1,
+            'baseManifestSha256': base_manifest_hash,
+            'manifestSha256': sha256(manifest_path.read_bytes()).hexdigest(),
+            'terrainModelCount': len(terrain_placements),
+            'placements': terrain_placements,
+            'ymaps': [{'file': path.name, 'sha256': sha256(path.read_bytes()).hexdigest()} for path in args.ymap],
+        }
+        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(f"terrain placements added: {len(terrain_placements)}; total: {len(manifest['placements'])}")
         return 0
     if args.command == 'export-targets':
         runtime_root = approved_runtime_root(args.runtime_root)

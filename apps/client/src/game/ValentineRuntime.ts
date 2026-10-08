@@ -13,10 +13,43 @@ import { ModelAssetCache } from './world/ModelAssetCache';
 import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
 import { selectHighestDrawableLod } from './world/DrawableLod';
+import { TerrainGround } from './world/TerrainGround';
 
 export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: number; z: number } {
-  const placement = manifest.placements[0];
+  const placement = manifest.placements.find((candidate) => candidate.layer !== 'terrain') ?? manifest.placements[0];
   return placement ? { ...placement.position } : { x: 0, y: 0, z: 0 };
+}
+
+export function placementBlocksPlayerAndCamera(placement: Pick<WorldPlacement, 'layer'>): boolean {
+  return placement.layer !== 'terrain';
+}
+
+export function disableTerrainVertexColorMultiplication(instance: Group): void {
+  instance.traverse((object) => {
+    if (!(object instanceof Mesh)) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      if ('vertexColors' in material && material.vertexColors) {
+        material.vertexColors = false;
+        material.needsUpdate = true;
+      }
+    }
+  });
+}
+
+export function prepareDrawableMaterialPreview(instance: Group): void {
+  instance.traverse((object) => {
+    if (!(object instanceof Mesh)) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      // The converter preserves original shader masks, whose blend equation
+      // is not represented by its explicitly labelled diffuse-only preview.
+      if (typeof material.userData.rdo_material_status === 'string' && material.vertexColors) {
+        material.vertexColors = false;
+        material.needsUpdate = true;
+      }
+    }
+  });
 }
 
 export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vector3): Raycaster {
@@ -100,6 +133,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
 
   const spawn = selectSpawnPosition(manifest);
   const collisionBounds = new Map<Group, Box3>();
+  const ground = new TerrainGround();
   let player: PlayerController | undefined;
   const canOccupy = (position: { x: number; y: number; z: number }): boolean => {
     for (const bounds of collisionBounds.values()) {
@@ -115,6 +149,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const loader = new GLTFLoader();
   const assets = new ModelAssetCache(async (asset) => {
     const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${asset}`);
+    prepareDrawableMaterialPreview(gltf.scene);
     selectHighestDrawableLod(gltf.scene);
     return gltf.scene;
   });
@@ -123,15 +158,18 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const lease = await assets.acquire(placement.asset);
     const instance = lease.instance;
     applyPlacementTransform(instance, placement);
+    if (placement.layer === 'terrain') disableTerrainVertexColorMultiplication(instance);
     scene.add(instance);
-    occluders.push(instance);
+    if (placementBlocksPlayerAndCamera(placement)) occluders.push(instance);
     instance.updateWorldMatrix(true, true);
-    collisionBounds.set(instance, new Box3().setFromObject(instance));
+    if (placement.layer === 'terrain') ground.add(instance);
+    if (placementBlocksPlayerAndCamera(placement)) collisionBounds.set(instance, new Box3().setFromObject(instance));
     return { dispose: () => {
       scene.remove(instance);
       const index = occluders.indexOf(instance);
       if (index >= 0) occluders.splice(index, 1);
       collisionBounds.delete(instance);
+      if (placement.layer === 'terrain') ground.remove(instance);
       lease.dispose();
     } };
   });
@@ -192,6 +230,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     previous = now;
     player.setMovement(menu.isOpen ? { forward: 0, right: 0 } : { forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);
+    const terrainHeight = ground.heightAt(player.position.x, player.position.z);
+    if (terrainHeight !== undefined) player.position.y = terrainHeight;
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
     hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount);
     void world.update(player.position.x, player.position.z);

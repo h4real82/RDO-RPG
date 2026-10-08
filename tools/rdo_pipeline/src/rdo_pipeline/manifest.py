@@ -80,7 +80,8 @@ def write_runtime_manifest(
                 raise ValueError(f'asset missing from asset root: {source_relative.as_posix()}')
             destination = runtime_root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source, destination)
+            if source != destination.resolve():
+                shutil.copy2(source, destination)
     _atomic_json(runtime_root / 'rdo_world_manifest.json', manifest)
     from .validate import validate_runtime
     validation = validate_runtime(runtime_root)

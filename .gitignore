@@ -46,6 +46,10 @@ data/runtime/**/reference-renders/
 data/runtime/**/test-artifacts/
 data/runtime/**/local-preview/
 data/runtime/valentine/source-reference/
+data/runtime/valentine/export-probe/
+data/runtime/valentine/terrain-probe/
+data/runtime/valentine/material-preview/
+data/runtime/valentine/material-runtime/
 docs/Obsidian/.obsidian/workspace*.json
 docs/Obsidian/.obsidian/plugins/obsidian-local-rest-api/data.json
 tools/rdo_pipeline/.venv/

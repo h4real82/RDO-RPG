@@ -8,11 +8,13 @@ import pytest
 
 
 @pytest.mark.parametrize("import_fails", [False, True])
-def test_full_drawable_import_never_writes_in_raw_directory(tmp_path, monkeypatch, import_fails):
+@pytest.mark.parametrize("nested_export", [False, True])
+def test_full_drawable_import_never_writes_in_raw_directory(tmp_path, monkeypatch, import_fails, nested_export):
     raw = tmp_path / "raw"
     model = raw / "val_bank_ydr"
-    model.mkdir(parents=True)
-    source = model / "val_bank.ydr.full"
+    source_dir = model / "val_bank_ydr" if nested_export else model
+    source_dir.mkdir(parents=True)
+    source = source_dir / "val_bank.ydr.full"
     source.write_bytes(b"drawable fixture")
     # A pre-existing file with the historical temporary name belongs to the user.
     sentinel = raw / "_temp_rdo_fallback.ydr"

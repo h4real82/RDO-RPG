@@ -23,6 +23,49 @@ describe('selectSpawnPosition', () => {
 
     expect(selectSpawnPosition(manifest)).toEqual({ x: -300, y: 100, z: 700 });
   });
+
+  it('does not move the spawn to a newly added terrain tile origin', () => {
+    const manifest = { version: 1, world: 'valentine', placements: [
+      { id: 'terrain', asset: 'models/valentine/terrain.glb', position: { x: -352, y: 116, z: 736 }, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, layer: 'terrain', chunkId: '-2:2', lod: 0 },
+      { id: 'saloon', asset: 'models/valentine/saloon.glb', position: { x: -300, y: 120, z: 750 }, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, layer: 'buildings', chunkId: '-2:3', lod: 0 },
+    ] } satisfies WorldManifest;
+
+    expect(selectSpawnPosition(manifest)).toEqual({ x: -300, y: 120, z: 750 });
+  });
+});
+
+it('does not treat terrain meshes as player blockers or camera occluders', () => {
+  expect(runtime.placementBlocksPlayerAndCamera({ layer: 'terrain' })).toBe(false);
+  expect(runtime.placementBlocksPlayerAndCamera({ layer: 'buildings' })).toBe(true);
+});
+
+it('disables unverified terrain vertex-color masks for neutral geometry previews', () => {
+  const instance = new Group();
+  const material = new MeshBasicMaterial({ color: '#ffffff', vertexColors: true });
+  instance.add(new Mesh(new BoxGeometry(1, 1, 1), material));
+
+  runtime.disableTerrainVertexColorMultiplication(instance);
+
+  expect(material.vertexColors).toBe(false);
+  instance.traverse((object) => { if (object instanceof Mesh) object.geometry.dispose(); });
+  material.dispose();
+});
+
+it('keeps decoded mask channels from blackening diffuse-only imported materials', () => {
+  const instance = new Group();
+  const preview = new MeshBasicMaterial({ vertexColors: true });
+  preview.userData.rdo_material_status = 'diffuse-only';
+  const authored = new MeshBasicMaterial({ vertexColors: true });
+  const geometry = new BoxGeometry(1, 1, 1);
+  instance.add(new Mesh(geometry, [preview, authored]));
+
+  runtime.prepareDrawableMaterialPreview(instance);
+
+  expect(preview.vertexColors).toBe(false);
+  expect(authored.vertexColors).toBe(true);
+  geometry.dispose();
+  preview.dispose();
+  authored.dispose();
 });
 
 it('checks the entire camera-player segment for occluders', () => {

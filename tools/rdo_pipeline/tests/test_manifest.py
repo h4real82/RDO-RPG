@@ -63,3 +63,17 @@ def test_runtime_write_stages_manifest_assets_and_provenance(tmp_path: Path) -> 
     provenance = (runtime / 'provenance.json').read_text(encoding='utf-8')
     assert 'toolVersion' in provenance
     assert 'validation' in provenance
+
+
+def test_runtime_writer_accepts_asset_root_inside_runtime_root(tmp_path: Path) -> None:
+    runtime = tmp_path / 'runtime'
+    asset_root = runtime / 'models' / 'valentine'
+    asset_root.mkdir(parents=True)
+    asset = asset_root / 'saloon.glb'
+    asset.write_bytes(b'already staged')
+
+    write_runtime_manifest(build_manifest(_inventory(), [_placement()]), _inventory(), runtime,
+                           asset_root=asset_root, placement_inputs=[])
+
+    assert asset.read_bytes() == b'already staged'
+    assert (runtime / 'rdo_world_manifest.json').exists()
