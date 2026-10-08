@@ -16,6 +16,7 @@
     "clean": "pnpm -r exec rm -rf dist node_modules"
   },
   "devDependencies": {
+    "@gltf-transform/cli": "4.5.1",
     "playwright": "^1.63.0",
     "typescript": "^5.4.5"
   },
