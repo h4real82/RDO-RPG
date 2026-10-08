@@ -11,6 +11,7 @@ describe('world presentation', () => {
 
     expect(controller.camera).toBeInstanceOf(OrthographicCamera);
     expect(controller.camera.position.x).toBe(12);
+    expect(controller.camera.top - controller.camera.bottom).toBe(90);
   });
 
   it('fades intersecting occluders and restores them after the ray clears', () => {

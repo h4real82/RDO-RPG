@@ -15,6 +15,18 @@ export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: nu
   return placement ? { ...placement.position } : { x: 0, y: 0, z: 0 };
 }
 
+interface PlacementInstance {
+  position: { set(x: number, y: number, z: number): void };
+  rotation: { set(x: number, y: number, z: number): void };
+  scale: { set(x: number, y: number, z: number): void };
+}
+
+export function applyPlacementTransform(instance: PlacementInstance, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
+  instance.position.set(placement.position.x, placement.position.y, placement.position.z);
+  instance.rotation.set(Math.PI / 2, placement.rotation.y, 0);
+  instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
+}
+
 export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRenderer): Promise<() => void> {
   const manifest = await loadValentineManifest('/runtime/valentine/local-preview/rdo_world_manifest.json');
   const scene = new Scene();
@@ -34,9 +46,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const world = new WorldChunkManager(manifest, async (placement: WorldPlacement) => {
     const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${placement.asset}`);
     const instance = gltf.scene;
-    instance.position.set(placement.position.x, placement.position.y, placement.position.z);
-    instance.rotation.set(placement.rotation.x, placement.rotation.y, placement.rotation.z);
-    instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
+    applyPlacementTransform(instance, placement);
     scene.add(instance);
     return { dispose: () => {
       scene.remove(instance);
