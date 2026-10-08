@@ -1,4 +1,4 @@
-import { AmbientLight, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
+import { AmbientLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
@@ -23,6 +23,15 @@ export function applyPlacementTransform(instance: Group, placement: Pick<WorldPl
   // Blender's glTF exporter has already converted the imported drawable to Y-up.
   instance.rotation.set(0, placement.rotation.y, 0);
   instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
+}
+
+function overlapsFootprint(bounds: Box3, position: { x: number; y: number; z: number }): boolean {
+  const radius = 0.35;
+  const height = 1.8;
+  if (bounds.max.y < position.y || bounds.min.y > position.y + height) return false;
+  const nearestX = Math.max(bounds.min.x, Math.min(position.x, bounds.max.x));
+  const nearestZ = Math.max(bounds.min.z, Math.min(position.z, bounds.max.z));
+  return Math.hypot(position.x - nearestX, position.z - nearestZ) < radius;
 }
 
 interface RuntimePoi {
@@ -83,7 +92,15 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   scene.add(sunlight);
 
   const spawn = selectSpawnPosition(manifest);
-  const player = new PlayerController(spawn);
+  const collisionBounds = new Map<Group, Box3>();
+  let player: PlayerController | undefined;
+  const canOccupy = (position: { x: number; y: number; z: number }): boolean => {
+    for (const bounds of collisionBounds.values()) {
+      if (overlapsFootprint(bounds, position) && (!player || !overlapsFootprint(bounds, player.position))) return false;
+    }
+    return true;
+  };
+  player = new PlayerController(spawn, 6, canOccupy);
   const playerMarker = new Mesh(new SphereGeometry(0.4, 16, 12), new MeshStandardMaterial({ color: '#caa05d' }));
   playerMarker.position.set(spawn.x, spawn.y + 0.4, spawn.z);
   scene.add(playerMarker);
@@ -96,10 +113,13 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     applyPlacementTransform(instance, placement);
     scene.add(instance);
     occluders.push(instance);
+    instance.updateWorldMatrix(true, true);
+    collisionBounds.set(instance, new Box3().setFromObject(instance));
     return { dispose: () => {
       scene.remove(instance);
       const index = occluders.indexOf(instance);
       if (index >= 0) occluders.splice(index, 1);
+      collisionBounds.delete(instance);
       disposeObjectResources(instance);
     } };
   });

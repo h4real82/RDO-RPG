@@ -14,7 +14,11 @@ export class PlayerController {
   readonly facing: PlayerPosition = { x: 0, y: 0, z: -1 };
   private movement: PlayerMovement = { forward: 0, right: 0 };
 
-  constructor(initialPosition: PlayerPosition, private readonly speed = 6) {
+  constructor(
+    initialPosition: PlayerPosition,
+    private readonly speed = 6,
+    private readonly canOccupy: (position: PlayerPosition) => boolean = () => true,
+  ) {
     this.position = { ...initialPosition };
   }
 
@@ -31,8 +35,10 @@ export class PlayerController {
     if (magnitude === 0) return;
     const forward = this.movement.forward / magnitude;
     const right = this.movement.right / magnitude;
-    this.position.x += right * this.speed * deltaSeconds;
-    this.position.z -= forward * this.speed * deltaSeconds;
+    const nextX = this.position.x + right * this.speed * deltaSeconds;
+    if (this.canOccupy({ x: nextX, y: this.position.y, z: this.position.z })) this.position.x = nextX;
+    const nextZ = this.position.z - forward * this.speed * deltaSeconds;
+    if (this.canOccupy({ x: this.position.x, y: this.position.y, z: nextZ })) this.position.z = nextZ;
     this.facing.x = right;
     this.facing.z = -forward;
   }
