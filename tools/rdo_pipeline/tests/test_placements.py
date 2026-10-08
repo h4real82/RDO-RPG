@@ -5,9 +5,9 @@ import pytest
 
 @pytest.mark.parametrize('quaternion,expected', [
     ([math.sqrt(0.5), 0, 0, math.sqrt(0.5)], {'x': math.pi / 2, 'y': 0, 'z': 0}),
-    ([0, math.sqrt(0.5), 0, math.sqrt(0.5)], {'x': 0, 'y': 0, 'z': -math.pi / 2}),
+    ([0, math.sqrt(0.5), 0, math.sqrt(0.5)], {'x': 0, 'y': 0, 'z': math.pi / 2}),
     ([0, 0, math.sqrt(0.5), math.sqrt(0.5)], {'x': 0, 'y': math.pi / 2, 'z': 0}),
-    ([0.5, 0.5, 0.5, 0.5], {'x': math.pi / 2, 'y': 0, 'z': -math.pi / 2}),
+    ([0.5, 0.5, 0.5, 0.5], {'x': math.pi / 2, 'y': math.pi / 2, 'z': 0}),
 ])
 def test_adapter_preserves_pitch_roll_and_heading_in_gltf_y_up_basis(quaternion, expected):
     payload = {'entities': [

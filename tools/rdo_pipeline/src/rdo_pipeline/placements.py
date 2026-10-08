@@ -117,9 +117,11 @@ def compose_mlo_entity(parent: Mapping[str, Any], child: Mapping[str, Any]) -> d
 
 def _rotation_xyz(rotation: list[float]) -> dict[str, float]:
     game_x, game_y, game_z, w = (float(value) for value in rotation)
-    # Same basis as Blender's glTF exporter: (x, y, z) -> (x, z, -y).
-    # Quaternion components follow this proper rotation of the local mesh basis.
-    x, y, z = game_x, game_z, -game_y
+    # Normal CEntityDef stores inverse orientation. Our required world basis
+    # swaps game Y/Z (a reflection): conjugating that inverse rotation by the
+    # reflection gives quaternion vector (x,z,y). The runtime separately flips
+    # GLB-local Z to reconcile Blender's (x,z,-y) mesh basis with (x,z,y).
+    x, y, z = game_x, game_z, game_y
     norm = math.sqrt(x*x + y*y + z*z + w*w)
     if not math.isfinite(norm) or norm == 0:
         raise ValueError('invalid source rotation quaternion')

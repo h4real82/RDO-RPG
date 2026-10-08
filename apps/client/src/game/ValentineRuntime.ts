@@ -27,9 +27,9 @@ export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vect
 
 export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
-  // Blender's glTF exporter has already converted the imported drawable to Y-up.
+  // GLB local basis is (game X, game Z, -game Y); world requires +game Y.
   instance.rotation.set(placement.rotation.x, placement.rotation.y, placement.rotation.z, 'XYZ');
-  instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
+  instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
 }
 
 function overlapsFootprint(bounds: Box3, position: { x: number; y: number; z: number }): boolean {
