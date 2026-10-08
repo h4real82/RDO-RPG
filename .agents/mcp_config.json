@@ -1,11 +1,9 @@
 {
   "mcpServers": {
     "filesystem": {
-      "command": "npx",
+      "command": "node",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "D:\\Projects\\RDO-RPG\\docs\\Obsidian"
+        "tools/obsidian-filesystem-mcp.mjs"
       ]
     }
   }
