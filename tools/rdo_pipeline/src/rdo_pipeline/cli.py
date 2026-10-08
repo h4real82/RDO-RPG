@@ -10,6 +10,7 @@ from .placements import adapt_rdo_placements
 from .validate import validate_runtime
 from .pois import validate_pois
 from .infrastructure import build_valentine_traces
+from .texture_references import build_texture_reference_report
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -61,6 +62,11 @@ def main() -> int:
     traces.add_argument('--runtime-root', type=Path, required=True)
     traces.add_argument('--roads', type=Path, required=True)
     traces.add_argument('--rails', type=Path, required=True)
+    texture_coverage = commands.add_parser('texture-coverage')
+    texture_coverage.add_argument('--asset-root', type=Path, required=True)
+    texture_coverage.add_argument('--model-root', type=Path, required=True)
+    texture_coverage.add_argument('--texture-root', type=Path, required=True)
+    texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
     if args.command == 'build-valentine':
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
@@ -94,6 +100,15 @@ def main() -> int:
         )
         trace_payload = {'version': 1, 'world': 'valentine', 'bounds': {'minX': bounds[0], 'maxX': bounds[1], 'minZ': bounds[2], 'maxZ': bounds[3]}, 'traces': build_valentine_traces(args.roads, args.rails, bounds=bounds)}
         (runtime_root / 'ground-truth-traces.json').write_text(json.dumps(trace_payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        return 0
+    if args.command == 'texture-coverage':
+        inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
+        available_models = {Path(item.path).stem for item in inventory.items if item.category == 'model'}
+        report = build_texture_reference_report(args.model_root, args.texture_root, available_models)
+        runtime_root = approved_runtime_root(args.runtime_root)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        (runtime_root / 'texture-coverage.json').write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(f"texture coverage: {report['summary']['availableTextureCount']}/{report['summary']['referencedTextureCount']} exported references")
         return 0
     report = validate_runtime(args.runtime_root)
     if args.pois:

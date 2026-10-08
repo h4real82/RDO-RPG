@@ -16,4 +16,20 @@ Falls der Standard-OpenIV-Konverter bei statischen Hilfsmodellen wegen einer def
 
 `extract-valentine-traces` transformiert ausschließlich die vorhandenen GeoJSON-Linien mit der Jean-Röpke-CRS und schreibt `ground-truth-traces.json`. Ohne im Quellmaterial belegte Breite und Höhenprofil bleiben diese Traces absichtlich nicht renderbar; das verhindert erfundene Straßen- oder Gleisribbons.
 
+## Texturbelege prüfen
+
+`texture-coverage` liest ausschließlich wörtliche Texturreferenzen aus den
+exportierten YDR-Dateien. Es erzeugt keine Materialzuordnung: Die proprietäre
+Shader-zu-Primitive-Beziehung ist im vorhandenen Export nicht belegt und darf
+nicht geraten werden. Das Ergebnis `texture-coverage.json` trennt daher
+nachweisbar verfügbare Texturen von noch fehlenden Exporten.
+
+```powershell
+& 'tools/rdo_pipeline/.venv/Scripts/python.exe' -m rdo_pipeline.cli texture-coverage `
+  --asset-root 'D:/Projects/RDO-RPG/data/processed/models_glb' `
+  --model-root 'D:/Projects/RDO-RPG/data/raw/models' `
+  --texture-root 'D:/Projects/RDO-RPG/data/raw/textures' `
+  --runtime-root 'data/runtime/valentine/local-preview'
+```
+
 `--allow-incomplete` ist nur für eine klar gekennzeichnete lokale Vorschau zulässig. Ein regulärer Build verweigert unaufgelöste Modelle. Details: [Versioniertes Pipeline-Runbook](../../../runbooks/asset-pipeline.md).
