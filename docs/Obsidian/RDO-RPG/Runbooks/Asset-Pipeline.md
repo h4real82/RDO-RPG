@@ -19,16 +19,18 @@ Falls der Standard-OpenIV-Konverter bei statischen Hilfsmodellen wegen einer def
 ## Texturbelege prüfen
 
 `texture-coverage` liest ausschließlich wörtliche Texturreferenzen aus den
-exportierten YDR-Dateien. Es erzeugt keine Materialzuordnung: Die proprietäre
-Shader-zu-Primitive-Beziehung ist im vorhandenen Export nicht belegt und darf
-nicht geraten werden. Das Ergebnis `texture-coverage.json` trennt daher
+exportierten YDR-Dateien. Dieser Bericht erzeugt selbst keine Materialzuordnung.
+Das Ergebnis `texture-coverage.json` trennt daher
 nachweisbar verfügbare Texturen von noch fehlenden Exporten.
 
 Die momentan verwendete RedDeadBlend2-Importbibliothek stellt UVs und
 Vertexdaten bereit, aber keine Shader- oder Materialzuordnung pro Geometrie.
-Ein zukünftig eingesetzter Importer muss diese Beziehung aus dem Originalformat
-nachweisbar liefern, bevor die Runtime Albedo-, Normal- oder Maskentexturen
-bindet.
+Der separate Decoder `drawable_materials.py` liest inzwischen die exakten
+Geometrie-Shader-Indizes, Texturparameter und Renderbuckets aus `.ydr.full`.
+Der Blender-Konverter nutzt diese Beziehungen mit `--texture-root`, um ausschließlich
+eindeutige `DiffuseTex`-Referenzen an vorhandene PNGs zu binden. Normal-, Masken-,
+Mehrschicht- und Transparenzsemantik sind damit noch nicht umgesetzt. Details und
+reproduzierbare Befehle stehen im versionierten Pipeline-Runbook.
 
 ```powershell
 & 'tools/rdo_pipeline/.venv/Scripts/python.exe' -m rdo_pipeline.cli texture-coverage `
