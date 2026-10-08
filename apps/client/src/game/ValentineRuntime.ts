@@ -156,8 +156,18 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     try { pressed.delete(event.key.toLowerCase()); }
     catch (error) { console.error('Could not process game keyup.', error); }
   };
+  const clearMovement = (): void => {
+    try { pressed.clear(); }
+    catch (error) { console.error('Could not clear game movement.', error); }
+  };
+  const onVisibilityChange = (): void => {
+    try { if (document.hidden) clearMovement(); }
+    catch (error) { console.error('Could not process game visibility.', error); }
+  };
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
+  window.addEventListener('blur', clearMovement);
+  document.addEventListener('visibilitychange', onVisibilityChange);
 
   let frame = 0;
   let previous = performance.now();
@@ -192,6 +202,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     cancelAnimationFrame(frame);
     window.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('keyup', onKeyUp);
+    window.removeEventListener('blur', clearMovement);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
     menu.close();
     hud.dispose();
     world.dispose();
