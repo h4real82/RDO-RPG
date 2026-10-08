@@ -12,6 +12,7 @@ import { Minimap } from './presentation/Minimap';
 import { disposeObjectResources } from './world/ResourceDisposer';
 import { loadValentineManifest } from './world/ManifestLoader';
 import { WorldChunkManager } from './world/WorldChunkManager';
+import { selectHighestDrawableLod } from './world/DrawableLod';
 
 export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: number; z: number } {
   const placement = manifest.placements[0];
@@ -116,6 +117,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const world = new WorldChunkManager(manifest, async (placement: WorldPlacement) => {
     const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${placement.asset}`);
     const instance = gltf.scene;
+    selectHighestDrawableLod(instance);
     applyPlacementTransform(instance, placement);
     scene.add(instance);
     occluders.push(instance);
