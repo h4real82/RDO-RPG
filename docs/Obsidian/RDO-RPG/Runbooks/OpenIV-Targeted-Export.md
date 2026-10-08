@@ -73,6 +73,7 @@ Ein nicht auffindbares Modell wird als Lücke dokumentiert und nicht durch ein
 & 'tools/rdo_pipeline/.venv/Scripts/python.exe' -m rdo_pipeline.cli build-valentine `
   --asset-root 'D:/Projects/RDO-RPG/data/processed/models_glb' `
   --placements 'D:/Projects/RDO-RPG/data/valentine_placements.json' `
+  --archetype-root 'D:/Projects/RDO-RPG/data/raw/ymap' `
   --runtime-root 'data/runtime/valentine/local-preview' `
   --allow-incomplete
 ```

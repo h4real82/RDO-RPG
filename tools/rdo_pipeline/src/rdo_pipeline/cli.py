@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .inventory import build_inventory
 from .manifest import build_manifest, write_runtime_manifest
-from .placements import adapt_rdo_placements, read_mlo_archetypes
+from .placements import adapt_rdo_placements, read_mlo_archetypes, expand_mlo_placements
 from .validate import validate_runtime
 from .pois import validate_pois
 from .infrastructure import build_valentine_traces
@@ -58,6 +58,7 @@ def main() -> int:
     build.add_argument('--placements', type=Path, required=True)
     build.add_argument('--runtime-root', type=Path, required=True)
     build.add_argument('--allow-incomplete', action='store_true')
+    build.add_argument('--archetype-root', type=Path)
     validate = commands.add_parser('validate-valentine')
     validate.add_argument('--runtime-root', type=Path, required=True)
     validate.add_argument('--pois', type=Path)
@@ -84,13 +85,24 @@ def main() -> int:
         inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
         available_models = {Path(item.path).stem for item in inventory.items if item.category == 'model'}
         source_payload = json.loads(args.placements.read_text(encoding='utf-8'))
-        placements, missing = load_placements(args.placements, available_models)
+        archetype_paths = []
+        if args.archetype_root is not None:
+            if not isinstance(source_payload, dict) or not isinstance(source_payload.get('entities'), list):
+                raise ValueError('MLO expansion requires source entities')
+            archetype_paths = sorted(args.archetype_root.glob('*ytyp.xml'))
+            if not archetype_paths:
+                raise ValueError('no YTYP exports found')
+            source_payload = expand_mlo_placements(source_payload, read_mlo_archetypes(archetype_paths))
+            adapted = adapt_rdo_placements(source_payload, available_models)
+            placements, missing = list(adapted.placements), adapted.missing_models
+        else:
+            placements, missing = load_placements(args.placements, available_models)
         if missing and not args.allow_incomplete:
             raise ValueError(f'{len(missing)} placement models are unresolved; pass --allow-incomplete only for an explicitly partial test runtime')
         manifest = build_manifest(inventory, placements)
         write_runtime_manifest(
             manifest, inventory, approved_runtime_root(args.runtime_root),
-            asset_root=args.asset_root, placement_inputs=[args.placements],
+            asset_root=args.asset_root, placement_inputs=[args.placements, *archetype_paths],
         )
         (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2) + '\n', encoding='utf-8')
         if missing:

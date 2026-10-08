@@ -115,6 +115,23 @@ def compose_mlo_entity(parent: Mapping[str, Any], child: Mapping[str, Any]) -> d
     return result
 
 
+def expand_mlo_placements(payload: Mapping[str, Any], archetypes: Mapping[str, Any]) -> dict[str, Any]:
+    """Expand base members only; optional sets require separate activation data."""
+    entities = []
+    for parent in payload.get('entities', []):
+        name = str(parent['modelName']).lower()
+        key = name if name.startswith('0x') else _joaat(name)
+        definition = archetypes.get(key)
+        if definition is None:
+            entities.append(dict(parent))
+            continue
+        for child in definition['entities']:
+            world = compose_mlo_entity(parent, child)
+            world['sourceFile'] = f"{parent['sourceFile']}::{child['sourceFile']}"
+            entities.append(world)
+    return {**payload, 'entities': entities}
+
+
 def _rotation_xyz(rotation: list[float]) -> dict[str, float]:
     game_x, game_y, game_z, w = (float(value) for value in rotation)
     # Normal CEntityDef stores inverse orientation. Our required world basis

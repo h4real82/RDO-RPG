@@ -38,3 +38,10 @@ der Basisobjekte getrennt von optionalen Entity-Sets. Es ist ein Diagnoseartefak
 (`renderable: false`), kein Weltmanifest. Fehlende Transformationen sind Fehler;
 optionale Sets werden nicht automatisch aktiviert. MLO-Namen dürfen nicht
 durch ähnlich benannte Außenmodelle ersetzt werden.
+
+`build-valentine --archetype-root <YTYP-Ordner>` expandiert Basisobjekte der
+MLO-Platzierungen vor der Modellauflösung. Ihre YTYP-Dateien werden mit Hashes
+in der Provenienz erfasst. Optionale Entity-Sets sind damit nicht abgedeckt;
+für die aktuelle Preview wurden leere `defaultEntitySets` in allen 14
+exportierten MLO-YMAPs geprüft. Eine spätere Karte mit aktivierten Sets benötigt
+deren explizite Auswertung, bevor sie als vollständig gelten kann.

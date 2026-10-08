@@ -58,3 +58,19 @@ def test_mlo_transform_rejects_nonuniform_parent_scale_that_can_introduce_shear(
     child = {'position': [1, 0, 0], 'rotation': [0, 0, 0, 1], 'scale': [1, 1, 1]}
     with pytest.raises(ValueError, match='nonuniform'):
         placements.compose_mlo_entity(parent, child)
+
+
+def test_expansion_replaces_mlo_root_with_base_members_without_activating_sets():
+    assert callable(getattr(placements, 'expand_mlo_placements', None))
+    child = {'modelName': 'prop', 'position': [1, 2, 3], 'rotation': [0, 0, 0, 1],
+             'scale': [1, 1, 1], 'sourceFile': 'interior.xml', 'isInterior': True}
+    root = {'modelName': 'val_genstore', 'position': [10, 20, 30],
+            'rotation': [0, 0, 0, 1], 'scale': [1, 1, 1], 'sourceFile': 'map.xml'}
+    payload = {'entities': [root]}
+    definitions = {'0x9f5729f9': {'entities': [child], 'entitySets': [{'name': 'optional', 'entities': [child]}]}}
+    expanded = placements.expand_mlo_placements(payload, definitions)
+    assert len(expanded['entities']) == 1
+    assert expanded['entities'][0]['modelName'] == 'prop'
+    assert expanded['entities'][0]['position'] == pytest.approx([11, 22, 33])
+    assert expanded['entities'][0]['sourceFile'] == 'map.xml::interior.xml'
+    assert payload['entities'][0]['modelName'] == 'val_genstore'
