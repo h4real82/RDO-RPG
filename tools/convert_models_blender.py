@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless fallback exporter for static RDR2 YDR drawables.
+r"""Headless fallback exporter for static RDR2 YDR drawables.
 
 Run through the bundled Blender, e.g.:
   blender.exe --background --python tools/convert_models_blender.py -- --input-dir D:\...\models --output-dir D:\...\models_glb
@@ -16,6 +16,7 @@ import os
 import shutil
 import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import bpy
 
@@ -74,18 +75,21 @@ def main() -> int:
         print(f'Cannot enable RedDeadBlend2: {error}', file=sys.stderr)
         return 1
     failures: list[str] = []
-    temporary = args.input_dir / '_temp_rdo_fallback.ydr'
     for name, source, is_full in discover_models(args.input_dir, set(args.only)):
         destination = args.output_dir / f'{name}.glb'
         if destination.exists():
             continue
         clear_scene()
         try:
-            import_path = source
             if is_full:
-                shutil.copyfile(source, temporary)
-                import_path = temporary
-            bpy.ops.import_mesh.ydr(filepath=os.fspath(import_path))
+                # The importer requires .ydr, but raw exports must remain read-only.
+                # Import is synchronous, so the copy can be removed before GLB export.
+                with TemporaryDirectory(prefix='rdo-drawable-') as staging:
+                    import_path = Path(staging) / f'{name}.ydr'
+                    shutil.copyfile(source, import_path)
+                    bpy.ops.import_mesh.ydr(filepath=os.fspath(import_path))
+            else:
+                bpy.ops.import_mesh.ydr(filepath=os.fspath(source))
             remove_skinning()
             bpy.ops.export_scene.gltf(filepath=os.fspath(destination), export_format='GLB', use_selection=False, export_apply=True, export_skins=False, export_animations=False)
             if not destination.is_file() or destination.stat().st_size == 0:
@@ -96,7 +100,6 @@ def main() -> int:
             failures.append(name)
             print(f'failed {name}: {error}', file=sys.stderr)
         finally:
-            temporary.unlink(missing_ok=True)
             clear_scene()
     if failures:
         print(f'failed models: {",".join(failures)}', file=sys.stderr)
