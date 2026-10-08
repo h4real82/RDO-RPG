@@ -15,6 +15,13 @@ export class OcclusionController {
     const visible = new Set<Material>();
     try {
       for (const intersection of ray.intersectObjects([...this.occluders], true)) {
+        let node: Object3D | null = intersection.object;
+        let rendered = true;
+        while (node) {
+          if (!node.visible) { rendered = false; break; }
+          node = node.parent;
+        }
+        if (!rendered) continue;
         const material = (intersection.object as Object3D & { material?: Material | Material[] }).material;
         for (const candidate of Array.isArray(material) ? material : [material]) {
           if (candidate) visible.add(candidate);

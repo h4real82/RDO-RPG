@@ -1,10 +1,25 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, OrthographicCamera, Raycaster, Vector3 } from 'three';
+import { BoxGeometry, Group, Mesh, MeshBasicMaterial, OrthographicCamera, Raycaster, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 
 import { OcclusionController } from './OcclusionController';
 import { OrthographicFollowCamera } from './OrthographicFollowCamera';
 
 describe('world presentation', () => {
+  it('ignores meshes under a hidden LOD parent', () => {
+    const material = new MeshBasicMaterial();
+    const mesh = new Mesh(new BoxGeometry(1, 1, 1), material);
+    const lod = new Group();
+    lod.visible = false;
+    lod.add(mesh);
+    lod.updateMatrixWorld(true);
+    const occlusion = new OcclusionController([lod]);
+    occlusion.update(new Raycaster(new Vector3(0, 0, 2), new Vector3(0, 0, -1)));
+    expect(material.opacity).toBe(1);
+    expect(material.depthWrite).toBe(true);
+    occlusion.dispose();
+    mesh.geometry.dispose();
+    material.dispose();
+  });
   it('uses an orthographic camera that follows the player target', () => {
     const controller = new OrthographicFollowCamera(16 / 9);
     controller.update(new Vector3(12, 0, 5));
