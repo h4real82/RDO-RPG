@@ -68,11 +68,16 @@ def write_runtime_manifest(
     runtime_root.mkdir(parents=True, exist_ok=True)
     if asset_root is not None:
         source_root = asset_root.resolve()
+        inventory_by_path = {item.path: item for item in inventory.items}
         for placement in manifest['placements']:
             relative = Path(placement['asset'])
-            source = (source_root / relative).resolve()
+            item = inventory_by_path.get(placement['asset'])
+            if item is None:
+                raise ValueError(f'asset missing from inventory: {relative.as_posix()}')
+            source_relative = Path(item.source_path or item.path)
+            source = (source_root / source_relative).resolve()
             if source_root not in source.parents or not source.is_file():
-                raise ValueError(f'asset missing from asset root: {relative.as_posix()}')
+                raise ValueError(f'asset missing from asset root: {source_relative.as_posix()}')
             destination = runtime_root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)

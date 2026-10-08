@@ -27,3 +27,14 @@ def test_inventory_is_sorted_hashed_and_explicit_about_unknown_files(tmp_path: P
     assert [item.category for item in inventory.items] == ['unknown', 'texture', 'ymap', 'model']
     assert inventory.items[3].sha256 == hashlib.sha256(b'model').hexdigest()
     assert sorted(raw.rglob('*'), key=lambda path: path.as_posix()) == before
+
+
+def test_inventory_can_assign_a_runtime_prefix_without_renaming_sources(tmp_path: Path) -> None:
+    raw = tmp_path / 'exports'
+    raw.mkdir()
+    (raw / 'saloon.glb').write_bytes(b'model')
+
+    inventory = build_inventory(raw, runtime_prefix='models/valentine')
+
+    assert inventory.items[0].path == 'models/valentine/saloon.glb'
+    assert inventory.items[0].source_path == 'saloon.glb'

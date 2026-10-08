@@ -9,7 +9,7 @@ from rdo_pipeline.manifest import build_manifest, write_runtime_manifest
 
 
 def _inventory() -> AssetInventory:
-    return AssetInventory((AssetItem('models/valentine/saloon.glb', 'model', 'a' * 64),))
+    return AssetInventory((AssetItem('models/valentine/saloon.glb', 'model', 'a' * 64, 'saloon.glb'),))
 
 
 def _placement() -> dict[str, object]:
@@ -34,7 +34,7 @@ def test_manifest_is_stable_sorted_and_chunked(tmp_path: Path) -> None:
     assert manifest['placements'][0]['id'].startswith('valentine:')
 
     asset_root = tmp_path / 'assets'
-    source = asset_root / 'models/valentine/saloon.glb'
+    source = asset_root / 'saloon.glb'
     source.parent.mkdir(parents=True)
     source.write_bytes(b'glb')
     write_runtime_manifest(manifest, _inventory(), tmp_path, asset_root=asset_root)
@@ -52,7 +52,7 @@ def test_manifest_rejects_duplicate_placement_keys() -> None:
 
 def test_runtime_write_stages_manifest_assets_and_provenance(tmp_path: Path) -> None:
     asset_root = tmp_path / 'assets'
-    source = asset_root / 'models/valentine/saloon.glb'
+    source = asset_root / 'saloon.glb'
     source.parent.mkdir(parents=True)
     source.write_bytes(b'glb')
     runtime = tmp_path / 'runtime'

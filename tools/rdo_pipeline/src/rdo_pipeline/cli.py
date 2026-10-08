@@ -38,7 +38,7 @@ def main() -> int:
     validate.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
     if args.command == 'build-valentine':
-        inventory = build_inventory(args.asset_root)
+        inventory = build_inventory(args.asset_root, runtime_prefix='models/valentine')
         manifest = build_manifest(inventory, _placements(args.placements))
         write_runtime_manifest(
             manifest, inventory, approved_runtime_root(args.runtime_root),
