@@ -86,3 +86,35 @@ Materialsteuerung im GLB-Exporter oder Browser implementiert.
 Browservergleich ohne dieses Objekt beseitigte die große Fläche. Renderbucket
 und untersuchte Materialkonstanten entsprechen jedoch normalen sichtbaren
 Shadern; dauerhaftes Ausblenden ist daher noch nicht begründet.
+
+## Fehlende Assets gezielt in OpenIV suchen
+
+Die [offizielle OpenIV-Namensdatenbank](https://github.com/OpenIV-Team/RAGE-StringsDatabase)
+ist eine Suchhilfe, keine Quelle für Geometrie oder bewiesene Dateitypen.
+Der lokale Referenzbestand liegt unter
+`data/runtime/valentine/source-reference/openiv-strings` und wurde aus Commit
+`cebe8efa08bbbb82cc2cdb3a0c6ad5ad150238d9` gelesen.
+Für Windows beim Klonen `git -c core.longpaths=true clone ...` verwenden.
+Der Referenzbestand ist nicht Teil der Projektversionierung; nur `.txt`-
+Namenslisten werden gelesen, kein fremder Code wird ausgeführt.
+
+```powershell
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli export-targets `
+  --missing-models data/runtime/valentine/local-preview/textured-runtime/missing-models.json `
+  --name-database data/runtime/valentine/source-reference/openiv-strings/RDR2/ArchiveItems `
+  --runtime-root data/runtime/valentine/local-preview/export-targets
+```
+
+Ergebnis: `export-targets.json`, mit SHA-256 der Missing-Liste und des
+Namensdatenbestands, sortierten Kandidaten und allen passenden Namensquellen.
+`name-candidate` bedeutet exakter JOAAT-Treffer oder bereits belegter
+`modelName` in den Platzierungsdaten; **nicht** bestätigte `.ydr`-Geometrie.
+`ambiguous` behält alle Kandidaten, `unknown` erfindet keinen Namen.
+Der Abgleich verändert weder Raw-Dateien noch das Weltmanifest.
+
+Stand 2026-10-08: 1581 Anforderungen, 1155 Namenskandidaten, 426 unbekannt,
+keine Mehrdeutigkeit im angefragten Teilbestand. 1150 Kandidaten stammen
+aus bisher nur als Hash benannten Einträgen; fünf Modelle waren schon benannt.
+In OpenIV nach dem Kandidatennamen suchen, über „Go to file“ zum Hauptfenster
+wechseln, Dateityp und Archiv prüfen und dort exportieren. Textdatenbank-Pfade
+sind Herkunftshinweise, kein Beweis einer bestimmten Resource-Endung.

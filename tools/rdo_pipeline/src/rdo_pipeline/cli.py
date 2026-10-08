@@ -13,6 +13,7 @@ from .pois import validate_pois
 from .infrastructure import build_valentine_traces
 from .texture_references import build_texture_reference_report
 from .drawable_materials import decode_drawable_materials
+from .export_targets import build_export_targets
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -52,6 +53,10 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    targets = commands.add_parser('export-targets')
+    targets.add_argument('--missing-models', type=Path, required=True)
+    targets.add_argument('--name-database', type=Path, required=True)
+    targets.add_argument('--runtime-root', type=Path, required=True)
     drawable_inspect = commands.add_parser('inspect-drawable-materials')
     drawable_inspect.add_argument('--drawable', type=Path, required=True)
     drawable_inspect.add_argument('--runtime-root', type=Path, required=True)
@@ -122,6 +127,16 @@ def main() -> int:
         if missing:
             print(f'partial runtime: {len(missing)} placement models unresolved')
         (approved_runtime_root(args.runtime_root) / 'coverage.json').write_text(json.dumps(build_coverage_report(source_payload, placements, missing), indent=2) + '\n', encoding='utf-8')
+        return 0
+    if args.command == 'export-targets':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        raw = args.missing_models.read_bytes()
+        missing = json.loads(raw)['missingModels']
+        report = build_export_targets(missing, args.name_database)
+        report['missingModelsSha256'] = sha256(raw).hexdigest()
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        (runtime_root / 'export-targets.json').write_text(json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(json.dumps(report['summary'], sort_keys=True))
         return 0
     if args.command == 'extract-valentine-traces':
         runtime_root = approved_runtime_root(args.runtime_root)

@@ -7,6 +7,22 @@ from rdo_pipeline import cli
 from rdo_pipeline.cli import approved_runtime_root, build_coverage_report, load_placements
 
 
+def test_export_targets_cli_writes_search_candidates_with_input_provenance(tmp_path, monkeypatch):
+    names = tmp_path / 'names'
+    names.mkdir()
+    (names / 'station.txt').write_text('val_trainstn_int_em_hd\n', encoding='utf-8')
+    missing = tmp_path / 'missing.json'
+    missing.write_text(json.dumps({'missingModels': ['0x7fb016f7']}), encoding='utf-8')
+    runtime = tmp_path / 'runtime'
+    monkeypatch.setattr(cli, 'approved_runtime_root', lambda candidate: runtime)
+    monkeypatch.setattr('sys.argv', ['rdo-pipeline', 'export-targets', '--missing-models', str(missing),
+                                   '--name-database', str(names), '--runtime-root', str(runtime)])
+    assert cli.main() == 0
+    report = json.loads((runtime / 'export-targets.json').read_text())
+    assert report['targets'][0]['candidates'][0]['name'] == 'val_trainstn_int_em_hd'
+    assert len(report['missingModelsSha256']) == 64
+
+
 def test_complete_rebuild_clears_the_previous_missing_model_report(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     assets = tmp_path / 'assets'
     assets.mkdir()
