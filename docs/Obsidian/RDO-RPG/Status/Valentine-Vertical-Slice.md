@@ -30,6 +30,20 @@ einen veröffentlichten oder vollständig spielbaren Build.
 
 Details und genaue Messpunkte: [Valentine route coverage audit](../../../runbooks/valentine-route-audit.md).
 
+## Räumliche Genauigkeit vorerst nicht abgenommen
+
+Der markierte Rundweg vom 09.10.2026 zeigt, dass die Vorschau noch keine
+verlässlich erkennbare Valentine-Gesamtform besitzt. Aktuell stehen 2.263
+Außenwelt- und 2.188 Innenraum-Entitäten in den Quelldaten nur 186 sichtbaren
+Außenwelt-Platzierungen und zugleich 408 geladenen Innenraum-Platzierungen
+gegenüber; zusätzlich fehlen 1.581 Modellreferenzen. Straßen und Gleise liegen
+nur als nicht renderbare Prüflinien vor. Eine möglicherweise spiegelverkehrte
+Gebäudeschrift macht außerdem die Achsen-/Handedness-Kalibrierung zum ersten
+Gate. Bis dieses Gate bestanden ist, werden keine weiteren Detailmodelle auf
+Verdacht exportiert.
+
+Umsetzungsplan: [Valentine Spatial Fidelity Recovery](../../../superpowers/plans/2026-10-09-valentine-spatial-fidelity-recovery.md).
+
 Codex arbeitet im separaten Git-Worktree. Diese Notiz wird im Obsidian-Vault
 des Haupt-Checkouts erst nach einer geprüften Git-Übernahme sichtbar; es gibt
 keine automatische Synchronisation zwischen den Worktrees.
