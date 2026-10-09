@@ -1,248 +1,282 @@
-# OpenIV-Exportliste – Valentine Spatial Recovery
+# OpenIV-Arbeitsanleitung – Valentine Spatial Recovery
 
-Stand: 2026-10-09. Ziel ist ausschließlich der geplante Valentine-Ausschnitt
-mit dem markierten Rundweg. Die Liste vermeidet den Export benachbarter
-Terrain-Sektoren: Eine Prüfung aller vorhandenen Terrain-YMAPs zeigt, dass die
-310 × 450 m große Slice-Grenze `X -460…-150 / Game-Y 540…990` nur von
-`l_09__ymap`, `l_09__strm_0_ymap` und dem übergeordneten
-`jklm_7_10_lod_ymap` belegt wird.
+Stand: 2026-10-09. Diese Anleitung gilt nur für den geplanten
+Valentine-Ausschnitt und den markierten Rundweg. Du musst keine Dateinamen
+erraten und keine technischen Entscheidungen allein treffen.
 
-## Verbindliche Exportregeln
+## Was du jetzt tun sollst
 
-- Niemals aus dem Suchfenster exportieren. Suche → Rechtsklick → **Go to file**;
-  erst in der Hauptansicht exportieren.
-- `.ymap`, `.ytyp` und `_manifest.ymf`: **Export to XML**.
-- `.ydr`, `.ybn`, `.yft` und `.ych`: **Save content/Export**. Den kompletten
-  von OpenIV erzeugten Unterordner mit `.full`, `.gfx` und `.sys` behalten.
-- `.ytd`: im Texture Viewer **Export all textures → PNG**. Jedes YTD erhält
-  einen eigenen Unterordner, damit gleichnamige Texturen nicht überschrieben
-  werden.
-- Jeden Batch in einen neuen Ordner exportieren:
-  `D:\Projects\RDO-RPG\data\raw\openiv-batches\valentine-spatial\<batch>`.
-- Vorhandene Dateien nicht überschreiben. Bei Namenskonflikten den
-  Quellarchivnamen als zusätzlichen Ordner verwenden.
+1. **Jetzt erledigen:** die acht YMAPs aus
+   `l_09_a_placement.rpf` bis `l_09_e_placement.rpf` als XML exportieren.
+2. Danach hier nur schreiben: **`Batch 00B fertig`**.
+3. **Noch nicht** die 291 Valentine-YDR oder alle 88 `l_09`-YDR einzeln
+   exportieren. Codex erstellt daraus erst eine kurze, geprüfte Zielliste.
+4. Wenn du freiwillig weiterarbeiten möchtest, beginne anschließend mit
+   **Batch 04A – Valentine-Texturen**. Die anderen Batches bleiben bis zur
+   Zielliste pausiert.
 
-## Batch 00 – Metadaten und Herkunft (zuerst)
+## Status-Legende
 
-Ziel: `00-metadata/`
+- ✅ **Geprüft und brauchbar:** Die Datei liegt im richtigen Pipelineformat vor.
+- 🟨 **Gesichert, aber noch nicht konvertierbar:** Als Inventar nützlich; ein
+  späterer gezielter Export kann nötig sein.
+- ⬜ **Deine nächste Aufgabe:** Kann jetzt bearbeitet werden.
+- ⏸️ **Warten:** Erst bearbeiten, wenn Codex exakte Dateien nennt.
+- 🚫 **Nicht exportieren:** Bringt für den aktuellen Ausschnitt keinen Nutzen.
 
-### Valentine-Area-Metadaten
+Ein Punkt ist erst ✅, wenn nicht nur der Dateiname, sondern auch das erzeugte
+Format geprüft wurde.
 
-Unter `levels_1.rpf/levels/rdr3/area/lod/` beziehungsweise per Tiefensuche und
-anschließendem **Go to file**:
+## Die vier Exportwege
 
-- [x] `jklm_7_10_area_lod_combine_metadata.rpf`: **nicht komplett
-  exportieren**. Die 327 Hash-YMAPs müssen nicht einzeln bearbeitet werden;
-  die für Valentine relevanten Klartext-YMAPs/YTYPs liegen bereits geprüft
-  unter `data/raw/ymap/`.
-- [ ] Aus diesem Archiv nur später von Codex ausdrücklich genannte Hash-YMAPs
-  exportieren, falls die Coverage-Auswertung eine konkrete Referenz als
-  fehlend meldet.
-- [x] `jklm_7_10_area_lod.rpf`: kein pauschaler Metadatenexport erforderlich;
-  vorhandene Valentine-Quellen zuerst verwenden.
-- [x] `jklm_7_10_area_lod_combine.rpf`: **kein Manifest vorhanden** (in
-  OpenIV geprüft: 171 Drawable Dictionaries und 22 Texture Dictionaries).
-  Diesen LOD-Assetcontainer nicht pauschal exportieren; sichtbare
-  Silhouettenmodelle werden erst nach der Coverage-Auswertung gezielt benannt.
+| OpenIV-Typ | Richtiger Befehl | Das muss im Zielordner erscheinen |
+| --- | --- | --- |
+| `.ymap`, `.ytyp`, `_manifest.ymf` | **Export to XML** | eine lesbare `.xml` |
+| `.ydr`, `.ybn`, `.yft`, `.ych` | **Save content/Export** | Unterordner mit `.full`, meist zusätzlich `.gfx` und `.sys` |
+| `.ytd` | Datei öffnen → **Export all textures** → PNG | mehrere `.png` |
+| komplettes `.rpf` | nur nach ausdrücklicher Aufforderung | ein Archiv-Snapshot, kein Modellkonvertat |
 
-### Terrain-Metadaten
+### Wichtigster Kontrollpunkt
 
-Unter `levels_5.rpf/levels/rdr3/terrain/jklm_07_10/`:
+Niemals direkt aus dem Suchfenster exportieren. Im Suchfenster:
 
-- [x] `jklm_7_10_lod_combine_metadata.rpf`: 69 XML-Dateien unter
-  `data/raw/terrain/jklm_07_10/metadata/` geprüft, einschließlich der
-  relevanten `l_09`-YMAPs und 32 YTYPs.
-- [x] `jklm_7_10_lod.rpf`: enthält nur vier YDR und ein YTD, keine weiteren
-  YMAP-/YTYP-Metadaten; kein Metadatenexport erforderlich.
-- [x] `l_09_.rpf`: `_manifest.ymf` als
-  `data/raw/terrain/l_09/Metadata/_manifest_ymf.xml` geprüft.
-- [x] `l_09_placement.rpf`: vorhandene YMAP als
-  `data/raw/ymap/l_09_placement_ymap.xml` geprüft; das Archiv enthält kein
-  Manifest.
-- [ ] `l_09_a_placement.rpf` bis `l_09_e_placement.rpf`: die insgesamt acht
-  YMAPs als XML exportieren. Die je Archiv vorhandene `_cache.ych` ist keine
-  Metadaten-XML und wird für die räumliche Kalibrierung nicht benötigt.
-- [x] `l_09_ftr.rpf`: im vorhandenen Metadatenbestand geprüft; kein
-  zusätzlicher pauschaler Export erforderlich.
+1. Treffer einmal links anklicken.
+2. Rechtsklick → **Go to file**.
+3. Prüfen, dass OpenIV den Treffer im Hauptfenster markiert hat.
+4. Erst dort Rechtsklick → den richtigen Exportweg aus der Tabelle wählen.
 
-Bereits vorhandene XMLs unter `data/raw/ymap/` und
-`data/raw/terrain/jklm_07_10/metadata/` bleiben erhalten. Dieser Batch dient
-als vollständiger, erneut prüfbarer Snapshot.
+Wenn am Ende nur `modellname.ydr`, `textur.ytd` oder `_manifest.ymf` im
+Windows-Ordner liegt, war es lediglich eine Ressourcen-/Archivkopie. Nicht
+löschen, aber als 🟨 behandeln. Für YDR/YBN/YFT/YCH ist ein `.full`-Unterordner
+die entscheidende Kontrolle.
 
-## Batch 01 – Valentine-Außenwelt (höchste Priorität)
+## Einheitliche Zielordner
 
-Ziel: `01-valentine-exteriors/<archivname>/`
+Neue Exporte bitte hier ablegen:
 
-Unter `levels_1.rpf/levels/rdr3/area/jklm_07_10/` jeweils die komplette
-Hauptansicht nach Typgruppen exportieren:
+`D:\Projects\RDO-RPG\data\raw\openiv-batches\valentine-spatial\<batch>\<quellarchiv>\<dateiname>\`
 
-- [x] `val_01_.rpf` – Bahnhof, Kutschenhaus und südöstlicher Ortseingang
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_01_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_02_.rpf` – Hotel, Bank und Gunsmith-Block
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_02_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_03_.rpf` – Hauptstraße, Sheriff/Jail, General Store, Saloon und Stable
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_03_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_04_.rpf` – nordöstlicher Wohn-/Saloon-Bereich
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_04_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_05_.rpf` – westliche und nördliche Bebauung
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_05_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_06_.rpf` – ergänzende Ortsbebauung
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_06_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_07_.rpf` – Kirche, nördlicher Ortsrand und Magic-Lantern-Bereich
-      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_07_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
-- [x] `val_vfx.rpf` – nur Metadaten sichern; VFX-Drawables noch nicht in die Standard-Außenwelt übernehmen
-      - Keine Metadaten enthalten, "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_vfx.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+Beispiel:
 
-### Prüfung des vollständigen Archivexports vom 2026-10-09
+`...\00-metadata\l_09_a_placement.rpf\l_09_a_placement_ymap.xml`
 
-Die acht Ordner sind als Inhaltsinventar brauchbar, aber **nicht direkt für die
-Konvertierung geeignet**. Geprüfter Bestand: 291 `.ydr`, vier `.yft`, 155
-`.ytd` und sieben binäre `.ymf`; keine `.ydr.full`, XML oder PNG. Die
-Ressourcen tragen weiterhin den `RSC8`-/`PSIN`-Containerheader. Unsere
-reproduzierbare Pipeline verarbeitet dagegen die von OpenIV über **Save
-content/Export** erzeugten `.full/.gfx/.sys`-Dateien sowie XML und PNG.
+- Vorhandene Dateien nicht überschreiben.
+- Bei gleichem Namen aus zwei Archiven beide Quellarchive als Ordner behalten.
+- Keine Dateien umbenennen, außer OpenIV schlägt selbst einen XML-Namen vor.
 
-Darum bitte **nicht** alle 291 YDR einzeln erneut exportieren. Die vorhandenen
-178 Valentine-`.ydr.full`-Exporte werden zuerst gegen den Rundweg ausgewertet;
-nur danach fehlende, sichtbare Silhouetten erhalten eine kleine, exakte
-Exportliste. Die kopierten RPF-Inhalte bleiben als Herkunftsinventar erhalten.
+## Batch 00 – Metadaten
 
+### 00A – Bereits geprüft
 
-Für die später von der Coverage-Auswertung **einzeln benannten Ziele** aus dem
-jeweiligen `val_0X_.rpf` exportieren:
+- ✅ `jklm_7_10_area_lod_combine_metadata.rpf`: Die 327 Hash-YMAPs müssen
+  **nicht** einzeln exportiert werden. Relevante Valentine-YMAP/YTYP-Quellen
+  sind bereits vorhanden.
+- 🚫 `jklm_7_10_area_lod_combine.rpf`: enthält kein Manifest, sondern 171
+  Drawable Dictionaries und 22 Texture Dictionaries. Kein Pauschalexport.
+- ✅ `jklm_7_10_lod_combine_metadata.rpf`: 69 XML-Dateien geprüft,
+  einschließlich 32 YTYPs und der relevanten `l_09`-YMAPs.
+- 🚫 `jklm_7_10_lod.rpf`: nur vier YDR und ein YTD, keine zusätzlichen
+  Metadaten.
+- ✅ `l_09_.rpf`: `_manifest.ymf` liegt als
+  `data/raw/terrain/l_09/Metadata/_manifest_ymf.xml` vor.
+- ✅ `l_09_placement.rpf`: YMAP liegt als
+  `data/raw/ymap/l_09_placement_ymap.xml` vor; dieses Archiv hat kein Manifest.
+- ✅ `l_09_ftr.rpf`: benötigte Metadaten sind im vorhandenen Bestand enthalten.
 
-- alle **Drawable objects (`.ydr`)** über Save content/Export;
-- alle **Fragment objects (`.yft`)** über Save content/Export;
-- alle **Static collisions (`.ybn`)** über Save content/Export;
-- alle **Texture dictionaries (`.ytd`)** als PNG in getrennte YTD-Ordner;
-- `_manifest.ymf`, `.ymap` und `.ytyp` als XML.
+### 00B – Deine aktuelle Aufgabe: acht Placement-YMAPs
 
-Die Quelldaten enthalten im Ausschnitt 2.263 Außenwelt-Entitäten und 1.108
-unterschiedliche Archetypen, davon 1.083 nur als Hash. Deshalb wird der
-vorhandene Archiv-Snapshot maschinell ausgewertet und anschließend nur eine
-kleine Liste sichtbarer, noch fehlender Rundweg-Silhouetten per **Go to file**
-und **Save content/Export** nachgezogen.
+Pfad in OpenIV:
 
-### Sichtbare Schlüsselmodelle zur Kontrolle
+`levels_5.rpf/levels/rdr3/terrain/jklm_07_10/`
 
-Nach Batch 01 müssen mindestens folgende Klarnamen im Export vorkommen; sie
-sind Kontrollpunkte, keine vollständige Einzelliste:
+| Archiv | Erwarteter Inhalt | Aufgabe |
+| --- | ---: | --- |
+| `l_09_a_placement.rpf` | 1 YMAP + `_cache.ych` | nur die YMAP als XML |
+| `l_09_b_placement.rpf` | 1 YMAP + `_cache.ych` | nur die YMAP als XML |
+| `l_09_c_placement.rpf` | 1 YMAP + `_cache.ych` | nur die YMAP als XML |
+| `l_09_d_placement.rpf` | 4 YMAP + `_cache.ych` | alle vier YMAP als XML |
+| `l_09_e_placement.rpf` | 1 YMAP + `_cache.ych` | nur die YMAP als XML |
 
-- [ ] `val_trainstn_int`, `val_carriagehouse_int`
-- [ ] `val_hotel_ext`, `val_hotel_lod`
-- [ ] `val_bank`, `val_bank_lod`
-- [ ] `val_gunsmith_ext`, `val_gunsmith_lod`
-- [ ] `val_genstore_ext`, `val_genstore`
-- [ ] `val_saloon2`, `val_saloon2_lod`, `val_saloon_int`
-- [ ] `val_gallows`, `val_gallows_lod`
-- [ ] Jail/Sheriff-, Doctor-, Stable- und Kirchen-Außenmodelle, auch wenn sie
-  in OpenIV nur als Hash erscheinen
+Die `_cache.ych` bitte überspringen. Sie wird für die aktuelle räumliche
+Kalibrierung nicht benötigt.
 
-## Batch 02 – Terrain, Straßenoberfläche und Vegetation für `l_09`
+Kontrolle nach dem Export:
 
-Ziel: `02-terrain-l09/<archivname>/`
+- Es müssen insgesamt **acht neue `.xml`-Dateien** vorhanden sein.
+- Eine XML mit Editor öffnen: Die erste Zeile beziehungsweise das Wurzelelement
+  muss lesbarer XML-Text sein, typischerweise `<CMapData>`.
+- Dateigröße `0 KB`, unlesbare Binärzeichen oder nur eine `.ymap` ohne `.xml`
+  bedeutet: falscher Exportweg. Dann erneut im Hauptfenster **Export to XML**.
 
-Unter `levels_5.rpf/levels/rdr3/terrain/jklm_07_10/`:
+## Batch 01 – Valentine-Außenwelt
 
-- [ ] `l_09_.rpf` – alle 88 YDR, alle 16 YBN, alle 17 YTD und die einzelne YCH
-- [ ] `l_09_ftr.rpf` – alle enthaltenen YDR/YBN/YTD/YCH
-- [ ] `l_09_placement.rpf` – alle enthaltenen Instanz-/Vegetationsressourcen
-- [ ] `l_09_a_placement.rpf`
-- [ ] `l_09_b_placement.rpf`
-- [ ] `l_09_c_placement.rpf`
-- [ ] `l_09_d_placement.rpf`
-- [ ] `l_09_e_placement.rpf`
-- [ ] `jklm_7_10_lod.rpf` – alle Drawables und Texture Dictionaries
-- [ ] `jklm_7_10_lod_combine.rpf` – alle Drawables und Texture Dictionaries
+### Bereits gesicherter Bestand
 
-Die bereits exportierten elf `l_09__hd_0_*`-Modelle bleiben gültig. Der neue
-Batch schließt insbesondere Straßen-/Bodenstücke, Böschungen, große
-Vegetationsgruppen und Kollisionen, die in der bisherigen Vorschau fehlen.
+🟨 Die Ordner `val_01_.rpf` bis `val_07_.rpf` und `val_vfx.rpf` liegen unter
+`data/raw/01-valentine-exteriors/`. Codex hat darin geprüft:
+
+- 291 `.ydr`
+- 4 `.yft`
+- 155 `.ytd`
+- 7 binäre `.ymf`
+- keine `.ydr.full`, keine XML und keine PNG
+
+Diese Dateien tragen weiterhin `RSC8`-/`PSIN`-Containerheader. Sie sind ein
+sehr gutes Inhaltsinventar, aber noch kein direktes Pipelineformat. Sie bleiben
+erhalten; du hast nichts falsch gemacht.
+
+### Entscheidung für den weiteren Export
+
+⏸️ **Keine 291 YDR einzeln nacharbeiten.** Es existieren bereits 178 passende
+Valentine-`.ydr.full`. Codex vergleicht zuerst diese Modelle mit den
+Platzierungen und dem Rundweg. Danach erhältst du eine kleine Tabelle mit:
+
+- exaktem Modellnamen;
+- exaktem Quell-RPF;
+- Exportbefehl;
+- Zielordner;
+- sichtbarem Zweck, zum Beispiel „Kirchensilhouette“;
+- Kontrollmerkmal, zum Beispiel erwartete `.full`-Datei.
+
+Wenn Codex später einen Namen nennt, suchst du ihn per Tiefensuche, verwendest
+**Go to file** und exportierst ihn aus der Hauptansicht.
+
+## Batch 02 – Terrain, Straßen und Vegetation
+
+### Bereits verwendbar
+
+- ✅ Elf `l_09__hd_0_*`-Terrainmodelle sind als `.ydr.full` exportiert,
+  konvertiert und in der lokalen Vorschau platziert.
+- ✅ Die YMAP-Transformationen dieser Modelle sind geprüft.
+
+### Noch nicht pauschal exportieren
+
+- ⏸️ die übrigen 77 der 88 YDR aus `l_09_.rpf`;
+- ⏸️ alle Drawables aus `l_09_ftr.rpf`;
+- ⏸️ Drawables aus `jklm_7_10_lod.rpf` und
+  `jklm_7_10_lod_combine.rpf`.
+
+Grund: Viele davon sind Detail-, Fern- oder überlappende LOD-Modelle. Die
+Coverage-Prüfung wählt nur Modelle aus, die Bodenlücken, Straßenkonturen,
+Böschungen oder große Vegetationssilhouetten auf dem Rundweg schließen.
+
+### Optional vorbereitbar: Kollisionen
+
+Wenn du jetzt weiter exportieren möchtest, darfst du die 16 YBN aus
+`l_09_.rpf` einzeln per **Save content/Export** nach
+`02-terrain-l09/l_09_.rpf/collision/` exportieren.
+
+Kontrolle: Jeder YBN-Export muss einen eigenen Ordner mit mindestens einer
+`.ybn.full` erzeugen. Erscheint nur `0x….ybn`, stoppen und einen Screenshot
+des Kontextmenüs senden.
 
 ## Batch 03 – Bahnhof, Gleise und südlicher Rundweg
 
-Ziel: `03-station-rail/`
+Status: ⏸️ bis zur Coverage-Zielliste.
 
-Unter `levels_1.rpf/levels/rdr3/area/jklm_07_10/`:
+Später mögliche Quellarchive:
 
-- [ ] `jklm_7_10_rails_b.rpf` – alle YDR/YBN/YTD und Metadaten
-- [ ] `jklm_7_10_rails_c.rpf` – alle YDR/YBN/YTD und Metadaten
-- [ ] `wal_train_.rpf` – alle YDR/YBN/YTD und Metadaten
-- [ ] `jklm_7_10_area_lod_combine_collision.rpf` – alle YBN
+- `jklm_7_10_rails_b.rpf`
+- `jklm_7_10_rails_c.rpf`
+- `wal_train_.rpf`
+- `jklm_7_10_area_lod_combine_collision.rpf`
+- `levels_4.rpf/.../instance_placement/jklm_7_10_static_collision.rpf`
+- `levels_4.rpf/.../instance_placement/jklm_7_10_instance_placement.rpf`
 
-Unter `levels_4.rpf/levels/rdr3/terrain/instance_placement/`:
+Bitte diese Archive noch nicht vollständig exportieren. Bahnhof, Gleis,
+Bahnsteig, Wasserturm und der südliche Straßenknoten werden zuerst gegen die
+bereits vorhandenen 178 Modelle geprüft.
 
-- [ ] `jklm_7_10_static_collision.rpf` – alle YBN plus Manifest/Metadaten
-- [ ] `jklm_7_10_instance_placement.rpf` – sämtliche Platzierungsmetadaten und
-  referenzierte Vegetations-/Instanzressourcen
+## Batch 04 – Globale Texturen
 
-Dieser Batch ist erforderlich für Bahnhof, Bahnsteig, Gleisbett, Wasserturm,
-den südlichen Straßenknoten und verlässliche Quellkollision.
+Texturen sind sicher vorab exportierbar, weil sie keine falschen
+Gebäudeplatzierungen erzeugen.
 
-## Batch 04 – Globale Texturwörterbücher
+### 04A – Valentine-Texturen (darf nach Batch 00B beginnen)
 
-Ziel: `04-global-textures/<rpf>/<ytd>/`
+Pfad:
 
-Unter `levels_2.rpf/levels/rdr3/gtxd/`:
+`levels_2.rpf/levels/rdr3/gtxd/gtxd_valentine.rpf`
 
-- [ ] `gtxd_valentine.rpf` – alle YTD vollständig als PNG
-- [ ] `gtxd_railroad.rpf` – alle YTD vollständig als PNG
-- [ ] `gtxd_terrain1.rpf` – mindestens `heartlands1_l09.ytd`, dessen `+hi`
-  Variante und alle `l_09`/`jklm_07_10` treffenden YTD
+Für jedes YTD:
 
-Zusätzlich in der OpenIV-Tiefensuche suchen und per **Go to file** öffnen:
+1. YTD doppelklicken, damit der Texture Viewer erscheint.
+2. **Export all textures** wählen.
+3. Format **Portable Network Graphics (`.png`)** wählen.
+4. Ziel:
+   `04-global-textures/gtxd_valentine.rpf/<name-des-ytd>/`.
+5. Viewer schließen und mit dem nächsten YTD fortfahren.
 
-- [ ] `val_*_txd.ytd`, `val_*_details.ytd`, `val_*_props.ytd`
-- [ ] `val_*+hi.ytd` und `val_*+hidr.ytd`
-- [ ] `heartlands1_l09*.ytd`
-- [ ] `railroad*.ytd`, `track*.ytd`, `trainstn*.ytd`
+Kontrolle:
 
-Die vorhandene Einzelliste `D:\Projects\RDO-RPG\data\needed_textures_valentine.txt`
-dient als Abschlusskontrolle. Bei mehrfachen Treffern alle Varianten getrennt
-nach Quell-RPF ablegen.
+- Jeder YTD-Ordner enthält mindestens eine PNG.
+- Stichprobe: zwei PNGs öffnen; sie müssen als Bild sichtbar sein.
+- Transparente Bilder mit Schachbrett sind erlaubt und kein Fehler.
+- Bei gleichen PNG-Namen niemals Ordner zusammenführen.
 
-## Batch 05 – Umgebung und lesbare Silhouette
+### 04B – Später oder bei viel Zeit
 
-Ziel: `05-surroundings/`
+- `gtxd_railroad.rpf`: alle YTD wie oben nach getrennten Ordnern.
+- `gtxd_terrain1.rpf`: zunächst nur `heartlands1_l09.ytd`, dessen `+hi`
+  Variante und eindeutig mit `l_09` bezeichnete YTDs.
 
-Diese Archive liegen ebenfalls unter
-`levels_1.rpf/levels/rdr3/area/jklm_07_10/`. Sie erst nach Batch 01–04
-exportieren:
+Bei Varianten gilt: Basis, `+hi` und `+hidr` getrennt exportieren; nicht selbst
+entscheiden, welche Variante „besser“ ist. Die Pipeline entscheidet später je
+Darstellungsstufe.
 
-- [ ] `hea_rd_sgn_.rpf` – Wegweiser und Straßenschilder
-- [ ] `hea_bridge.rpf` – Brücken-/Durchlassgeometrie am Ausschnitt
-- [ ] `wag_01_.rpf` und `wal_train_.rpf` – Wagen-/Bahninfrastruktur
-- [ ] `jklm_7_10_area_lod_combine.rpf` – große Hintergrund-/Silhouettenmodelle
-- [ ] `jklm_7_10_area_lod.rpf` – korrespondierende LOD-Modelle
+## Batch 05 – Umgebung
 
-Nur wenn die Coverage-Auswertung danach noch konkrete Treffer im Slice meldet:
+Status: ⏸️. Nur nach einer konkreten Codex-Zielliste bearbeiten.
+
+Mögliche Quellen sind `hea_rd_sgn_.rpf`, `hea_bridge.rpf`, `wag_01_.rpf`,
+`wal_train_.rpf` sowie die beiden `jklm_7_10_area_lod*`-Archive. Auch
 `bea_for.rpf`, `che_01_.rpf`, `cor_01_.rpf`, `mil_01_.rpf`, `old_01_.rpf`,
-`reg_hrt_00.rpf`, `six_01_.rpf`, `wild_01.rpf`. Diese Pakete nicht pauschal
-vor Batch 01–04 exportieren.
+`reg_hrt_00.rpf`, `six_01_.rpf` und `wild_01.rpf` werden nur bei einem
+nachgewiesenen Treffer im Slice benötigt.
 
-## Batch 06 – Innenräume für später (optional)
+## Batch 06 – Innenräume
 
-Ziel: `06-interiors-future/`
+Status: ⏸️ optional und derzeit nicht laden.
 
-Innenräume werden aktuell **nicht** in der Straßenansicht geladen. Wenn Zeit
-bleibt, können die folgenden Pakete vollständig für die spätere Gebäudephase
-gesichert werden:
+Innenräume sind für den ersten begehbaren Rundweg nicht erforderlich. Sie
+werden erst bearbeitet, wenn Außenwelt, Kamera, Kollision und Rundweg korrekt
+sind. Lockdown-, zerstörte und optionale Entity-Set-Varianten müssen später
+getrennt bleiben und dürfen nie gemeinsam mit `default_day` geladen werden.
 
-- [ ] `val_trainstn_int.rpf`, `val_carriagehouse_int.rpf`
-- [ ] `val_hotel_int.rpf`, `val_bank_int.rpf`, `val_gunsmith_int.rpf`
-- [ ] `val_genstore_int.rpf`, `val_saloon_int.rpf`, `val_saloon2_int.rpf`
-- [ ] `val_jail_int.rpf`, `val_doctor_int.rpf`, `val_stable_int.rpf`
-- [ ] `val_res_01_f_int.rpf`, `val_res_a_int.rpf`, `val_magiclantern_int.rpf`
+## Wenn etwas anders aussieht als beschrieben
 
-Je Paket: YDR/YBN/YFT/YCH per Save content/Export, YTD als PNG und
-YMAP/YTYP/YMF als XML. Lockdown-, zerstörte und optionale Entity-Set-Varianten
-getrennt ablegen; sie dürfen nicht mit dem normalen Tageszustand vermischt
-werden.
+Treffe keine technische Vermutung. Nutze diese Fallbacks:
 
-## Übergabe an Codex
+- **Dateityp fehlt im Archiv:** Screenshot mit eingeklappten Typgruppen senden.
+- **„Save content/Export“ fehlt:** Screenshot des Kontextmenüs senden; nicht
+  stattdessen „Extract“ wählen.
+- **Export erzeugt nur `.ydr/.ybn/.ytd`:** als 🟨 behalten und stoppen.
+- **OpenIV fragt nach Überschreiben:** abbrechen und einen neuen Quellordner
+  anlegen.
+- **Mehrere gleichnamige Suchtreffer:** nichts auswählen; Screenshot mit
+  sichtbaren Quellpfaden senden.
+- **Unklar, ob Basis oder `+hi/+hidr`:** alle Varianten getrennt behalten.
+- **XML wirkt leer oder binär:** aus der Hauptansicht erneut **Export to XML**.
 
-Nach jedem Batch nur schreiben: `Batch 01 fertig` (entsprechend der Nummer).
-Codex prüft dann automatisch Dateizahl, Duplikate, Quellhashes und fehlende
-Typgruppen. Batch 01–04 sind für die geplante Karte zwingend; Batch 05 ist
-coverage-gesteuert, Batch 06 optional.
+## Übergabe und Kontrollinstanz
 
+Nach einem Batch reicht folgende kurze Meldung:
+
+```text
+Batch 00B fertig
+Zielordner: D:\...\00-metadata
+Ergebnis: 8 XML
+Abweichung: keine
+```
+
+Bei einer Abweichung ergänzt du nur einen Screenshot. Codex übernimmt danach:
+
+1. Dateizahl und Endungen prüfen;
+2. XML-/Ressourcenheader kontrollieren;
+3. Duplikate und Quellpfade prüfen;
+4. sagen, was gültig ist;
+5. die nächste kleine Aufgabe eindeutig freigeben.
+
+Du musst selbst nur dann eine Entscheidung treffen, wenn es um Zeitaufwand
+geht: **Batch 04A jetzt zusätzlich exportieren oder nach Batch 00B warten.**
+Technische Auswahlentscheidungen übernimmt Codex anhand der Coverage-Daten.
