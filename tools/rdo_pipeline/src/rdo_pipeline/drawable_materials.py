@@ -7,7 +7,48 @@ are 8-bit, texture-reference name pointer at 0x28). No pixel decoding here.
 from __future__ import annotations
 
 import struct
+from pathlib import Path
 from typing import Any
+
+
+_TERRAIN_TEXTURE_PARAMETERS = (
+    ('lookup', '0xc075f9b6'),
+    ('layer0', '0xce7b968e'),
+    ('layer1', '0xd883aa9e'),
+    ('layer2', '0x32b9df09'),
+    ('layer3', '0x3d10f3b7'),
+)
+
+
+def terrain_texture_plan(bindings: dict[str, Any], texture_files: dict[str, list[str]]) -> list[dict[str, Any]]:
+    """Resolve the exact lookup and four diffuse references used by RDR terrain shaders."""
+    def resolve(paths: list[str]) -> str | None:
+        if len(paths) == 1:
+            return paths[0]
+        hd = [path for path in paths
+              if Path(path).parent.name.lower().endswith(('+hi', '+hidr'))]
+        return hd[0] if len(hd) == 1 else None
+
+    plan = []
+    for shader in bindings['shaders']:
+        resolved: dict[str, str] = {}
+        valid = True
+        for role, parameter_hash in _TERRAIN_TEXTURE_PARAMETERS:
+            names = [entry['name'] for entry in shader['textures']
+                     if entry['parameterHash'] == parameter_hash and entry['name']]
+            paths = texture_files.get(names[0].lower(), []) if len(names) == 1 else []
+            path = resolve(paths)
+            if path is None:
+                valid = False
+                break
+            resolved[role] = path
+        plan.append({
+            'shaderHash': shader['hash'],
+            'lookup': resolved['lookup'] if valid else None,
+            'layers': [resolved[f'layer{index}'] for index in range(4)] if valid else [],
+            'reason': None if valid else 'unresolved-terrain-texture',
+        })
+    return plan
 
 
 def diffuse_texture_plan(bindings: dict[str, Any], texture_files: dict[str, list[str]]) -> list[dict[str, Any]]:

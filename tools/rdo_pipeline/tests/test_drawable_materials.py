@@ -124,3 +124,64 @@ def test_diffuse_plan_uses_parameter_hash_and_rejects_ambiguous_files():
     ambiguous = drawable_materials.diffuse_texture_plan(bindings, {'wall_al': ['one.png', 'two.png']})
     assert ambiguous[0]['path'] is None
     assert ambiguous[0]['reason'] == 'ambiguous-texture'
+
+
+def test_terrain_plan_resolves_exact_lookup_and_four_diffuse_layers():
+    from rdo_pipeline.drawable_materials import terrain_texture_plan
+    bindings = {'shaders': [{'hash': '0x770b903e', 'textures': [
+        {'parameterHash': '0xc075f9b6', 'slot': 0, 'name': 'l_09_c'},
+        {'parameterHash': '0xce7b968e', 'slot': 1, 'name': 'dirt_abte'},
+        {'parameterHash': '0xd883aa9e', 'slot': 2, 'name': 'grass_abte'},
+        {'parameterHash': '0x32b9df09', 'slot': 3, 'name': 'mud_abte'},
+        {'parameterHash': '0x3d10f3b7', 'slot': 4, 'name': 'straw_abte'},
+    ]}]}
+    textures = {name: [f'{name}.png'] for name in
+                ('l_09_c', 'dirt_abte', 'grass_abte', 'mud_abte', 'straw_abte')}
+
+    assert terrain_texture_plan(bindings, textures) == [{
+        'shaderHash': '0x770b903e',
+        'lookup': 'l_09_c.png',
+        'layers': ['dirt_abte.png', 'grass_abte.png', 'mud_abte.png', 'straw_abte.png'],
+        'reason': None,
+    }]
+
+
+def test_terrain_plan_rejects_missing_or_ambiguous_exact_references():
+    from rdo_pipeline.drawable_materials import terrain_texture_plan
+    bindings = {'shaders': [{'hash': '0x770b903e', 'textures': [
+        {'parameterHash': '0xc075f9b6', 'slot': 0, 'name': 'lookup'},
+        {'parameterHash': '0xce7b968e', 'slot': 1, 'name': 'layer0'},
+        {'parameterHash': '0xd883aa9e', 'slot': 2, 'name': 'layer1'},
+        {'parameterHash': '0x32b9df09', 'slot': 3, 'name': 'layer2'},
+        {'parameterHash': '0x3d10f3b7', 'slot': 4, 'name': 'layer3'},
+    ]}]}
+    plan = terrain_texture_plan(bindings, {
+        'lookup': ['lookup.png'], 'layer0': ['layer0.png'],
+        'layer1': ['one.png', 'two.png'], 'layer2': ['layer2.png'],
+    })
+
+    assert plan[0]['lookup'] is None
+    assert plan[0]['layers'] == []
+    assert plan[0]['reason'] == 'unresolved-terrain-texture'
+
+
+def test_terrain_plan_prefers_the_single_manifest_hd_package_candidate():
+    from rdo_pipeline.drawable_materials import terrain_texture_plan
+    bindings = {'shaders': [{'hash': '0x770b903e', 'textures': [
+        {'parameterHash': '0xc075f9b6', 'slot': 0, 'name': 'lookup'},
+        {'parameterHash': '0xce7b968e', 'slot': 1, 'name': 'layer0'},
+        {'parameterHash': '0xd883aa9e', 'slot': 2, 'name': 'layer1'},
+        {'parameterHash': '0x32b9df09', 'slot': 3, 'name': 'layer2'},
+        {'parameterHash': '0x3d10f3b7', 'slot': 4, 'name': 'layer3'},
+    ]}]}
+    textures = {'lookup': ['l_09_base/lookup.png']}
+    for index in range(4):
+        textures[f'layer{index}'] = [
+            f'heartlands1_l09/layer{index}.png',
+            f'heartlands1_l09+hi/layer{index}.png',
+        ]
+
+    plan = terrain_texture_plan(bindings, textures)
+
+    assert plan[0]['reason'] is None
+    assert plan[0]['layers'] == [f'heartlands1_l09+hi/layer{index}.png' for index in range(4)]
