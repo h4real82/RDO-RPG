@@ -32,3 +32,19 @@ return leg remain unverified; do not synthesize them from this tile grid.
 The user-described “circus tent” is not identified by these names. Map-facing
 landmark order must be verified against `Media/Valentine MAP.jpg` and source
 YMAPs before changing building placement.
+
+## Preview spawn correction
+
+The old preview spawned at the first non-terrain manifest placement: a hotel
+interior proxy. The `main-street-s-curve` camera target (-306.4235, 771.1453)
+is also **not** a walkable road point: it coincides with the bank shell and
+reflection proxy at approximately (-306.43, 771.19). Browser collision probes
+confirmed both source meshes at that point; the bank shell must remain solid.
+
+The preview now starts at source road trace `valentine:road:0059`, point 18,
+(-310.1441, 788.7001), recorded in `apps/client/src/game/data/preview-spawn.json`.
+The terrain mesh supplies its height after chunk load. Browser checks found
+movement in all four cardinal directions at this point and the first-frame
+screenshot shows the marker between buildings. This validates a local starting
+point only, **not** the full station-to-town route. The bank reflection helper
+is omitted from rendering/collision, but the physical bank shell remains.

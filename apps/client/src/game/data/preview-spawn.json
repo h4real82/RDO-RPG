@@ -1,0 +1,9 @@
+{
+  "world": "valentine",
+  "source": {
+    "file": "data/runtime/valentine/local-preview/ground-truth-traces.json",
+    "traceId": "valentine:road:0059",
+    "pointIndex": 18
+  },
+  "position": { "x": -310.1441, "z": 788.7001 }
+}

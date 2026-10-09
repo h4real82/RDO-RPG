@@ -16,6 +16,14 @@ it('applies manifest pitch and roll instead of flattening them to heading', () =
 });
 
 describe('selectSpawnPosition', () => {
+  it('starts at a supplied source road point rather than a building origin', () => {
+    const manifest = { version: 1, world: 'valentine', placements: [
+      { id: 'bank', asset: 'models/valentine/val_bank_main_shell.glb', position: { x: 10, y: 120, z: 20 }, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, layer: 'buildings', chunkId: '0:0', lod: 0 },
+    ] } satisfies WorldManifest;
+
+    expect(selectSpawnPosition(manifest, { x: 30, z: 40 })).toEqual({ x: 30, y: 0, z: 40 });
+  });
+
   it('uses the first ground-truth manifest placement as the local preview spawn', () => {
     const manifest = { version: 1, world: 'valentine', placements: [
       { id: 'station', asset: 'models/valentine/station.glb', position: { x: -300, y: 100, z: 700 }, rotation: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, layer: 'buildings', chunkId: '-2:2', lod: 0 },
@@ -37,6 +45,11 @@ describe('selectSpawnPosition', () => {
 it('does not treat terrain meshes as player blockers or camera occluders', () => {
   expect(runtime.placementBlocksPlayerAndCamera({ layer: 'terrain' })).toBe(false);
   expect(runtime.placementBlocksPlayerAndCamera({ layer: 'buildings' })).toBe(true);
+});
+
+it('excludes the source reflection helper without excluding bank geometry', () => {
+  expect(runtime.isRenderablePlacement({ asset: 'models/valentine/val_bank_int_reflection_proxy.glb' })).toBe(false);
+  expect(runtime.isRenderablePlacement({ asset: 'models/valentine/val_bank_int_ref.glb' })).toBe(true);
 });
 
 it('disables unverified terrain vertex-color masks for neutral geometry previews', () => {

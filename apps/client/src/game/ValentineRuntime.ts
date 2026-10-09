@@ -15,14 +15,22 @@ import { WorldChunkManager } from './world/WorldChunkManager';
 import { selectHighestDrawableLod } from './world/DrawableLod';
 import { TerrainGround } from './world/TerrainGround';
 import { VisibleMeshCollision } from './world/VisibleMeshCollision';
+import previewSpawn from './data/preview-spawn.json';
 
-export function selectSpawnPosition(manifest: WorldManifest): { x: number; y: number; z: number } {
+export function selectSpawnPosition(manifest: WorldManifest, roadPoint?: { x: number; z: number }): { x: number; y: number; z: number } {
+  if (roadPoint && Number.isFinite(roadPoint.x) && Number.isFinite(roadPoint.z)) {
+    return { x: roadPoint.x, y: 0, z: roadPoint.z };
+  }
   const placement = manifest.placements.find((candidate) => candidate.layer !== 'terrain') ?? manifest.placements[0];
   return placement ? { ...placement.position } : { x: 0, y: 0, z: 0 };
 }
 
 export function placementBlocksPlayerAndCamera(placement: Pick<WorldPlacement, 'layer'>): boolean {
   return placement.layer !== 'terrain';
+}
+
+export function isRenderablePlacement(placement: Pick<WorldPlacement, 'asset'>): boolean {
+  return !placement.asset.endsWith('_reflection_proxy.glb');
 }
 
 export function disableTerrainVertexColorMultiplication(instance: Group): void {
@@ -123,7 +131,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   sunlight.position.set(30, 50, 20);
   scene.add(sunlight);
 
-  const spawn = selectSpawnPosition(manifest);
+  const spawn = selectSpawnPosition(manifest, previewSpawn.position);
   const collision = new VisibleMeshCollision();
   const ground = new TerrainGround();
   let player: PlayerController | undefined;
@@ -144,6 +152,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   });
   const occluders: Group[] = [];
   const world = new WorldChunkManager(manifest, async (placement: WorldPlacement) => {
+    if (!isRenderablePlacement(placement)) return { dispose() {} };
     const lease = await assets.acquire(placement.asset);
     const instance = lease.instance;
     applyPlacementTransform(instance, placement);
@@ -163,6 +172,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     } };
   });
   await world.update(player.position.x, player.position.z);
+  const spawnGroundHeight = ground.heightAt(player.position.x, player.position.z);
+  if (spawnGroundHeight !== undefined) {
+    player.position.y = spawnGroundHeight;
+    playerMarker.position.y = spawnGroundHeight + 0.4;
+  }
 
   const menu = new FallbackMenu();
   const hud = new Hud(root);
