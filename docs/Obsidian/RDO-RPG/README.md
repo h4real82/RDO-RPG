@@ -7,3 +7,4 @@ Dieses Verzeichnis ist der versionierte Obsidian-Einstiegspunkt für den RDO-RPG
 - [Codex-/Obsidian-Workflow](Runbooks/Codex-Obsidian-Workflow.md)
 - [Architekturentwurf](../../superpowers/specs/2026-10-08-rdo-rpg-restart-design.md)
 - [Roadmap](../../superpowers/plans/2026-10-08-rdo-rpg-restart-roadmap.md)
+- [Valentine Vertical Slice – geprüfter Stand](Status/Valentine-Vertical-Slice.md)

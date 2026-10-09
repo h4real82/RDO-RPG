@@ -50,6 +50,25 @@ Movement now stops at absent terrain instead of continuing at the previous
 valid elevation; other walkable surfaces will need explicit source-grounded
 treatment later.
 
+## Keyboard route probe
+
+A headless Chromium playtest used real WASD input to follow consecutive source
+points of `valentine:road:0062`. From point 12 at (-200.4, 646.7), every
+checkpoint through point 20 at (-247.7, 747.9) was reached without a stall.
+A second run reached points 21–35 through approximately (-271.5, 831.9),
+then stopped before point 36 (-272.1, 838.3) at (-272.4, 831.9). There were
+no page errors. Screenshots are in the local, Git-ignored `test-artifacts`
+directory (`station-walk-probe.png`, `town-walk-probe.png`). The latter shows
+obvious missing ground/visual context and a large dark foreground obstruction;
+this is not a visual acceptance. The block is consistent with the absent HD
+terrain north of the current tiles, but should be rechecked after import.
+
+The same source YMAP places `l_09__hd_0_1_-1` at (-288, 864), covering the
+next road segment. Its raw drawable is not in the local model export directory;
+an exact OpenIV export has been requested. No substitute terrain or road was
+fabricated. This test establishes one successful street segment, not the
+user-requested full station–church–saloon–station loop.
+
 The terrain PNGs are under `data/raw/terrain/l_09/textures`, not the general
 `data/raw/textures` folder. Terrain materials are resolved by the exact
 `lookuptexture` and `diffusetexture_layer0..3` parameter hashes. OpenIV's
