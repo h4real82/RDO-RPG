@@ -20,13 +20,27 @@ _TERRAIN_TEXTURE_PARAMETERS = (
 )
 
 
+def terrain_material_metadata(plan: dict[str, Any]) -> dict[str, str]:
+    if plan.get('reason') is not None or not isinstance(plan.get('lookup'), str):
+        return {}
+    layers = plan.get('layers')
+    if not isinstance(layers, list) or len(layers) != 4 or not all(isinstance(path, str) for path in layers):
+        return {}
+    metadata = {
+        'rdo_material_status': 'terrain-four-layer-preview',
+        'rdo_terrain_lookup': Path(plan['lookup']).name,
+    }
+    metadata.update({f'rdo_terrain_layer{index}': Path(path).name for index, path in enumerate(layers)})
+    return metadata
+
+
 def terrain_texture_plan(bindings: dict[str, Any], texture_files: dict[str, list[str]]) -> list[dict[str, Any]]:
     """Resolve the exact lookup and four diffuse references used by RDR terrain shaders."""
     def resolve(paths: list[str]) -> str | None:
         if len(paths) == 1:
             return paths[0]
         hd = [path for path in paths
-              if Path(path).parent.name.lower().endswith(('+hi', '+hidr'))]
+              if Path(path).parent.name.lower().endswith(('+hi', '+hidr', '_hi', '_hidr'))]
         return hd[0] if len(hd) == 1 else None
 
     plan = []

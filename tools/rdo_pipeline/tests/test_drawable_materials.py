@@ -185,3 +185,40 @@ def test_terrain_plan_prefers_the_single_manifest_hd_package_candidate():
 
     assert plan[0]['reason'] is None
     assert plan[0]['layers'] == [f'heartlands1_l09+hi/layer{index}.png' for index in range(4)]
+
+
+def test_terrain_plan_accepts_openiv_sanitized_local_hi_folder():
+    from rdo_pipeline.drawable_materials import terrain_texture_plan
+    bindings = {'shaders': [{'hash': '0x770b903e', 'textures': [
+        {'parameterHash': '0xc075f9b6', 'slot': 0, 'name': 'lookup'},
+        {'parameterHash': '0xce7b968e', 'slot': 1, 'name': 'layer0'},
+        {'parameterHash': '0xd883aa9e', 'slot': 2, 'name': 'layer1'},
+        {'parameterHash': '0x32b9df09', 'slot': 3, 'name': 'layer2'},
+        {'parameterHash': '0x3d10f3b7', 'slot': 4, 'name': 'layer3'},
+    ]}]}
+    textures = {'lookup': ['l_09_base/lookup.png']}
+    for index in range(4):
+        textures[f'layer{index}'] = [f'l_09_base/layer{index}.png', f'l_09_hi/layer{index}.png']
+
+    assert terrain_texture_plan(bindings, textures)[0]['layers'] == [
+        f'l_09_hi/layer{index}.png' for index in range(4)
+    ]
+
+
+def test_terrain_material_metadata_uses_portable_staged_texture_names():
+    from rdo_pipeline.drawable_materials import terrain_material_metadata
+    plan = {
+        'shaderHash': '0x770b903e',
+        'lookup': r'D:\raw\l_09_c.png',
+        'layers': [f'/raw/layer{index}.png' for index in range(4)],
+        'reason': None,
+    }
+
+    assert terrain_material_metadata(plan) == {
+        'rdo_material_status': 'terrain-four-layer-preview',
+        'rdo_terrain_lookup': 'l_09_c.png',
+        'rdo_terrain_layer0': 'layer0.png',
+        'rdo_terrain_layer1': 'layer1.png',
+        'rdo_terrain_layer2': 'layer2.png',
+        'rdo_terrain_layer3': 'layer3.png',
+    }

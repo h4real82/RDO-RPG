@@ -28,7 +28,12 @@ export class ModelAssetCache {
     const materials = new Map<Material, Material>();
     const clone = (material: Material): Material => {
       let result = materials.get(material);
-      if (!result) { result = material.clone(); materials.set(material, result); }
+      if (!result) {
+        result = material.clone();
+        result.onBeforeCompile = material.onBeforeCompile;
+        result.customProgramCacheKey = material.customProgramCacheKey;
+        materials.set(material, result);
+      }
       return result;
     };
     instance.traverse((node) => {

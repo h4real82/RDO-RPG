@@ -1,4 +1,4 @@
-import { AmbientLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, Scene, SphereGeometry, Vector3, WebGLRenderer } from 'three';
+import { AmbientLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector3, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
@@ -59,6 +59,53 @@ export function prepareDrawableMaterialPreview(instance: Group): void {
       }
     }
   });
+}
+
+export async function prepareTerrainFourLayerPreview(
+  instance: Group,
+  loadTexture: (url: string) => Promise<Texture>,
+): Promise<void> {
+  const pending: Promise<void>[] = [];
+  instance.traverse((object) => {
+    if (!(object instanceof Mesh) || !object.geometry.getAttribute('uv') || !object.geometry.getAttribute('color_1')) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      if (!(material instanceof MeshStandardMaterial) || material.userData.rdo_material_status !== 'terrain-four-layer-preview') continue;
+      const names = ['rdo_terrain_lookup', 'rdo_terrain_layer0', 'rdo_terrain_layer1', 'rdo_terrain_layer2', 'rdo_terrain_layer3']
+        .map((key) => material.userData[key]);
+      if (!names.every((name): name is string => typeof name === 'string' && name.length > 0)) continue;
+      pending.push((async () => {
+        const textures = await Promise.all(names.map((name) => loadTexture(`/runtime/valentine/local-preview/textures/terrain/${encodeURIComponent(name)}`)));
+        for (const texture of textures) {
+          texture.wrapS = RepeatWrapping;
+          texture.wrapT = RepeatWrapping;
+        }
+        material.vertexColors = false;
+        material.onBeforeCompile = (shader) => {
+          Object.assign(shader.uniforms, {
+            rdoLookup: { value: textures[0] },
+            rdoLayer0: { value: textures[1] },
+            rdoLayer1: { value: textures[2] },
+            rdoLayer2: { value: textures[3] },
+            rdoLayer3: { value: textures[4] },
+          });
+          shader.vertexShader = `attribute vec4 color_1;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.vertexShader}`
+            .replace('#include <color_vertex>', '#include <color_vertex>\nvRdoColor1 = color_1;\nvRdoUv = uv;');
+          shader.fragmentShader = `uniform sampler2D rdoLookup;\nuniform sampler2D rdoLayer0;\nuniform sampler2D rdoLayer1;\nuniform sampler2D rdoLayer2;\nuniform sampler2D rdoLayer3;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.fragmentShader}`
+            .replace('vec4 diffuseColor = vec4( diffuse, opacity );', `
+              vec3 rdoControl = mix(texture2D(rdoLookup, vRdoUv).rgb, vRdoColor1.rgb, vRdoColor1.a);
+              vec3 rdo01 = mix(sRGBTransferEOTF(texture2D(rdoLayer0, vRdoUv)).rgb, sRGBTransferEOTF(texture2D(rdoLayer1, vRdoUv)).rgb, 1.0 - rdoControl.r);
+              vec3 rdo23 = mix(sRGBTransferEOTF(texture2D(rdoLayer2, vRdoUv)).rgb, sRGBTransferEOTF(texture2D(rdoLayer3, vRdoUv)).rgb, rdoControl.g);
+              vec4 diffuseColor = vec4(mix(rdo01, rdo23, rdoControl.b), opacity);
+            `);
+        };
+        material.customProgramCacheKey = () => 'rdo-terrain-four-layer-v1';
+        material.userData.rdo_terrain_preview_ready = true;
+        material.needsUpdate = true;
+      })());
+    }
+  });
+  await Promise.all(pending);
 }
 
 export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vector3): Raycaster {
@@ -144,9 +191,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   scene.add(playerMarker);
   const cameraController = new OrthographicFollowCamera(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
   const loader = new GLTFLoader();
+  const textureLoader = new TextureLoader();
   const assets = new ModelAssetCache(async (asset) => {
     const gltf = await loader.loadAsync(`/runtime/valentine/local-preview/${asset}`);
     prepareDrawableMaterialPreview(gltf.scene);
+    await prepareTerrainFourLayerPreview(gltf.scene, (url) => textureLoader.loadAsync(url));
     selectHighestDrawableLod(gltf.scene);
     return gltf.scene;
   });

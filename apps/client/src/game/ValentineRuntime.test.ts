@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { BoxGeometry, BufferAttribute, BufferGeometry, Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, Texture, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import type { WorldManifest } from '@rdo-rpg/world-contracts';
 
@@ -79,6 +79,42 @@ it('keeps decoded mask channels from blackening diffuse-only imported materials'
   geometry.dispose();
   preview.dispose();
   authored.dispose();
+});
+
+it('configures a four-layer terrain preview only from complete exported metadata', async () => {
+  const instance = new Group();
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new BufferAttribute(new Float32Array([0, 0, 0]), 3));
+  geometry.setAttribute('uv', new BufferAttribute(new Float32Array([0, 0]), 2));
+  geometry.setAttribute('color_1', new BufferAttribute(new Float32Array([1, 0, 0, 1]), 4));
+  const material = new MeshStandardMaterial();
+  Object.assign(material.userData, {
+    rdo_material_status: 'terrain-four-layer-preview',
+    rdo_terrain_lookup: 'lookup.png',
+    rdo_terrain_layer0: 'layer0.png',
+    rdo_terrain_layer1: 'layer1.png',
+    rdo_terrain_layer2: 'layer2.png',
+    rdo_terrain_layer3: 'layer3.png',
+  });
+  instance.add(new Mesh(geometry, material));
+  const loaded: string[] = [];
+
+  await runtime.prepareTerrainFourLayerPreview(instance, async (url) => {
+    loaded.push(url);
+    return new Texture();
+  });
+
+  expect(loaded).toEqual([
+    '/runtime/valentine/local-preview/textures/terrain/lookup.png',
+    '/runtime/valentine/local-preview/textures/terrain/layer0.png',
+    '/runtime/valentine/local-preview/textures/terrain/layer1.png',
+    '/runtime/valentine/local-preview/textures/terrain/layer2.png',
+    '/runtime/valentine/local-preview/textures/terrain/layer3.png',
+  ]);
+  expect(material.userData.rdo_terrain_preview_ready).toBe(true);
+  expect(material.customProgramCacheKey()).toBe('rdo-terrain-four-layer-v1');
+  geometry.dispose();
+  material.dispose();
 });
 
 it('checks the entire camera-player segment for occluders', () => {

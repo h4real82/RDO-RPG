@@ -41,4 +41,22 @@ describe('ModelAssetCache', () => {
     expect(lease.instance).toBeInstanceOf(Group);
     lease.dispose();
   });
+
+  it('preserves custom terrain shader hooks while isolating cloned materials', async () => {
+    const source = new Group();
+    const material = new MeshStandardMaterial();
+    const hook = () => undefined;
+    material.onBeforeCompile = hook;
+    material.customProgramCacheKey = () => 'rdo-terrain-four-layer-v1';
+    source.add(new Mesh(new BoxGeometry(), material));
+    const cache = new ModelAssetCache(async () => source);
+
+    const lease = await cache.acquire('terrain');
+    const instance = lease.instance.children[0] as Mesh<BoxGeometry, MeshStandardMaterial>;
+
+    expect(instance.material).not.toBe(material);
+    expect(instance.material.onBeforeCompile).toBe(hook);
+    expect(instance.material.customProgramCacheKey()).toBe('rdo-terrain-four-layer-v1');
+    lease.dispose();
+  });
 });

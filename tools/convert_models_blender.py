@@ -23,7 +23,12 @@ from typing import Callable
 import bpy
 
 sys.path.insert(0, os.fspath(Path(__file__).resolve().parent / 'rdo_pipeline' / 'src'))
-from rdo_pipeline.drawable_materials import decode_drawable_materials, diffuse_texture_plan
+from rdo_pipeline.drawable_materials import (
+    decode_drawable_materials,
+    diffuse_texture_plan,
+    terrain_material_metadata,
+    terrain_texture_plan,
+)
 from rdo_pipeline.vertex_colors import decode_drawable_vertex_colors
 
 
@@ -34,6 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--only', action='append', default=[])
     parser.add_argument('--texture-root', type=Path)
+    parser.add_argument('--terrain-texture-output-dir', type=Path)
     return parser.parse_args(argv)
 
 
@@ -79,9 +85,10 @@ def remove_skinning() -> None:
                 obj.modifiers.remove(modifier)
 
 
-def bind_diffuse_materials(source: Path, texture_files: dict[str, list[str]]) -> None:
+def bind_diffuse_materials(source: Path, texture_files: dict[str, list[str]], terrain_texture_output_dir: Path | None) -> None:
     bindings = decode_drawable_materials(source.read_bytes())
     plan = diffuse_texture_plan(bindings, texture_files)
+    terrain_plan = terrain_texture_plan(bindings, texture_files)
     materials = []
     for index, entry in enumerate(plan):
         material = bpy.data.materials.new(f'shader_{index}_{entry["shaderHash"]}')
@@ -94,6 +101,19 @@ def bind_diffuse_materials(source: Path, texture_files: dict[str, list[str]]) ->
             image_node.image.colorspace_settings.name = 'sRGB'
             principled = material.node_tree.nodes.get('Principled BSDF')
             material.node_tree.links.new(image_node.outputs['Color'], principled.inputs['Base Color'])
+        elif terrain_texture_output_dir is not None:
+            metadata = terrain_material_metadata(terrain_plan[index])
+            if metadata:
+                terrain_texture_output_dir.mkdir(parents=True, exist_ok=True)
+                referenced = [terrain_plan[index]['lookup'], *terrain_plan[index]['layers']]
+                for texture in referenced:
+                    destination = terrain_texture_output_dir / Path(texture).name
+                    if destination.exists() and destination.read_bytes() != Path(texture).read_bytes():
+                        raise ValueError(f'conflicting staged terrain texture: {destination.name}')
+                    if not destination.exists():
+                        shutil.copyfile(texture, destination)
+                for key, value in metadata.items():
+                    material[key] = value
         materials.append(material)
     objects = {}
     for obj in bpy.data.objects:
@@ -239,7 +259,7 @@ def main() -> int:
                 bpy.ops.import_mesh.ydr(filepath=os.fspath(source))
             remove_skinning()
             if args.texture_root:
-                bind_diffuse_materials(source, texture_files)
+                bind_diffuse_materials(source, texture_files, args.terrain_texture_output_dir)
             color_meshes, color_channels, restore_color_export = prepare_exact_vertex_colors(source)
             if color_meshes:
                 print(f'verified exact source vertex colors: {color_channels} channels on {color_meshes} meshes')
