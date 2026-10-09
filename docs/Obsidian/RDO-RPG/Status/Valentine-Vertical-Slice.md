@@ -44,6 +44,8 @@ Verdacht exportiert.
 
 Umsetzungsplan: [Valentine Spatial Fidelity Recovery](../../../superpowers/plans/2026-10-09-valentine-spatial-fidelity-recovery.md).
 
+Abhakbare OpenIV-Arbeitsliste: [Valentine Spatial Recovery Export Queue](../Runbooks/OpenIV-Valentine-Spatial-Recovery-Export-Queue.md).
+
 Codex arbeitet im separaten Git-Worktree. Diese Notiz wird im Obsidian-Vault
 des Haupt-Checkouts erst nach einer geprüften Git-Übernahme sichtbar; es gibt
 keine automatische Synchronisation zwischen den Worktrees.
