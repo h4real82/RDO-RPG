@@ -31,8 +31,15 @@ Ziel: `00-metadata/`
 Unter `levels_1.rpf/levels/rdr3/area/lod/` beziehungsweise per Tiefensuche und
 anschließendem **Go to file**:
 
-- [ ] `jklm_7_10_area_lod_combine_metadata.rpf`: alle `.ymap` und `.ytyp` als XML
-- [ ] `jklm_7_10_area_lod.rpf`: alle `.ymap` und `.ytyp` als XML
+- [x] `jklm_7_10_area_lod_combine_metadata.rpf`: **nicht komplett
+  exportieren**. Die 327 Hash-YMAPs müssen nicht einzeln bearbeitet werden;
+  die für Valentine relevanten Klartext-YMAPs/YTYPs liegen bereits geprüft
+  unter `data/raw/ymap/`.
+- [ ] Aus diesem Archiv nur später von Codex ausdrücklich genannte Hash-YMAPs
+  exportieren, falls die Coverage-Auswertung eine konkrete Referenz als
+  fehlend meldet.
+- [x] `jklm_7_10_area_lod.rpf`: kein pauschaler Metadatenexport erforderlich;
+  vorhandene Valentine-Quellen zuerst verwenden.
 - [ ] `jklm_7_10_area_lod_combine.rpf`: enthaltene `_manifest.ymf` als XML
 
 ### Terrain-Metadaten
