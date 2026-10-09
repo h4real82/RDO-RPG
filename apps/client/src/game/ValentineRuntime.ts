@@ -136,6 +136,7 @@ declare global {
       setReferenceCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }): void;
       waitForChunks(): Promise<void>;
       getState(): { frame: number; player: { x: number; y: number; z: number }; cameraType: string; viewHeight: number };
+      getCollisionHit(): { asset: string; mesh: string } | undefined;
     };
   }
 }
@@ -213,6 +214,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     if (!isRenderablePlacement(placement)) return { dispose() {} };
     const lease = await assets.acquire(placement.asset);
     const instance = lease.instance;
+    instance.userData.sourceAsset = placement.asset;
     applyPlacementTransform(instance, placement);
     if (placement.layer === 'terrain') disableTerrainVertexColorMultiplication(instance);
     scene.add(instance);
@@ -252,6 +254,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       cameraController.setReferencePose(position, target);
     },
     waitForChunks: () => world.waitForIdle(),
+    getCollisionHit: () => collision.lastHit,
     getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type,
       viewHeight: (cameraController.camera.top - cameraController.camera.bottom) / cameraController.camera.zoom }),
   };

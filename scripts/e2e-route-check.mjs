@@ -10,7 +10,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const url = 'http://127.0.0.1:4174';
 const tracePath = path.join(root, 'data/runtime/valentine/local-preview/ground-truth-traces.json');
 const artifactDir = path.join(root, 'data/runtime/valentine/test-artifacts');
-const traceId = 'valentine:road:0062';
+const traceId = process.argv[4] ?? 'valentine:road:0062';
 const from = Number(process.argv[2] ?? 12);
 const to = Number(process.argv[3] ?? 20);
 let server;
@@ -39,8 +39,9 @@ async function readRoute() {
   const source = JSON.parse(await readFile(tracePath, 'utf8'));
   const trace = source.traces.find((item) => item.id === traceId && item.kind === 'road');
   if (!trace) throw new Error(`Source road trace not found: ${traceId}`);
-  if (!Number.isInteger(from) || !Number.isInteger(to) || from < 0 || to <= from || to >= trace.points.length) {
-    throw new Error(`Expected integer route indices 0 <= from < to < ${trace.points.length}`);
+  if (!Number.isInteger(from) || !Number.isInteger(to) || from < 0 || to < 0 || from === to
+    || from >= trace.points.length || to >= trace.points.length) {
+    throw new Error(`Expected distinct integer route indices within 0..${trace.points.length - 1}`);
   }
   return trace.points;
 }
@@ -70,7 +71,8 @@ async function main() {
     let failure;
     let reached = from;
     try {
-      for (let index = from + 1; index <= to; index += 1) {
+      const direction = Math.sign(to - from);
+      for (let index = from + direction; direction * (index - to) <= 0; index += direction) {
         const target = points[index];
         let arrived = false;
         let stalled = 0;
@@ -98,7 +100,12 @@ async function main() {
           if (stalled >= 5) break;
         }
         if (!arrived) {
-          failure = { index, target, player: (await page.evaluate(() => window.__rdoPreview.getState())).player };
+          failure = {
+            index,
+            target,
+            player: (await page.evaluate(() => window.__rdoPreview.getState())).player,
+            collision: await page.evaluate(() => window.__rdoPreview.getCollisionHit()),
+          };
           break;
         }
       }
@@ -106,7 +113,7 @@ async function main() {
       for (const key of pressed) await page.keyboard.up(key);
     }
     await mkdir(artifactDir, { recursive: true });
-    const screenshot = path.join(artifactDir, `route-${from}-${to}.png`);
+    const screenshot = path.join(artifactDir, `route-${traceId.replace(/[^a-z0-9-]/gi, '-')}-${from}-${to}.png`);
     await page.screenshot({ path: screenshot });
     console.log(JSON.stringify({ traceId, from, to, reached, failure, errors, screenshot }, null, 2));
     if (failure || errors.length) process.exitCode = 1;

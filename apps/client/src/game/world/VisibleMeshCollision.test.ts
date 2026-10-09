@@ -4,6 +4,7 @@ import { VisibleMeshCollision } from './VisibleMeshCollision';
 
 const box = (x: number, y: number, z: number, w: number, h: number, d: number) => {
   const mesh = new Mesh(new BoxGeometry(w, h, d), new MeshBasicMaterial());
+  mesh.name = 'test-wall';
   mesh.position.set(x, y, z);
   return mesh;
 };
@@ -16,8 +17,10 @@ it('allows crossing a doorway in a building whose enclosing box spans the openin
   collision.add(building);
   expect(collision.blocksTransition({ x: 0, y: 0, z: -0.4 }, { x: 0, y: 0, z: 0.4 })).toBe(false);
   expect(collision.blocksTransition({ x: 2, y: 0, z: -0.4 }, { x: 2, y: 0, z: 0.4 })).toBe(true);
+  expect(collision.lastHit?.mesh).toBeTruthy();
   collision.remove(building);
   expect(collision.blocksTransition({ x: 2, y: 0, z: -0.4 }, { x: 2, y: 0, z: 0.4 })).toBe(false);
+  expect(collision.lastHit).toBeUndefined();
 });
 
 it('ignores high roofs and hidden LODs, while detecting low visible walls', () => {

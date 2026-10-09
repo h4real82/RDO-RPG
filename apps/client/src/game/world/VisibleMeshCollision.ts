@@ -7,6 +7,7 @@ type Candidate = { bounds: Box3; meshes: { mesh: Mesh; bounds: Box3 }[] };
 export class VisibleMeshCollision {
   private readonly candidates = new Map<Group, Candidate>();
   private readonly ray = new Raycaster();
+  lastHit: { asset: string; mesh: string } | undefined;
 
   add(instance: Group): void {
     instance.updateWorldMatrix(true, true);
@@ -25,13 +26,14 @@ export class VisibleMeshCollision {
   remove(instance: Group): void { this.candidates.delete(instance); }
 
   blocksTransition(from: Position, to: Position): boolean {
+    this.lastHit = undefined;
     const dx = to.x - from.x, dz = to.z - from.z;
     const length = Math.hypot(dx, dz);
     if (!Number.isFinite(length) || length < 1e-8) return false;
     const direction = new Vector3(dx / length, 0, dz / length);
     const sideX = -direction.z * 0.25, sideZ = direction.x * 0.25;
     this.ray.far = length;
-    for (const { bounds, meshes } of this.candidates.values()) {
+    for (const [instance, { bounds, meshes }] of this.candidates) {
       if (bounds.max.y < Math.min(from.y, to.y) + 0.35 || bounds.min.y > Math.max(from.y, to.y) + 1.55) continue;
       if (Math.max(from.x, to.x) + 0.25 < bounds.min.x || Math.min(from.x, to.x) - 0.25 > bounds.max.x
         || Math.max(from.z, to.z) + 0.25 < bounds.min.z || Math.min(from.z, to.z) - 0.25 > bounds.max.z) continue;
@@ -42,7 +44,10 @@ export class VisibleMeshCollision {
         for (const side of [-1, 0, 1]) {
           for (const elevation of [0.4, 1.4]) {
             this.ray.set(new Vector3(from.x + side * sideX, from.y + elevation, from.z + side * sideZ), direction);
-            if (this.ray.intersectObject(mesh, false).length > 0) return true;
+            if (this.ray.intersectObject(mesh, false).length > 0) {
+              this.lastHit = { asset: String(instance.userData.sourceAsset ?? ''), mesh: mesh.name };
+              return true;
+            }
           }
         }
       }

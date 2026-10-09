@@ -20,6 +20,9 @@ einen veröffentlichten oder vollständig spielbaren Build.
   Exporten muss die Grenze des geplanten Valentine-Ausschnitts feststehen.
 - Der gewünschte Rundweg Bahnhof → Kirche → Sheriff/Saloon → Bahnhof ist
   nicht vollständig begehbar oder als Karte abgenommen.
+- Die westliche Quell-Straßenlinie `valentine:road:0059` trifft auf Hotelveranda
+  und Gunsmith-Geometrie. Sie ist eine Kartenreferenz, noch kein sicherer
+  Laufweg; die Gebäude-Kollision wird deshalb nicht pauschal entfernt.
 - Terrain-Farben, UV-Skalierung und große sichtbare Randlücken sind noch
   Vorschauqualität. Vegetation, Wege, Gleise und Innenräume fehlen teilweise.
 - Multiplayer, Discord, Figur-Editor und Minispiele sind Planungsumfang,

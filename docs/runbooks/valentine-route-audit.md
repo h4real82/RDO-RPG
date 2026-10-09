@@ -166,3 +166,17 @@ node scripts/e2e-check.mjs
 The import is not an acceptance test. Confirm the source hashes, rendered
 terrain, continuous station-to-town walk, and absence of new collision or
 material regressions before calling the route playable.
+
+## Western return trace is not a collision-safe route
+
+`valentine:road:0059` connects to the validated main-street trace at point 23,
+but its point sequence is only a cartographic centerline, not a navigation
+mesh. A browser walk from point 23 toward point 8 stopped against the loaded
+`val_gunsmith_ext` and, in another run, `val_hotel_prch_dcl` meshes. Both hits
+occurred on grounded terrain with no browser exception. Their source geometry
+must not be disabled merely to make this coarse line pass. The route checker
+now accepts a trace ID and descending indices and reports the source mesh on
+a collision; use its failure as an audit signal, not proof that a street is
+impassable. Next, verify an actual walkable corridor against the imported
+building geometry and the `Media/` references, then record navigable
+waypoints. Do not call the full station-to-town circuit playable yet.
