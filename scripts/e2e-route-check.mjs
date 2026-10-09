@@ -63,6 +63,7 @@ async function main() {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#game-container')?.getAttribute('data-game-ready') === 'true');
     await page.evaluate((point) => window.__rdoPreview.teleport({ x: point.x, y: -999, z: point.z }), points[from]);
+    await page.waitForTimeout(100);
     await page.evaluate(() => window.__rdoPreview.waitForChunks());
     await page.waitForTimeout(150);
     const start = (await page.evaluate(() => window.__rdoPreview.getState())).player;

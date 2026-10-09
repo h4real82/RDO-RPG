@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, Mesh, MeshBasicMaterial } from 'three';
+import { BoxGeometry, Group, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three';
 import { expect, it } from 'vitest';
 import { VisibleMeshCollision } from './VisibleMeshCollision';
 
@@ -38,4 +38,17 @@ it('ignores high roofs and hidden LODs, while detecting low visible walls', () =
   building.updateWorldMatrix(true, true);
   collision.add(building);
   expect(collision.blocksTransition({ x: 0, y: 0, z: -0.4 }, { x: 0, y: 0, z: 0.4 })).toBe(true);
+});
+
+it('blocks a wall from its back face without changing the render material', () => {
+  const building = new Group();
+  const wall = new Mesh(new PlaneGeometry(4, 2), new MeshBasicMaterial());
+  wall.name = 'one-sided-wall';
+  wall.position.y = 1;
+  building.add(wall);
+  building.updateWorldMatrix(true, true);
+  const collision = new VisibleMeshCollision();
+  collision.add(building);
+  expect(collision.blocksTransition({ x: 0, y: 0, z: -0.4 }, { x: 0, y: 0, z: 0.4 })).toBe(true);
+  expect(collision.blocksTransition({ x: 0, y: 0, z: 0.4 }, { x: 0, y: 0, z: -0.4 })).toBe(true);
 });

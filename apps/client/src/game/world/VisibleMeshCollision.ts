@@ -44,7 +44,10 @@ export class VisibleMeshCollision {
         for (const side of [-1, 0, 1]) {
           for (const elevation of [0.4, 1.4]) {
             this.ray.set(new Vector3(from.x + side * sideX, from.y + elevation, from.z + side * sideZ), direction);
-            if (this.ray.intersectObject(mesh, false).length > 0) {
+            const forwardHit = this.ray.intersectObject(mesh, false).length > 0;
+            this.ray.set(new Vector3(to.x + side * sideX, to.y + elevation, to.z + side * sideZ), direction.clone().negate());
+            const reverseHit = this.ray.intersectObject(mesh, false).length > 0;
+            if (forwardHit || reverseHit) {
               this.lastHit = { asset: String(instance.userData.sourceAsset ?? ''), mesh: mesh.name };
               return true;
             }
