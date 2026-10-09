@@ -103,6 +103,28 @@ The first shader has lookupUVSet=1 and uvSet=(1,1,1,1); other variants use
 lookupUVSet=3 and some layer uvSet values of 2. These values do not yet prove
 whether selection is one-based or how masks/heights/colors combine. Do not
 replace the four-layer shader with a single diffuse map or guessed RGBA weights.
+
+### UV channel mismatch in the browser preview — 2026-10-09
+
+The converted `l_09__hd_0_-2_0.glb` preserves three UV attributes per mesh.
+For mesh 0, the decoded GLB ranges are `TEXCOORD_0` U 0.573–0.620 / V
+0.627–0.708, `TEXCOORD_1` U -163.54–67.71 / V -244.89–0.51, and
+`TEXCOORD_2` U -0.660–-0.420 / V 1.460–1.881. These values came from
+reading the GLB accessors and buffer views, not from judging a screenshot.
+The matching first source shader has `lookupUVSet=1` and
+`uvSet=(1,1,1,1)`; other material variants in the same source drawable use
+`lookupUVSet=3` and one has `uvSet=(1,1,2,1)`. These constants were decoded
+directly from its OpenIV `.ydr.full` by `decode_drawable_materials`.
+
+The current browser four-layer preview samples lookup and all four diffuse
+textures with `TEXCOORD_0`, ignoring these per-material UV-set constants.
+The large, blurry texture forms in the browser are therefore **not evidence
+that the source texture resolution is insufficient**. The original indexing
+convention and texture-coordinate transforms remain unverified; changing to
+`TEXCOORD_1` or `_2` without that proof could create a different false render.
+Next visual gate: decode/verify the UV-set mapping against original shader
+program inputs or another authoritative material implementation, propagate
+the verified indices through material metadata, then compare screenshots.
 Some texture parameters have null resource references (e.g. DetailTexArrayN);
 61/61 named-reference coverage does not prove availability of global shader
 resources or complete material fidelity.
