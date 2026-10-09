@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "coordinateSystem": {
+    "x": "gameX",
+    "gameY": "gameY",
+    "elevation": "gameZ"
+  },
+  "anchors": [
+    {
+      "id": "station-shell",
+      "label": "Bahnhof und Bahnsteig",
+      "sourceKind": "placement",
+      "sourceFile": "val_01__interior_val_trainstn_int_milo__ymap.xml",
+      "model": "val_trainstn_int",
+      "position": { "x": -180.8372, "gameY": 626.5492, "elevation": 113.2691 },
+      "exterior": true
+    },
+    {
+      "id": "hotel-shell",
+      "label": "Saints Hotel",
+      "sourceKind": "placement",
+      "sourceFile": "val_02__strm_0_ymap.xml",
+      "model": "val_hotel_ext",
+      "position": { "x": -322.7087, "gameY": 767.6314, "elevation": 121.7168 },
+      "exterior": true
+    },
+    {
+      "id": "bank-shell",
+      "label": "Valentine Bank",
+      "sourceKind": "placement",
+      "sourceFile": "val_02__strm_0_ymap.xml",
+      "model": "val_bank",
+      "position": { "x": -306.4235, "gameY": 771.1453, "elevation": 120.6122 },
+      "exterior": true
+    },
+    {
+      "id": "law-office-shell",
+      "label": "Sheriff und Law Office",
+      "sourceKind": "placement",
+      "sourceFile": "val_02__strm_0_ymap.xml",
+      "model": "0x2cb66617",
+      "position": { "x": -291.2156, "gameY": 779.5289, "elevation": 122.5423 },
+      "exterior": true
+    },
+    {
+      "id": "saloon-shell",
+      "label": "Valentine Saloon",
+      "sourceKind": "placement",
+      "sourceFile": "val_03__strm_0_ymap.xml",
+      "model": "0x3adbe18d",
+      "position": { "x": -309.1668, "gameY": 807.5872, "elevation": 122.6945 },
+      "exterior": true
+    },
+    {
+      "id": "jail-shell",
+      "label": "Valentine Jail",
+      "sourceKind": "placement",
+      "sourceFile": "val_03__strm_0_ymap.xml",
+      "model": "0x06d9cc8a",
+      "position": { "x": -276.1627, "gameY": 806.7511, "elevation": 121.7221 },
+      "exterior": true
+    },
+    {
+      "id": "western-stable-shell",
+      "label": "Westlicher Stall und Koppel",
+      "sourceKind": "placement",
+      "sourceFile": "val_03__strm_0_ymap.xml",
+      "model": "0xc6c3a704",
+      "position": { "x": -367.15, "gameY": 788.2974, "elevation": 119.5064 },
+      "exterior": true
+    },
+    {
+      "id": "station-approach-road",
+      "label": "Bahnhofszufahrt",
+      "sourceKind": "road",
+      "sourceFile": "ground-truth-traces.json",
+      "model": "valentine:road:0062",
+      "sourceIndex": 12,
+      "position": { "x": -200.4067, "gameY": 646.7461, "elevation": null },
+      "exterior": true
+    },
+    {
+      "id": "main-road-junction",
+      "label": "Kreuzung Hauptstraße und westlicher Rundweg",
+      "sourceKind": "road",
+      "sourceFile": "ground-truth-traces.json",
+      "model": "valentine:road:0062",
+      "sourceIndex": 25,
+      "position": { "x": -259.3025, "gameY": 793.7339, "elevation": null },
+      "exterior": true
+    },
+    {
+      "id": "church-hill-road-turn",
+      "label": "Straßenkurve am Kirchenhügel",
+      "sourceKind": "road",
+      "sourceFile": "ground-truth-traces.json",
+      "model": "valentine:road:0062",
+      "sourceIndex": 43,
+      "position": { "x": -269.3702, "gameY": 883.336, "elevation": null },
+      "exterior": true
+    },
+    {
+      "id": "southern-west-road-junction",
+      "label": "Südwestliche Straßengabelung",
+      "sourceKind": "road",
+      "sourceFile": "ground-truth-traces.json",
+      "model": "valentine:road:0059",
+      "sourceIndex": 0,
+      "position": { "x": -295.5461, "gameY": 626.6108, "elevation": null },
+      "exterior": true
+    }
+  ]
+}

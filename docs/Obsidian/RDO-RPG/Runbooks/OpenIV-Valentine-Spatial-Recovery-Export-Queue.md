@@ -40,7 +40,10 @@ anschließendem **Go to file**:
   fehlend meldet.
 - [x] `jklm_7_10_area_lod.rpf`: kein pauschaler Metadatenexport erforderlich;
   vorhandene Valentine-Quellen zuerst verwenden.
-- [ ] `jklm_7_10_area_lod_combine.rpf`: enthaltene `_manifest.ymf` als XML
+- [x] `jklm_7_10_area_lod_combine.rpf`: **kein Manifest vorhanden** (in
+  OpenIV geprüft: 171 Drawable Dictionaries und 22 Texture Dictionaries).
+  Diesen LOD-Assetcontainer nicht pauschal exportieren; sichtbare
+  Silhouettenmodelle werden erst nach der Coverage-Auswertung gezielt benannt.
 
 ### Terrain-Metadaten
 
