@@ -182,9 +182,17 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const collision = new VisibleMeshCollision();
   const ground = new TerrainGround();
   let player: PlayerController | undefined;
+  let blockedReason: 'terrain' | 'obstacle' | undefined;
   const canOccupy = (position: { x: number; y: number; z: number }): boolean => {
-    return ground.heightAt(position.x, position.z) !== undefined
-      && (!player || !collision.blocksTransition(player.position, position));
+    if (ground.heightAt(position.x, position.z) === undefined) {
+      blockedReason = 'terrain';
+      return false;
+    }
+    if (player && collision.blocksTransition(player.position, position)) {
+      if (blockedReason !== 'terrain') blockedReason = 'obstacle';
+      return false;
+    }
+    return true;
   };
   player = new PlayerController(spawn, 6, canOccupy);
   const playerMarker = new Mesh(new SphereGeometry(0.4, 16, 12), new MeshStandardMaterial({ color: '#caa05d' }));
@@ -303,11 +311,12 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const delta = Math.min((now - previous) / 1000, 0.5);
     previous = now;
     player.setMovement(menu.isOpen ? { forward: 0, right: 0 } : { forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
+    blockedReason = undefined;
     player.update(delta);
     const terrainHeight = ground.heightAt(player.position.x, player.position.z);
     if (terrainHeight !== undefined) player.position.y = terrainHeight;
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
-    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount, player.blocked);
+    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount, player.blocked ? blockedReason : undefined);
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target, delta);

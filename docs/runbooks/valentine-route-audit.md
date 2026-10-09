@@ -64,10 +64,22 @@ this is not a visual acceptance. The block is consistent with the absent HD
 terrain north of the current tiles, but should be rechecked after import.
 
 The same source YMAP places `l_09__hd_0_1_-1` at (-288, 864), covering the
-next road segment. Its raw drawable is not in the local model export directory;
-an exact OpenIV export has been requested. No substitute terrain or road was
-fabricated. This test establishes one successful street segment, not the
-user-requested full station–church–saloon–station loop.
+next road segment. Its raw drawable was initially absent, so an exact OpenIV
+export was requested. No substitute terrain or road was fabricated. This test
+establishes one successful street segment, not the user-requested full
+station–church–saloon–station loop.
+
+After the user exported `l_09__hd_0_1_-1`, the source `.ydr.full` was converted
+with 48 verified vertex-color channels on 12 meshes and placed from that YMAP.
+The local preview now has **eleven** HD terrain tiles and **605** placements.
+`npx pnpm test:route 20 36` passed via real WASD input with no browser errors;
+the previously blocked source point 36 is reachable. A subsequent ground probe
+found terrain through point 44 near (-256.8, 888.1), but none at points 45–52
+near X -250…-222 / Z 890…899. The YMAP identifies candidate neighboring
+tiles `l_09__hd_0_1_0` at (-224, 864) and `l_09__hd_0_2_0` at (-224, 928).
+Neither is exported locally. Whether that farther road section belongs to the
+accepted Valentine slice must be decided against the map scope before asking
+for more OpenIV exports.
 
 The route check is repeatable with `npx pnpm test:route 12 20`; it boots an
 isolated local browser preview, reads the exported road trace, moves with
