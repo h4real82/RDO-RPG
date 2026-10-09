@@ -118,7 +118,8 @@ reflection proxy at approximately (-306.43, 771.19). Browser collision probes
 confirmed both source meshes at that point; the bank shell must remain solid.
 
 The preview now starts at source road trace `valentine:road:0059`, point 18,
-(-310.1441, 788.7001), recorded in `apps/client/src/game/data/preview-spawn.json`.
+game coordinate (-310.1441, 788.7001), projected to Three.js
+(-310.1441, -788.7001) in `apps/client/src/game/data/preview-spawn.json`.
 The terrain mesh supplies its height after chunk load. Browser checks found
 movement in all four cardinal directions at this point and the first-frame
 screenshot shows the marker between buildings. This validates a local starting

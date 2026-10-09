@@ -227,7 +227,7 @@ def main() -> int:
             min(position['z'] for position in positions) - padding,
             max(position['z'] for position in positions) + padding,
         )
-        trace_payload = {'version': 1, 'world': 'valentine', 'bounds': {'minX': bounds[0], 'maxX': bounds[1], 'minZ': bounds[2], 'maxZ': bounds[3]}, 'traces': build_valentine_traces(args.roads, args.rails, bounds=bounds)}
+        trace_payload = {'version': 1, 'world': 'valentine', 'coordinateSpace': 'three-right-handed', 'bounds': {'minX': bounds[0], 'maxX': bounds[1], 'minZ': bounds[2], 'maxZ': bounds[3]}, 'traces': build_valentine_traces(args.roads, args.rails, bounds=bounds)}
         (runtime_root / 'ground-truth-traces.json').write_text(json.dumps(trace_payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
         return 0
     if args.command == 'texture-coverage':

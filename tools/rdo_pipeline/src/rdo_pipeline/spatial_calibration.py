@@ -104,9 +104,11 @@ def verify_spatial_anchors(
     placement_payload = json.loads(placement_source.read_text(encoding='utf-8'))
     entities = placement_payload.get('entities', []) if isinstance(placement_payload, dict) else []
     traces: dict[str, Any] = {}
+    trace_coordinates = 'legacy-game-y-positive'
     if trace_source is not None:
         trace_payload = json.loads(trace_source.read_text(encoding='utf-8'))
         if isinstance(trace_payload, dict):
+            trace_coordinates = str(trace_payload.get('coordinateSpace', trace_coordinates))
             traces = {trace.get('id'): trace for trace in trace_payload.get('traces', []) if isinstance(trace, dict)}
     for anchor in anchors:
         found = False
@@ -129,8 +131,9 @@ def verify_spatial_anchors(
             if (trace.get('kind') == 'road' and isinstance(index, int) and index < len(points)
                     and anchor.source_file == trace_source.name):
                 point = points[index]
+                source_game_y = -point.get('z') if trace_coordinates == 'three-right-handed' and isinstance(point, dict) and isinstance(point.get('z'), (int, float)) else point.get('z')
                 found = (_same_number(point.get('x'), anchor.position.x)
-                         and _same_number(point.get('z'), anchor.position.game_y)
+                         and _same_number(source_game_y, anchor.position.game_y)
                          and anchor.position.elevation is None)
         if not found:
             raise ValueError(f'unknown spatial anchor source: {anchor.id}')

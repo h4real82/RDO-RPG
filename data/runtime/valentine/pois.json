@@ -2,8 +2,8 @@
   {
     "id": "valentine-sheriff",
     "name": "Sheriff's Office",
-    "manifestRef": "valentine:033000e70d1620a7",
-    "position": { "x": -259.0177, "y": 120.1503, "z": 741.3681 },
+    "manifestRef": "valentine:d39386b4eb21ae1a",
+    "position": { "x": -259.0177, "y": 120.1503, "z": -741.3681 },
     "radius": 4,
     "category": "sheriff"
   }

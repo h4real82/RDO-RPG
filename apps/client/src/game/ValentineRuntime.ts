@@ -116,9 +116,10 @@ export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vect
 
 export function applyPlacementTransform(instance: Group, placement: Pick<WorldPlacement, 'position' | 'rotation' | 'scale'>): void {
   instance.position.set(placement.position.x, placement.position.y, placement.position.z);
-  // GLB local basis is (game X, game Z, -game Y); world requires +game Y.
+  // GLB and world both use the proper-rotation (game X, game Z, -game Y)
+  // basis. A negative instance scale would reflect signs and facades.
   instance.rotation.set(placement.rotation.x, placement.rotation.y, placement.rotation.z, 'XYZ');
-  instance.scale.set(placement.scale.x, placement.scale.y, -placement.scale.z);
+  instance.scale.set(placement.scale.x, placement.scale.y, placement.scale.z);
 }
 
 interface RuntimePoi {
@@ -133,10 +134,11 @@ declare global {
   interface Window {
     __rdoPreview?: {
       teleport(position: { x: number; y: number; z: number }): void;
-      setReferenceCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }): void;
+      setReferenceCamera(position: { x: number; y: number; z: number }, target: { x: number; y: number; z: number }, visibleHeight?: number): void;
       waitForChunks(): Promise<void>;
       getState(): { frame: number; player: { x: number; y: number; z: number }; cameraType: string; viewHeight: number };
       getCollisionHit(): { asset: string; mesh: string } | undefined;
+      getLoadedTransforms(): { asset: string; determinant: number }[];
     };
   }
 }
@@ -250,11 +252,21 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       player.position.y = position.y;
       player.position.z = position.z;
     },
-    setReferenceCamera(position, target): void {
-      cameraController.setReferencePose(position, target);
+    setReferenceCamera(position, target, visibleHeight): void {
+      cameraController.setReferencePose(position, target, visibleHeight);
     },
     waitForChunks: () => world.waitForIdle(),
     getCollisionHit: () => collision.lastHit,
+    getLoadedTransforms: () => {
+      scene.updateMatrixWorld(true);
+      const transforms: { asset: string; determinant: number }[] = [];
+      scene.traverse((object) => {
+        if (typeof object.userData.sourceAsset === 'string') {
+          transforms.push({ asset: object.userData.sourceAsset, determinant: object.matrixWorld.determinant() });
+        }
+      });
+      return transforms;
+    },
     getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type,
       viewHeight: (cameraController.camera.top - cameraController.camera.bottom) / cameraController.camera.zoom }),
   };

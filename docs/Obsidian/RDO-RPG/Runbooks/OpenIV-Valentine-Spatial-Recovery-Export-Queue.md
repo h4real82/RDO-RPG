@@ -49,12 +49,21 @@ anschließendem **Go to file**:
 
 Unter `levels_5.rpf/levels/rdr3/terrain/jklm_07_10/`:
 
-- [ ] `jklm_7_10_lod_combine_metadata.rpf`: alle `.ymap`/`.ytyp` als XML
-- [ ] `jklm_7_10_lod.rpf`: alle `.ymap`/`.ytyp` als XML
-- [ ] `l_09_.rpf`: `_manifest.ymf` als XML
-- [ ] `l_09_placement.rpf`: `_manifest.ymf` sowie vorhandene `.ymap`/`.ytyp` als XML
-- [ ] `l_09_a_placement.rpf` bis `l_09_e_placement.rpf`: sämtliche Metadaten als XML
-- [ ] `l_09_ftr.rpf`: sämtliche Metadaten als XML
+- [x] `jklm_7_10_lod_combine_metadata.rpf`: 69 XML-Dateien unter
+  `data/raw/terrain/jklm_07_10/metadata/` geprüft, einschließlich der
+  relevanten `l_09`-YMAPs und 32 YTYPs.
+- [x] `jklm_7_10_lod.rpf`: enthält nur vier YDR und ein YTD, keine weiteren
+  YMAP-/YTYP-Metadaten; kein Metadatenexport erforderlich.
+- [x] `l_09_.rpf`: `_manifest.ymf` als
+  `data/raw/terrain/l_09/Metadata/_manifest_ymf.xml` geprüft.
+- [x] `l_09_placement.rpf`: vorhandene YMAP als
+  `data/raw/ymap/l_09_placement_ymap.xml` geprüft; das Archiv enthält kein
+  Manifest.
+- [ ] `l_09_a_placement.rpf` bis `l_09_e_placement.rpf`: die insgesamt acht
+  YMAPs als XML exportieren. Die je Archiv vorhandene `_cache.ych` ist keine
+  Metadaten-XML und wird für die räumliche Kalibrierung nicht benötigt.
+- [x] `l_09_ftr.rpf`: im vorhandenen Metadatenbestand geprüft; kein
+  zusätzlicher pauschaler Export erforderlich.
 
 Bereits vorhandene XMLs unter `data/raw/ymap/` und
 `data/raw/terrain/jklm_07_10/metadata/` bleiben erhalten. Dieser Batch dient
@@ -67,17 +76,40 @@ Ziel: `01-valentine-exteriors/<archivname>/`
 Unter `levels_1.rpf/levels/rdr3/area/jklm_07_10/` jeweils die komplette
 Hauptansicht nach Typgruppen exportieren:
 
-- [ ] `val_01_.rpf` – Bahnhof, Kutschenhaus und südöstlicher Ortseingang
-- [ ] `val_02_.rpf` – Hotel, Bank und Gunsmith-Block
-- [ ] `val_03_.rpf` – Hauptstraße, Sheriff/Jail, General Store, Saloon und Stable
-- [ ] `val_04_.rpf` – nordöstlicher Wohn-/Saloon-Bereich
-- [ ] `val_05_.rpf` – westliche und nördliche Bebauung
-- [ ] `val_06_.rpf` – ergänzende Ortsbebauung
-- [ ] `val_07_.rpf` – Kirche, nördlicher Ortsrand und Magic-Lantern-Bereich
-- [ ] `val_vfx.rpf` – nur Metadaten sichern; VFX-Drawables noch nicht in die
-  Standard-Außenwelt übernehmen
+- [x] `val_01_.rpf` – Bahnhof, Kutschenhaus und südöstlicher Ortseingang
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_01_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_02_.rpf` – Hotel, Bank und Gunsmith-Block
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_02_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_03_.rpf` – Hauptstraße, Sheriff/Jail, General Store, Saloon und Stable
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_03_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_04_.rpf` – nordöstlicher Wohn-/Saloon-Bereich
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_04_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_05_.rpf` – westliche und nördliche Bebauung
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_05_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_06_.rpf` – ergänzende Ortsbebauung
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_06_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_07_.rpf` – Kirche, nördlicher Ortsrand und Magic-Lantern-Bereich
+      - "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_07_.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
+- [x] `val_vfx.rpf` – nur Metadaten sichern; VFX-Drawables noch nicht in die Standard-Außenwelt übernehmen
+      - Keine Metadaten enthalten, "D:\Projects\RDO-RPG\data\raw\01-valentine-exteriors\val_vfx.rpf" Exportiertes Rpf Archiv verschlüsselung prüfen
 
-Aus jedem `val_0X_.rpf` exportieren:
+### Prüfung des vollständigen Archivexports vom 2026-10-09
+
+Die acht Ordner sind als Inhaltsinventar brauchbar, aber **nicht direkt für die
+Konvertierung geeignet**. Geprüfter Bestand: 291 `.ydr`, vier `.yft`, 155
+`.ytd` und sieben binäre `.ymf`; keine `.ydr.full`, XML oder PNG. Die
+Ressourcen tragen weiterhin den `RSC8`-/`PSIN`-Containerheader. Unsere
+reproduzierbare Pipeline verarbeitet dagegen die von OpenIV über **Save
+content/Export** erzeugten `.full/.gfx/.sys`-Dateien sowie XML und PNG.
+
+Darum bitte **nicht** alle 291 YDR einzeln erneut exportieren. Die vorhandenen
+178 Valentine-`.ydr.full`-Exporte werden zuerst gegen den Rundweg ausgewertet;
+nur danach fehlende, sichtbare Silhouetten erhalten eine kleine, exakte
+Exportliste. Die kopierten RPF-Inhalte bleiben als Herkunftsinventar erhalten.
+
+
+Für die später von der Coverage-Auswertung **einzeln benannten Ziele** aus dem
+jeweiligen `val_0X_.rpf` exportieren:
 
 - alle **Drawable objects (`.ydr`)** über Save content/Export;
 - alle **Fragment objects (`.yft`)** über Save content/Export;
@@ -85,10 +117,11 @@ Aus jedem `val_0X_.rpf` exportieren:
 - alle **Texture dictionaries (`.ytd`)** als PNG in getrennte YTD-Ordner;
 - `_manifest.ymf`, `.ymap` und `.ytyp` als XML.
 
-Nicht einzeln suchen, wenn das komplette Archiv erreichbar ist. Die Quelldaten
-enthalten im Ausschnitt 2.263 Außenwelt-Entitäten und 1.108 unterschiedliche
-Archetypen, davon 1.083 nur als Hash. Ein vollständiger Export dieser sieben
-Archive ist zuverlässiger als eine manuelle Hash-Liste.
+Die Quelldaten enthalten im Ausschnitt 2.263 Außenwelt-Entitäten und 1.108
+unterschiedliche Archetypen, davon 1.083 nur als Hash. Deshalb wird der
+vorhandene Archiv-Snapshot maschinell ausgewertet und anschließend nur eine
+kleine Liste sichtbarer, noch fehlender Rundweg-Silhouetten per **Go to file**
+und **Save content/Export** nachgezogen.
 
 ### Sichtbare Schlüsselmodelle zur Kontrolle
 

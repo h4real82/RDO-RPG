@@ -12,7 +12,7 @@ ORIGIN_LAT = -63.6
 def _to_game(lng: float, lat: float) -> dict[str, float]:
     return {
         'x': round((lng - ORIGIN_LNG) / SCALE_FACTOR, 4),
-        'z': round((lat - ORIGIN_LAT) / SCALE_FACTOR, 4),
+        'z': round(-(lat - ORIGIN_LAT) / SCALE_FACTOR, 4),
     }
 
 

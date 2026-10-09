@@ -6,6 +6,12 @@ describe('world coordinates', () => {
     expect(toGameCoordinates(111.29, -63.6)).toEqual({ x: 0, z: 0 });
   });
 
+  it('maps increasing game Y to negative Three.js Z to preserve handedness', () => {
+    const point = toGameCoordinates(111.29, -63.58448);
+    expect(point.x).toBe(0);
+    expect(point.z).toBeCloseTo(-1);
+  });
+
   it('uses floor-based chunk indices on both sides of the origin', () => {
     expect(CHUNK_SIZE).toBe(250);
     expect(getChunkId(250, -0.001)).toBe('1:-1');

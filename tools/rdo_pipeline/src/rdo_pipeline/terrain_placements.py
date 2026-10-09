@@ -55,7 +55,7 @@ def build_terrain_placements(ymap_paths: Sequence[Path], model_names: Sequence[s
             placements[model] = {
                 'source': path.name,
                 'asset': f'models/valentine/{model}.glb',
-                'position': {'x': x, 'y': elevation, 'z': game_y},
+                'position': {'x': x, 'y': elevation, 'z': -game_y},
                 'rotation': _rotation_xyz(quaternion),
                 'scale': {'x': xy_scale, 'y': z_scale, 'z': xy_scale},
                 'layer': 'terrain',

@@ -67,7 +67,7 @@ async function main() {
     const inactive = await page.evaluate(() => window.__rdoPreview?.getState());
     await page.keyboard.up('w');
     if (blurred.player.z !== inactive.player.z) throw new Error('Movement continued after window blur.');
-    await page.evaluate(() => window.__rdoPreview?.teleport({ x: -259.0177, y: 120.1503, z: 741.3681 }));
+    await page.evaluate(() => window.__rdoPreview?.teleport({ x: -259.0177, y: 120.1503, z: -741.3681 }));
     await page.keyboard.press('e');
     await page.waitForSelector('section[role="dialog"]');
     const dialogPosition = await page.evaluate(() => window.__rdoPreview?.getState().player);

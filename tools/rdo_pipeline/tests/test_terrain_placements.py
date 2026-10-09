@@ -26,7 +26,7 @@ def test_terrain_placements_resolve_exact_model_hash_and_game_axes(tmp_path):
     assert result == [{
         'source': 'l_09__strm_0_ymap.xml',
         'asset': 'models/valentine/l_09__hd_0_0_-1.glb',
-        'position': {'x': -288.0, 'y': 118.0, 'z': 800.0},
+        'position': {'x': -288.0, 'y': 118.0, 'z': -800.0},
         'rotation': {'x': 0.0, 'y': 0.0, 'z': 0.0},
         'scale': {'x': 1.0, 'y': 1.0, 'z': 1.0},
         'layer': 'terrain', 'lod': 0, 'interior': False,

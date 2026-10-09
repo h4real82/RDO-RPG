@@ -13,7 +13,7 @@ describe('Minimap', () => {
   it('projects a known CRS reference point from the contract core', () => {
     const point = minimap.project(toGameCoordinates(111.30552, -63.58448));
     expect(point.x).toBeCloseTo(1, 10);
-    expect(point.y).toBeCloseTo(1, 10);
+    expect(point.y).toBeCloseTo(-1, 10);
   });
 
   it('preserves negative game coordinates deterministically', () => {

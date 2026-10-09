@@ -133,7 +133,7 @@ it('checks the entire camera-player segment for occluders', () => {
   wall.material.dispose();
 });
 
-it('keeps Blender-exported Y-up GLB geometry upright while applying a world-Y heading', () => {
+it('keeps the Blender GLB basis right-handed without reflective instance scale', () => {
   const instance = new Group();
   const placement = {
     position: { x: 1, y: 2, z: 3 },
@@ -142,26 +142,28 @@ it('keeps Blender-exported Y-up GLB geometry upright while applying a world-Y he
   };
 
   applyPlacementTransform(instance, placement);
+  instance.updateMatrix();
 
   expect(instance.position).toMatchObject({ x: 1, y: 2, z: 3 });
   expect(new Vector3(0, 1, 0).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 1, 0));
   expect(new Vector3(1, 0, 0).applyQuaternion(instance.quaternion).round()).toEqual(new Vector3(0, 0, -1));
-  expect(instance.scale).toMatchObject({ x: 4, y: 5, z: -6 });
+  expect(instance.scale).toMatchObject({ x: 4, y: 5, z: 6 });
+  expect(instance.matrix.determinant()).toBeGreaterThan(0);
 });
 
-it('maps Blender local geometry into the required game-Y-positive world-Z basis', () => {
+it('maps Blender local geometry into the right-handed game-Y-negative world-Z basis', () => {
   const instance = new Group();
   applyPlacementTransform(instance, {
-    position: { x: 10, y: 30, z: 20 },
-    rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    position: { x: 10, y: 30, z: -20 },
+    rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
   });
   instance.updateMatrixWorld(true);
   // Game-local (1,2,3) becomes GLB (1,3,-2).
   // Stored +90deg game-Z quaternion is inverse orientation:
-  // game world = (10,20,30) + (2,-1,3), Three world = (12,33,19).
+  // game world = (10,20,30) + (2,-1,3), Three world = (12,33,-19).
   const point = new Vector3(1, 3, -2).applyMatrix4(instance.matrixWorld);
   expect(point.x).toBeCloseTo(12);
   expect(point.y).toBeCloseTo(33);
-  expect(point.z).toBeCloseTo(19);
+  expect(point.z).toBeCloseTo(-19);
 });

@@ -6,9 +6,10 @@ export interface GameCoordinates {
 }
 
 export function toGameCoordinates(lng: number, lat: number): GameCoordinates {
+  const gameY = (lat - -63.6) / 0.01552;
   return {
     x: (lng - 111.29) / 0.01552,
-    z: (lat - -63.6) / 0.01552,
+    z: gameY === 0 ? 0 : -gameY,
   };
 }
 

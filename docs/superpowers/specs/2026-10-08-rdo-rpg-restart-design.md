@@ -42,7 +42,7 @@ Das Weltmanifest ist die einzige Quelle für Objekt-ID, Modellpfad, Position, Ro
 
 Die vorhandene RDO-Rekonstruktionsvorgabe gilt unverändert:
 
-- Coordinates: `game_x = (lng - 111.29) / 0.01552` und `game_y = (lat - (-63.6)) / 0.01552`; Three.js verwendet X = `game_x`, Y = Höhe, Z = `game_y`.
+- Coordinates: `game_x = (lng - 111.29) / 0.01552` und `game_y = (lat - (-63.6)) / 0.01552`; Three.js verwendet X = `game_x`, Y = Höhe, Z = `-game_y`. Diese rechtshändige Basis `(X, Z, -Y)` entspricht dem Blender-/glTF-Export und verhindert die zuvor durch eine negative Instanzskalierung gespiegelten Fassaden und Schriften.
 - Schichten: Terrain `0.000`, Straßen/Schienen `0.002`, Boardwalks `0.0035`, Gebäude/Fundamente `0.005`.
 - Straßen und Schienen sind manifestgesteuerte BufferGeometry-Quad-Strips; Schienen haben Kollisions- und Lichtraumpriorität.
 - Streaming erfolgt deterministisch in 250 m × 250 m großen Chunks mit vollständigem GPU-Resource-Disposal beim Entladen.

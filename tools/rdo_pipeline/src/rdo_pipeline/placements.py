@@ -134,11 +134,11 @@ def expand_mlo_placements(payload: Mapping[str, Any], archetypes: Mapping[str, A
 
 def _rotation_xyz(rotation: list[float]) -> dict[str, float]:
     game_x, game_y, game_z, w = (float(value) for value in rotation)
-    # Normal CEntityDef stores inverse orientation. Our required world basis
-    # swaps game Y/Z (a reflection): conjugating that inverse rotation by the
-    # reflection gives quaternion vector (x,z,y). The runtime separately flips
-    # GLB-local Z to reconcile Blender's (x,z,-y) mesh basis with (x,z,y).
-    x, y, z = game_x, game_z, game_y
+    # CEntityDef stores inverse orientation. Invert it, then change from game
+    # (X,Y,Z-up) to the proper-rotation Three basis (X,Z,-Y). This keeps the
+    # determinant positive, so asymmetric facades and readable signs are not
+    # mirrored by a compensating negative instance scale.
+    x, y, z = -game_x, -game_z, game_y
     norm = math.sqrt(x*x + y*y + z*z + w*w)
     if not math.isfinite(norm) or norm == 0:
         raise ValueError('invalid source rotation quaternion')
@@ -182,7 +182,7 @@ def adapt_rdo_placements(payload: Mapping[str, Any], available_models: set[str])
         placements.append({
             'source': str(entity['sourceFile']),
             'asset': f'models/valentine/{asset_model}.glb',
-            'position': {'x': x, 'y': elevation, 'z': game_y},
+            'position': {'x': x, 'y': elevation, 'z': -game_y},
             'rotation': _rotation_xyz(entity['rotation']),
             'scale': {'x': scale_x, 'y': scale_z, 'z': scale_y},
             'layer': 'buildings',

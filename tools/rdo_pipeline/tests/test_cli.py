@@ -76,7 +76,7 @@ def test_add_terrain_tiles_merges_y_map_ground_truth_into_existing_preview(tmp_p
     assert len(result['placements']) == 2
     tile = next(item for item in result['placements'] if item['layer'] == 'terrain')
     assert tile['asset'] == 'models/valentine/l_09__hd_0_0_-1.glb'
-    assert tile['position'] == {'x': -288.0, 'y': 118.0, 'z': 800.0}
+    assert tile['position'] == {'x': -288.0, 'y': 118.0, 'z': -800.0}
     report = json.loads((runtime / 'terrain-placement-report.json').read_text())
     assert report['baseManifestSha256']
     assert report['terrainModelCount'] == 1

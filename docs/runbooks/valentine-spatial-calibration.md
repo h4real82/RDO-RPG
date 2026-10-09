@@ -8,8 +8,10 @@ selection before more OpenIV detail is exported.
 
 The fixture records unmodified game coordinates as `X = gameX`,
 `gameY = gameY`, and `elevation = gameZ`. It does not encode a Three.js
-projection. One shared transform must later project these records for buildings,
-terrain, roads, collision, POIs, and the minimap.
+projection. The calibrated shared projection is `Three X = gameX`,
+`Three Y = elevation`, and `Three Z = -gameY`, a proper rotation with positive
+determinant. Buildings, terrain, roads, collision, POIs, and the minimap must
+all use this basis; reflective per-asset scale is forbidden.
 
 The authoritative fixture is
 `data/reference/valentine/spatial-anchors.json`. Placement anchors are exact

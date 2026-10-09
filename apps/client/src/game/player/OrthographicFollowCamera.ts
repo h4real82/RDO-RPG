@@ -42,8 +42,9 @@ export class OrthographicFollowCamera {
     this.camera.updateMatrixWorld();
   }
 
-  setReferencePose(position: Vector3Like, target: Vector3Like): void {
-    this.camera.zoom = this.viewHeight / 90;
+  setReferencePose(position: Vector3Like, target: Vector3Like, visibleHeight = 90): void {
+    const safeHeight = Number.isFinite(visibleHeight) ? Math.max(4, Math.min(500, visibleHeight)) : 90;
+    this.camera.zoom = this.viewHeight / safeHeight;
     this.camera.updateProjectionMatrix();
     this.camera.position.set(position.x, position.y, position.z);
     this.referenceTarget = new Vector3(target.x, target.y, target.z);
