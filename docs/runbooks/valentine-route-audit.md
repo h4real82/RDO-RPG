@@ -16,17 +16,24 @@ between the station tile at (-160, 608) and the village tile at (-288, 736):
 
 | Source drawable | YMAP X/Z center | Raw `.ydr.full` | Runtime GLB |
 | --- | --- | --- | --- |
-| `l_09__hd_0_-2_1` | -160, 672 | missing | missing |
-| `l_09__hd_0_-2_0` | -224, 672 | missing | missing |
-| `l_09__hd_0_-1_0` | -224, 736 | missing | missing |
+| `l_09__hd_0_-2_1` | -160, 672 | exported | converted and placed |
+| `l_09__hd_0_-2_0` | -224, 672 | exported | converted and placed |
+| `l_09__hd_0_-1_0` | -224, 736 | exported | converted and placed |
+
+Imported locally on 2026-10-09: all three source `.ydr.full` files were
+converted with exact vertex-color preservation and source YMAP positions. The
+preview manifest now has 603 placements, including nine HD terrain tiles.
+`validate-valentine`, the workspace build, and the browser smoke test pass.
+These checks do **not** establish a continuous playable route. The conversion
+bound 0 diffuse textures across these three models (33 shaders total), so
+terrain material/color fidelity is still an open visual issue. The raw and
+local-preview data are intentionally Git-ignored and remain local.
 
 These are the minimum *candidate* exports for the direct station-to-Sheriff
-corridor, not proof of exact road alignment or complete camera coverage. Export
-from the corresponding OpenIV **main archive view** using **Save content/Export**
-to a dedicated raw terrain folder. Do not use Extract from search results, which
-only copies encrypted resources. Retain source filenames and provenance. Convert
-and integrate only after checking each export, then test an actual continuous
-walk before considering the corridor done. Paths, rails, vegetation and the
+corridor, not proof of exact road alignment or complete camera coverage. They
+were exported from the OpenIV **main archive view** using **Save content/Export**;
+Extract from search results would only copy encrypted resources. Test an actual
+continuous walk before considering the corridor done. Paths, rails, vegetation and the
 return leg remain unverified; do not synthesize them from this tile grid.
 
 The user-described “circus tent” is not identified by these names. Map-facing
