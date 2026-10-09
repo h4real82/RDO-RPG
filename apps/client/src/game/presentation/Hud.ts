@@ -23,7 +23,7 @@ export class Hud {
       : `Valentine · X ${position.x.toFixed(1)} · Z ${position.z.toFixed(1)} · Karte ${minimap?.x.toFixed(1) ?? '?'} / ${minimap?.y.toFixed(1) ?? '?'}`;
     const controls = ' · Zoom: Mausrad / + / − · 0: Zurücksetzen';
     this.element.textContent = (missingModelCount > 0 ? `${detail} · Teilvorschau: ${missingModelCount} Modelle fehlen` : detail)
-      + (blocked ? ' · Hindernis vor der Figur' : '') + controls;
+      + (blocked ? ' · Hindernis oder Geländelücke vor der Figur' : '') + controls;
   }
 
   dispose(): void {

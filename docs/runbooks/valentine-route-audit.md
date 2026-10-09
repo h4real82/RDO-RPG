@@ -22,7 +22,7 @@ between the station tile at (-160, 608) and the village tile at (-288, 736):
 
 Imported locally on 2026-10-09: all three source `.ydr.full` files were
 converted with exact vertex-color preservation and source YMAP positions. The
-preview manifest now has 603 placements, including nine HD terrain tiles.
+preview manifest then had 603 placements, including nine HD terrain tiles.
 `validate-valentine`, the workspace build, and the browser smoke test pass.
 Headless screenshots at all three tile centers show loaded ground geometry and
 the player being grounded by the new meshes without browser errors. This is
@@ -32,6 +32,23 @@ bound 0 single-diffuse textures across these three models (33 shaders total);
 the separate four-layer preview now covers 32 materials. Final UV scaling and
 terrain material fidelity remain open visual issues. The raw and
 local-preview data are intentionally Git-ignored and remain local.
+
+## Browser ground probe — station approach
+
+On 2026-10-09 the browser was teleported to sampled points of the exported
+`valentine:road:0062` trace. Initially the loaded terrain raycast found **no
+ground** at (-238.7, 600.4), (-219.5, 621.8), or (-208.1, 634.3). The source
+`l_09__strm_0_ymap.xml` places `l_09__hd_0_-3_0` at about (-224, 608). Its
+already-exported `.ydr.full` was located under the user's raw model directory,
+converted with 44 exact source vertex-color channels on 11 meshes, and added
+at the source YMAP transform. The local preview now has **ten** HD terrain tiles
+and **604** total placements. After import, all ten sampled points from
+(-180.8, 626.5) via (-219.5, 621.8) to (-238.7, 600.4) had terrain heights
+in the browser; there were no page errors. This confirms sampled ground
+coverage, **not** a continuous walk free of collision or the full circuit.
+Movement now stops at absent terrain instead of continuing at the previous
+valid elevation; other walkable surfaces will need explicit source-grounded
+treatment later.
 
 The terrain PNGs are under `data/raw/terrain/l_09/textures`, not the general
 `data/raw/textures` folder. Terrain materials are resolved by the exact

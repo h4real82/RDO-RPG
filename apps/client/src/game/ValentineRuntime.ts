@@ -183,7 +183,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const ground = new TerrainGround();
   let player: PlayerController | undefined;
   const canOccupy = (position: { x: number; y: number; z: number }): boolean => {
-    return !player || !collision.blocksTransition(player.position, position);
+    return ground.heightAt(position.x, position.z) !== undefined
+      && (!player || !collision.blocksTransition(player.position, position));
   };
   player = new PlayerController(spawn, 6, canOccupy);
   const playerMarker = new Mesh(new SphereGeometry(0.4, 16, 12), new MeshStandardMaterial({ color: '#caa05d' }));
