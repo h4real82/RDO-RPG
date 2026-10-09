@@ -236,7 +236,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   let frameCount = 0;
   const render = (now: number): void => {
     if (disposed) return;
-    const delta = Math.min((now - previous) / 1000, 0.1);
+    const delta = Math.min((now - previous) / 1000, 0.5);
     previous = now;
     player.setMovement(menu.isOpen ? { forward: 0, right: 0 } : { forward: Number(pressed.has('w')) - Number(pressed.has('s')), right: Number(pressed.has('d')) - Number(pressed.has('a')) });
     player.update(delta);

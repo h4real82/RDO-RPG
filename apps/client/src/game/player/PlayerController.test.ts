@@ -27,4 +27,14 @@ describe('PlayerController', () => {
     expect(player.position.x).toBe(0);
     expect(player.position.z).toBeCloseTo(-Math.SQRT1_2 * 6);
   });
+
+  it('does not jump across a narrow obstacle during a slow frame', () => {
+    const player = new PlayerController({ x: 0, y: 0, z: 0 }, 6,
+      (position) => position.x < 1 || position.x > 1.5);
+    player.setMovement({ forward: 0, right: 1 });
+
+    player.update(0.5);
+
+    expect(player.position.x).toBeLessThan(1);
+  });
 });

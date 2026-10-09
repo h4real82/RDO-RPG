@@ -35,10 +35,14 @@ export class PlayerController {
     if (magnitude === 0) return;
     const forward = this.movement.forward / magnitude;
     const right = this.movement.right / magnitude;
-    const nextX = this.position.x + right * this.speed * deltaSeconds;
-    if (this.canOccupy({ x: nextX, y: this.position.y, z: this.position.z })) this.position.x = nextX;
-    const nextZ = this.position.z - forward * this.speed * deltaSeconds;
-    if (this.canOccupy({ x: this.position.x, y: this.position.y, z: nextZ })) this.position.z = nextZ;
+    const steps = Math.ceil(deltaSeconds / 0.1);
+    const stepSeconds = deltaSeconds / steps;
+    for (let step = 0; step < steps; step += 1) {
+      const nextX = this.position.x + right * this.speed * stepSeconds;
+      if (this.canOccupy({ x: nextX, y: this.position.y, z: this.position.z })) this.position.x = nextX;
+      const nextZ = this.position.z - forward * this.speed * stepSeconds;
+      if (this.canOccupy({ x: this.position.x, y: this.position.y, z: nextZ })) this.position.z = nextZ;
+    }
     this.facing.x = right;
     this.facing.z = -forward;
   }
