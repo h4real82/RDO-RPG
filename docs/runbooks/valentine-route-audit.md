@@ -24,10 +24,20 @@ Imported locally on 2026-10-09: all three source `.ydr.full` files were
 converted with exact vertex-color preservation and source YMAP positions. The
 preview manifest now has 603 placements, including nine HD terrain tiles.
 `validate-valentine`, the workspace build, and the browser smoke test pass.
+Headless screenshots at all three tile centers show loaded ground geometry and
+the player being grounded by the new meshes without browser errors. This is
+tile-level evidence only; it does not prove a continuous walk between them.
 These checks do **not** establish a continuous playable route. The conversion
 bound 0 diffuse textures across these three models (33 shaders total), so
 terrain material/color fidelity is still an open visual issue. The raw and
 local-preview data are intentionally Git-ignored and remain local.
+
+The terrain PNGs are under `data/raw/terrain/l_09/textures`, not the general
+`data/raw/textures` folder. Rebuilding against the correct root produced
+byte-identical GLBs because these terrain shaders expose multi-layer bindings
+rather than the converter's single `DiffuseTex` contract. The missing color is
+therefore a shader-reconstruction issue, not a missing-PNG issue; do not assign
+one arbitrary layer as a replacement.
 
 These are the minimum *candidate* exports for the direct station-to-Sheriff
 corridor, not proof of exact road alignment or complete camera coverage. They
@@ -74,7 +84,7 @@ foreach ($model in $models) {
 & 'D:/Projects/RDO-RPG/apps/tools/Blender/blender-3.2.2-windows-x64/blender.exe' `
   --background --python tools/convert_models_blender.py -- `
   --input-dir $rawModelRoot --output-dir "$runtime/models/valentine" `
-  --texture-root 'D:/Projects/RDO-RPG/data/raw/textures' `
+  --texture-root 'D:/Projects/RDO-RPG/data/raw/terrain/l_09/textures' `
   --only $models[0] --only $models[1] --only $models[2]
 if ($LASTEXITCODE -ne 0) { throw 'Blender terrain conversion failed' }
 $env:PYTHONPATH = (Resolve-Path 'tools/rdo_pipeline/src').Path
