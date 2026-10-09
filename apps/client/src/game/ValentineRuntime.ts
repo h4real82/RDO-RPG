@@ -243,7 +243,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const terrainHeight = ground.heightAt(player.position.x, player.position.z);
     if (terrainHeight !== undefined) player.position.y = terrainHeight;
     playerMarker.position.set(player.position.x, player.position.y + 0.4, player.position.z);
-    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount);
+    hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount, player.blocked);
     void world.update(player.position.x, player.position.z);
     const target = new Vector3(player.position.x, player.position.y, player.position.z);
     cameraController.update(target, delta);
