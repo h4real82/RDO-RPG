@@ -48,3 +48,39 @@ movement in all four cardinal directions at this point and the first-frame
 screenshot shows the marker between buildings. This validates a local starting
 point only, **not** the full station-to-town route. The bank reflection helper
 is omitted from rendering/collision, but the physical bank shell remains.
+
+## Three-tile import after OpenIV export
+
+Run from the Codex worktree root only after all three `.ydr.full` files exist.
+The preflight reads raw exports without changing them; Blender never overwrites
+an existing GLB. The manifest writer deduplicates the six existing tiles.
+
+```powershell
+$rawModelRoot = 'D:/Projects/RDO-RPG/data/raw/terrain/l_09/models'
+$ymap = 'D:/Projects/RDO-RPG/data/raw/terrain/jklm_07_10/metadata/l_09__strm_0_ymap.xml'
+$runtime = 'data/runtime/valentine/local-preview'
+$models = @('l_09__hd_0_-2_1', 'l_09__hd_0_-2_0', 'l_09__hd_0_-1_0')
+foreach ($model in $models) {
+  $exports = @(Get-ChildItem -LiteralPath $rawModelRoot -Recurse -File -Filter "$model.ydr.full")
+  if ($exports.Count -ne 1) { throw "Expected one .ydr.full for $model, found $($exports.Count)" }
+}
+& 'D:/Projects/RDO-RPG/apps/tools/Blender/blender-3.2.2-windows-x64/blender.exe' `
+  --background --python tools/convert_models_blender.py -- `
+  --input-dir $rawModelRoot --output-dir "$runtime/models/valentine" `
+  --texture-root 'D:/Projects/RDO-RPG/data/raw/textures' `
+  --only $models[0] --only $models[1] --only $models[2]
+if ($LASTEXITCODE -ne 0) { throw 'Blender terrain conversion failed' }
+$env:PYTHONPATH = (Resolve-Path 'tools/rdo_pipeline/src').Path
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli add-terrain-tiles `
+  --asset-root "$runtime/models/valentine" --runtime-root $runtime --ymap $ymap `
+  --model $models[0] --model $models[1] --model $models[2]
+if ($LASTEXITCODE -ne 0) { throw 'Terrain manifest integration failed' }
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli validate-valentine --runtime-root $runtime
+if ($LASTEXITCODE -ne 0) { throw 'Terrain runtime validation failed' }
+npx pnpm -r build
+node scripts/e2e-check.mjs
+```
+
+The import is not an acceptance test. Confirm the source hashes, rendered
+terrain, continuous station-to-town walk, and absence of new collision or
+material regressions before calling the route playable.
