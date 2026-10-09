@@ -13,6 +13,7 @@
     "build:server": "pnpm --filter @rdo-rpg/server build",
     "build:client": "pnpm --filter @rdo-rpg/client build",
     "test:e2e": "node scripts/e2e-check.mjs",
+    "test:route": "node scripts/e2e-route-check.mjs",
     "clean": "pnpm -r exec rm -rf dist node_modules"
   },
   "devDependencies": {

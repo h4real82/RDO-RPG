@@ -69,6 +69,12 @@ an exact OpenIV export has been requested. No substitute terrain or road was
 fabricated. This test establishes one successful street segment, not the
 user-requested full station–church–saloon–station loop.
 
+The route check is repeatable with `npx pnpm test:route 12 20`; it boots an
+isolated local browser preview, reads the exported road trace, moves with
+WASD, and writes a screenshot plus the last reached source index. To check the
+currently missing northern segment, use `npx pnpm test:route 20 36` after
+the next OpenIV import. The test fails on a stall or browser exception.
+
 The terrain PNGs are under `data/raw/terrain/l_09/textures`, not the general
 `data/raw/textures` folder. Terrain materials are resolved by the exact
 `lookuptexture` and `diffusetexture_layer0..3` parameter hashes. OpenIV's
