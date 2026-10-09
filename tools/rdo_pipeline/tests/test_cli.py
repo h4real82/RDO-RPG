@@ -114,6 +114,44 @@ def test_complete_rebuild_clears_the_previous_missing_model_report(tmp_path: Pat
     assert json.loads((runtime / 'missing-models.json').read_text())['missingModels'] == []
 
 
+def test_build_valentine_writes_an_auditable_default_day_world_state_report(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    assets = tmp_path / 'assets'
+    assets.mkdir()
+    for name in ('shop', 'shop_lockdown'):
+        (assets / f'{name}.glb').write_bytes(name.encode())
+    placements = tmp_path / 'placements.json'
+    placements.write_text(json.dumps({'version': 1, 'world': 'valentine', 'placements': [
+        {
+            'id': 'shop', 'asset': 'models/valentine/shop.glb',
+            'position': {'x': 1, 'y': 2, 'z': 3}, 'rotation': {'x': 0, 'y': 0, 'z': 0},
+            'scale': {'x': 1, 'y': 1, 'z': 1}, 'layer': 'buildings', 'chunkId': '0:0',
+            'lod': 0, 'tags': ['exterior'],
+        },
+        {
+            'id': 'shop-lockdown', 'asset': 'models/valentine/shop_lockdown.glb',
+            'position': {'x': 1, 'y': 2, 'z': 3}, 'rotation': {'x': 0, 'y': 0, 'z': 0},
+            'scale': {'x': 1, 'y': 1, 'z': 1}, 'layer': 'buildings', 'chunkId': '0:0',
+            'lod': 0, 'tags': ['exterior'],
+        },
+    ]}), encoding='utf-8')
+    runtime = tmp_path / 'runtime'
+    monkeypatch.setattr(cli, 'approved_runtime_root', lambda candidate: runtime)
+    monkeypatch.setattr('sys.argv', [
+        'rdo-pipeline', 'build-valentine', '--asset-root', str(assets),
+        '--placements', str(placements), '--runtime-root', str(runtime),
+    ])
+
+    assert cli.main() == 0
+
+    report = json.loads((runtime / 'world-state-report.json').read_text())
+    assert report['state'] == 'default_day'
+    assert report['acceptedCount'] == 1
+    assert report['excludedCount'] == 1
+    assert report['excluded'][0]['reason'] == 'inactive-lockdown-variant'
+
+
 def test_cli_rejects_runtime_output_outside_repository_runtime_directory(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match='data/runtime'):
         approved_runtime_root(tmp_path)

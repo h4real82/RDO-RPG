@@ -18,6 +18,7 @@ from .vertex_colors import decode_drawable_vertex_colors
 from .shader_database import LocalOodleDecoder, export_matching_programs
 from .terrain_placements import build_terrain_placements
 from .material_preview import apply_material_preview
+from .world_state import select_world_state
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -166,6 +167,8 @@ def main() -> int:
             placements, missing = load_placements(args.placements, available_models)
         if missing and not args.allow_incomplete:
             raise ValueError(f'{len(missing)} placement models are unresolved; pass --allow-incomplete only for an explicitly partial test runtime')
+        world_state = select_world_state(placements, state='default_day')
+        placements = list(world_state.accepted)
         manifest = build_manifest(inventory, placements)
         write_runtime_manifest(
             manifest, inventory, approved_runtime_root(args.runtime_root),
@@ -175,6 +178,13 @@ def main() -> int:
         if missing:
             print(f'partial runtime: {len(missing)} placement models unresolved')
         (approved_runtime_root(args.runtime_root) / 'coverage.json').write_text(json.dumps(build_coverage_report(source_payload, placements, missing), indent=2) + '\n', encoding='utf-8')
+        (approved_runtime_root(args.runtime_root) / 'world-state-report.json').write_text(json.dumps({
+            'version': 1,
+            'state': 'default_day',
+            'acceptedCount': len(world_state.accepted),
+            'excludedCount': len(world_state.excluded),
+            'excluded': list(world_state.excluded),
+        }, indent=2, sort_keys=True) + '\n', encoding='utf-8')
         return 0
     if args.command == 'add-terrain-tiles':
         runtime_root = approved_runtime_root(args.runtime_root)
