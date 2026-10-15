@@ -157,6 +157,41 @@ def test_cli_rejects_runtime_output_outside_repository_runtime_directory(tmp_pat
         approved_runtime_root(tmp_path)
 
 
+def test_rebuild_applies_selected_material_previews_after_copying_base_models(tmp_path, monkeypatch):
+    import struct
+    from hashlib import sha256
+
+    assets, staged, runtime = [tmp_path / name for name in ('assets', 'staged', 'runtime')]
+    assets.mkdir()
+    staged.mkdir()
+    (assets / 'shop.glb').write_bytes(b'original-untextured-model')
+    document = {'asset': {'version': '2.0'}, 'materials': [{
+        'extras': {'rdo_material_status': 'diffuse-only'},
+        'pbrMetallicRoughness': {'baseColorTexture': {'index': 0}},
+    }]}
+    chunk = json.dumps(document).encode()
+    chunk += b' ' * (-len(chunk) % 4)
+    textured = struct.pack('<5I', 0x46546c67, 2, 20 + len(chunk), len(chunk), 0x4e4f534a) + chunk
+    (staged / 'shop.glb').write_bytes(textured)
+    source = tmp_path / 'placements.json'
+    source.write_text(json.dumps({'entities': [{
+        'modelName': 'shop', 'position': [1, 2, 3], 'rotation': [0, 0, 0, 1],
+        'scale': [1, 1, 1], 'sourceFile': 'shop.xml',
+    }]}), encoding='utf-8')
+    monkeypatch.setattr(cli, 'approved_runtime_root', lambda candidate: runtime)
+    monkeypatch.setattr('sys.argv', [
+        'rdo-pipeline', 'build-valentine', '--asset-root', str(assets), '--placements', str(source),
+        '--runtime-root', str(runtime), '--material-preview-root', str(staged),
+    ])
+
+    for _ in range(2):
+        assert cli.main() == 0
+        assert (runtime / 'models/valentine/shop.glb').read_bytes() == textured
+        provenance = json.loads((runtime / 'provenance.json').read_text())
+        assert next(a['sha256'] for a in provenance['assets'] if a['path'].endswith('/shop.glb')) == sha256(textured).hexdigest()
+        assert json.loads((runtime / 'material-preview-report.json').read_text())['promotedModelCount'] == 1
+
+
 def test_cli_adapts_an_rdo_entity_export_and_reports_unresolved_models(tmp_path: Path) -> None:
     placements = tmp_path / 'placements.json'
     placements.write_text('{"entities":[{"modelName":"0x7fb016f7","position":[1,2,3],"rotation":[0,0,0,1],"scale":[1,1,1],"sourceFile":"station.xml"}]}', encoding='utf-8')

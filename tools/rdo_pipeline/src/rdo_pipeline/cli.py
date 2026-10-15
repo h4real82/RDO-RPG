@@ -88,6 +88,8 @@ def main() -> int:
     build.add_argument('--runtime-root', type=Path, required=True)
     build.add_argument('--allow-incomplete', action='store_true')
     build.add_argument('--archetype-root', type=Path)
+    build.add_argument('--material-preview-root', type=Path,
+                       help='reapply verified diffuse preview GLBs after rebuilding base assets')
     terrain = commands.add_parser('add-terrain-tiles')
     terrain.add_argument('--asset-root', type=Path, required=True)
     terrain.add_argument('--ymap', type=Path, action='append', required=True)
@@ -174,6 +176,11 @@ def main() -> int:
             manifest, inventory, approved_runtime_root(args.runtime_root),
             asset_root=args.asset_root, placement_inputs=[args.placements, *archetype_paths],
         )
+        if args.material_preview_root is not None:
+            if not args.material_preview_root.is_dir():
+                raise ValueError('material preview root must be an existing directory')
+            material_report = apply_material_preview(args.material_preview_root, approved_runtime_root(args.runtime_root))
+            print(f"material previews applied: {material_report['promotedModelCount']}")
         (approved_runtime_root(args.runtime_root) / 'missing-models.json').write_text(json.dumps({'version': 1, 'missingModels': list(missing)}, indent=2) + '\n', encoding='utf-8')
         if missing:
             print(f'partial runtime: {len(missing)} placement models unresolved')

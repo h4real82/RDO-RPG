@@ -77,3 +77,16 @@ Reproduce each completed model with:
 node scripts/strip-preview-masks.mjs data/runtime/valentine/material-preview/val_03_saloon_ext.glb data/runtime/valentine/material-runtime/val_03_saloon_ext.glb
 & tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli apply-material-preview --asset-root data/runtime/valentine/material-runtime --runtime-root data/runtime/valentine/local-preview
 ```
+
+When rebuilding the world, include the verified preview directory in the same
+command. Otherwise the base inventory deliberately replaces generated models,
+which can restore the old untextured GLBs:
+
+```powershell
+& tools/rdo_pipeline/.venv/Scripts/python.exe -m rdo_pipeline.cli build-valentine --asset-root D:/Projects/RDO-RPG/data/processed/models_glb --placements D:/Projects/RDO-RPG/data/valentine_placements.json --runtime-root data/runtime/valentine/local-preview --material-preview-root data/runtime/valentine/material-runtime --allow-incomplete
+```
+
+Re-add the source-backed terrain tiles afterwards as documented by the terrain
+pipeline. `material-preview-report.json` records replaced assets and hashes;
+`provenance.json` must contain the final textured asset hashes. A regression test
+rebuilds twice and verifies that the texture preview survives both runs.

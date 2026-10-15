@@ -1,7 +1,26 @@
 # Valentine Vertical Slice – geprüfter Stand
 
-Stand: 2026-10-09. Diese Notiz beschreibt den lokalen Codex-Worktree, nicht
+Stand: 2026-10-15. Diese Notiz beschreibt den lokalen Codex-Worktree, nicht
 einen veröffentlichten oder vollständig spielbaren Build.
+
+## Neu geprüft am 15.10.2026
+
+- Die korrigierte Projektion ist `X = gameX`, `Y = gameZ`, `Z = -gameY`.
+  Der Browsercheck prüft 141 geladene Platzierungen mit positiver Determinante.
+- Die Auswahl `default_day` akzeptiert 130 Außenwelt-Platzierungen; elf
+  Terrain-Kacheln kommen hinzu. Ausgeschlossen sind 219 Innenräume, 43
+  VFX-Helfer, zehn Lockdown-Varianten und drei doppelte LOD-Hüllen.
+- Nach Wiederherstellung von 91 Materialvorschauen ist die Beschriftung am
+  General Store im West-Kontrollbild lesbar und nicht gespiegelt. Fehlende
+  Materialien und weitere Geometrie bleiben sichtbar; die Kartenabnahme ist offen.
+- Ein Neuaufbau kann die Materialvorschauen jetzt über
+  `--material-preview-root` direkt übernehmen. Der Regressionstest prüft zwei
+  aufeinanderfolgende Neuaufbauten samt finalen Asset-Hashes.
+- Pipeline: 90 Tests bestanden. Client: 47 Tests bestanden. Vertragsprüfungen,
+  Browser-Smoke-Test für WASD/Zoom/POI und `npx pnpm -r build` bestanden.
+
+Die folgenden Abschnitte vom 09.10. dokumentieren den älteren Ausgangsstand;
+ihre Bestandszahlen sind keine aktuellen Messwerte.
 
 ## Bereits testbar
 
@@ -46,6 +65,8 @@ Umsetzungsplan: [Valentine Spatial Fidelity Recovery](../../../superpowers/plans
 
 Abhakbare OpenIV-Arbeitsliste: [Valentine Spatial Recovery Export Queue](../Runbooks/OpenIV-Valentine-Spatial-Recovery-Export-Queue.md).
 
-Codex arbeitet im separaten Git-Worktree. Diese Notiz wird im Obsidian-Vault
-des Haupt-Checkouts erst nach einer geprüften Git-Übernahme sichtbar; es gibt
-keine automatische Synchronisation zwischen den Worktrees.
+Codex arbeitet im separaten Git-Worktree. Am 15.10. wurden diese Statusnotiz
+und die überarbeitete Exportanleitung als lesbare Momentaufnahme auch im Vault
+des Hauptprojekts abgelegt und über die Vault-MCP-Verbindung zurückgelesen.
+Es gibt weiterhin keine automatische Synchronisation zwischen den Worktrees;
+Änderungen an diesen beiden Fassungen müssen vor einer Übernahme verglichen werden.
