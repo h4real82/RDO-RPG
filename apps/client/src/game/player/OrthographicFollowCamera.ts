@@ -47,8 +47,16 @@ export class OrthographicFollowCamera {
     this.camera.zoom = this.viewHeight / safeHeight;
     this.camera.updateProjectionMatrix();
     this.camera.position.set(position.x, position.y, position.z);
+    // A straight-down look direction is parallel to Three's default Y-up.
+    // Use geographic north (-world Z) as screen up rather than lookAt's
+    // perturbation fallback, which shifts roofs relative to ground outlines.
+    const overhead = position.x === target.x && position.z === target.z && position.y > target.y;
+    this.camera.up.set(0, overhead ? 0 : 1, overhead ? -1 : 0);
     this.referenceTarget = new Vector3(target.x, target.y, target.z);
   }
 
-  clearReferencePose(): void { this.referenceTarget = undefined; }
+  clearReferencePose(): void {
+    this.referenceTarget = undefined;
+    this.camera.up.set(0, 1, 0);
+  }
 }

@@ -54,6 +54,29 @@ async function main() {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => document.querySelector('#game-container')?.getAttribute('data-game-ready') === 'true');
     await mkdir(output, { recursive: true });
+    // Frame all frozen source anchors with a fixed geographic north-up camera.
+    // This is a diagnostic overview, not a registered comparison to the paper map.
+    const positions = fixture.anchors.map(worldPosition);
+    const minX = Math.min(...positions.map((p) => p.x)) - 40;
+    const maxX = Math.max(...positions.map((p) => p.x)) + 40;
+    const minZ = Math.min(...positions.map((p) => p.z)) - 40;
+    const maxZ = Math.max(...positions.map((p) => p.z)) + 40;
+    const overviewHeight = Math.max(maxZ - minZ, (maxX - minX) / (1440 / 900));
+    const overviewTarget = { x: (minX + maxX) / 2, y: 120, z: (minZ + maxZ) / 2 };
+    await page.evaluate((target) => window.__rdoPreview.teleport(target), overviewTarget);
+    await page.waitForTimeout(100);
+    await page.evaluate(() => window.__rdoPreview.waitForChunks());
+    await page.evaluate(({ target, height }) => window.__rdoPreview.setReferenceCamera(
+      { x: target.x, y: target.y + 400, z: target.z }, target, height,
+    ), { target: overviewTarget, height: overviewHeight });
+    await page.waitForTimeout(250);
+    await page.screenshot({ path: path.join(output, 'valentine-north-up.png') });
+    await writeFile(path.join(output, 'north-up-frame.json'), `${JSON.stringify({
+      version: 1, projection: 'orthographic', screenUp: '-worldZ', screenRight: '+worldX',
+      target: overviewTarget, visibleHeight: overviewHeight, viewport: { width: 1440, height: 900 },
+      anchors: fixture.anchors.map((anchor) => ({ id: anchor.id, sourceFile: anchor.sourceFile, position: worldPosition(anchor) })),
+      paperMapRegistration: 'not-verified',
+    }, null, 2)}\n`);
     for (const [name, target] of [['station', station], ['saloon', saloon]]) {
       await page.evaluate((position) => window.__rdoPreview.teleport(position), target);
       await page.evaluate(() => window.__rdoPreview.waitForChunks());

@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { Vector3 } from 'three';
 import { OrthographicFollowCamera } from './OrthographicFollowCamera';
 
 const player = { x: 5, y: 2, z: 10 };
@@ -44,4 +45,18 @@ it('preserves the 90-unit reference framing and restores gameplay zoom afterward
   c.clearReferencePose();
   settle(c);
   expect(height(c)).toBeCloseTo(36);
+});
+
+it('projects an overhead map north-up without shifting elevated roof outlines', () => {
+  const c = new OrthographicFollowCamera(2);
+  c.setReferencePose({ x: 5, y: 402, z: 10 }, player, 100);
+  c.update(player);
+  const ground = new Vector3(5, 2, 10).project(c.camera);
+  const roof = new Vector3(5, 32, 10).project(c.camera);
+  const north = new Vector3(5, 2, 0).project(c.camera);
+  const east = new Vector3(15, 2, 10).project(c.camera);
+  expect(roof.x).toBeCloseTo(ground.x, 12);
+  expect(roof.y).toBeCloseTo(ground.y, 12);
+  expect(north.y).toBeGreaterThan(ground.y);
+  expect(east.x).toBeGreaterThan(ground.x);
 });

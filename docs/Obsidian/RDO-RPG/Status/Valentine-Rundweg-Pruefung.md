@@ -25,3 +25,17 @@ brauchen weiterhin eine eigene Prüfung im Spiel.
 Deine aktuelle Vorbereitung bleibt
 [Batch 00B aus der Exportanleitung](../Runbooks/OpenIV-Valentine-Spatial-Recovery-Export-Queue.md).
 Die vollständige Karte ist noch nicht fertig.
+
+## Neue Lauf- und Bildprüfung
+
+Die Bahnhofszufahrt und die anschließende Straße bis Quellpunkt 36 wurden am
+15.10. mit echter WASD-Eingabe durchlaufen; beide Teilprüfungen waren ohne
+Browserfehler erfolgreich. Das ist noch kein erfolgreicher vollständiger Rundweg.
+
+Eine feste Draufsicht mit Norden oben ist jetzt reproduzierbar. Sie zeigt
+noch große Bodenlücken im Westen und am Bahnhof sowie uneinheitliche
+Terrain-Texturen und unvollständige Straßendarstellung. Diese Bildfehler sind
+offene Abnahmepunkte, auch wenn einzelne Gebäude korrekt platziert sind.
+
+Geprüft: 96 Pipeline-Tests, 48 Client-Tests, Vertragsprüfungen, Build und
+Browser-Kalibrierung mit 141 Platzierungen bestanden.
