@@ -39,3 +39,21 @@ offene Abnahmepunkte, auch wenn einzelne Gebäude korrekt platziert sind.
 
 Geprüft: 96 Pipeline-Tests, 48 Client-Tests, Vertragsprüfungen, Build und
 Browser-Kalibrierung mit 141 Platzierungen bestanden.
+
+## Terrain-Materialien korrigiert
+
+Alle elf Terrain-Kacheln haben jetzt Materialvorschauen: 105 Vier-Schicht-
+Materialien, fünf weiterhin nicht unterstützte Materialplätze. Bei sechs
+Kacheln fehlten vorher sämtliche Materialien. Die Quellparameter zur
+Texturwiederholung (in den untersuchten Materialien 128×128) und die
+UV-Auswahl werden jetzt berücksichtigt. Dadurch verschwinden die riesigen
+Grashalme; die Originalgeometrie bleibt erhalten.
+
+Die aktuelle Draufsicht zeigt weiterhin echte Bodenlücken und helle,
+unvollständige Straßen-/Decalflächen. Die vollständige Material- und
+Kartenabnahme ist offen. Die neue Prüfung besteht 105 Pipeline-Tests,
+48 Client-Tests, Build und Browser-Smoke-Test.
+
+Lokale Vorschau, nicht als fertige Karte abgenommen:
+
+![Terrain-Vorschau vom 15.10.2026](Attachments/preview-terrain-2026-10-15.png)

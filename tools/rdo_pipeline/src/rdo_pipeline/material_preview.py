@@ -24,13 +24,15 @@ def read_glb_metadata(raw: bytes) -> dict:
     return document
 
 
-def apply_material_preview(staged_root: Path, runtime_root: Path) -> dict:
+def apply_material_preview(staged_root: Path, runtime_root: Path, *, include_terrain: bool = False) -> dict:
     runtime_root = runtime_root.resolve()
     manifest_path = runtime_root / 'rdo_world_manifest.json'
     manifest_bytes = manifest_path.read_bytes()
     manifest = json.loads(manifest_bytes)
-    assets = sorted({p['asset'] for p in manifest['placements'] if p['layer'] != 'terrain'})
+    assets = sorted({p['asset'] for p in manifest['placements'] if include_terrain or p['layer'] != 'terrain'})
+    terrain_assets = {p['asset'] for p in manifest['placements'] if p['layer'] == 'terrain'}
     planned = []
+    textures = {}
     # Inspect the complete batch before replacing any generated asset.
     for asset in assets:
         target = (runtime_root / asset).resolve()
@@ -47,8 +49,22 @@ def apply_material_preview(staged_root: Path, runtime_root: Path) -> dict:
             continue
         textured = sum(m.get('extras', {}).get('rdo_material_status') == 'diffuse-only'
                        and 'baseColorTexture' in m.get('pbrMetallicRoughness', {}) for m in materials)
-        if not textured:
+        terrain = [m for m in materials if asset in terrain_assets
+                   and m.get('extras', {}).get('rdo_material_status') == 'terrain-four-layer-preview']
+        if not textured and not terrain:
             continue
+        for material in terrain:
+            for key in ('rdo_terrain_lookup', *(f'rdo_terrain_layer{i}' for i in range(4))):
+                name = material['extras'].get(key)
+                if not isinstance(name, str) or Path(name).name != name or '\\' in name or not name.endswith('.png'):
+                    raise ValueError('invalid terrain texture reference')
+                texture = staged_root / 'textures' / name
+                if not texture.is_file():
+                    raise ValueError(f'missing terrain texture: {name}')
+                destination = runtime_root / 'textures' / 'terrain' / name
+                if destination.exists() and destination.read_bytes() != texture.read_bytes():
+                    raise ValueError(f'conflicting terrain texture: {name}')
+                textures[name] = (texture, destination)
         old_hash, new_hash = sha256(target.read_bytes()).hexdigest(), sha256(raw).hexdigest()
         if old_hash == new_hash:
             continue
@@ -56,16 +72,24 @@ def apply_material_preview(staged_root: Path, runtime_root: Path) -> dict:
             'path': asset, 'previousSha256': old_hash, 'sha256': new_hash,
             'backup': f'asset-backups/{old_hash}.glb',
             'texturedMaterialCount': textured,
+            'terrainMaterialCount': len(terrain),
             'materialStatusCounts': dict(Counter(m.get('extras', {}).get('rdo_material_status', 'unmarked') for m in materials)),
         }))
 
     report = {'version': 1, 'manifestSha256': sha256(manifest_bytes).hexdigest(),
-              'promotedModelCount': len(planned), 'assets': [item for _, _, item in planned]}
-    if not planned:
+              'promotedModelCount': len(planned), 'assets': [item for _, _, item in planned],
+              'terrainTextureCount': len(textures)}
+    if not planned and all(destination.exists() for _, destination in textures.values()):
         return report
     provenance_path = runtime_root / 'provenance.json'
     provenance = json.loads(provenance_path.read_text()) if provenance_path.exists() else {}
     indexed = {item['path']: item for item in provenance.get('assets', [])}
+    for texture, destination in textures.values():
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if not destination.exists():
+            shutil.copy2(texture, destination)
+        relative = destination.relative_to(runtime_root).as_posix()
+        indexed[relative] = {'path': relative, 'sha256': sha256(destination.read_bytes()).hexdigest()}
     for staged, target, item in planned:
         backup = runtime_root / item['backup']
         backup.parent.mkdir(parents=True, exist_ok=True)

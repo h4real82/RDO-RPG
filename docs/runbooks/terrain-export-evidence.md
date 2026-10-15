@@ -1,5 +1,10 @@
 # Valentine terrain export checkpoint — 2026-10-08
 
+Current update (2026-10-15): all eleven tiles now have terrain material
+previews, with exported UV scale/bias and layer UV selection. See
+[Terrain preview rebuild](terrain-preview-rebuild.md). Historical findings
+below about the preview ignoring these parameters describe the older version.
+
 Raw exports remain read-only under `D:/Projects/RDO-RPG/data/raw/terrain`.
 
 Reproducible source-color report (no Blender required):

@@ -95,13 +95,18 @@ it('configures a four-layer terrain preview only from complete exported metadata
     rdo_terrain_layer1: 'layer1.png',
     rdo_terrain_layer2: 'layer2.png',
     rdo_terrain_layer3: 'layer3.png',
+    rdo_terrain_uv_scale_bias: [128, 128, 128, 0],
+    rdo_terrain_uv_set: [1, 1, 1, 1],
   });
   instance.add(new Mesh(geometry, material));
   const loaded: string[] = [];
+  const textures: Texture[] = [];
 
   await runtime.prepareTerrainFourLayerPreview(instance, async (url) => {
     loaded.push(url);
-    return new Texture();
+    const texture = new Texture();
+    textures.push(texture);
+    return texture;
   });
 
   expect(loaded).toEqual([
@@ -112,7 +117,10 @@ it('configures a four-layer terrain preview only from complete exported metadata
     '/runtime/valentine/local-preview/textures/terrain/layer3.png',
   ]);
   expect(material.userData.rdo_terrain_preview_ready).toBe(true);
-  expect(material.customProgramCacheKey()).toBe('rdo-terrain-four-layer-v1');
+  const shader = { uniforms: {}, vertexShader: '#include <color_vertex>', fragmentShader: 'vec4 diffuseColor = vec4( diffuse, opacity );' };
+  material.onBeforeCompile(shader as never, undefined as never);
+  expect((shader.uniforms as Record<string, { value: { toArray(): number[] } }>).rdoUvScaleBias.value.toArray()).toEqual([128, 128, 128, 0]);
+  expect(textures.every((texture) => texture.flipY === false)).toBe(true);
   geometry.dispose();
   material.dispose();
 });

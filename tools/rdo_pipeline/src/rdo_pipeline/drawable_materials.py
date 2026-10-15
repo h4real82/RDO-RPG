@@ -7,6 +7,7 @@ are 8-bit, texture-reference name pointer at 0x28). No pixel decoding here.
 from __future__ import annotations
 
 import struct
+import math
 from pathlib import Path
 from typing import Any
 
@@ -20,7 +21,25 @@ _TERRAIN_TEXTURE_PARAMETERS = (
 )
 
 
-def terrain_material_metadata(plan: dict[str, Any]) -> dict[str, str]:
+def decode_terrain_uv_parameters(shader: dict[str, Any]) -> dict[str, list[float]]:
+    result = {}
+    for field, hashed in (('uvScaleBias', '0xc8ccec64'), ('uvSet', '0x724bed95')):
+        values = [entry for entry in shader.get('constants', []) if entry['parameterHash'] == hashed]
+        if not values:
+            continue
+        raw = bytes.fromhex(values[0]['bytes'])
+        if len(values) != 1 or len(raw) != 16:
+            raise ValueError(f'invalid terrain {field} constant')
+        decoded = list(struct.unpack('<4f', raw))
+        if not all(math.isfinite(value) for value in decoded):
+            raise ValueError(f'non-finite terrain {field}')
+        if field == 'uvSet' and any(value not in (1, 2, 3) for value in decoded):
+            raise ValueError('unsupported terrain UV set')
+        result[field] = decoded
+    return result
+
+
+def terrain_material_metadata(plan: dict[str, Any]) -> dict[str, Any]:
     if plan.get('reason') is not None or not isinstance(plan.get('lookup'), str):
         return {}
     layers = plan.get('layers')
@@ -31,6 +50,9 @@ def terrain_material_metadata(plan: dict[str, Any]) -> dict[str, str]:
         'rdo_terrain_lookup': Path(plan['lookup']).name,
     }
     metadata.update({f'rdo_terrain_layer{index}': Path(path).name for index, path in enumerate(layers)})
+    for field, key in (('uvScaleBias', 'rdo_terrain_uv_scale_bias'), ('uvSet', 'rdo_terrain_uv_set')):
+        if field in plan:
+            metadata[key] = plan[field]
     return metadata
 
 
@@ -61,6 +83,7 @@ def terrain_texture_plan(bindings: dict[str, Any], texture_files: dict[str, list
             'lookup': resolved['lookup'] if valid else None,
             'layers': [resolved[f'layer{index}'] for index in range(4)] if valid else [],
             'reason': None if valid else 'unresolved-terrain-texture',
+            **(decode_terrain_uv_parameters(shader) if valid else {}),
         })
     return plan
 

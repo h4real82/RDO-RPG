@@ -109,6 +109,7 @@ def main() -> int:
     materials = commands.add_parser('apply-material-preview')
     materials.add_argument('--asset-root', type=Path, required=True)
     materials.add_argument('--runtime-root', type=Path, required=True)
+    materials.add_argument('--include-terrain', action='store_true')
     validate = commands.add_parser('validate-valentine')
     validate.add_argument('--runtime-root', type=Path, required=True)
     validate.add_argument('--pois', type=Path)
@@ -145,7 +146,8 @@ def main() -> int:
         print(json.dumps({item['id']: item['status'] for item in report['landmarks']}, sort_keys=True))
         return 0
     if args.command == 'apply-material-preview':
-        report = apply_material_preview(args.asset_root, approved_runtime_root(args.runtime_root))
+        report = apply_material_preview(args.asset_root, approved_runtime_root(args.runtime_root),
+                                        include_terrain=args.include_terrain)
         print(f"material previews applied: {report['promotedModelCount']}")
         return 0
     if args.command == 'inspect-shader-database':

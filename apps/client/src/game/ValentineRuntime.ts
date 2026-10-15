@@ -1,4 +1,4 @@
-import { AmbientLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector3, WebGLRenderer } from 'three';
+import { AmbientLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector3, Vector4, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
@@ -74,11 +74,33 @@ export async function prepareTerrainFourLayerPreview(
       const names = ['rdo_terrain_lookup', 'rdo_terrain_layer0', 'rdo_terrain_layer1', 'rdo_terrain_layer2', 'rdo_terrain_layer3']
         .map((key) => material.userData[key]);
       if (!names.every((name): name is string => typeof name === 'string' && name.length > 0)) continue;
+      const vector4 = (key: string, fallback: number[]): number[] => {
+        const value = material.userData[key];
+        if (value === undefined) return fallback;
+        if (!Array.isArray(value) || value.length !== 4 || !value.every((n) => typeof n === 'number' && Number.isFinite(n))) {
+          throw new Error(`Invalid terrain parameter: ${key}`);
+        }
+        return value;
+      };
+      const scaleBias = vector4('rdo_terrain_uv_scale_bias', [1, 1, 0, 0]);
+      const uvSets = vector4('rdo_terrain_uv_set', [1, 1, 1, 1]);
+      for (const set of uvSets) {
+        if (![1, 2, 3].includes(set) || !object.geometry.getAttribute(set === 1 ? 'uv' : `uv${set - 1}`)) {
+          throw new Error(`Terrain geometry is missing source UV set ${set}`);
+        }
+      }
+      const uvDeclarations = [2, 3].filter((set) => uvSets.includes(set))
+        .map((set) => `#ifndef USE_UV${set - 1}\nattribute vec2 uv${set - 1};\n#endif`).join('\n');
+      const layerVaryings = uvSets.map((_, i) => `varying vec2 vRdoLayerUv${i};`).join('\n');
+      const layerAssignments = uvSets.map((set, i) => `vRdoLayerUv${i} = ${set === 1
+        ? 'vec2(uv.x * rdoUvScaleBias.x + rdoUvScaleBias.z, uv.y * rdoUvScaleBias.y + 1.0 - rdoUvScaleBias.y - rdoUvScaleBias.w)'
+        : `uv${set - 1}`};`).join('\n');
       pending.push((async () => {
         const textures = await Promise.all(names.map((name) => loadTexture(`/runtime/valentine/local-preview/textures/terrain/${encodeURIComponent(name)}`)));
         for (const texture of textures) {
           texture.wrapS = RepeatWrapping;
           texture.wrapT = RepeatWrapping;
+          texture.flipY = false;
         }
         material.vertexColors = false;
         material.onBeforeCompile = (shader) => {
@@ -88,18 +110,19 @@ export async function prepareTerrainFourLayerPreview(
             rdoLayer1: { value: textures[2] },
             rdoLayer2: { value: textures[3] },
             rdoLayer3: { value: textures[4] },
+            rdoUvScaleBias: { value: new Vector4(...scaleBias as [number, number, number, number]) },
           });
-          shader.vertexShader = `attribute vec4 color_1;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.vertexShader}`
-            .replace('#include <color_vertex>', '#include <color_vertex>\nvRdoColor1 = color_1;\nvRdoUv = uv;');
-          shader.fragmentShader = `uniform sampler2D rdoLookup;\nuniform sampler2D rdoLayer0;\nuniform sampler2D rdoLayer1;\nuniform sampler2D rdoLayer2;\nuniform sampler2D rdoLayer3;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.fragmentShader}`
+          shader.vertexShader = `uniform vec4 rdoUvScaleBias;\n${uvDeclarations}\n${layerVaryings}\nattribute vec4 color_1;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.vertexShader}`
+            .replace('#include <color_vertex>', `#include <color_vertex>\nvRdoColor1 = color_1;\nvRdoUv = uv;\n${layerAssignments}`);
+          shader.fragmentShader = `uniform sampler2D rdoLookup;\nuniform sampler2D rdoLayer0;\nuniform sampler2D rdoLayer1;\nuniform sampler2D rdoLayer2;\nuniform sampler2D rdoLayer3;\n${layerVaryings}\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.fragmentShader}`
             .replace('vec4 diffuseColor = vec4( diffuse, opacity );', `
               vec3 rdoControl = mix(texture2D(rdoLookup, vRdoUv).rgb, vRdoColor1.rgb, vRdoColor1.a);
-              vec3 rdo01 = mix(sRGBTransferEOTF(texture2D(rdoLayer0, vRdoUv)).rgb, sRGBTransferEOTF(texture2D(rdoLayer1, vRdoUv)).rgb, 1.0 - rdoControl.r);
-              vec3 rdo23 = mix(sRGBTransferEOTF(texture2D(rdoLayer2, vRdoUv)).rgb, sRGBTransferEOTF(texture2D(rdoLayer3, vRdoUv)).rgb, rdoControl.g);
+              vec3 rdo01 = mix(sRGBTransferEOTF(texture2D(rdoLayer0, vRdoLayerUv0)).rgb, sRGBTransferEOTF(texture2D(rdoLayer1, vRdoLayerUv1)).rgb, 1.0 - rdoControl.r);
+              vec3 rdo23 = mix(sRGBTransferEOTF(texture2D(rdoLayer2, vRdoLayerUv2)).rgb, sRGBTransferEOTF(texture2D(rdoLayer3, vRdoLayerUv3)).rgb, rdoControl.g);
               vec4 diffuseColor = vec4(mix(rdo01, rdo23, rdoControl.b), opacity);
             `);
         };
-        material.customProgramCacheKey = () => 'rdo-terrain-four-layer-v1';
+        material.customProgramCacheKey = () => `rdo-terrain-four-layer-v2:${uvSets.join(',')}`;
         material.userData.rdo_terrain_preview_ready = true;
         material.needsUpdate = true;
       })());

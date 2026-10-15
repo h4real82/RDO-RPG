@@ -222,3 +222,29 @@ def test_terrain_material_metadata_uses_portable_staged_texture_names():
         'rdo_terrain_layer2': 'layer2.png',
         'rdo_terrain_layer3': 'layer3.png',
     }
+
+
+def test_terrain_uv_constants_are_decoded_and_carried_to_material_metadata():
+    from rdo_pipeline.drawable_materials import decode_terrain_uv_parameters, terrain_material_metadata
+    shader = {'constants': [
+        {'parameterHash': '0xc8ccec64', 'bytes': struct.pack('<4f', 128, 128, 128, 0).hex()},
+        {'parameterHash': '0x724bed95', 'bytes': struct.pack('<4f', 1, 1, 2, 1).hex()},
+    ]}
+    parameters = decode_terrain_uv_parameters(shader)
+    assert parameters == {'uvScaleBias': [128.0, 128.0, 128.0, 0.0], 'uvSet': [1, 1, 2, 1]}
+    metadata = terrain_material_metadata({'lookup': 'lookup.png', 'layers': ['a.png']*4,
+                                          'reason': None, **parameters})
+    assert metadata['rdo_terrain_uv_scale_bias'] == [128.0, 128.0, 128.0, 0.0]
+    assert metadata['rdo_terrain_uv_set'] == [1, 1, 2, 1]
+
+
+@pytest.mark.parametrize('hashed,values', [
+    ('0xc8ccec64', [128, float('nan'), 0, 0]),
+    ('0x724bed95', [1, 1, 4, 1]),
+])
+def test_invalid_terrain_uv_constants_are_rejected(hashed, values):
+    from rdo_pipeline.drawable_materials import decode_terrain_uv_parameters
+    with pytest.raises(ValueError):
+        decode_terrain_uv_parameters({'constants': [
+            {'parameterHash': hashed, 'bytes': struct.pack('<4f', *values).hex()},
+        ]})
