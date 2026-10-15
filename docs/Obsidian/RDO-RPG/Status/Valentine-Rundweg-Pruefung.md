@@ -1,5 +1,28 @@
 # Valentine-Rundweg – Bestandsprüfung
 
+## Batch 02A – geprüft und eingebunden (15.10.2026)
+
+Die drei neuen Terrainmodelle wurden aus den .ydr.full-Dateien konvertiert
+und ausschließlich über ihre YMAP-Quelltransformationen eingebunden.
+Die lokale Vorschau enthält jetzt 143 Platzierungen, davon 14 Terrain-Kacheln.
+Die 33 südlichen Quell-Prüfpunkte liegen innerhalb exportierter
+Terrain-Begrenzungen; das allein beweist noch keine lückenlose Oberfläche.
+
+Der echte WASD-Lauftest auf Quellstraße valentine:road:0059 von Punkt 0 bis
+13 besteht jetzt ohne Browserfehler. Zuvor blockierte val_lights_holder_05:
+ein 24-Vertex-Hilfsvolumen von etwa 65,6 × 17,3 × 79,8 Metern mit
+Checker-Textur. Nur dieses konkret untersuchte Modell ist aus dem
+Tages-Weltzustand ausgeschlossen; andere Lampen bleiben unverändert.
+Die Bedeutung der Quell-RenderMask-Bits ist damit nicht allgemein geklärt.
+
+110 Pipeline-Tests, Manifestvalidierung und npx pnpm -r build bestanden.
+Der erste Testlauf wurde durch einen parallelen Build/Seitenreload
+unterbrochen; der Wiederholungslauf nach Build-Ende bestand.
+Offen bleiben der vollständige Rundweg, Bahnhof-/Kirchen-Platzierungen,
+Straßenmaterialien und die vollständige visuelle Kartenabnahme.
+Aktuell ist kein weiterer OpenIV-Export erforderlich.
+
+
 Stand: 15.10.2026. Die neue automatische Prüfung vergleicht die Gebäude für
 deinen Rundweg mit den ursprünglichen Platzierungen. Sie prüft auch Richtung
 und Maßstab; ein passender Dateiname allein reicht nicht.

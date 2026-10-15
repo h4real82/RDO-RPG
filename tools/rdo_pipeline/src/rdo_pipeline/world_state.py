@@ -51,6 +51,11 @@ def _explicit_exclusion(placement: Mapping[str, Any], model: str) -> str | None:
         return 'inactive-lockdown-variant'
     if 'shadowproxy' in model or 'shadow_proxy' in model:
         return 'shadow-helper'
+    # Verified source volume: 24 vertices, 65.6 x 17.3 x 79.8 metres,
+    # checker-textured light holder, not physical lamp geometry. Keep this
+    # exact allowlist narrow; other light-named models are not classified.
+    if model == 'val_lights_holder_05':
+        return 'verified-light-volume-helper'
     return None
 
 

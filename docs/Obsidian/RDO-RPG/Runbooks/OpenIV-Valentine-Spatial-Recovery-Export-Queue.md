@@ -9,8 +9,8 @@ erraten und keine technischen Entscheidungen allein treffen.
 1. ✅ **Batch 00B ist vollständig geprüft und erledigt.** Alle acht XMLs
    liegen unter `D:\Projects\RDO-RPG\data\raw\ymap\` vor.
 2. ✅ **Batch 04A ist geprüft:** 652 lesbare PNGs in 40 getrennten YTD-Ordnern.
-3. ⬜ **Jetzt Batch 02A:** die drei unten genannten Terrainmodelle
-   per **Save content/Export** exportieren.
+3. ✅ **Batch 02A ist geprüft und eingebunden:** alle drei Terrainmodelle
+   wurden erfolgreich konvertiert. Aktuell ist kein weiterer Export nötig.
 4. Die 291 Valentine-YDR und die 88 Terrain-YDR bitte weiterhin nicht
    pauschal erneut exportieren. Auch Bahnhof und Kirche sind bereits als
    vollständige Modelle vorhanden; dort fehlt eine Platzierungsquelle.
@@ -163,10 +163,10 @@ Wenn Codex später einen Namen nennt, suchst du ihn per Tiefensuche, verwendest
   konvertiert und in der lokalen Vorschau platziert.
 - ✅ Die YMAP-Transformationen dieser Modelle sind geprüft.
 
-### 02A – Deine nächste kleine Aufgabe: drei Bodenmodelle
+### 02A – Erledigt: drei Bodenmodelle
 
 Die Prüfung nutzt echte YMAP-Transformationen und YTYP-Begrenzungen.
-Diese drei Dateien fehlen im südlichen/westlichen Korridor:
+Diese drei Dateien wurden geprüft und mit ihren Quellpositionen eingebunden:
 
 | Datei in OpenIV | Zweck |
 | --- | --- |

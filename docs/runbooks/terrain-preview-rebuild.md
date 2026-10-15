@@ -21,7 +21,7 @@ open; lookup still follows the reference preview's first-channel rule.
 
 ## Reproduce
 
-Run from the restart worktree after the eleven source-backed tiles have
+Run from the restart worktree after the fourteen source-backed tiles have
 been added to the local manifest:
 
 ```powershell

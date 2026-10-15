@@ -58,3 +58,17 @@ def test_selection_rejects_unknown_world_state():
         assert str(error) == 'unsupported world state: night_lockdown'
     else:
         raise AssertionError('unknown world state was accepted')
+
+
+def test_default_day_excludes_verified_light_volume_but_keeps_physical_lamps():
+    result = select_world_state([
+        placement('val_lights_holder_05'),
+        placement('p_lamp01x'),
+        placement('val_lights_holder_06'),
+    ])
+
+    assert [item['asset'] for item in result.accepted] == [
+        'models/valentine/p_lamp01x.glb',
+        'models/valentine/val_lights_holder_06.glb',
+    ]
+    assert [item['reason'] for item in result.excluded] == ['verified-light-volume-helper']
