@@ -1,19 +1,20 @@
 # OpenIV-Arbeitsanleitung – Valentine Spatial Recovery
 
-Stand: 2026-10-09. Diese Anleitung gilt nur für den geplanten
+Stand: 2026-10-15. Diese Anleitung gilt nur für den geplanten
 Valentine-Ausschnitt und den markierten Rundweg. Du musst keine Dateinamen
 erraten und keine technischen Entscheidungen allein treffen.
 
 ## Was du jetzt tun sollst
 
-1. **Jetzt erledigen:** die acht YMAPs aus
-   `l_09_a_placement.rpf` bis `l_09_e_placement.rpf` als XML exportieren.
-2. Danach hier nur schreiben: **`Batch 00B fertig`**.
-3. **Noch nicht** die 291 Valentine-YDR oder alle 88 `l_09`-YDR einzeln
-   exportieren. Codex erstellt daraus erst eine kurze, geprüfte Zielliste.
-4. Wenn du freiwillig weiterarbeiten möchtest, beginne anschließend mit
-   **Batch 04A – Valentine-Texturen**. Die anderen Batches bleiben bis zur
-   Zielliste pausiert.
+1. ✅ **Batch 00B ist vollständig geprüft und erledigt.** Alle acht XMLs
+   liegen unter `D:\Projects\RDO-RPG\data\raw\ymap\` vor.
+2. **Aktuell ist kein weiterer Pflicht-Export nötig.** Codex prüft die
+   vorhandenen Daten weiter und nennt anschließend konkrete fehlende Dateien.
+3. Die 291 Valentine-YDR und die 88 Terrain-YDR bitte weiterhin nicht
+   pauschal erneut exportieren. Auch Bahnhof und Kirche sind bereits als
+   vollständige Modelle vorhanden; dort fehlt eine Platzierungsquelle.
+4. **Batch 04A ist optional und vorerst zurückgestellt**, bis Codex die
+   vorhandenen Texturen abgeglichen hat. Damit vermeidest du doppelte Arbeit.
 
 ## Status-Legende
 
@@ -83,7 +84,20 @@ Beispiel:
   `data/raw/ymap/l_09_placement_ymap.xml` vor; dieses Archiv hat kein Manifest.
 - ✅ `l_09_ftr.rpf`: benötigte Metadaten sind im vorhandenen Bestand enthalten.
 
-### 00B – Deine aktuelle Aufgabe: acht Placement-YMAPs
+### 00B – ✅ Abgeschlossen: acht Placement-YMAPs
+
+Am 15.10. geprüft: acht eindeutige, lesbare `CMapData`-XMLs. Die fünf
+benannten Placement-Dateien sind gültige leere Karten. Die drei Hash-Dateien
+enthalten acht Gras-Batches mit insgesamt 90 Instanzen. Es sind keine
+normalen Gebäude-/Terrain-Entitäten und keine Prop-Instanzen enthalten.
+
+Die leeren `<entities/>`-Abschnitte sind **kein Exportfehler**. Die
+Graspositionen liegen in separaten gepackten Instanzlisten; ihre Nullwerte in
+den äußeren Transformationsfeldern werden nicht als echte Positionen verwendet.
+Codex hat für jede Datei eine SHA-256-Prüfsumme und den Inhaltstyp erfasst.
+
+Erhaltene Hash-Dateien: `0xE8AEF56E_ymap.xml`, `0xD6E951E3_ymap.xml`,
+`0x750C0E2A_ymap.xml`. Die folgende Tabelle dokumentiert den erledigten Export.
 
 Pfad in OpenIV:
 
@@ -256,7 +270,9 @@ Treffe keine technische Vermutung. Nutze diese Fallbacks:
 - **Mehrere gleichnamige Suchtreffer:** nichts auswählen; Screenshot mit
   sichtbaren Quellpfaden senden.
 - **Unklar, ob Basis oder `+hi/+hidr`:** alle Varianten getrennt behalten.
-- **XML wirkt leer oder binär:** aus der Hauptansicht erneut **Export to XML**.
+- **XML-Datei hat 0 KB oder unlesbare Binärzeichen:** aus der Hauptansicht
+  erneut **Export to XML**. Lesbares XML mit `<entities/>` darf dagegen
+  tatsächlich leer sein; erst von Codex prüfen lassen.
 
 ## Übergabe und Kontrollinstanz
 

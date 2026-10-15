@@ -20,6 +20,7 @@ from .terrain_placements import build_terrain_placements
 from .material_preview import apply_material_preview
 from .world_state import select_world_state
 from .route_coverage import build_route_coverage
+from .metadata_batch import audit_ymap_batch
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -65,6 +66,10 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    metadata = commands.add_parser('audit-placement-metadata')
+    metadata.add_argument('--ymap', type=Path, action='append', required=True)
+    metadata.add_argument('--expected-count', type=int, required=True)
+    metadata.add_argument('--runtime-root', type=Path, required=True)
     route = commands.add_parser('audit-valentine-circuit')
     route.add_argument('--circuit', type=Path, required=True)
     route.add_argument('--placements', type=Path, required=True)
@@ -117,6 +122,14 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'audit-placement-metadata':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        report = audit_ymap_batch(args.ymap, expected_count=args.expected_count)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        (runtime_root / 'placement-metadata-audit.json').write_text(
+            json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(json.dumps(report['summary'], sort_keys=True))
+        return 0
     if args.command == 'audit-valentine-circuit':
         runtime_root = approved_runtime_root(args.runtime_root)
         manifest_path = runtime_root / 'rdo_world_manifest.json'
