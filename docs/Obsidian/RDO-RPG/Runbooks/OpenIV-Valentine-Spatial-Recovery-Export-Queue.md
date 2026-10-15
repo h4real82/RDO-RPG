@@ -8,13 +8,13 @@ erraten und keine technischen Entscheidungen allein treffen.
 
 1. ✅ **Batch 00B ist vollständig geprüft und erledigt.** Alle acht XMLs
    liegen unter `D:\Projects\RDO-RPG\data\raw\ymap\` vor.
-2. **Aktuell ist kein weiterer Pflicht-Export nötig.** Codex prüft die
-   vorhandenen Daten weiter und nennt anschließend konkrete fehlende Dateien.
-3. Die 291 Valentine-YDR und die 88 Terrain-YDR bitte weiterhin nicht
+2. ✅ **Batch 04A ist geprüft:** 652 lesbare PNGs in 40 getrennten YTD-Ordnern.
+3. ⬜ **Jetzt Batch 02A:** die drei unten genannten Terrainmodelle
+   per **Save content/Export** exportieren.
+4. Die 291 Valentine-YDR und die 88 Terrain-YDR bitte weiterhin nicht
    pauschal erneut exportieren. Auch Bahnhof und Kirche sind bereits als
    vollständige Modelle vorhanden; dort fehlt eine Platzierungsquelle.
-4. **Batch 04A ist optional und vorerst zurückgestellt**, bis Codex die
-   vorhandenen Texturen abgeglichen hat. Damit vermeidest du doppelte Arbeit.
+5. Weitere globale Texturen aus Batch 04B bleiben vorerst zurückgestellt.
 
 ## Status-Legende
 
@@ -163,7 +163,38 @@ Wenn Codex später einen Namen nennt, suchst du ihn per Tiefensuche, verwendest
   konvertiert und in der lokalen Vorschau platziert.
 - ✅ Die YMAP-Transformationen dieser Modelle sind geprüft.
 
-### Noch nicht pauschal exportieren
+### 02A – Deine nächste kleine Aufgabe: drei Bodenmodelle
+
+Die Prüfung nutzt echte YMAP-Transformationen und YTYP-Begrenzungen.
+Diese drei Dateien fehlen im südlichen/westlichen Korridor:
+
+| Datei in OpenIV | Zweck |
+| --- | --- |
+| `l_09__hd_0_-3_-1.ydr` | südliche Verbindung Richtung Bahnhof |
+| `l_09__hd_0_-2_-1.ydr` | Anschluss des westlichen Rückwegs |
+| `l_09__hd_0_-2_-2.ydr` | Boden beim Magic-Lantern-Zelt |
+
+1. In OpenIV öffnen:
+   `levels_5.rpf/levels/rdr3/terrain/jklm_07_10/l_09_.rpf`.
+2. **Drawable objects** aufklappen und die erste Datei markieren.
+3. Im **Hauptfenster** Rechtsklick → **Save content/Export**.
+4. Ziel: `D:/Projects/RDO-RPG/data/raw/terrain/l_09/models`.
+5. Mit den beiden anderen Dateien wiederholen.
+
+**Kontrolle:** Drei neue Unterordner, jeweils mit einer `.ydr.full`.
+`.gfx` und `.sys` dürfen zusätzlich vorhanden sein. Die beiden Unterstriche
+nach `l_09` gehören zum Namen. Eine einzelne `.ydr` genügt nicht.
+
+Falls ein Name fehlt: Tiefensuche nach dem vollständigen Modellnamen,
+**Go to file** verwenden und den Quellpfad prüfen. Bei mehreren Treffern
+oder einem anderen Archiv einen Screenshot senden. Bei einer
+Überschreiben-Rückfrage abbrechen und Codex den Namen nennen.
+
+Danach reicht: **`Batch 02A fertig`**. Codex prüft und konvertiert die
+Dateien und testet den Boden. Quell-Begrenzungen allein beweisen noch
+keine lückenlose begehbare Oberfläche.
+
+### Übrige Modelle weiterhin zurückstellen
 
 - ⏸️ die übrigen 77 der 88 YDR aus `l_09_.rpf`;
 - ⏸️ alle Drawables aus `l_09_ftr.rpf`;
@@ -174,7 +205,14 @@ Grund: Viele davon sind Detail-, Fern- oder überlappende LOD-Modelle. Die
 Coverage-Prüfung wählt nur Modelle aus, die Bodenlücken, Straßenkonturen,
 Böschungen oder große Vegetationssilhouetten auf dem Rundweg schließen.
 
-### Optional vorbereitbar: Kollisionen
+### Kollisionen – Export vorhanden, Laufzeitprüfung offen
+
+🟨 Alle 16 `.ybn.full` sind unter
+`D:/Projects/RDO-RPG/data/raw/02-terrain-l09/l_09_.rpf/collision`
+angekommen. Kein erneuter Export nötig. Die Kollisionskonvertierung und
+Einbindung ins Spiel sind noch nicht verifiziert.
+
+Der folgende Exportweg bleibt nur als Referenz stehen:
 
 Wenn du jetzt weiter exportieren möchtest, darfst du die 16 YBN aus
 `l_09_.rpf` einzeln per **Save content/Export** nach
@@ -206,7 +244,17 @@ bereits vorhandenen 178 Modelle geprüft.
 Texturen sind sicher vorab exportierbar, weil sie keine falschen
 Gebäudeplatzierungen erzeugen.
 
-### 04A – Valentine-Texturen (darf nach Batch 00B beginnen)
+### 04A – ✅ Valentine-Texturen geprüft
+
+Am 15.10. geprüft unter
+`D:/Projects/RDO-RPG/data/raw/04-global-textures/gtxd_valentine.rpf`:
+40 getrennte YTD-Ordner, insgesamt 652 PNGs. Alle Bilder wurden mit dem
+Windows-Bilddecoder geöffnet und bis zum letzten Pixel gelesen; keine
+Dekodierfehler oder leeren Paketordner. Kein erneuter Export nötig.
+Die Vollständigkeit gegenüber OpenIV benötigt dessen Inhaltsliste;
+diese Prüfung bestätigt die angekommenen Dateien.
+
+Die folgenden Schritte dokumentieren den erledigten Export:
 
 Pfad:
 

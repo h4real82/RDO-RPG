@@ -21,6 +21,7 @@ from .material_preview import apply_material_preview
 from .world_state import select_world_state
 from .route_coverage import build_route_coverage
 from .metadata_batch import audit_ymap_batch
+from .terrain_coverage import read_source_terrain_bounds, audit_terrain_bounds
 
 
 def approved_runtime_root(candidate: Path) -> Path:
@@ -66,6 +67,13 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    terrain_audit = commands.add_parser('audit-terrain-corridor')
+    terrain_audit.add_argument('--definition', type=Path, required=True)
+    terrain_audit.add_argument('--ymap', type=Path, action='append', required=True)
+    terrain_audit.add_argument('--ytyp-root', type=Path, required=True)
+    terrain_audit.add_argument('--placements', type=Path, required=True)
+    terrain_audit.add_argument('--raw-root', type=Path, required=True)
+    terrain_audit.add_argument('--runtime-root', type=Path, required=True)
     metadata = commands.add_parser('audit-placement-metadata')
     metadata.add_argument('--ymap', type=Path, action='append', required=True)
     metadata.add_argument('--expected-count', type=int, required=True)
@@ -123,6 +131,37 @@ def main() -> int:
     texture_coverage.add_argument('--texture-root', type=Path, required=True)
     texture_coverage.add_argument('--runtime-root', type=Path, required=True)
     args = parser.parse_args()
+    if args.command == 'audit-terrain-corridor':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        trace_path = runtime_root / 'ground-truth-traces.json'
+        definition = json.loads(args.definition.read_text(encoding='utf-8'))
+        traces = {t['id']: t for t in json.loads(trace_path.read_text(encoding='utf-8'))['traces']}
+        points = []
+        for span in definition['roadSpans']:
+            trace = traces[span['trace']]
+            if not 0 <= span['from'] <= span['to'] < len(trace['points']):
+                raise ValueError('invalid terrain checkpoint span')
+            points.extend({'id': f"{span['trace']}:{i}", **trace['points'][i]}
+                          for i in range(span['from'], span['to']+1))
+        source = json.loads(args.placements.read_text(encoding='utf-8'))
+        for model in definition['landmarkModels']:
+            adaptation = adapt_rdo_placements(source, {model})
+            matches = [p for p in adaptation.placements if not p['interior']]
+            if not matches:
+                raise ValueError(f'landmark source placement missing: {model}')
+            points.extend({'id': f'{model}:{i}', 'x': p['position']['x'], 'z': p['position']['z']}
+                          for i, p in enumerate(matches))
+        ytyps = sorted(args.ytyp_root.glob('*ytyp.xml'))
+        tiles = read_source_terrain_bounds(args.ymap, ytyps, definition['models'])
+        available = {p.name[:-len('.ydr.full')] for p in args.raw_root.rglob('*.ydr.full')}
+        report = audit_terrain_bounds(tiles, points, available)
+        report['scope'] = definition['scope']
+        report['inputs'] = [{'path': p.name, 'sha256': sha256(p.read_bytes()).hexdigest()}
+                            for p in [args.definition, trace_path, args.placements, *args.ymap, *ytyps]]
+        (runtime_root / 'terrain-corridor-export-targets.json').write_text(
+            json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(json.dumps([target['model'] for target in report['exportTargets']]))
+        return 0
     if args.command == 'audit-placement-metadata':
         runtime_root = approved_runtime_root(args.runtime_root)
         report = audit_ymap_batch(args.ymap, expected_count=args.expected_count)

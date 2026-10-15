@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "scope": "Southern return corridor candidates; not the accepted complete circuit",
+  "models": [
+    "l_09__hd_0_-3_-1", "l_09__hd_0_-2_-1", "l_09__hd_0_-2_-2",
+    "l_09__hd_0_-3_0", "l_09__hd_0_-3_1", "l_09__hd_0_-2_0", "l_09__hd_0_-2_1",
+    "l_09__hd_0_-1_-1", "l_09__hd_0_-1_-2", "l_09__hd_0_-1_0",
+    "l_09__hd_0_0_-1", "l_09__hd_0_0_-2", "l_09__hd_0_0_0", "l_09__hd_0_1_-1"
+  ],
+  "roadSpans": [
+    {"trace": "valentine:road:0059", "from": 0, "to": 23},
+    {"trace": "valentine:road:0060", "from": 6, "to": 13}
+  ],
+  "landmarkModels": ["val_07_magiclantern_ext"]
+}
