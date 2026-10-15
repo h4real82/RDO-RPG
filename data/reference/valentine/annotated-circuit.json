@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "reference": "User annotated Valentine map, 2026-10-09",
+  "routeGeometryStatus": "pending-source-verified-centerline",
+  "segments": [
+    {"id": "station-entry", "label": "Bahnhof und Hauptzufahrt", "from": "station", "to": "sheriff", "sourcePathStatus": "unverified"},
+    {"id": "church-ascent", "label": "Rechts herum zur Kirche", "from": "sheriff", "to": "church", "sourcePathStatus": "unverified"},
+    {"id": "main-street", "label": "Über Hauptstraße an Sheriff und Saloon vorbei", "from": "church", "to": "main-saloon", "sourcePathStatus": "unverified"},
+    {"id": "west-return", "label": "Westlich am Magic-Lantern-Zelt vorbei", "from": "main-saloon", "to": "magic-lantern", "sourcePathStatus": "unverified"},
+    {"id": "station-return", "label": "Südliche Rückkehr zum Bahnhof", "from": "magic-lantern", "to": "station", "sourcePathStatus": "unverified"}
+  ],
+  "landmarks": [
+    {"id": "station", "label": "Bahnhof-Außenhülle", "models": ["val_01_trainstn_ext"]},
+    {"id": "church", "label": "Kirche", "models": ["val_05_church_ext"]},
+    {"id": "sheriff", "label": "Sheriff im östlichen Ortsteil", "models": ["val_shrffhs"]},
+    {"id": "east-saloon", "label": "Saloon neben dem Sheriff", "models": ["val_saloon2"]},
+    {"id": "main-saloon", "label": "Großer Saloon an der Hauptstraße", "models": ["val_03_saloon_ext"]},
+    {"id": "hotel", "label": "Saints Hotel", "models": ["val_hotel_ext"]},
+    {"id": "bank", "label": "Bank", "models": ["val_bank"]},
+    {"id": "stable", "label": "Westlicher Stall", "models": ["val_03_stable_ext"]},
+    {"id": "magic-lantern", "label": "Magic-Lantern-Zelt", "models": ["val_07_magiclantern_ext"]}
+  ]
+}
