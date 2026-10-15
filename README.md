@@ -1,149 +1,100 @@
-# RDO-RPG (Red Dead Online Discord Activity RPG)
+# RDO-RPG
 
-A multiplayer Western RPG built specifically as a **Discord Activity** using **Phaser 3**, **Colyseus**, and **TypeScript** in a modern monorepo setup.
+Western-RPG als Discord Activity mit **Three.js, TypeScript, Vite und Colyseus**.
+Stand: **16.10.2026**. Schwerpunkt ist die quellenbasierte Rekonstruktion der
+Valentine-Außenwelt; vollständige Karte und Multiplayer-Vertikalschnitt sind noch
+nicht abgenommen.
 
----
+## Aktueller Stand
 
-## 🎮 Architecture Overview
+- **Bahnhof und Kirche:** Die originalen HD-Außenplatzierungen sind gefunden.
+  Der frische Audit bestätigt für beide Modelle `source-placement-found`.
+  Dafür ist derzeit kein weiterer OpenIV-Export erforderlich.
+- **Runtime:** Die geprüfte lokale Restart-Vorschau enthält 143 Platzierungen.
+  Die beiden neu belegten Außenhüllen sind darin noch nicht integriert.
+- **Terrain und Route:** Frühere Teilstreckenprüfungen und Materialvorschauen
+  liegen vor. Bodenlücken, Straßen-/Decal-Darstellung, Kollisionsabgleich und
+  vollständiger Rundweg bleiben offen. Diese Sitzung enthält keine neue Browserabnahme.
+- **Frische Validierung:** 116 Pipeline-Tests, 48 Client-Tests, 11 Vertragstests
+  plus 2 Node-Prüfungen, Runtime-Validierung und Pflicht-Build im Restart bestanden.
+  Auch der Hauptcheckout bestand `npx pnpm -r build`.
+  Vite warnt weiterhin vor CJS-Abkündigung und großen Bundles.
 
-```mermaid
-graph TD
-    subgraph Discord Client
-        A[Discord Activity iFrame] -->|Embedded App SDK| B[Phaser 3 Game Client]
-    end
+Quellkoordinaten, Prüfbedingungen und offene Abnahmen:
+[Projektstand vom 16.10.2026](docs/Project-Status-2026-10-16.md).
 
-    subgraph Reverse Proxy / Gateway
-        C[Caddy Proxy / TLS] -->|HTTP / API| D[Express API]
-        C -->|WebSocket Transport / 20Hz| E[Colyseus Room]
-        C -->|Static Files| B
-    end
+## Branches und Arbeitsstände
 
-    subgraph Backend Services
-        D -->|Token Exchange| F[Discord OAuth2]
-        E -->|Tile Collision / State| G[WorldRoom Simulation]
-        G -->|Shared State Sync| H[packages/shared @colyseus/schema]
-        G -->|Maps & Items| I[packages/content]
-    end
+| Stand | Zweck |
+| --- | --- |
+| `main`, lokal `D:/Projects/RDO-RPG` | Bestehender Three.js-/Colyseus-Prototyp; viele zusätzliche lokale Änderungen |
+| [`codex/rdo-restart-foundation`](https://github.com/h4real82/RDO-RPG/tree/codex/rdo-restart-foundation) | Aktive Restart-Implementierung: modularer Client, Weltverträge, Python-Pipeline und Tests |
+
+Der Restart liegt lokal unter
+`C:/Users/h4rea/.codex/worktrees/rdo-restart-foundation/RDO-RPG`.
+Sein Branch-Push ist noch kein Merge nach `main`. Die Pipeline-/Client-Tests oben
+beziehen sich auf den Restart. Ein frischer Clone enthält keine lokalen Rohdaten
+oder generierten Runtime-GLBs.
+
+## Architektur
+
+- `apps/client`: Three.js, Vite und TypeScript. Der Restart kapselt Bootstrap,
+  Weltstreaming, GLB-Cache, orthografische Kamera, Bewegung, Geländeprüfung,
+  Kollisionen, HUD und Interaktionen unter `src/game/`.
+- `apps/server`: Express, Colyseus und Discord-Tokenaustausch als Grundlage
+  des autoritativen Servers. Die lokale Restart-Vorschau belegt noch keinen
+  erfolgreichen Discord-/Zwei-Client-Test.
+- `packages/shared` und `packages/content`: gemeinsame Netzwerktypen,
+  Colyseus-Schemas und Inhaltsdaten.
+- `packages/world-contracts` und `tools/rdo_pipeline` **im Restart-Branch**:
+  Weltverträge, Koordinatenkonvertierung, Exportinventar, Provenienz,
+  Manifestaufbau und Diagnosewerkzeuge.
+- `infra`: Caddy und Docker. Deployment wurde in dieser Sitzung nicht neu geprüft.
+
+## Lokal starten
+
+Node.js 20+ und die in `package.json` festgelegte pnpm-Version verwenden.
+Im gewünschten Checkout:
+
+```powershell
+npx pnpm install
+npx pnpm -r build
+npx pnpm dev
 ```
 
-### Key Pillars
+Client: `http://localhost:3000`; Server: `http://localhost:2567`.
+Die Restart-Vorschau benötigt zusätzlich lokal erzeugte Daten unter
+`data/runtime/valentine/local-preview/`.
+Aufbau und Prüfungen: [Pipeline-Runbook im Restart](https://github.com/h4real82/RDO-RPG/blob/codex/rdo-restart-foundation/docs/runbooks/asset-pipeline.md).
+Discord-Zugangsdaten gehören in lokale Umgebungsvariablen; Client-Secret und
+Service-Keys dürfen nie ins Clientbundle oder Git gelangen.
 
-1. **Client (`apps/client`)**:
-   - **Phaser 3 + Vite + TypeScript**: HD game engine optimized for low-latency canvas rendering inside the Discord desktop and mobile clients.
-   - **Discord Embedded App SDK**: Handles user identity authentication, handshake, and context inside voice channel activities.
-   - **Colyseus.js Client**: Connects to the multiplayer room, interpolating player movement and broadcasting input intents.
+## Daten und Qualitätsgrenzen
 
-2. **Server (`apps/server`)**:
-   - **Node.js + Colyseus + Express**: Authoritative multiplayer game server.
-   - **20Hz Simulation Loop**: Runs deterministic world updates every 50ms (`setSimulationInterval`).
-   - **Server-Side Tile Validation**: Validates all player movement and interactions against map collision layers and bounds to prevent cheating/clipping.
-   - **Discord OAuth Token Exchange**: Secure `/api/token` route for exchanging authorization codes for Discord tokens.
+- GitHub führt Quellcode, Dokumentation, Schemas und Pipeline-Tools.
+  Originalmodelle, Texturpakete und generierte GLBs bleiben lokal.
+- `data/raw/` bleibt unverändert; `data/runtime/` enthält generierte Ausgaben.
+  Bereits versionierte kleine Runtime-Konfigurationen im Restart sind keine
+  Modellpakete; Git-Ignore entfernt zuvor getrackte Dateien nicht rückwirkend.
+- `Media/` und belegte Originaltransformationen bestimmen den Kartenabgleich.
+  Ein Modellname oder ein grüner Build belegt keine korrekte Platzierung.
+- Supabase ist für relationale Spielzustände vorgesehen. Neue Live-Migrationen,
+  Autosave und Storage-Uploads wurden mit diesem Abgleich nicht ausgeführt.
 
-3. **Shared Packages (`packages/shared` & `packages/content`)**:
-   - **`@rdo-rpg/shared`**: Single source of truth for `@colyseus/schema` classes (`Player`, `WorldState`, `Stats`, `ItemStack`, `Position`), movement constants, and network message types.
-   - **`@rdo-rpg/content`**: Static JSON data definitions for items, tilesets, and 2D tilemaps.
+## Aufgaben und nächste Abnahmen
 
-4. **Infrastructure (`infra`)**:
-   - **Caddy Reverse Proxy**: Handles SSL termination and proxying for WebSocket (`/colyseus`), API (`/api`), and client static assets.
-   - **Docker Compose**: Orchestrates multi-container local and production deployment.
+[Linear führt den aktuellen Status](https://linear.app/h4real82/project/rdo-rpg-d9ca7fe5de94).
+Historische Dashboards und Checkboxen sind keine Live-Fortschrittsanzeige.
+Es besteht keine automatische Obsidian-/GitHub-/Linear-Synchronisierung.
 
----
+1. [H4R-52](https://linear.app/h4real82/issue/H4R-52): Quellplatzierungen Bahnhof/Kirche nachgewiesen, abgeschlossen.
+2. [H4R-27](https://linear.app/h4real82/issue/H4R-27): Exteriors mit Provenienz integrieren und gegen Media abgleichen.
+3. [H4R-28](https://linear.app/h4real82/issue/H4R-28) und [H4R-29](https://linear.app/h4real82/issue/H4R-29): Terrain und Client-/Server-Kollision abnehmen.
+4. [H4R-30](https://linear.app/h4real82/issue/H4R-30): vollständigen Kernrundweg mit Kollision und ohne Noclip abnehmen.
 
-## 📁 Repository Structure
+Dokumentationsabgleich: [H4R-50](https://linear.app/h4real82/issue/H4R-50).
 
-```text
-rdo-rpg/
-├── apps/
-│   ├── client/                  # Phaser 3 + Vite + TypeScript
-│   │   ├── src/
-│   │   │   ├── discord.ts       # Discord Embedded App SDK integration
-│   │   │   ├── scenes/
-│   │   │   │   └── WorldScene.ts# Tilemap rendering & player interpolation
-│   │   │   └── main.ts          # Client bootstrap
-│   │   ├── index.html
-│   │   └── vite.config.ts
-│   └── server/                  # Colyseus + Express + Node.js
-│       ├── src/
-│       │   ├── rooms/
-│       │   │   └── WorldRoom.ts # 20Hz Colyseus Room with tile validation
-│       │   ├── config.ts
-│       │   └── index.ts         # Server entrypoint & HTTP routes
-├── packages/
-│   ├── shared/                  # Colyseus schemas & shared types
-│   │   └── src/
-│   │       ├── schema.ts        # Player, WorldState, Stats, ItemStack
-│   │       ├── constants.ts     # 20Hz Tick rate, Directions, Action enums
-│   │       ├── types.ts
-│   │       └── index.ts
-│   └── content/                 # Game data & tilemaps
-│       ├── data/
-│       │   ├── items.json       # Consumables, equipment, key items
-│       │   ├── tilesets.json    # Tileset definitions & passability
-│       │   └── maps/            # JSON grid maps with collision layers
-│       └── src/
-│           └── index.ts
-├── infra/                       # Deployment configurations
-│   ├── Caddyfile                # Discord Activity proxy configuration
-│   ├── docker-compose.yml       # Caddy + Server + Client orchestration
-│   ├── Dockerfile.server
-│   └── Dockerfile.client
-├── pnpm-workspace.yaml
-├── package.json
-└── tsconfig.base.json
-```
+## Lizenz
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v20+ recommended)
-- pnpm (`corepack enable && corepack prepare pnpm@latest --activate`)
-- Docker & Docker Compose (optional, for containerized run)
-
-### Local Development
-
-1. **Install dependencies:**
-   ```bash
-   pnpm install
-   ```
-
-2. **Build shared packages:**
-   ```bash
-   pnpm build:shared
-   pnpm build:content
-   ```
-
-3. **Start development servers (Client + Server in parallel):**
-   ```bash
-   pnpm dev
-   ```
-   - Client will be running at `http://localhost:3000`
-   - Server will be running at `http://localhost:2567`
-
-### Discord Developer Portal Setup
-
-1. Create an application on the [Discord Developer Portal](https://discord.com/developers/applications).
-2. Under **Activities**, configure:
-   - **URL Mappings**: Map `/` to your tunnel or production domain (e.g., via Cloudflare Tunnel).
-3. Copy **Client ID** and **Client Secret** into your `.env`:
-   ```env
-   VITE_DISCORD_CLIENT_ID=your_client_id_here
-   DISCORD_CLIENT_SECRET=your_client_secret_here
-   ```
-
----
-
-## 🐳 Docker Deployment
-
-To launch the full stack with Caddy reverse proxy:
-
-```bash
-cd infra
-docker compose up --build -d
-```
-
----
-
-## 📄 License
-MIT
+MIT für den Projektcode. Daraus folgt keine Weitergabeerlaubnis für lokale
+Rockstar-Originalassets; diese sind kein Bestandteil des Quellcode-Pushs.
