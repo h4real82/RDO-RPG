@@ -4,6 +4,14 @@ Stand: 2026-10-15. Diese Anleitung gilt nur für den geplanten
 Valentine-Ausschnitt und den markierten Rundweg. Du musst keine Dateinamen
 erraten und keine technischen Entscheidungen allein treffen.
 
+**Aktualisierung 16.10.2026, H4R-27/H4R-52:** Bahnhof und Kirche sind in den
+hinzugekommenen levels_1-Basis-YMAPs mit originalen HD-Platzierungen gefunden.
+Der Audit bestätigt beide Quellen. Die Suche nach diesen Metadaten ist beendet;
+für diese zwei Gebäude ist derzeit kein weiterer OpenIV-Export erforderlich.
+Ältere Such-/Exportaufforderungen unten sind historisch. Runtime-Integration,
+Terrain und vollständige Route bleiben separat abzunehmen.
+Nachweis: `docs/runbooks/station-church-source-recovery.md`.
+
 ## Was du jetzt tun sollst
 
 1. ✅ **Batch 00B ist vollständig geprüft und erledigt.** Alle acht XMLs
@@ -13,7 +21,7 @@ erraten und keine technischen Entscheidungen allein treffen.
    wurden erfolgreich konvertiert. Aktuell ist kein weiterer Export nötig.
 4. Die 291 Valentine-YDR und die 88 Terrain-YDR bitte weiterhin nicht
    pauschal erneut exportieren. Auch Bahnhof und Kirche sind bereits als
-   vollständige Modelle vorhanden; dort fehlt eine Platzierungsquelle.
+   vollständige Modelle vorhanden; ihre Platzierungsquellen sind nun belegt.
 5. Weitere globale Texturen aus Batch 04B bleiben vorerst zurückgestellt.
 
 ## Status-Legende

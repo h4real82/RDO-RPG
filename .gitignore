@@ -41,6 +41,8 @@ caddy_data/
 caddy_config/
 
 # RDO-RPG restart: generated local-only artifacts
+/data/raw/
+/data/runtime/
 data/runtime/**/cache/
 data/runtime/**/reference-renders/
 data/runtime/**/test-artifacts/

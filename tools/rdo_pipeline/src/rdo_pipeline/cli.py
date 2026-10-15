@@ -20,6 +20,7 @@ from .terrain_placements import build_terrain_placements
 from .material_preview import apply_material_preview
 from .world_state import select_world_state
 from .route_coverage import build_route_coverage
+from .placement_recovery import audit_landmark_sources
 from .metadata_batch import audit_ymap_batch
 from .terrain_coverage import read_source_terrain_bounds, audit_terrain_bounds
 
@@ -67,6 +68,10 @@ def build_coverage_report(payload: object, placements: tuple[dict[str, object], 
 def main() -> int:
     parser = argparse.ArgumentParser(prog='rdo-pipeline')
     commands = parser.add_subparsers(dest='command', required=True)
+    recovery = commands.add_parser('audit-landmark-sources')
+    recovery.add_argument('--raw-root', type=Path, required=True)
+    recovery.add_argument('--runtime-root', type=Path, required=True)
+    recovery.add_argument('--model', action='append', required=True)
     terrain_audit = commands.add_parser('audit-terrain-corridor')
     terrain_audit.add_argument('--definition', type=Path, required=True)
     terrain_audit.add_argument('--ymap', type=Path, action='append', required=True)
@@ -169,6 +174,15 @@ def main() -> int:
         (runtime_root / 'placement-metadata-audit.json').write_text(
             json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
         print(json.dumps(report['summary'], sort_keys=True))
+        return 0
+    if args.command == 'audit-landmark-sources':
+        runtime_root = approved_runtime_root(args.runtime_root)
+        report = audit_landmark_sources(args.raw_root, args.model)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+        (runtime_root / 'landmark-source-recovery.json').write_text(
+            json.dumps(report, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        print(json.dumps({'summary': report['summary'],
+                          'models': {m['model']: m['status'] for m in report['models']}}, sort_keys=True))
         return 0
     if args.command == 'audit-valentine-circuit':
         runtime_root = approved_runtime_root(args.runtime_root)
