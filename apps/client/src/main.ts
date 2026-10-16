@@ -29,7 +29,16 @@ function showStartupError(message: string): void {
 try {
   const root = document.getElementById('game-container');
   if (!root) throw new Error('Game root is required');
-  bootstrapGame(root, { onStartupError: () => showStartupError('Der lokale Spielstart ist fehlgeschlagen. Bitte Seite neu laden.') });
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('view') === 'inspector') {
+    void import('./game/dev/MapInspector').then(({ startMapInspector }) => startMapInspector(root)).then((dispose) => {
+      if (import.meta.hot) import.meta.hot.dispose(dispose);
+    }).catch((error) => {
+      console.error('Could not start DEV map inspector.', error);
+      showStartupError(`Karteninspektor konnte nicht starten: ${String(error)}`);
+    });
+  } else {
+    bootstrapGame(root, { onStartupError: () => showStartupError('Der lokale Spielstart ist fehlgeschlagen. Bitte Seite neu laden.') });
+  }
 } catch (error) {
   console.error('Could not start the game.', error);
   showStartupError('Der lokale Spielstart ist fehlgeschlagen. Bitte Seite neu laden.');

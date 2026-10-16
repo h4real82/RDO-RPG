@@ -94,6 +94,56 @@ Es besteht keine automatische Obsidian-/GitHub-/Linear-Synchronisierung.
 
 Dokumentationsabgleich: [H4R-50](https://linear.app/h4real82/issue/H4R-50).
 
+## DEV-Karteninspektor (H4R-53)
+
+Im Restart-Checkout `npx pnpm --filter @rdo-rpg/client dev --host 127.0.0.1`
+starten und `http://127.0.0.1:3000/?view=inspector` öffnen.
+Diese Ansicht ist ausschließlich im Vite-DEV-Modus verfügbar.
+
+- Quellraum `(x,y,z)` wird unverändert nach Three.js `(x,z,-y)` abgebildet;
+  die Kamera ist nordorientiert. Tiefe/Höhe der echten GLBs bestimmen die Verdeckung.
+- 143 vorhandene Preview-Platzierungen plus zwei HD-Landmarken aus dem lokalen
+  Recovery-Bericht ergeben hier 145 Objekte. Die Bahnhof-/Kirchen-GLBs werden aus
+  `local-preview/textured-assets/` geladen. Das normale Weltmanifest bleibt unverändert.
+- F2 oder Debug: 10-m-Raster, Canvas-/Quellkoordinaten am Cursor, Landmarken-IDs,
+  AABBs und eingefärbte Originalgeometrie. Grid, Bounds, Collision und Labels
+  lassen sich unabhängig schalten. Ziehen bewegt die Kamera, Mausrad/+/- zoomt,
+  Top down wechselt zur Draufsicht, 0/Fit town passt den Ortsausschnitt ein.
+- Grün zeigt Quelloberflächen, Rot Kollisionskandidaten, Amber Objektgrenzen.
+  Der Cursor prüft zwei lokale Übergänge über die bestehenden Terrain-/Mesh-Routinen.
+  Das ist kein Navmesh oder Beweis für vollständige Begehbarkeit. Fehlendes Terrain
+  und unvollständige Straßenflächen werden weder aufgefüllt noch verbreitert.
+- Typnamen beeinflussen nur visuelle Kategorien, niemals Maße oder Positionen.
+  Fehlende Assets/Quellnachweise werden in der Ansicht gemeldet.
+
+Prüfung: 53 Client-Tests und `npx pnpm -r build`; Browserchecks für 145 geladene
+Objekte, Landmark-TRS, F2, Koordinaten, Einzeltoggles, Pan/Zoom/Fit und Draufsicht.
+Die vollständige Routen-/Server-Kollisionsabnahme bleibt bei H4R-27/H4R-29/H4R-30.
+Auftrag: [H4R-53](https://linear.app/h4real82/issue/H4R-53).
+
+## Bilder aus der DEV-Prüfung vom 16.10.2026
+
+Die Aufnahmen zeigen den [Restart-Branch](https://github.com/h4real82/RDO-RPG/tree/codex/rdo-restart-foundation)
+mit 145 quellengebundenen Objekten einschließlich Bahnhof und Kirche.
+Der DEV-Inspektor ist noch nicht in `main` integriert. Sichtbare Terrainlücken
+und unvollständige Straßenflächen sind weiterhin offene Abnahmepunkte.
+
+**Ortsübersicht – orthografische 2.5D-Ansicht:**
+
+![Valentine: quellengebundene Ortsübersicht](docs/screenshots/valentine-inspector-2026-10-16/town.png)
+
+**F2-Debug – Raster, Landmarken-IDs, Objektgrenzen und Quelloberflächen:**
+
+![Valentine: F2-Debugansicht mit Koordinaten und Objektgrenzen](docs/screenshots/valentine-inspector-2026-10-16/debug.png)
+
+**Draufsicht – Norden oben, Bahnhof im Südosten und Kirche im Nordosten:**
+
+![Valentine: nordorientierte Draufsicht](docs/screenshots/valentine-inspector-2026-10-16/top.png)
+
+Diese Bilder belegen den Darstellungs-/Inspektionsstand, keine vollständige
+Routen- oder Server-Kollisionsabnahme. Auftrag:
+[H4R-53](https://linear.app/h4real82/issue/H4R-53).
+
 ## Lizenz
 
 MIT für den Projektcode. Daraus folgt keine Weitergabeerlaubnis für lokale
