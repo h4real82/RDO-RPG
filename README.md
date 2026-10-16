@@ -94,6 +94,29 @@ Es besteht keine automatische Obsidian-/GitHub-/Linear-Synchronisierung.
 
 Dokumentationsabgleich: [H4R-50](https://linear.app/h4real82/issue/H4R-50).
 
+## Bilder aus der DEV-Prüfung vom 16.10.2026
+
+Die Aufnahmen zeigen den [Restart-Branch](https://github.com/h4real82/RDO-RPG/tree/codex/rdo-restart-foundation)
+mit 145 quellengebundenen Objekten einschließlich Bahnhof und Kirche.
+Der DEV-Inspektor ist noch nicht in `main` integriert. Sichtbare Terrainlücken
+und unvollständige Straßenflächen sind weiterhin offene Abnahmepunkte.
+
+**Ortsübersicht – orthografische 2.5D-Ansicht:**
+
+![Valentine: quellengebundene Ortsübersicht](docs/screenshots/valentine-inspector-2026-10-16/town.png)
+
+**F2-Debug – Raster, Landmarken-IDs, Objektgrenzen und Quelloberflächen:**
+
+![Valentine: F2-Debugansicht mit Koordinaten und Objektgrenzen](docs/screenshots/valentine-inspector-2026-10-16/debug.png)
+
+**Draufsicht – Norden oben, Bahnhof im Südosten und Kirche im Nordosten:**
+
+![Valentine: nordorientierte Draufsicht](docs/screenshots/valentine-inspector-2026-10-16/top.png)
+
+Diese Bilder belegen den Darstellungs-/Inspektionsstand, keine vollständige
+Routen- oder Server-Kollisionsabnahme. Auftrag:
+[H4R-53](https://linear.app/h4real82/issue/H4R-53).
+
 ## Lizenz
 
 MIT für den Projektcode. Daraus folgt keine Weitergabeerlaubnis für lokale
