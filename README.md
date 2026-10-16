@@ -69,6 +69,17 @@ Aufbau und Prüfungen: [Pipeline-Runbook im Restart](https://github.com/h4real82
 Discord-Zugangsdaten gehören in lokale Umgebungsvariablen; Client-Secret und
 Service-Keys dürfen nie ins Clientbundle oder Git gelangen.
 
+## Architektur
+
+Die Repository-Architektur ist als Dark-Mode-Übersicht dargestellt. Sie zeigt
+den Hauptpfad vom Discord-Activity-Client über Caddy und Colyseus bis zu
+`WorldRoom` sowie die gemeinsamen `shared`-/`content`-Verträge.
+
+![RDO-RPG Repository-Architektur im Dark Mode](docs/screenshots/rdo-rpg-architecture-dark.png)
+
+Die interaktive Archify-Version liegt lokal unter
+`.archify/architecture-rdo-rpg-20261017-000000/rdo-rpg-architecture.html`.
+
 ## Daten und Qualitätsgrenzen
 
 - GitHub führt Quellcode, Dokumentation, Schemas und Pipeline-Tools.
