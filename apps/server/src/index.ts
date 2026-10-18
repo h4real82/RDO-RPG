@@ -4,11 +4,14 @@ import cors from 'cors';
 import { Server } from 'colyseus';
 import { WebSocketTransport } from '@colyseus/ws-transport';
 import { WorldRoom } from './rooms/WorldRoom';
+import { SourceBoundaryRoom } from './rooms/SourceBoundaryRoom';
 import { config } from './config';
+import { accountRuntime } from './accounts/AccountRuntime';
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(express.json({limit:'16kb'}));
+const accounts=accountRuntime();
+app.use('/api',accounts.router);
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
@@ -24,13 +27,7 @@ app.post('/api/token', async (req: Request, res: Response) => {
     }
 
     if (!config.discordClientId || !config.discordClientSecret) {
-      // In local dev without secret configured, return simulated payload
-      return res.json({
-        access_token: 'mock_access_token_' + Math.random().toString(36).substring(7),
-        token_type: 'Bearer',
-        expires_in: 604800,
-        scope: 'identify'
-      });
+      return res.status(503).json({error:'Discord authentication is not configured'});
     }
 
     const response = await fetch('https://discord.com/api/oauth2/token', {
@@ -65,6 +62,7 @@ const gameServer = new Server({
 
 // Define Rooms
 gameServer.define('world_room', WorldRoom);
+gameServer.define('valentine_source', SourceBoundaryRoom);
 
 // Start server
 server.listen(config.port, () => {

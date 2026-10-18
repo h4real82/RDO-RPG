@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "valentine-holdem-practice",
+  "gameId": "poker",
+  "rulesVersion": "valentine-holdem-practice-v1",
+  "status": "runtime-loaded",
+  "startingChips": 100,
+  "smallBlind": 2,
+  "bigBlind": 4
+}

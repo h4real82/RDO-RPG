@@ -25,15 +25,13 @@ export class ModelAssetCache {
       throw error;
     }
     const instance = source.clone(true);
-    const materials = new Map<Material, Material>();
+    const materials = new Set<Material>();
     const clone = (material: Material): Material => {
-      let result = materials.get(material);
-      if (!result) {
-        result = material.clone();
-        result.onBeforeCompile = material.onBeforeCompile;
-        result.customProgramCacheKey = material.customProgramCacheKey;
-        materials.set(material, result);
-      }
+      // Source material reuse does not imply that separate meshes/slots occlude together.
+      const result = material.clone();
+      result.onBeforeCompile = material.onBeforeCompile;
+      result.customProgramCacheKey = material.customProgramCacheKey;
+      materials.add(result);
       return result;
     };
     instance.traverse((node) => {
@@ -43,7 +41,7 @@ export class ModelAssetCache {
     return { instance, dispose: () => {
       if (released) return;
       released = true;
-      for (const material of materials.values()) material.dispose();
+      for (const material of materials) material.dispose();
       owned.references -= 1;
       if (owned.references === 0) {
         this.entries.delete(asset);

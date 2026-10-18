@@ -1,7 +1,43 @@
 # RDO-RPG
 
+## Changelog · 19.10.2026 · Spielerprofil und Menü
+
+- Stitch-basierte Anmelde-/Registrierungsansichten und Charakterseite mit eigenem Inventar, Coins-Konto und Buchungen ergänzt. Wiederherstellung, Passwortänderung und Abmeldung sind an die neue Account-API angeschlossen. **Google entfällt auf Benutzerwunsch.**
+- Serverseitiges E-Mail-Konto mit geschützter Browsersitzung; feste Account-UUID, einmaliger Starterbestand und transaktionales Coins-Ledger. Bestehende Charakter-/Inventartabellen werden weiterverwendet; kein Browser-Guthaben als Wahrheit.
+- Lokale SQL-/API-/Browserprüfungen vorhanden. **Noch kein Livebetrieb:** Datenbankzugang, Auth-E-Mail-Konfiguration und Schemafreigabe fehlen. Die Solo-Vorschau bleibt ungespeichert; private/Discord-Sessions und Sessionboni sind noch nicht verfügbar. Build und Stubtests ersetzen diese Abnahme nicht.
+- [Einrichtung, Prüfungen und Git-Übergabe](docs/runbooks/player-accounts.md) · [H4R-61](https://linear.app/h4real82/issue/H4R-61), [H4R-35](https://linear.app/h4real82/issue/H4R-35), [H4R-87](https://linear.app/h4real82/issue/H4R-87).
+
+**Archify: Anmeldung und Profil** — logische Übersicht des lokalen Integrationsstands; keine Behauptung eines Live-Deployments. [Interaktive HTML-Datei](docs/architecture/account-access.html).
+
+![Anmeldung und Profil](docs/architecture/account-access.png)
+
+**Archify: dauerhafte Besitzdaten** — lokale Repository-/SQL-Funktionen; der Welt-Autosave ist noch nicht angeschlossen. [Interaktive HTML-Datei](docs/architecture/account-state.html).
+
+![Dauerhafte Besitzdaten](docs/architecture/account-state.png)
+
+**Umgesetzt 18.10.2026 (aktiver Restart):** Kontextkamera und aktive Erdgeschossansicht für Bank/Smithfield’s, außen Shift-/Kontext-Rennen und innen Gehen, nahe Ausgangs-/Aktionshinweise. Saloon mit einfacher Theke, zwei Tischen und Darts-Wandanker. Gebäude-/Spielregister angebunden; Darts nutzt seinen eigenen Codeordner und eine validierte Variante. 147 Client-Tests, Workspace-Build, Bank-/Saloon-Rundlauf, Produktions-Darts Desktop/mobil, zwölf Input-Guard-Fälle und zehn Appzyklen bestanden. Weitere Häuser, Galerie/Treppen und visuelle Originalerkennbarkeit bleiben offen. [Prüfprotokoll und nächste Arbeiten](docs/planning/Context-Interiors-Implementation-Ledger.md). Keine neue Benutzer-Zuarbeit. Main erhält Dokumentation; Runtime bleibt im Restart.
+
+**Spielziel18.10.2026:** Wiedererkennbares Valentine in2,5D, keine1:1-Rekonstruktion. Vereinfachte Zugänge, Rampen, Kollision und Innenräume sind erlaubt; L22 entfällt. [Aktuelle Designentscheidung](docs/planning/Valentine-25D-Designentscheidung-2026-10-18.md).
+
+**Nachtrag18.10.2026:** Strahlkosten beim Saloon-Anlauf reduziert, frühere Nahtransparenz vor Wandkontakt geprüft; Kollision bleibt. [Messung, Prüfungen und offene Grenzen](docs/planning/Performance-Proximity-Validation-2026-10-18.md). H4R-49/32/29 bleiben In Progress. Reset und reduzierte Animation vom Benutzer bestätigt.
+
+**Fortschritt18.10.2026:** Selektive Gebäudetransparenz korrigiert: Materialslots unabhängig, nur tatsächliche physische Treffer verblassen, Sichtstrahl zum sichtbaren Spielerzentrum. Saloon/Bahnhof/Kirche und Straße0059/13↔18 geprüft;101 Clienttests und Builds bestanden. [Abnahme und offene Etagen-/Routenpunkte](docs/planning/Occlusion-Isolation-Validation-2026-10-18.md). H4R-32/29 bleiben In Progress; aktive Runtime im Restart.
+
+**Aktualisierung 18.10.2026:** [Straßenrücksetzung und Menüfeedback](docs/planning/Recovery-Menu-Validation-2026-10-18.md) im aktiven Restart umgesetzt und lokal abgenommen (H4R-84/85). Unter http://127.0.0.1:4180/ neu laden; Solo → Menü → „Zur Straße zurücksetzen“. Exakter Header, animiertes Licht/Partikel, Blur und reduzierte Bewegung. 97 Clienttests,12 Guardfälle,10 DEV- und3 Produktionszyklen sowie Pflicht-Builds bestanden; Umfang siehe Bericht. Keine allgemeine Kollisions-/Routen- oder Onlineabnahme. Main erhält Dokumentation; Runtime bleibt im Restart. [Deine optionale Aufgabenliste](docs/Valentine-Nebenaufgaben-2026-10-17.md).
+
+**Aktualisierung 17.10.2026:** Im aktiven Restart jetzt 150 Platzierungen / 25 Terrain-Tiles. [Batch08](docs/Valentine-Terrain-Batch08-2026-10-17.md): drei Exporte übernommen, 111 zusätzliche Bodentreffer; 1009/1657 Treffer, 648 fehlend, 39 weitere Quell-Bounds offen. [Stitch-App-Shell](docs/planning/Frontier-Shell-Validation-2026-10-17.md) im normalen lokalen Build unter http://127.0.0.1:4180/; gewählter Screen mit Header, linker Navigation und drei Moduskarten. Client86/86 und Pflicht-Build bestanden. [Aktuelle Aufgaben für dich](docs/Valentine-Nebenaufgaben-2026-10-17.md): keine erneuten Exporte/URLs nötig. Ältere Zahlen unten bleiben als damalige Zwischenstände lesbar; Main- und Restart-Runtime sind weiterhin getrennt.
+
+App-/Social-Hub-Fahrplan: [Planung und Einstieg](docs/Valentine-App-Planung-2026-10-17.md),
+[Meilensteine](docs/planning/Valentine-Milestone-Roadmap-2026-10-17.md).
+Die DEV-Ansicht `?view=app-concept` verbindet bedienbare Menüs mit der echten lokalen
+Solo-Szene; Darts ist als lokale Übung verfügbar, Multiplayer und weitere Minigames bleiben geplant.
+Frische DEV-Abnahme: [Prüfbericht](docs/planning/App-Concept-Validation-2026-10-17.md).
+Aktive Eingaben und Fehlererholung: [H4R-33-Audit](docs/planning/Input-Guards-Audit-2026-10-17.md),
+85 Client-Tests, zwölf Guard-Browserfälle und zehn App-Sessionzyklen bestanden.
+Zum parallelen Mitmachen: [Nebenaufgaben und vorbereitete Dateien](docs/Valentine-Nebenaufgaben-2026-10-17.md).
+
 Western-RPG als Discord Activity mit **Three.js, TypeScript, Vite und Colyseus**.
-Stand: **16.10.2026**. Schwerpunkt ist die quellenbasierte Rekonstruktion der
+Stand: **17.10.2026**. Schwerpunkt ist die quellenbasierte Rekonstruktion der
 Valentine-Außenwelt; vollständige Karte und Multiplayer-Vertikalschnitt sind noch
 nicht abgenommen.
 
@@ -10,18 +46,29 @@ nicht abgenommen.
 - **Bahnhof und Kirche:** Die originalen HD-Außenplatzierungen sind gefunden.
   Der frische Audit bestätigt für beide Modelle `source-placement-found`.
   Dafür ist derzeit kein weiterer OpenIV-Export erforderlich.
-- **Runtime:** Die geprüfte lokale Restart-Vorschau enthält 143 Platzierungen.
-  Die beiden neu belegten Außenhüllen sind darin noch nicht integriert.
-- **Terrain und Route:** Frühere Teilstreckenprüfungen und Materialvorschauen
-  liegen vor. Bodenlücken, Straßen-/Decal-Darstellung, Kollisionsabgleich und
-  vollständiger Rundweg bleiben offen. Diese Sitzung enthält keine neue Browserabnahme.
-- **Frische Validierung:** 116 Pipeline-Tests, 48 Client-Tests, 11 Vertragstests
-  plus 2 Node-Prüfungen, Runtime-Validierung und Pflicht-Build im Restart bestanden.
-  Auch der Hauptcheckout bestand `npx pnpm -r build`.
+- **Runtime:** Spiel und Inspector laden dieselbe gehashte `verified-scene` mit
+  146 Platzierungen einschließlich Bahnhof und Kirche. Davon sind 21 Terrain-Tiles.
+- **Ortsgrenze:** Benutzerkontur mit fünf Originalankern und sechs Kontrollen
+  registriert (126 Punkte, geschätzte Bildunsicherheit ±8.3 m). Client und
+  separater `valentine_source`-Serverraum prüfen denselben Grenzvertrag;
+  der Inspector zeigt die Kontur über „Ortsgrenze“. Die lokale Vorschau
+  ist noch nicht vernetzt; Legacy-Pixelraum und volle Serverphysik bleiben offen.
+- **Terrain und Route:** Sieben nachgelieferte Original-Terrainressourcen sind
+  integriert. 17 zuvor betroffene Quellanker treffen echte Bodendreiecke;
+  sieben lokale Abschnitte sowie der begrenzte Straßenabschnitt 0062/12↔20
+  sind in beiden Richtungen mit aktiver Kollision bestanden. Im registrierten
+  Gesamtumfang schneiden 64 HD-Terrain-Bounds die Kontur: 21 integriert,
+  43 weitere Akquisitionskandidaten. Im 10-m-Raster fehlen 801 von 1657
+  Bodenproben. Vollständige Rundweg-/Serverabnahme bleibt offen.
+- **Frische Validierung:** 145 Pipeline-Tests, 85 Client-Tests, 14 Vertrags-Tests
+  plus zwei Node-Checks, Grenzprüfung im Browser und Socket-Test bestanden.
+  Runtime-Validierung, begrenzte Routenprüfung
+  und Pflicht-Build im Restart bestanden; keine Lade-/Textur-/Konsolenfehler.
   Vite warnt weiterhin vor CJS-Abkündigung und großen Bundles.
 
 Quellkoordinaten, Prüfbedingungen und offene Abnahmen:
-[Projektstand vom 16.10.2026](docs/Project-Status-2026-10-16.md).
+[Aktuelles Issue-Runbook](docs/runbooks/valentine-issue-remediation.md).
+Der [Projektstand vom 16.10.2026](docs/Project-Status-2026-10-16.md) bleibt als Historie erhalten.
 
 ## Branches und Arbeitsstände
 
@@ -102,9 +149,9 @@ Diese Ansicht ist ausschließlich im Vite-DEV-Modus verfügbar.
 
 - Quellraum `(x,y,z)` wird unverändert nach Three.js `(x,z,-y)` abgebildet;
   die Kamera ist nordorientiert. Tiefe/Höhe der echten GLBs bestimmen die Verdeckung.
-- 143 vorhandene Preview-Platzierungen plus zwei HD-Landmarken aus dem lokalen
-  Recovery-Bericht ergeben hier 145 Objekte. Die Bahnhof-/Kirchen-GLBs werden aus
-  `local-preview/textured-assets/` geladen. Das normale Weltmanifest bleibt unverändert.
+- Spiel und Inspector verwenden dieselben 146 Platzierungen aus
+  `verified-scene/rdo_world_manifest.json`. Die ursprüngliche `local-preview`
+  bleibt erhalten; der Inspector ergänzt keine privaten Landmarken mehr.
 - F2 oder Debug: 10-m-Raster, Canvas-/Quellkoordinaten am Cursor, Landmarken-IDs,
   AABBs und eingefärbte Originalgeometrie. Grid, Bounds, Collision und Labels
   lassen sich unabhängig schalten. Ziehen bewegt die Kamera, Mausrad/+/- zoomt,
@@ -116,8 +163,9 @@ Diese Ansicht ist ausschließlich im Vite-DEV-Modus verfügbar.
 - Typnamen beeinflussen nur visuelle Kategorien, niemals Maße oder Positionen.
   Fehlende Assets/Quellnachweise werden in der Ansicht gemeldet.
 
-Prüfung: 53 Client-Tests und `npx pnpm -r build`; Browserchecks für 145 geladene
-Objekte, Landmark-TRS, F2, Koordinaten, Einzeltoggles, Pan/Zoom/Fit und Draufsicht.
+Prüfung: 142 Pipeline-Tests und `npx pnpm -r build`; frische Browserchecks für
+145 geladene Objekte, gemeinsame Szene, Bodendreiecke und lokale Laufabschnitte.
+Die frühere Prüfung von F2, Koordinaten, Einzeltoggles und Pan/Zoom/Fit bleibt dokumentiert.
 Die vollständige Routen-/Server-Kollisionsabnahme bleibt bei H4R-27/H4R-29/H4R-30.
 Auftrag: [H4R-53](https://linear.app/h4real82/issue/H4R-53).
 

@@ -1,0 +1,486 @@
+{
+  "imageSha256": "e80ab7703e240cb8c85e3bb1ee5c25651c030bd3615deb32bd6ac627f2954aa8",
+  "coordinateSpace": "three-xz-metres",
+  "pixelMeasurement": "Manual visible building-symbol bounding-box centres; integer pixels; symbol versus roof uncertainty up to 3 metres. No inferred placements.",
+  "worldMeasurement": "Rendered highest-LOD original GLB world bounding-box centre from inspector snapshot; snapshot SHA and individual GLB hashes recorded.",
+  "snapshotSha256": "79f4f75da27a807a3b03f2226ac6f432413f953a8b61a71c4a64cbfb3c279032",
+  "maxResidualMetres": 3,
+  "anchors": [
+    {
+      "model": "val_05_res_d",
+      "placementId": "valentine:47508410ee74f2ff",
+      "pixel": [
+        824,
+        287
+      ],
+      "world": [
+        -246.11065078125,
+        -962.6867921875
+      ],
+      "bounds": {
+        "min": [
+          -250.6521546875,
+          135.77958671875,
+          -970.3293703125
+        ],
+        "max": [
+          -241.569146875,
+          142.7478484375,
+          -955.0442140625
+        ]
+      },
+      "asset": "models/valentine/val_05_res_d.glb",
+      "assetSha256": "5fa4df7253750fcfe8f741cf8f7cef90ba1b01784834f79fe9327b666601247c",
+      "placementTransform": {
+        "position": {
+          "x": -246.6961,
+          "y": 139.2332,
+          "z": -962.8948
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_05_res_e",
+      "placementId": "valentine:4481729a82f53fdc",
+      "pixel": [
+        718,
+        425
+      ],
+      "world": [
+        -282.0964453125,
+        -918.374562109375
+      ],
+      "bounds": {
+        "min": [
+          -288.26392578125,
+          126.76989140625,
+          -925.81767734375
+        ],
+        "max": [
+          -275.92896484375,
+          132.550653125,
+          -910.931446875
+        ]
+      },
+      "asset": "models/valentine/val_05_res_e.glb",
+      "assetSha256": "25ddb9379b9397d7ec07302cf01b35589eb4366659ca0749d067fefa58c5a72e",
+      "placementTransform": {
+        "position": {
+          "x": -279.865,
+          "y": 129.2362,
+          "z": -916.7459
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_06_auchouseb_ext",
+      "placementId": "valentine:aef24b04fe24c505",
+      "pixel": [
+        430,
+        414
+      ],
+      "world": [
+        -378.769815625,
+        -920.14269765625
+      ],
+      "bounds": {
+        "min": [
+          -386.80936640625,
+          116.35426328125,
+          -928.0592015625
+        ],
+        "max": [
+          -370.73026484375,
+          129.54566953124998,
+          -912.22619375
+        ]
+      },
+      "asset": "models/valentine/val_06_auchouseb_ext.glb",
+      "assetSha256": "52e74fae3c9b310163575b2f4ae0395568791d5f10fe0d2d5b78e2bc5c876f2d",
+      "placementTransform": {
+        "position": {
+          "x": -378.2913,
+          "y": 123.2444,
+          "z": -920.6051
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_03_stable_ext",
+      "placementId": "valentine:285038be82adc909",
+      "pixel": [
+        457,
+        805
+      ],
+      "world": [
+        -369.130224609375,
+        -789.408972265625
+      ],
+      "bounds": {
+        "min": [
+          -378.06455078125,
+          114.9468296875,
+          -800.69974375
+        ],
+        "max": [
+          -360.1958984375,
+          125.14458359375,
+          -778.11820078125
+        ]
+      },
+      "asset": "models/valentine/val_03_stable_ext.glb",
+      "assetSha256": "994cb03e6348a696759e41ddec95ab367bfae0808155e293446513c1ad6de4dc",
+      "placementTransform": {
+        "position": {
+          "x": -367.15,
+          "y": 119.5064,
+          "z": -788.2974
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_01_trainstn_ext",
+      "placementId": "source:371094a16fdc5b5b",
+      "pixel": [
+        1032,
+        1274
+      ],
+      "world": [
+        -177.0218,
+        -633.8562
+      ],
+      "bounds": {
+        "min": [
+          -194.7219953125,
+          110.85130859375,
+          -652.80590703125
+        ],
+        "max": [
+          -159.3216046875,
+          127.6301171875,
+          -614.90649296875
+        ]
+      },
+      "asset": "models/valentine/val_01_trainstn_ext.glb",
+      "assetSha256": "00f80fbb53d4ae0885e2b0feb492aec7371dd94c50fbe967f9ef658d65bd42c1",
+      "placementTransform": {
+        "position": {
+          "x": -177.0218,
+          "y": 119.26,
+          "z": -633.8562
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "model": "val_05_church_ext",
+      "placementId": "source:e3d0a307f73a0fc4",
+      "pixel": [
+        884,
+        760
+      ],
+      "world": [
+        -228.60531875,
+        -804.629108984375
+      ],
+      "bounds": {
+        "min": [
+          -241.5691859375,
+          120.4784625,
+          -815.23433359375
+        ],
+        "max": [
+          -215.6414515625,
+          146.77875546875,
+          -794.023884375
+        ]
+      },
+      "asset": "models/valentine/val_05_church_ext.glb",
+      "assetSha256": "8047ca57143e0d754a05afaff14e42ea4a97cf8a0b186976db95248102ad1da2",
+      "placementTransform": {
+        "position": {
+          "x": -226.5936,
+          "y": 133.6269,
+          "z": -804.0024
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_hotel_ext",
+      "placementId": "valentine:cb03cea32867a99b",
+      "pixel": [
+        596,
+        868
+      ],
+      "world": [
+        -322.665487109375,
+        -768.848196875
+      ],
+      "bounds": {
+        "min": [
+          -333.9196375,
+          114.890628125,
+          -782.61723984375
+        ],
+        "max": [
+          -311.41133671875,
+          128.47021796875,
+          -755.07915390625
+        ]
+      },
+      "asset": "models/valentine/val_hotel_ext.glb",
+      "assetSha256": "6265dd0597014d09f6d7e2728e6d72a2e2eff95ecd59b3a468de2119f886417e",
+      "placementTransform": {
+        "position": {
+          "x": -322.7087,
+          "y": 121.7168,
+          "z": -767.6314
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_bank",
+      "placementId": "valentine:6d4672cf966268e0",
+      "pixel": [
+        644,
+        858
+      ],
+      "world": [
+        -305.26578515625,
+        -771.0544796875
+      ],
+      "bounds": {
+        "min": [
+          -314.1315078125,
+          116.502825,
+          -784.37576875
+        ],
+        "max": [
+          -296.4000625,
+          124.36659453125,
+          -757.733190625
+        ]
+      },
+      "asset": "models/valentine/val_bank.glb",
+      "assetSha256": "47332382e314cd4b2dc38d2a4c2b12a2d0a8b1a704cc06fe32853a58bb272aaf",
+      "placementTransform": {
+        "position": {
+          "x": -306.4235,
+          "y": 120.6122,
+          "z": -771.1453
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_01_aucbarns_barn3",
+      "placementId": "source:42030fab922b6c61",
+      "pixel": [
+        899,
+        1151
+      ],
+      "world": [
+        -221.288119921875,
+        -673.748324609375
+      ],
+      "bounds": {
+        "min": [
+          -235.8811375,
+          112.0062125,
+          -687.42093203125
+        ],
+        "max": [
+          -206.69510234375,
+          120.98521640625,
+          -660.0757171875
+        ]
+      },
+      "asset": "models/valentine/val_01_aucbarns_barn3.glb",
+      "assetSha256": "58e5965a4a5904b7bb4be1c96cfcce59ca4692bdcac2e851985cb9186943eb81",
+      "placementTransform": {
+        "position": {
+          "x": -221.4827,
+          "y": 116.7484,
+          "z": -673.5181
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_01_aucbarns_barn2",
+      "placementId": "source:6f1907a25c9b8012",
+      "pixel": [
+        793,
+        1267
+      ],
+      "world": [
+        -257.255356640625,
+        -634.58044296875
+      ],
+      "bounds": {
+        "min": [
+          -271.84935078125,
+          112.01158359375,
+          -648.25231796875
+        ],
+        "max": [
+          -242.6613625,
+          120.98228671875,
+          -620.90856796875
+        ]
+      },
+      "asset": "models/valentine/val_01_aucbarns_barn2.glb",
+      "assetSha256": "1744a937f38962b1ef1fe587df6753a16d8ed456946d47670d00c90d745cca1e",
+      "placementTransform": {
+        "position": {
+          "x": -257.0598,
+          "y": 116.7484,
+          "z": -634.8114
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "model": "val_saloon2",
+      "placementId": "valentine:f02adf080eceead6",
+      "pixel": [
+        842,
+        864
+      ],
+      "world": [
+        -242.2632078125,
+        -769.56906015625
+      ],
+      "bounds": {
+        "min": [
+          -250.3647703125,
+          115.99526484375,
+          -777.38937265625
+        ],
+        "max": [
+          -234.1616453125,
+          125.26186640625,
+          -761.74874765625
+        ]
+      },
+      "asset": "models/valentine/val_saloon2.glb",
+      "assetSha256": "929e71d73fa3053d0278fc794c7573d2ebf4bc693ad3cdb47d34e3449fda6405",
+      "placementTransform": {
+        "position": {
+          "x": -242.4927,
+          "y": 120.8063,
+          "z": -769.5549
+        },
+        "rotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    }
+  ],
+  "snapshotPath": "data/runtime/valentine/boundary/anchor-inspector-snapshot.json"
+}

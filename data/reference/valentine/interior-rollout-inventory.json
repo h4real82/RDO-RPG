@@ -1,0 +1,1456 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Planning inventory only; not runtime floors or proof of enterability",
+  "sourceManifest": "data/runtime/valentine/verified-scene/rdo_world_manifest.json",
+  "sourceManifestSha256": "4823c2651fb5715573fa3582807734f07abf36186113731a77a99cc7def43be8",
+  "counts": {
+    "supporting-placement": 72,
+    "building-candidate": 28,
+    "classification-required": 3
+  },
+  "coverage": "All 103 buildings-layer placements recorded. 28 shell candidates and 3 special reviews are not an approved final house count. 2 ground-floor pilots; no complete floor coverage claimed.",
+  "placements": [
+    {
+      "placementId": "source:1d7a4419399c58d0",
+      "asset": "models/valentine/val_01_aucyard_01_fence_det.glb",
+      "sourcePosition": {
+        "x": -226.9777,
+        "y": 116.625,
+        "z": -643.5338
+      },
+      "classification": "supporting-placement",
+      "label": "val_01_aucyard_01_fence_det",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:371094a16fdc5b5b",
+      "asset": "models/valentine/val_01_trainstn_ext.glb",
+      "sourcePosition": {
+        "x": -177.0218,
+        "y": 119.26,
+        "z": -633.8562
+      },
+      "classification": "building-candidate",
+      "label": "Bahnhof",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:3d36f17249ef5a21",
+      "asset": "models/valentine/val_01_aucyard_stables.glb",
+      "sourcePosition": {
+        "x": -240.5894,
+        "y": 115.328,
+        "z": -687.9747
+      },
+      "classification": "building-candidate",
+      "label": "Viehmarkt-Stall",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:42030fab922b6c61",
+      "asset": "models/valentine/val_01_aucbarns_barn3.glb",
+      "sourcePosition": {
+        "x": -221.4827,
+        "y": 116.7484,
+        "z": -673.5181
+      },
+      "classification": "building-candidate",
+      "label": "Auktionsscheune 3",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:453738749a7497c7",
+      "asset": "models/valentine/val_01_aucyard_01_archa.glb",
+      "sourcePosition": {
+        "x": -214.018,
+        "y": 114.9593,
+        "z": -613.5537
+      },
+      "classification": "supporting-placement",
+      "label": "val_01_aucyard_01_archa",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:6347aaeb265dd106",
+      "asset": "models/valentine/val_01_aucyard_chkcoop.glb",
+      "sourcePosition": {
+        "x": -248.2455,
+        "y": 112.3002,
+        "z": -674.5961
+      },
+      "classification": "classification-required",
+      "label": "Kleintierbau: menschliche Begehbarkeit und Zuordnung prüfen",
+      "interiorStatus": "review",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:6559b152288c756a",
+      "asset": "models/valentine/val_03_doctor_ext_em_hd.glb",
+      "sourcePosition": {
+        "x": -286.4647,
+        "y": 122.6979,
+        "z": -809.085
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_doctor_ext_em_hd",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:6d944660a55d294b",
+      "asset": "models/valentine/val_01_aucyard_stable2.glb",
+      "sourcePosition": {
+        "x": -276.0304,
+        "y": 117.6904,
+        "z": -656.0528
+      },
+      "classification": "building-candidate",
+      "label": "Viehmarkt-Stall 2",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:6f1907a25c9b8012",
+      "asset": "models/valentine/val_01_aucbarns_barn2.glb",
+      "sourcePosition": {
+        "x": -257.0598,
+        "y": 116.7484,
+        "z": -634.8114
+      },
+      "classification": "building-candidate",
+      "label": "Auktionsscheune 2",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:74a1d93ad5eb3bc0",
+      "asset": "models/valentine/val_01_aucyard_shed.glb",
+      "sourcePosition": {
+        "x": -251.6151,
+        "y": 114.3605,
+        "z": -650.902
+      },
+      "classification": "building-candidate",
+      "label": "Viehmarkt-Schuppen",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:85b1c8d53603c18e",
+      "asset": "models/valentine/val_p_fenceagate.glb",
+      "sourcePosition": {
+        "x": -286.7701,
+        "y": 119.6977,
+        "z": -861.444
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:8c40e858108995a0",
+      "asset": "models/valentine/val_p_fenceagate_h.glb",
+      "sourcePosition": {
+        "x": -286.7693,
+        "y": 119.9704,
+        "z": -861.4988
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate_h",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:9e96f394b6329428",
+      "asset": "models/valentine/val_01_aucyard_01_archb.glb",
+      "sourcePosition": {
+        "x": -227.291,
+        "y": 115.213,
+        "z": -643.2327
+      },
+      "classification": "supporting-placement",
+      "label": "val_01_aucyard_01_archb",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:a0a57f7943ef0429",
+      "asset": "models/valentine/val_01_trainstn_fence.glb",
+      "sourcePosition": {
+        "x": -197.6274,
+        "y": 115.0366,
+        "z": -605.0408
+      },
+      "classification": "supporting-placement",
+      "label": "val_01_trainstn_fence",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:ae28db4e8a8406db",
+      "asset": "models/valentine/val_01_aucyard_barn.glb",
+      "sourcePosition": {
+        "x": -273.4284,
+        "y": 117.8085,
+        "z": -690.1792
+      },
+      "classification": "building-candidate",
+      "label": "Viehmarkt-Scheune",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:d0bb16dbc2fa6e0b",
+      "asset": "models/valentine/val_gravenames.glb",
+      "sourcePosition": {
+        "x": -236.4889,
+        "y": 123.6197,
+        "z": -818.771
+      },
+      "classification": "supporting-placement",
+      "label": "val_gravenames",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:e3d0a307f73a0fc4",
+      "asset": "models/valentine/val_05_church_ext.glb",
+      "sourcePosition": {
+        "x": -226.5936,
+        "y": 133.6269,
+        "z": -804.0024
+      },
+      "classification": "building-candidate",
+      "label": "Kirche",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "source:f8c55e8f4fa43385",
+      "asset": "models/valentine/val_05_church_dec.glb",
+      "sourcePosition": {
+        "x": -228.6081,
+        "y": 127.7632,
+        "z": -804.4132
+      },
+      "classification": "supporting-placement",
+      "label": "val_05_church_dec",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:00fe3567ba830271",
+      "asset": "models/valentine/val_07_resf_ext.glb",
+      "sourcePosition": {
+        "x": -409.5711,
+        "y": 117.0768,
+        "z": -655.8354
+      },
+      "classification": "building-candidate",
+      "label": "Wohnhaus F",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:02b94d3957f53059",
+      "asset": "models/valentine/val_04__em001.glb",
+      "sourcePosition": {
+        "x": -259.0177,
+        "y": 120.1503,
+        "z": -741.3681
+      },
+      "classification": "supporting-placement",
+      "label": "val_04__em001",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:0307eb9c36b9745b",
+      "asset": "models/valentine/val_auc_dcl.glb",
+      "sourcePosition": {
+        "x": -266.6791,
+        "y": 122.899,
+        "z": -757.7681
+      },
+      "classification": "supporting-placement",
+      "label": "val_auc_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:041c440f46358aaf",
+      "asset": "models/valentine/val_03_props_debris_13.glb",
+      "sourcePosition": {
+        "x": -306.1545,
+        "y": 118.8997,
+        "z": -833.587
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_13",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:04260cbfa3ba7ac0",
+      "asset": "models/valentine/val_genstore_rope.glb",
+      "sourcePosition": {
+        "x": -322.626,
+        "y": 119.2842,
+        "z": -794.5329
+      },
+      "classification": "supporting-placement",
+      "label": "val_genstore_rope",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:0a88d738f8b3e039",
+      "asset": "models/valentine/val_p_fenceagate_h.glb",
+      "sourcePosition": {
+        "x": -274.94,
+        "y": 116.9068,
+        "z": -762.6036
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate_h",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:0aa8e1ed74594897",
+      "asset": "models/valentine/val_03_props_debris_09.glb",
+      "sourcePosition": {
+        "x": -297.8627,
+        "y": 117.6523,
+        "z": -808.4682
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_09",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:14b2bf5cdda53a67",
+      "asset": "models/valentine/val_07_pigpen_shad.glb",
+      "sourcePosition": {
+        "x": -434.1967,
+        "y": 113.7478,
+        "z": -652.9266
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_pigpen_shad",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:1babfdfe8cd4375a",
+      "asset": "models/valentine/val_trainstn_int_em_hd.glb",
+      "sourcePosition": {
+        "x": -180.8372,
+        "y": 113.2691,
+        "z": -626.5492
+      },
+      "classification": "supporting-placement",
+      "label": "val_trainstn_int_em_hd",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:1eaa0bce51e3743b",
+      "asset": "models/valentine/val_03_saloon_decal_03.glb",
+      "sourcePosition": {
+        "x": -308.8703,
+        "y": 118.4572,
+        "z": -810.086
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_saloon_decal_03",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:22e60322b1713340",
+      "asset": "models/valentine/val_p_fenceagate.glb",
+      "sourcePosition": {
+        "x": -274.8903,
+        "y": 116.634,
+        "z": -762.6229
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:24c0c78c63cc346a",
+      "asset": "models/valentine/val_07_magic_ticketbooth.glb",
+      "sourcePosition": {
+        "x": -354.7037,
+        "y": 116.8039,
+        "z": -705.8861
+      },
+      "classification": "building-candidate",
+      "label": "Kassenhäuschen",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:285038be82adc909",
+      "asset": "models/valentine/val_03_stable_ext.glb",
+      "sourcePosition": {
+        "x": -367.15,
+        "y": 119.5064,
+        "z": -788.2974
+      },
+      "classification": "building-candidate",
+      "label": "Livery-Stall",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:2997b4644809fbae",
+      "asset": "models/valentine/val_06_pigpen.glb",
+      "sourcePosition": {
+        "x": -402.6699,
+        "y": 118.9081,
+        "z": -939.167
+      },
+      "classification": "supporting-placement",
+      "label": "val_06_pigpen",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:3262217cf7aeb336",
+      "asset": "models/valentine/val_07_resf_vines.glb",
+      "sourcePosition": {
+        "x": -409.6571,
+        "y": 114.9989,
+        "z": -654.7272
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_resf_vines",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:34453c0524da760b",
+      "asset": "models/valentine/val_07_pigpen.glb",
+      "sourcePosition": {
+        "x": -434.1967,
+        "y": 113.7478,
+        "z": -652.9266
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_pigpen",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:3613d9499256f0be",
+      "asset": "models/valentine/val_03_props_debris_11.glb",
+      "sourcePosition": {
+        "x": -271.6651,
+        "y": 117.597,
+        "z": -781.8417
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_11",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:3d7303bdb5f77f77",
+      "asset": "models/valentine/val_genstore_ext.glb",
+      "sourcePosition": {
+        "x": -323.0455,
+        "y": 120.5974,
+        "z": -799.5194
+      },
+      "classification": "building-candidate",
+      "label": "General Store",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:434da3e471c89552",
+      "asset": "models/valentine/val_06_sign_chadwickfarm.glb",
+      "sourcePosition": {
+        "x": -390.5077,
+        "y": 115.5277,
+        "z": -888.8649
+      },
+      "classification": "supporting-placement",
+      "label": "val_06_sign_chadwickfarm",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:4481729a82f53fdc",
+      "asset": "models/valentine/val_05_res_e.glb",
+      "sourcePosition": {
+        "x": -279.865,
+        "y": 129.2362,
+        "z": -916.7459
+      },
+      "classification": "building-candidate",
+      "label": "Wohnhaus E",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:47508410ee74f2ff",
+      "asset": "models/valentine/val_05_res_d.glb",
+      "sourcePosition": {
+        "x": -246.6961,
+        "y": 139.2332,
+        "z": -962.8948
+      },
+      "classification": "building-candidate",
+      "label": "Wohnhaus D",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:4a1ac9ae93ce4ad9",
+      "asset": "models/valentine/val_03_stables_fence.glb",
+      "sourcePosition": {
+        "x": -380.1211,
+        "y": 117.7592,
+        "z": -779.528
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_stables_fence",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:4ce2a4b2dcba0c7c",
+      "asset": "models/valentine/val_07_props_debris01.glb",
+      "sourcePosition": {
+        "x": -372.8894,
+        "y": 115.3709,
+        "z": -732.9772
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_props_debris01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:535b24a39073f3c2",
+      "asset": "models/valentine/val_shrffhs_dcl.glb",
+      "sourcePosition": {
+        "x": -258.5855,
+        "y": 116.487,
+        "z": -739.0651
+      },
+      "classification": "supporting-placement",
+      "label": "val_shrffhs_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:54699040c3a1d7ca",
+      "asset": "models/valentine/val_07_magiclantern_ext.glb",
+      "sourcePosition": {
+        "x": -348.3871,
+        "y": 118.4697,
+        "z": -698.2033
+      },
+      "classification": "building-candidate",
+      "label": "Kinozelt",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:57a3efb964daa498",
+      "asset": "models/valentine/val_03_jail_ext.glb",
+      "sourcePosition": {
+        "x": -276.1627,
+        "y": 121.7221,
+        "z": -806.7511
+      },
+      "classification": "building-candidate",
+      "label": "Gefängnis-Hülle",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:57f7de2949c92791",
+      "asset": "models/valentine/val_05_res_e_dcl.glb",
+      "sourcePosition": {
+        "x": -281.7161,
+        "y": 128.287,
+        "z": -916.7166
+      },
+      "classification": "supporting-placement",
+      "label": "val_05_res_e_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:5c288eefbfd9e035",
+      "asset": "models/valentine/val_04__em003.glb",
+      "sourcePosition": {
+        "x": -266.6794,
+        "y": 122.8988,
+        "z": -757.7681
+      },
+      "classification": "supporting-placement",
+      "label": "val_04__em003",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:5e327d90dd967d4a",
+      "asset": "models/valentine/val_gallows_dtl.glb",
+      "sourcePosition": {
+        "x": -314.7774,
+        "y": 121.3148,
+        "z": -731.4235
+      },
+      "classification": "supporting-placement",
+      "label": "val_gallows_dtl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:5e7b9af2f4a9c10c",
+      "asset": "models/valentine/val_lawoffice_dcl.glb",
+      "sourcePosition": {
+        "x": -291.4229,
+        "y": 121.2688,
+        "z": -779.608
+      },
+      "classification": "supporting-placement",
+      "label": "val_lawoffice_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:64aaae9d9b74dc62",
+      "asset": "models/valentine/val_rds_hay004.glb",
+      "sourcePosition": {
+        "x": -319.6935,
+        "y": 116.7065,
+        "z": -790.577
+      },
+      "classification": "supporting-placement",
+      "label": "val_rds_hay004",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:66d1c61394b1df76",
+      "asset": "models/valentine/val_gunsmith_ext.glb",
+      "sourcePosition": {
+        "x": -279.6426,
+        "y": 121.7859,
+        "z": -782.0623
+      },
+      "classification": "building-candidate",
+      "label": "Büchsenmacher",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:6d4672cf966268e0",
+      "asset": "models/valentine/val_bank.glb",
+      "sourcePosition": {
+        "x": -306.4235,
+        "y": 120.6122,
+        "z": -771.1453
+      },
+      "classification": "building-candidate",
+      "label": "Bank",
+      "interiorStatus": "ground-floor-pilot",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:6e9498442fd73563",
+      "asset": "models/valentine/val_03_house_ext_em_hd.glb",
+      "sourcePosition": {
+        "x": -295.6679,
+        "y": 121.9448,
+        "z": -806.5698
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_house_ext_em_hd",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:6ebd826b625bcb3b",
+      "asset": "models/valentine/val_hotel_ext_prch.glb",
+      "sourcePosition": {
+        "x": -321.5615,
+        "y": 119.7786,
+        "z": -768.2769
+      },
+      "classification": "supporting-placement",
+      "label": "val_hotel_ext_prch",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:707dfd297328323e",
+      "asset": "models/valentine/val_freightstn.glb",
+      "sourcePosition": {
+        "x": -233.7582,
+        "y": 119.9693,
+        "z": -754.4468
+      },
+      "classification": "building-candidate",
+      "label": "Frachtstation",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:70ead86b8af996e6",
+      "asset": "models/valentine/val_lawoffice_ext.glb",
+      "sourcePosition": {
+        "x": -291.2156,
+        "y": 122.5423,
+        "z": -779.5289
+      },
+      "classification": "building-candidate",
+      "label": "Law Office",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:714a10d6278bec94",
+      "asset": "models/valentine/val_blksmth_int_detail.glb",
+      "sourcePosition": {
+        "x": -368.3257,
+        "y": 116.7843,
+        "z": -796.8668
+      },
+      "classification": "supporting-placement",
+      "label": "val_blksmth_int_detail",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:7cbd24eb143b9ee6",
+      "asset": "models/valentine/val_03_saloon_ext.glb",
+      "sourcePosition": {
+        "x": -309.1668,
+        "y": 122.6945,
+        "z": -807.5872
+      },
+      "classification": "building-candidate",
+      "label": "Smithfield’s Saloon",
+      "interiorStatus": "ground-floor-pilot",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:7d6cbda6803aced9",
+      "asset": "models/valentine/val_03_footboards_dcl02.glb",
+      "sourcePosition": {
+        "x": -326.4919,
+        "y": 115.7876,
+        "z": -790.9999
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_footboards_dcl02",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:81adeccf53707b84",
+      "asset": "models/valentine/val_p_fenceagate.glb",
+      "sourcePosition": {
+        "x": -292.7481,
+        "y": 118.3557,
+        "z": -820.8449
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:84a118125a16e3f6",
+      "asset": "models/valentine/val_auchouse_ext.glb",
+      "sourcePosition": {
+        "x": -266.6794,
+        "y": 122.8988,
+        "z": -757.7681
+      },
+      "classification": "building-candidate",
+      "label": "Auktionshaus",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:86925af7fd5c6a1b",
+      "asset": "models/valentine/val_p_fenceagate.glb",
+      "sourcePosition": {
+        "x": -289.6955,
+        "y": 118.4302,
+        "z": -825.9782
+      },
+      "classification": "supporting-placement",
+      "label": "val_p_fenceagate",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:89413ea50e307014",
+      "asset": "models/valentine/val_07_resf_dec.glb",
+      "sourcePosition": {
+        "x": -408.028,
+        "y": 115.7661,
+        "z": -656.7646
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_resf_dec",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:89e47fb7ea7888b6",
+      "asset": "models/valentine/val_06_stairs_repair01.glb",
+      "sourcePosition": {
+        "x": -371.0578,
+        "y": 116.8289,
+        "z": -921.3354
+      },
+      "classification": "supporting-placement",
+      "label": "val_06_stairs_repair01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:8be6ce184db77292",
+      "asset": "models/valentine/val_03_doctor_decal.glb",
+      "sourcePosition": {
+        "x": -286.4032,
+        "y": 120.2844,
+        "z": -809.0533
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_doctor_decal",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:9e636eb10a65a17f",
+      "asset": "models/valentine/val_bank_dcl01.glb",
+      "sourcePosition": {
+        "x": -305.2572,
+        "y": 117.3754,
+        "z": -771.6294
+      },
+      "classification": "supporting-placement",
+      "label": "val_bank_dcl01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:9f49129d5d8faf42",
+      "asset": "models/valentine/val_03_saloon_decal_02.glb",
+      "sourcePosition": {
+        "x": -315.8367,
+        "y": 116.6634,
+        "z": -802.2782
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_saloon_decal_02",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:a56af7d8fdab0384",
+      "asset": "models/valentine/val_03_props_debris_01.glb",
+      "sourcePosition": {
+        "x": -271.6932,
+        "y": 117.9206,
+        "z": -820.8683
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:a7a47eaca8bee8e2",
+      "asset": "models/valentine/val_03_props_debris_04.glb",
+      "sourcePosition": {
+        "x": -337.1758,
+        "y": 115.2904,
+        "z": -770.1374
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_04",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:a8570ee4fb300b01",
+      "asset": "models/valentine/val_gunsmith_dcl.glb",
+      "sourcePosition": {
+        "x": -279.6448,
+        "y": 121.5119,
+        "z": -782.0623
+      },
+      "classification": "supporting-placement",
+      "label": "val_gunsmith_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:aa04db23fc1c0afa",
+      "asset": "models/valentine/val_03_props_debris_10.glb",
+      "sourcePosition": {
+        "x": -290.5354,
+        "y": 117.6054,
+        "z": -798.0369
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_10",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:add70b8f205d699e",
+      "asset": "models/valentine/val_07_magiclantern_dec.glb",
+      "sourcePosition": {
+        "x": -347.7663,
+        "y": 118.6559,
+        "z": -697.4922
+      },
+      "classification": "supporting-placement",
+      "label": "val_07_magiclantern_dec",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:aef24b04fe24c505",
+      "asset": "models/valentine/val_06_auchouseb_ext.glb",
+      "sourcePosition": {
+        "x": -378.2913,
+        "y": 123.2444,
+        "z": -920.6051
+      },
+      "classification": "building-candidate",
+      "label": "Auktionshaus B",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:afc8293ebe4d851f",
+      "asset": "models/valentine/val_02_props_debris01.glb",
+      "sourcePosition": {
+        "x": -294.1199,
+        "y": 116.7619,
+        "z": -741.9261
+      },
+      "classification": "supporting-placement",
+      "label": "val_02_props_debris01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:affe97c317b84340",
+      "asset": "models/valentine/val_03_props_debris_02.glb",
+      "sourcePosition": {
+        "x": -275.5768,
+        "y": 118.0795,
+        "z": -800.2631
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_02",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:b1d077937781a8a6",
+      "asset": "models/valentine/val_03_props_debris_12.glb",
+      "sourcePosition": {
+        "x": -344.4507,
+        "y": 115.2224,
+        "z": -796.0683
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_12",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:b21b3703be44fcab",
+      "asset": "models/valentine/val_03_saloon_decal_01.glb",
+      "sourcePosition": {
+        "x": -307.6637,
+        "y": 117.5549,
+        "z": -796.8128
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_saloon_decal_01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:bf867eeb3ba101d0",
+      "asset": "models/valentine/val_03_default_jail.glb",
+      "sourcePosition": {
+        "x": -279.7559,
+        "y": 114.9548,
+        "z": -804.9147
+      },
+      "classification": "classification-required",
+      "label": "Zusammenhang mit Gefängnis/Sheriff-Hüllen prüfen; nicht doppelt als Haus zählen",
+      "interiorStatus": "review",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:c379e40415aba12c",
+      "asset": "models/valentine/val_02__em001.glb",
+      "sourcePosition": {
+        "x": -322.7087,
+        "y": 121.7168,
+        "z": -767.6314
+      },
+      "classification": "supporting-placement",
+      "label": "val_02__em001",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:c8a08ce89d90d071",
+      "asset": "models/valentine/val_03_jail_decal.glb",
+      "sourcePosition": {
+        "x": -277.3502,
+        "y": 121.1421,
+        "z": -806.5299
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_jail_decal",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:c8e8401f1349491a",
+      "asset": "models/valentine/val_06_aucb_dec.glb",
+      "sourcePosition": {
+        "x": -378.2913,
+        "y": 123.2444,
+        "z": -920.6051
+      },
+      "classification": "supporting-placement",
+      "label": "val_06_aucb_dec",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:c9f61db168ff21c3",
+      "asset": "models/valentine/val_gallows.glb",
+      "sourcePosition": {
+        "x": -315.6021,
+        "y": 119.7646,
+        "z": -731.0102
+      },
+      "classification": "supporting-placement",
+      "label": "val_gallows",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:cb03cea32867a99b",
+      "asset": "models/valentine/val_hotel_ext.glb",
+      "sourcePosition": {
+        "x": -322.7087,
+        "y": 121.7168,
+        "z": -767.6314
+      },
+      "classification": "building-candidate",
+      "label": "Hotel",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:d0d0cef1fb83c531",
+      "asset": "models/valentine/val_03_props_debris_08.glb",
+      "sourcePosition": {
+        "x": -332.6252,
+        "y": 116.5079,
+        "z": -820.5409
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_08",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:d39386b4eb21ae1a",
+      "asset": "models/valentine/val_shrffhs.glb",
+      "sourcePosition": {
+        "x": -259.0177,
+        "y": 120.1503,
+        "z": -741.3681
+      },
+      "classification": "building-candidate",
+      "label": "Sheriff-Haus",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:d40850ed728aec29",
+      "asset": "models/valentine/val_03_props_debris_06.glb",
+      "sourcePosition": {
+        "x": -313.1508,
+        "y": 116.4775,
+        "z": -782.8646
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_06",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:d60cb7ca455651c0",
+      "asset": "models/valentine/val_02__em003.glb",
+      "sourcePosition": {
+        "x": -279.6426,
+        "y": 121.7859,
+        "z": -782.0623
+      },
+      "classification": "supporting-placement",
+      "label": "val_02__em003",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:d7513e7de5414cd0",
+      "asset": "models/valentine/val_hotel_prch_dcl.glb",
+      "sourcePosition": {
+        "x": -321.8688,
+        "y": 118.0628,
+        "z": -768.7331
+      },
+      "classification": "supporting-placement",
+      "label": "val_hotel_prch_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:db345b4baf69106a",
+      "asset": "models/valentine/val_03_props_debris_07.glb",
+      "sourcePosition": {
+        "x": -290.3306,
+        "y": 117.5256,
+        "z": -787.0247
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_07",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:db9ae93094a388bc",
+      "asset": "models/valentine/val_butcher_collapsed.glb",
+      "sourcePosition": {
+        "x": -336.4391,
+        "y": 116.7049,
+        "z": -768.1857
+      },
+      "classification": "classification-required",
+      "label": "Ruine: sinnvolle zugängliche Restfläche statt geschlossener Hülle festlegen",
+      "interiorStatus": "review",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:db9b9812f3d914d5",
+      "asset": "models/valentine/val_blksmth_int.glb",
+      "sourcePosition": {
+        "x": -370.5913,
+        "y": 117.0154,
+        "z": -796.1258
+      },
+      "classification": "building-candidate",
+      "label": "Schmiede",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:dddcbc4ae5b717d1",
+      "asset": "models/valentine/val_05_res_e_veg.glb",
+      "sourcePosition": {
+        "x": -279.7704,
+        "y": 128.9564,
+        "z": -916.8127
+      },
+      "classification": "supporting-placement",
+      "label": "val_05_res_e_veg",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:de064691074f853e",
+      "asset": "models/valentine/val_02__em002.glb",
+      "sourcePosition": {
+        "x": -291.2156,
+        "y": 122.5423,
+        "z": -779.5289
+      },
+      "classification": "supporting-placement",
+      "label": "val_02__em002",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:e56dda763cb33ef7",
+      "asset": "models/valentine/val_03_doctor_ext.glb",
+      "sourcePosition": {
+        "x": -286.4647,
+        "y": 122.6979,
+        "z": -809.085
+      },
+      "classification": "building-candidate",
+      "label": "Arzt",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:ea95816258ff5ff1",
+      "asset": "models/valentine/val_genstore_dcl.glb",
+      "sourcePosition": {
+        "x": -323.9614,
+        "y": 117.6987,
+        "z": -799.035
+      },
+      "classification": "supporting-placement",
+      "label": "val_genstore_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:eb5b76d87c41f067",
+      "asset": "models/valentine/val_ladder_01.glb",
+      "sourcePosition": {
+        "x": -306.4235,
+        "y": 120.6122,
+        "z": -771.1453
+      },
+      "classification": "supporting-placement",
+      "label": "val_ladder_01",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:ed36103e4b695a6f",
+      "asset": "models/valentine/val_04__em002.glb",
+      "sourcePosition": {
+        "x": -242.4927,
+        "y": 120.8063,
+        "z": -769.5549
+      },
+      "classification": "supporting-placement",
+      "label": "val_04__em002",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:eee6354a3f28fd19",
+      "asset": "models/valentine/val_03_props_debris_03.glb",
+      "sourcePosition": {
+        "x": -306.5533,
+        "y": 117.8665,
+        "z": -797.1616
+      },
+      "classification": "supporting-placement",
+      "label": "val_03_props_debris_03",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:f02adf080eceead6",
+      "asset": "models/valentine/val_saloon2.glb",
+      "sourcePosition": {
+        "x": -242.4927,
+        "y": 120.8063,
+        "z": -769.5549
+      },
+      "classification": "building-candidate",
+      "label": "Zweiter Saloon",
+      "interiorStatus": "planned",
+      "floorCount": null,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+    },
+    {
+      "placementId": "valentine:f0e2149972acaa83",
+      "asset": "models/valentine/val_06__em001.glb",
+      "sourcePosition": {
+        "x": -381.8932,
+        "y": 118.1481,
+        "z": -915.5703
+      },
+      "classification": "supporting-placement",
+      "label": "val_06__em001",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:f7b2acd772de9604",
+      "asset": "models/valentine/val_blksmth_int_dcl.glb",
+      "sourcePosition": {
+        "x": -366.955,
+        "y": 115.6479,
+        "z": -797.2514
+      },
+      "classification": "supporting-placement",
+      "label": "val_blksmth_int_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:f7c867bf6c8824a0",
+      "asset": "models/valentine/val_gunsmith_ladder.glb",
+      "sourcePosition": {
+        "x": -279.6426,
+        "y": 121.7859,
+        "z": -782.0623
+      },
+      "classification": "supporting-placement",
+      "label": "val_gunsmith_ladder",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:f8d73f7e2c82fcca",
+      "asset": "models/valentine/val_freight_dcl.glb",
+      "sourcePosition": {
+        "x": -234.6138,
+        "y": 115.8305,
+        "z": -753.4166
+      },
+      "classification": "supporting-placement",
+      "label": "val_freight_dcl",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "valentine:fe71a5879b866eab",
+      "asset": "models/valentine/val_05_glue_02.glb",
+      "sourcePosition": {
+        "x": -259.2714,
+        "y": 136.2084,
+        "z": -969.0496
+      },
+      "classification": "supporting-placement",
+      "label": "val_05_glue_02",
+      "interiorStatus": "not-a-separate-approved-building",
+      "floorCount": null,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    }
+  ]
+}

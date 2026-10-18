@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-03-jail-ext",
+  "name": "Gefängnis-Hülle",
+  "sourcePlacementIds": [
+    "valentine:57a3efb964daa498"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_03_jail_ext.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

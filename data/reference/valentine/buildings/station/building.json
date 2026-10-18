@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "station",
+  "name": "Bahnhof",
+  "sourcePlacementIds": [
+    "source:371094a16fdc5b5b"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_01_trainstn_ext.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

@@ -3,6 +3,7 @@ import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 
 import { WorldChunkManager } from './WorldChunkManager';
 import { disposeObjectResources } from './ResourceDisposer';
+import { RoadRecovery } from '../player/RoadRecovery';
 
 const manifest: WorldManifest = {
   version: 1,
@@ -20,6 +21,42 @@ const manifest: WorldManifest = {
 };
 
 describe('WorldChunkManager', () => {
+  it('requires a completely loaded neighbourhood and rejects partial terrain/obstacle loads for recovery', async () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      const floor = { ...manifest.placements[0], id: 'floor', layer: 'terrain' as const };
+      const wall = { ...manifest.placements[0], id: 'wall' };
+      const instantiate = vi.fn(async (placement: WorldPlacement) => {
+        if (placement.id === 'wall') throw new Error('missing obstacle');
+        return { dispose() {} };
+      });
+      const manager = new WorldChunkManager({ ...manifest, placements: [floor, wall] }, instantiate);
+      expect(manager.isRegionReady(1, 1)).toBe(false);
+      await manager.update(1, 1);
+      expect(manager.isRegionReady(1, 1)).toBe(false);
+      await expect(manager.prepareRegion(1, 1)).rejects.toThrow('nicht vollständig geladen');
+      const apply = vi.fn();
+      const recovery = new RoadRecovery([], { id: 'road#0', position: { x: 1, z: 1 },
+        source: { path: 'source.json', traceId: 'road', pointIndex: 0 } }, {
+        prepare: target => manager.prepareRegion(target.position.x, target.position.z),
+        validate: target => ({ ...target.position, y: 0 }), isActive: () => true, apply,
+      });
+      expect((await recovery.reset()).status).toBe('error');
+      expect(apply).not.toHaveBeenCalled(); // Support alone never proves obstacle clearance.
+      await manager.update(1, 1);
+      expect(instantiate).toHaveBeenCalledTimes(2); // No per-frame retry storm.
+      expect(manager.isRegionReady(1, 1)).toBe(false);
+      await manager.update(2001, 1);
+      expect(manager.isRegionReady(1, 1)).toBe(false);
+      expect(manager.isRegionReady(2001, 1)).toBe(true); // Empty source chunks are complete.
+      manager.dispose();
+      expect(manager.isRegionReady(2001, 1)).toBe(false);
+      const complete = new WorldChunkManager(manifest, async () => ({ dispose() {} }));
+      await complete.update(1, 1);
+      expect(complete.isRegionReady(1, 1)).toBe(true);
+      complete.dispose();
+    } finally { log.mockRestore(); }
+  });
   it('skips an obsolete queued neighbourhood while a model is loading', async () => {
     let finish: (() => void) | undefined;
     const loaded: string[] = [];
@@ -64,6 +101,19 @@ describe('WorldChunkManager', () => {
     await Promise.all([first, second]);
 
     expect(resource.dispose).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not start additional placement loads after cancellation', async () => {
+    let finish!: (resource: {dispose():void})=>void;
+    const resource={dispose:vi.fn()};
+    const instantiate=vi.fn(()=>new Promise<{dispose():void}>(resolve=>{finish=resolve;}));
+    const placement=manifest.placements[0];
+    const manager=new WorldChunkManager({...manifest,placements:[placement,{...placement,id:'second'}]},instantiate);
+    const pending=manager.update(1,1);
+    await new Promise(resolve=>setTimeout(resolve,0));
+    manager.dispose();finish(resource);
+    await pending;
+    expect(instantiate).toHaveBeenCalledTimes(1);expect(resource.dispose).toHaveBeenCalledTimes(1);
   });
 
   it('disposes chunk resources once after the player leaves their neighbourhood', async () => {

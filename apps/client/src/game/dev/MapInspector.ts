@@ -1,5 +1,5 @@
 import {
-  AmbientLight, Box3, Box3Helper, Color, DirectionalLight, GridHelper, Group,
+  AmbientLight, Box3, Box3Helper, BufferGeometry, Color, DirectionalLight, GridHelper, Group, LineLoop, LineBasicMaterial,
   Mesh, MeshBasicMaterial, MeshStandardMaterial, OrthographicCamera, Plane,
   Raycaster, Scene, Vector2, Vector3, WebGLRenderer,
 } from 'three';
@@ -13,10 +13,14 @@ import { TerrainGround } from '../world/TerrainGround';
 import { VisibleMeshCollision } from '../world/VisibleMeshCollision';
 import { applyPlacementTransform, prepareDrawableMaterialPreview, prepareTerrainFourLayerPreview } from '../ValentineRuntime';
 import { TextureLoader } from 'three';
-import { palette, recoveredLandmarks, sourceCoordinates, visualCategory } from './MapData';
+import { palette, sourceCoordinates, visualCategory } from './MapData';
+import { sceneManifestUrl, sceneAssetUrl } from '../world/SceneSource';
+import { VALENTINE_BOUNDARY } from '@rdo-rpg/world-contracts';
+import { placementRoles } from '../world/PlacementRoles';
+import { describeSelection, type MapSelection } from './MapDiagnostics';
+import { isDetachedTarget, isEditableTarget } from '../input/InputTarget';
 import './MapInspector.css';
 
-const base = '/runtime/valentine/local-preview/';
 type Entry = { placement: WorldPlacement; model: string; source: string; instance: Group; bounds: Box3; label?: HTMLElement };
 
 export async function startMapInspector(root: HTMLElement): Promise<() => void> {
@@ -43,6 +47,8 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   const errors: string[] = [];
   const cleanup: (() => void)[] = [];
   const entries: Entry[] = [];
+  const sourceEvidence = new Map<string, unknown[]>();
+  let selected: MapSelection | undefined;
   const ground = new TerrainGround();
   const collision = new VisibleMeshCollision();
   const bounds = new Box3();
@@ -58,6 +64,9 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   ui.setAttribute('aria-label', 'DEV map inspector');
   ui.innerHTML = `<div class="labels"></div><header><div><div class="eyebrow">RDO / WORLD STUDIES — DEV 01</div><h1>Valentine</h1><div class="subtitle">NEW HANOVER · SOURCE-BOUND EXTERIOR STUDY</div></div><nav aria-label="Map controls"><button data-action="debug" aria-pressed="false">F2 · Debug</button><button data-action="top" aria-pressed="false">Top down</button><button data-action="fit">Fit town</button><button data-action="in" aria-label="Zoom in">+</button><button data-action="out" aria-label="Zoom out">−</button></nav></header><div class="north">↑<br>N</div><aside class="panel"><h2>EXTRACTED WORLD / LIVE GEOMETRY</h2><div class="legend"><span><i style="background:#797855"></i>Source terrain / grass & dirt</span><span><i style="background:#654735"></i>Mud / road surfaces</span><span><i style="background:#c39760"></i>Boardwalks / source timber</span><span><i style="background:#a59069"></i>Fences / livestock structures</span></div><p class="note">Actual GLB geometry. Doors and porches stay at their extracted positions. Missing terrain stays empty.</p><div data-debug hidden><p class="note">10 m grid · green = source surfaces<br>red = collider candidates · amber = AABBs<br>Bounds are not a navigation mesh.</p><output data-selection class="selection">Hover an entity to inspect its ID.</output></div></aside><footer><output data-status role="status">Loading verified manifest…</output><output data-coordinates>Drag to pan · wheel to zoom · F2 inspect · 0 fit</output></footer>`;
   root.append(ui);
+  const boundaryButton = document.createElement('button');
+  boundaryButton.textContent = 'Ortsgrenze'; boundaryButton.dataset.action = 'boundary';
+  ui.querySelector('nav')?.append(boundaryButton);
   const status = ui.querySelector<HTMLOutputElement>('[data-status]')!;
   const coordinates = ui.querySelector<HTMLOutputElement>('[data-coordinates]')!;
   const selection = ui.querySelector<HTMLOutputElement>('[data-selection]')!;
@@ -73,6 +82,9 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
     debugControls.append(button);
   }
   debugPanel.prepend(debugControls);
+  const copySelection = document.createElement('button');
+  copySelection.type = 'button'; copySelection.textContent = 'Auswahl kopieren'; copySelection.disabled = true;
+  debugControls.append(copySelection);
   let labelsEnabled = true;
   let grid: GridHelper | undefined;
 
@@ -103,15 +115,34 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   /** Every input callback is guarded; a detached UI cannot kill the render loop. */
   const listen = (node: EventTarget | null, type: string, callback: (event: Event) => void, options?: AddEventListenerOptions): void => {
     if (!node) return;
-    const guarded = (event: Event): void => { try { if (!disposed && root.isConnected) callback(event); } catch (error) { console.error(`Map inspector ${type} failed.`, error); } };
+    const guarded = (event: Event): void => { try { if (!disposed && root.isConnected && !event.defaultPrevented && !isDetachedTarget(event)) callback(event); } catch (error) { console.error(`Map inspector ${type} failed.`, error); } };
     node.addEventListener(type, guarded, options);
     cleanup.push(() => node.removeEventListener(type, guarded, options));
   };
+  listen(copySelection, 'click', () => {
+    void (async () => {
+      try {
+        if (disposed || !copySelection.isConnected || !selected || !navigator.clipboard) return;
+        await navigator.clipboard.writeText(JSON.stringify(selected, null, 2));
+        if (!disposed && copySelection.isConnected) copySelection.textContent = 'Kopiert';
+      } catch (error) {
+        if (!disposed && selection.isConnected) selection.textContent = `${JSON.stringify(selected, null, 2)}\nKopieren nicht verfügbar: ${String(error)}`;
+      }
+    })();
+  });
   listen(ui.querySelector('nav'), 'click', (event) => {
     if (!(event.target instanceof Element)) return;
     const action = event.target.closest<HTMLButtonElement>('button')?.dataset.action;
     if (action === 'debug') toggleDebug();
     if (action === 'fit') fit();
+    if (action === 'boundary') {
+      if (!debug) toggleDebug();
+      const extent = new Box3().setFromPoints(VALENTINE_BOUNDARY.polygon.map(([x,z]) => new Vector3(x, target.y, z)));
+      extent.getCenter(target);
+      const size = extent.getSize(new Vector3());
+      viewHeight = Math.max(size.z, size.x / (Math.max(root.clientWidth,1)/Math.max(root.clientHeight,1))) * 1.12;
+      updateCamera();
+    }
     if (action === 'top') { overhead = !overhead; topButton.setAttribute('aria-pressed', String(overhead)); updateCamera(); }
     if (action === 'in') zoom(0.8);
     if (action === 'out') zoom(1.25);
@@ -129,8 +160,8 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   });
   listen(window, 'keydown', (event) => {
     const key = event as KeyboardEvent;
-    if (key.target instanceof Element && key.target.closest('input,textarea,select,[contenteditable=true]')) return;
-    if (key.repeat || key.ctrlKey || key.metaKey || key.altKey) return;
+    if (isEditableTarget(key.target) || isEditableTarget(document.activeElement)) return;
+    if (key.repeat || key.isComposing || key.ctrlKey || key.metaKey || key.altKey || key.key==='Process') return;
     if (key.key === 'F2') { key.preventDefault(); toggleDebug(); }
     if (key.key === '0') fit();
     if (key.key === '+') zoom(0.8);
@@ -155,7 +186,11 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
         let owner = hit.object;
         while (owner.parent && !owner.userData.inspectorId) owner = owner.parent;
         const entry = entries.find((item) => item.placement.id === owner.userData.inspectorId);
-        if (entry) selection.textContent = `${entry.model}\n${entry.placement.id}\n${entry.source}`;
+        if (entry && hit.object instanceof Mesh) {
+          selected = describeSelection(entry.placement, hit.object, hit.point, sourceEvidence.get(entry.placement.id));
+          selection.textContent = JSON.stringify(selected, null, 2);
+          copySelection.disabled = false; copySelection.textContent = 'Auswahl kopieren';
+        }
         return hit.point;
       }
     }
@@ -204,7 +239,13 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   listen(renderer.domElement, 'pointercancel', endDrag);
   listen(renderer.domElement, 'lostpointercapture', () => { drag = undefined; });
   listen(window, 'blur', () => { drag = undefined; });
-  listen(renderer.domElement, 'wheel', (event) => { const wheel = event as WheelEvent; wheel.preventDefault(); zoom(Math.exp(Math.max(-500, Math.min(500, wheel.deltaY * (wheel.deltaMode === 1 ? 16 : wheel.deltaMode === 2 ? root.clientHeight : 1))) * 0.0015)); }, { passive: false });
+  listen(renderer.domElement, 'wheel', (event) => {
+    const wheel = event as WheelEvent;
+    if (wheel.ctrlKey || wheel.metaKey || wheel.altKey
+      || isEditableTarget(wheel.target) || isEditableTarget(document.activeElement)) return;
+    wheel.preventDefault();
+    zoom(Math.exp(Math.max(-500, Math.min(500, wheel.deltaY * (wheel.deltaMode === 1 ? 16 : wheel.deltaMode === 2 ? root.clientHeight : 1))) * 0.0015));
+  }, { passive: false });
   updateCamera();
 
   const render = (): void => {
@@ -237,22 +278,16 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
   listen(window, 'pagehide', dispose);
 
   try {
-    const manifest = await loadValentineManifest(`${base}rdo_world_manifest.json`);
-    const records = manifest.placements.map((placement) => ({ placement, source: 'local-preview/rdo_world_manifest.json', url: `${base}${placement.asset}` }));
+    const manifest = await loadValentineManifest(sceneManifestUrl());
     try {
-      const response = await fetch('/runtime/valentine/placement-recovery/landmark-source-recovery.json');
-      if (!response.ok) throw new Error(`Recovery report HTTP ${response.status}`);
-      for (const recovered of recoveredLandmarks(await response.json())) {
-        const existing = records.find(({ placement }) => placement.asset === recovered.placement.asset &&
-          (['x', 'y', 'z'] as const).every((axis) => Math.abs(placement.position[axis] - recovered.placement.position[axis]) < 1e-7));
-        if (existing) {
-          if (!(['rotation', 'scale'] as const).every((field) => (['x', 'y', 'z'] as const).every((axis) =>
-            Math.abs(existing.placement[field][axis] - recovered.placement[field][axis]) < 1e-7))) throw new Error(`Conflicting source TRS: ${recovered.model}`);
-          continue;
-        }
-        records.push({ placement: recovered.placement, source: recovered.source, url: `${base}textured-assets/${recovered.model}.glb` });
+      const response = await fetch(sceneAssetUrl('scene-report.json'));
+      if (!response.ok) throw new Error(`Scene evidence HTTP ${response.status}`);
+      const report = await response.json() as { placements?: { id: string; sources: unknown[] }[] };
+      for (const item of report.placements ?? []) if (item && typeof item.id === 'string' && Array.isArray(item.sources)) {
+        sourceEvidence.set(item.id, item.sources);
       }
-    } catch (error) { errors.push(`Landmark recovery unavailable: ${String(error)}`); }
+    } catch (error) { errors.push(`Source evidence unavailable: ${String(error)}`); }
+    const records = manifest.placements.map((placement) => ({ placement, source: 'verified-scene/rdo_world_manifest.json', url: sceneAssetUrl(placement.asset) }));
     const loader = new GLTFLoader();
     const textures = new TextureLoader();
     // Bounded parallelism avoids loading the entire source library at once.
@@ -287,8 +322,9 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
           instance.updateWorldMatrix(true, true);
           const entry: Entry = { ...record, model, instance, bounds: new Box3().setFromObject(instance) };
           scene.add(instance); entries.push(entry); bounds.union(entry.bounds);
-          if (category === 'terrain') ground.add(instance);
-          else collision.add(instance);
+          const roles = placementRoles(record.placement);
+          if (roles.support) ground.add(instance, category === 'terrain' ? 'terrain' : 'structure');
+          if (roles.obstacle) collision.add(instance);
           const helper = new Box3Helper(entry.bounds, '#d0ab5b');
           for (const material of Array.isArray(helper.material) ? helper.material : [helper.material]) {
             material.depthTest = false; material.transparent = true; material.opacity = 0.35;
@@ -325,19 +361,44 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
     grid.position.set(Math.floor(center.x / 10) * 10, center.y, Math.floor(center.z / 10) * 10);
     grid.material.transparent = true; grid.material.opacity = 0.17; grid.material.depthTest = false;
     debugGroup.add(grid);
+    const boundaryLine = new LineLoop(new BufferGeometry().setFromPoints(
+      VALENTINE_BOUNDARY.polygon.map(([x,z]) => new Vector3(x, center.y, z))),
+      new LineBasicMaterial({ color: '#00ffff', depthTest: false, depthWrite: false }));
+    boundaryLine.renderOrder = 100;
+    debugGroup.add(boundaryLine);
+    const boundaryNote = document.createElement('p'); boundaryNote.className = 'note';
+    boundaryNote.textContent = `Cyan = freigegebene Ortsgrenze · Bildgenauigkeit ±${VALENTINE_BOUNDARY.uncertaintyMetres.toFixed(1)} m · Kulisse bleibt sichtbar`;
+    debugPanel.append(boundaryNote);
     fit();
     labels.hidden = true;
     const missing = circuit.landmarks.filter((landmark) => !entries.some((entry) => landmark.models.includes(entry.model)));
     status.textContent = `${entries.length} source entities · ${errors.length} load errors · ${missing.length} missing landmarks`;
     if (errors.length) { const details = document.createElement('p'); details.className = 'note'; details.textContent = errors.join('\n'); ui.querySelector('.panel')?.append(details); }
     root.dataset.mapReady = 'true'; root.dataset.gameReady = 'true'; root.dataset.mapDebug = 'false';
-    window.__rdoMapInspector = { state: () => ({ frames, debug, overhead, viewHeight, center: target.toArray(), entities: entries.map((entry) => ({ id: entry.placement.id, model: entry.model, position: entry.placement.position, source: entry.source })), errors }) };
+    window.__rdoMapInspector = {
+      state: () => ({ frames, debug, overhead, viewHeight, center: target.toArray(), selection: selected,
+        manifestUrl: sceneManifestUrl(), boundary: VALENTINE_BOUNDARY, entities: entries.map((entry) => ({ id: entry.placement.id, model: entry.model,
+          position: entry.placement.position, source: entry.source, bounds: { min: entry.bounds.min.toArray(), max: entry.bounds.max.toArray() } })), errors }),
+      focusModel: (model, height = 60) => {
+        const entry = entries.find((item) => item.model === model);
+        if (!entry || !Number.isFinite(height)) return false;
+        entry.bounds.getCenter(target); viewHeight = Math.max(8, Math.min(2400, height)); updateCamera(); return true;
+      },
+      sampleGround: (x, z, referenceY) => ground.heightAt(x, z, referenceY),
+    };
     return dispose;
   } catch (error) { dispose(); throw error; }
 }
 
 declare global {
   interface Window {
-    __rdoMapInspector?: { state(): { frames: number; debug: boolean; overhead: boolean; viewHeight: number; center: number[]; entities: { id: string; model: string; position: WorldPlacement['position']; source: string }[]; errors: string[] } };
+    __rdoMapInspector?: {
+      state(): { frames: number; debug: boolean; overhead: boolean; viewHeight: number; center: number[];
+        manifestUrl: string; selection?: MapSelection; boundary: typeof VALENTINE_BOUNDARY;
+        entities: { id: string; model: string; position: WorldPlacement['position']; source: string;
+          bounds: { min: number[]; max: number[] } }[]; errors: string[] };
+      focusModel(model: string, height?: number): boolean;
+      sampleGround(x: number, z: number, referenceY?: number): number | undefined;
+    };
   }
 }

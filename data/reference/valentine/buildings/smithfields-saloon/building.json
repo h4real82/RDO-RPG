@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "id": "smithfields-saloon",
+  "name": "Smithfield’s Saloon",
+  "sourcePlacementIds": [
+    "valentine:7cbd24eb143b9ee6"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_03_saloon_ext.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "confirmed-open",
+    "edition": "unspecified",
+    "evidenceRefs": [
+      {
+        "path": "docs/planning/Investigation-P1-P8-2026-10-18.md",
+        "section": "P5",
+        "kind": "user-gameplay-photo-review"
+      }
+    ],
+    "notes": "Interior traversal documented by supplied in-game screenshots; Story/RDO edition not inferred."
+  },
+  "interior": {
+    "policy": "recognizable-adaptation",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [
+      "Thekenzone",
+      "Galerie mit offenem Schankraum",
+      "prägende Treppen-/Laufwege und Holzcharakter"
+    ],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "ground-floor-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ]
+  },
+  "actions": [
+    {
+      "id": "darts",
+      "gameId": "darts",
+      "variantId": "valentine-saloon-practice",
+      "bindingStatus": "registered",
+      "runtimeAvailability": "existing-local-pilot",
+      "anchorStatus": "authored-gameplay",
+      "floorId": "ground",
+      "position": {
+        "x": -305.5968838354087,
+        "y": 119.58999999999999,
+        "z": -819.3670702727412
+      },
+      "radius": 1.8,
+      "interactionPosition": {
+        "x": -305.5968838354087,
+        "y": 117.99,
+        "z": -818.4670702727412
+      },
+      "kind": "game",
+      "label": "Saloon-Darts spielen"
+    },
+    {
+      "id": "piano-music",
+      "kind": "music",
+      "label": "Musik am Klavier",
+      "floorId": "ground",
+      "position": {
+        "x": -314.1968838354087,
+        "y": 119.14,
+        "z": -803.3920702727412
+      },
+      "interactionPosition": {
+        "x": -312.6468838354087,
+        "y": 117.99,
+        "z": -803.3920702727412
+      },
+      "radius": 2.3,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "poker",
+      "kind": "game",
+      "label": "Poker spielen",
+      "floorId": "ground",
+      "position": {
+        "x": -307.79688383540866,
+        "y": 119.14,
+        "z": -814.6920702727411
+      },
+      "interactionPosition": {
+        "x": -307.79688383540866,
+        "y": 117.99,
+        "z": -812.8420702727412
+      },
+      "radius": 2.45,
+      "anchorStatus": "authored-gameplay",
+      "gameId": "poker",
+      "variantId": "valentine-holdem-practice"
+    },
+    {
+      "id": "bartender",
+      "kind": "drinks",
+      "label": "Getränke bestellen",
+      "floorId": "ground",
+      "position": {
+        "x": -312.6468838354087,
+        "y": 119.14,
+        "z": -810.6920702727411
+      },
+      "interactionPosition": {
+        "x": -311.7468838354087,
+        "y": 117.99,
+        "z": -810.6920702727411
+      },
+      "radius": 2.25,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
+}

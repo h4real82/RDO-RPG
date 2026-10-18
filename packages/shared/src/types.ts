@@ -1,4 +1,4 @@
-import { Direction } from './constants';
+import { Direction } from './constants.js';
 
 export interface MoveIntentMessage {
   x: number;

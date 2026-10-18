@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RDO-RPG — Valentine Preview</title>
+    <title>RDO-RPG — Valentine</title>
     <style>
       html, body, #game-container { width: 100%; height: 100%; margin: 0; overflow: hidden; }
       body { background: #17130e; color: #f4ead5; font-family: system-ui, sans-serif; }
@@ -11,10 +11,13 @@
       #game-container > aside { position: fixed; left: 1rem; top: 1rem; z-index: 5; padding: .5rem .75rem; background: rgba(23,19,14,.82); border: 1px solid #b99658; border-radius: .3rem; }
       section[role="alert"], section[role="dialog"] { position: fixed; inset: auto 1rem 1rem; z-index: 10; max-width: 28rem; padding: 1rem; background: #251c14; border: 1px solid #b99658; border-radius: .4rem; }
       button { margin-left: .75rem; background: #b99658; color: #17130e; border: 0; border-radius: .2rem; padding: .4rem .6rem; cursor: pointer; }
+      #dev-app-entry { position: fixed; right: 1rem; bottom: 4rem; z-index: 50; padding: .6rem 1rem; border: 1px solid #c69239; color: #e5dec9; background: #141210; font: 14px Georgia, serif; text-decoration: none; }
+      #dev-app-entry[hidden] { display: none; }
     </style>
   </head>
   <body>
-    <main id="game-container" aria-label="Valentine 2.5D Vorschau"></main>
+    <main id="game-container" aria-label="Valentine"></main>
+    <a id="dev-app-entry" href="/?view=app-concept" hidden>Hauptmenü öffnen →</a>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,0 +1,24 @@
+{
+ "schema_version":1,"diagram_type":"architecture",
+ "meta":{"title":"Valentine: dauerhafte Besitzdaten","subtitle":"AccountStore und lokale SQL-Tests · noch kein Autosave der Solo-Vorschau","output":".archify/architecture-player-accounts-20261018-213000/account-state.html","quality_profile":"showcase"},
+ "components":[
+  {"id":"api","type":"backend","label":"Geprüfte Sitzung","sublabel":"Besitzer steht fest","pos":[40,60],"size":[190,70]},
+  {"id":"store","type":"backend","label":"AccountStore","sublabel":"Besitz- und Schreibregeln","pos":[430,60],"size":[230,70]},
+  {"id":"profile","type":"database","label":"Profil + Charakter","sublabel":"UUID · ein Charakter","pos":[990,60],"size":[220,70]},
+  {"id":"inventory","type":"database","label":"Inventar","sublabel":"Charaktergebundene Items","pos":[990,260],"size":[220,70]},
+  {"id":"wallet","type":"database","label":"Coins + Buchungen","sublabel":"Atomar und idempotent","pos":[430,260],"size":[230,70]},
+  {"id":"leases","type":"database","label":"Gameplay-Lease","sublabel":"Fencing + Checkpoint","pos":[40,260],"size":[190,70]}
+ ],
+ "connections":[
+  {"from":"api","to":"store","label":"Eigener Account","variant":"security"},
+  {"from":"store","to":"profile","label":"Einmaliger Bootstrap","variant":"emphasis"},
+  {"from":"store","to":"inventory","label":"Besitz und Ereignis prüfen","variant":"security"},
+  {"from":"store","to":"wallet","label":"Transaktion","variant":"emphasis"},
+  {"from":"store","to":"leases","label":"Schreibbesitz","variant":"security"}
+ ],
+ "cards":[
+  {"dot":"emerald","title":"Kein Reset beim Anmelden","items":["Starterinventar und 5000 Startcoins werden einmal angelegt","Ein wiederholtes Ereignis erzeugt keine zweite Buchung"]},
+  {"dot":"amber","title":"Noch getrennt","items":["Die lokale Weltvorschau schreibt keine Besitzdaten","100 Coins pro Session bleiben bis zur Anti-Farming-Abnahme deaktiviert"]},
+  {"dot":"slate","title":"Prüfgrenze","items":["PostgreSQL-Engine lokal getestet; kein Nachweis eines Live-Deployments","Leases sind vorbereitet, noch nicht mit der vollständigen Spielwelt verbunden"]}
+ ]
+}

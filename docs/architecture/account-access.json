@@ -1,0 +1,27 @@
+{
+ "schema_version":1,"diagram_type":"architecture",
+ "meta":{"title":"Valentine: Anmeldung und Profil","subtitle":"Lokaler Integrationsstand · E-Mail/Passwort · Live-Konfiguration noch offen","output":".archify/architecture-player-accounts-20261018-213000/account-access.html","quality_profile":"showcase"},
+ "components":[
+  {"id":"player","type":"external","label":"Spieler","sublabel":"Browser","pos":[40,60],"size":[140,70]},
+  {"id":"menu","type":"frontend","label":"Stitch-Menü","sublabel":"Login und Charakter","pos":[290,60],"size":[190,70]},
+  {"id":"http","type":"backend","label":"Account-API","sublabel":"Express · gleiche Website","pos":[620,60],"size":[220,70]},
+  {"id":"auth","type":"security","label":"Supabase Auth","sublabel":"E-Mail und Passwort","pos":[620,270],"size":[220,70]},
+  {"id":"cookies","type":"security","label":"App-Sitzung","sublabel":"HttpOnly-Cookie","pos":[290,270],"size":[190,70]},
+  {"id":"postgres","type":"database","label":"Postgres","sublabel":"Profil, Inventar, Coins","pos":[1010,60],"size":[220,70]},
+  {"id":"discord","type":"external","label":"Discord","sublabel":"Optionale Verknüpfung","pos":[1010,270],"size":[220,70]}
+ ],
+ "connections":[
+  {"from":"player","to":"menu","label":"Menü öffnen"},
+  {"from":"menu","to":"http","label":"Kontozugriff","variant":"emphasis"},
+  {"from":"http","to":"auth","label":"Identität prüfen","variant":"security"},
+  {"from":"http","to":"postgres","label":"Eigene Daten","variant":"emphasis"},
+  {"from":"http","to":"cookies","label":"Sitzung ausstellen","variant":"security"},
+  {"from":"cookies","to":"menu","label":"Wiederanmeldung","variant":"security"},
+  {"from":"http","to":"discord","label":"OAuth-Verknüpfung","variant":"security"}
+ ],
+ "cards":[
+  {"dot":"amber","title":"Betriebsgrenze","items":["Supabase-Migration und Serverzugang noch nicht live freigeschaltet","Google-Anmeldung auf Benutzerwunsch entfallen"]},
+  {"dot":"emerald","title":"Privater Spielstand","items":["Eine feste Account-ID statt Browser- oder Verbindungs-ID","Kein Zugriff des Browsers auf Datenbank-Secrets"]},
+  {"dot":"slate","title":"Belegstand","items":["Logische Übersicht der uncommitteten Implementierung, kein HEAD-Nachweis","Quelldateien und Prüfumfang im Account-Runbook"]}
+ ]
+}

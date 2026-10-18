@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-butcher-collapsed",
+  "name": "Ruine: sinnvolle zugängliche Restfläche statt geschlossener Hülle festlegen",
+  "sourcePlacementIds": [
+    "valentine:db9ae93094a388bc"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_butcher_collapsed.glb"
+  ],
+  "classification": "classification-required",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "review",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

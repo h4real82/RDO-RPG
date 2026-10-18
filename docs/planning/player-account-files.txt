@@ -1,0 +1,55 @@
+H4R-61 / H4R-35 / H4R-87 — task file review list, not an automatic git-add script.
+Active checkout: C:/Users/h4rea/.codex/worktrees/rdo-restart-foundation/RDO-RPG
+
+NEW ACCOUNT FILES
+apps/client/src/app/AccountController.ts
+apps/client/src/app/AccountController.test.ts
+apps/client/src/app/AccountViews.ts
+apps/client/src/app/AccountViews.test.ts
+apps/client/src/app/AccountViews.css
+apps/server/src/accounts/AccountStore.ts
+apps/server/src/accounts/AccountHttp.ts
+apps/server/src/accounts/AccountRuntime.ts
+apps/server/src/accounts/Accounts.test.ts
+apps/server/src/accounts/AccountHttp.test.ts
+packages/shared/src/account.ts
+supabase/migrations/20261018151227_player_accounts.sql
+scripts/e2e-player-accounts.mjs
+docs/runbooks/player-accounts.md
+docs/planning/player-account-files.txt
+docs/architecture/account-access.html
+docs/architecture/account-access.png
+docs/architecture/account-access.json
+docs/architecture/account-state.html
+docs/architecture/account-state.png
+docs/architecture/account-state.json
+scripts/test-account-server-start.mjs
+
+INTEGRATION FILES — contain earlier changes too; review diffs, do not stage blindly
+apps/client/src/app/AppShell.ts
+apps/client/vite.config.ts
+apps/server/src/index.ts
+apps/server/package.json
+packages/shared/src/index.ts
+packages/shared/src/schema.ts
+packages/shared/src/types.ts
+packages/content/src/index.ts
+pnpm-lock.yaml
+.env.example
+README.md
+
+BASELINE DEPENDENCIES — already existed before this task but are untracked here
+apps/client/src/app/AppSessionController.ts and test
+apps/client/src/app/AppSettings.ts and test
+apps/client/src/app/AppShell.css
+Active game/bootstrap and its world/building/input/runtime dependencies
+Existing supabase/config.toml and historical/prepared migrations copied from main
+
+Do not stage .stitch/designs, data/raw, data/runtime, screenshots of test fixtures,
+node_modules, .env secrets or unrelated map/pipeline changes with the account work.
+The existing assets remain local. No commit or push is performed by this list.
+
+Concurrent edits detected 19.10.2026: AccountStore.ts, Accounts.test.ts and
+AccountHttp.ts also received bank-sale additions from another ongoing task.
+Treat these NEW files as mixed integration files during review; this list
+does not certify the bank feature or authorize blindly staging its changes.

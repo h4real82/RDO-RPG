@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "sheriff-house",
+  "name": "Sheriff-Haus",
+  "sourcePlacementIds": [
+    "valentine:d39386b4eb21ae1a"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_shrffhs.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

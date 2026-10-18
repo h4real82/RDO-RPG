@@ -1,0 +1,63 @@
+{
+  "textures": [
+    {
+      "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\val_fl_salwood01_ab.png",
+      "runtime": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+      "sha256": "c613954ea40c40817b7f79c66da5c627b8a4a7d236623fe12b7472372646db02",
+      "role": "original texture on authored geometry; not original model UV claim"
+    },
+    {
+      "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\val_cs_salwoodtrim00_ab.png",
+      "runtime": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png",
+      "sha256": "fd73442a717fdc138f1751d5037ddff429e76d3b9da2735d8fcf07eda868d5cb",
+      "role": "original texture on authored geometry; not original model UV claim"
+    },
+    {
+      "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\val_salwallpaper01_ab.png",
+      "runtime": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png",
+      "sha256": "c60b4b674f499d29958d3e18fe5cef0922e2e3f88ad97a52e55c8bcd06e99941",
+      "role": "original texture on authored geometry; not original model UV claim"
+    },
+    {
+      "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\new_cs_gala_rug08_ab.png",
+      "runtime": "interiors/smithfields-saloon/textures/new_cs_gala_rug08_ab.png",
+      "sha256": "044c9cea5742790a65f078c71aefa082a90f4dca8c3a83ae816845cdf303b46f",
+      "role": "original texture on authored geometry; not original model UV claim"
+    },
+    {
+      "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\val_cs_salpaintings08_ab.png",
+      "runtime": "interiors/smithfields-saloon/textures/val_cs_salpaintings08_ab.png",
+      "sha256": "b604a4be2861f21209f244a1a68d1ed869a09103dd7a03a93ad3a34cdbdbe8a7",
+      "role": "original artwork atlas, authored UV crop on simple frame"
+    }
+  ],
+  "models": [
+    {
+      "sourceModel": "val_sal_main_shell.ydr.full",
+      "sourcePath": "D:/Projects/RDO-RPG/data/raw/models/val_sal_main_shell_ydr/val_sal_main_shell.ydr.full",
+      "runtime": "interiors/smithfields-saloon/bar-v3.glb",
+      "selection": "bar-region.json",
+      "archivePath": "[FLAG: Data Missing]",
+      "sourceSha256": "879fe56e9972d18c51ff5280b3ec3fad2c7c95324d653f11db4e249e89081a53",
+      "sourceIndex": "data/runtime/valentine/interior-audit/2026-10-18-source-report.json",
+      "sourceUnchangedFromAudit": true,
+      "embeddedOriginalAlbedo": [
+        {
+          "sha256": "60ebd4d4c27d74dc55d11cc5f9add2310100d43f01f479fecc3383533cb601b6",
+          "filename": "val_cs_salwoodtrim03_ab.png"
+        },
+        {
+          "sha256": "6a60ee0be0086d28d19facfc2339b63fc56989bc2c6f479693067dcbcdea9163",
+          "filename": "val_cs_salwoodtrim02_ab.png"
+        }
+      ],
+      "runtimeSha256": "a681851630786d597fb06dfe9f16528ebbbee103f886bb2a3ba2b4854c28078a"
+    }
+  ],
+  "remainingOriginalMeshes": {
+    "piano": "[FLAG: Data Missing]",
+    "chairs": "[FLAG: Data Missing]",
+    "tables": "[FLAG: Data Missing]"
+  },
+  "placementSpace": "room-relative X/Z and floor-relative Y; authored scale/placement, source UVs preserved in GLB"
+}

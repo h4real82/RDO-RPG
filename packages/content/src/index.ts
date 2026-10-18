@@ -1,7 +1,7 @@
-import itemsData from '../data/items.json';
-import tilesetsData from '../data/tilesets.json';
-import worldMap01 from '../data/maps/world_map_01.json';
-import poisData from '../data/pois.json';
+import itemsData from '../data/items.json' with { type: 'json' };
+import tilesetsData from '../data/tilesets.json' with { type: 'json' };
+import worldMap01 from '../data/maps/world_map_01.json' with { type: 'json' };
+import poisData from '../data/pois.json' with { type: 'json' };
 import { ItemDefinition, MapData, POIDefinition } from '@rdo-rpg/shared';
 
 export const items: ItemDefinition[] = itemsData as ItemDefinition[];

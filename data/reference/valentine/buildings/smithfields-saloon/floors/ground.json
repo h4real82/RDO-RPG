@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss",
+  "status": "built-pilot",
+  "layout": {
+    "x": -309.3968838354087,
+    "z": -808.8920702727412,
+    "width": 11.6,
+    "depth": 21.25,
+    "floorY": 117.99,
+    "front": -798.2670702727412,
+    "doorX": -309.04688383540866,
+    "doorWidth": 2.3,
+    "rampStart": -794.0670702727411,
+    "rampLow": 117.04,
+    "frontDirection": 1,
+    "fixtures": [
+      {
+        "id": "bar-counter",
+        "kind": "bar",
+        "position": {
+          "x": -313.4968838354087,
+          "y": 117.99,
+          "z": -810.6920702727411
+        },
+        "size": {
+          "x": 1.65,
+          "y": 1.25,
+          "z": 7.2
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "bar-back-shelf",
+        "kind": "backbar",
+        "position": {
+          "x": -314.6468838354087,
+          "y": 117.99,
+          "z": -810.6920702727411
+        },
+        "size": {
+          "x": 0.65,
+          "y": 2.8,
+          "z": 7.5
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "table-rear",
+        "kind": "table-round",
+        "position": {
+          "x": -307.79688383540866,
+          "y": 117.99,
+          "z": -814.6920702727411
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.9,
+          "z": 1.4
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "table-center",
+        "kind": "table",
+        "position": {
+          "x": -308.4968838354087,
+          "y": 117.99,
+          "z": -807.2920702727412
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.9,
+          "z": 1.4
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "saloon-piano",
+        "kind": "piano",
+        "position": {
+          "x": -314.1968838354087,
+          "y": 117.99,
+          "z": -803.3920702727412
+        },
+        "size": {
+          "x": 2.2,
+          "y": 1.8,
+          "z": 0.6
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "piano-rug",
+        "kind": "rug",
+        "position": {
+          "x": -313.5968838354087,
+          "y": 117.99,
+          "z": -803.3920702727412
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.02,
+          "z": 3
+        },
+        "color": "#5d4938",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "wall-picture-a",
+        "kind": "picture",
+        "position": {
+          "x": -309.3968838354087,
+          "y": 119.99,
+          "z": -819.3720702727412
+        },
+        "size": {
+          "x": 1.15,
+          "y": 0.01,
+          "z": 0.85
+        },
+        "color": "#5d4938",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "wall-picture-b",
+        "kind": "picture",
+        "position": {
+          "x": -315.04688383540866,
+          "y": 120.24,
+          "z": -803.3920702727412
+        },
+        "size": {
+          "x": 0.9,
+          "y": 0.01,
+          "z": 0.7
+        },
+        "color": "#5d4938",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "bartender-npc",
+        "kind": "npc-bartender",
+        "position": {
+          "x": -313.8968838354087,
+          "y": 117.99,
+          "z": -810.6920702727411
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead8ba",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      }
+    ],
+    "wallTargets": [
+      {
+        "id": "darts-target",
+        "position": {
+          "x": -305.5968838354087,
+          "y": 119.58999999999999,
+          "z": -819.3670702727412
+        },
+        "radius": 0.45,
+        "yaw": 0
+      }
+    ],
+    "yaw": 0.17453292519943295,
+    "furnishingStyle": "saloon",
+    "porch": {
+      "x": -309.3968838354087,
+      "z": -796.8420702727412,
+      "width": 12.1,
+      "depth": 2.85,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -309.04688383540866,
+            "y": 117.04,
+            "z": -794.0670702727411
+          },
+          "to": {
+            "x": -309.04688383540866,
+            "y": 117.99,
+            "z": -795.4170702727412
+          },
+          "width": 2.05
+        },
+        {
+          "id": "west",
+          "from": {
+            "x": -316.8968838354087,
+            "y": 117.04,
+            "z": -796.8420702727412
+          },
+          "to": {
+            "x": -315.4468838354087,
+            "y": 117.99,
+            "z": -796.8420702727412
+          },
+          "width": 1.55
+        },
+        {
+          "id": "east",
+          "from": {
+            "x": -301.8968838354087,
+            "y": 117.04,
+            "z": -796.8420702727412
+          },
+          "to": {
+            "x": -303.3468838354087,
+            "y": 117.99,
+            "z": -796.8420702727412
+          },
+          "width": 1.55
+        }
+      ]
+    },
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            5
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "rug": {
+          "url": "interiors/smithfields-saloon/textures/new_cs_gala_rug08_ab.png"
+        },
+        "art": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salpaintings08_ab.png",
+          "repeat": [
+            0.5,
+            0.5
+          ],
+          "offset": [
+            0.5,
+            0
+          ]
+        }
+      },
+      "models": [
+        {
+          "url": "interiors/smithfields-saloon/bar-v3.glb",
+          "replaces": [
+            "bar-counter",
+            "bar-back-shelf"
+          ],
+          "position": {
+            "x": -4.45,
+            "y": 0,
+            "z": -1.8
+          },
+          "size": {
+            "x": 2.35,
+            "y": 2.6,
+            "z": 7.2
+          }
+        }
+      ]
+    }
+  },
+  "designStatus": "source-derived textured bar; original floor/wall/wood/art textures on authored geometry; chairs/piano original meshes still unverified",
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 10,
+    "note": "Local coordinate frame rotated around layout centre; no changes to imported transforms. Access supports remain independent from source rendering."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "runtime-connected-darts-only",
+  "games": [
+    {
+      "id": "darts",
+      "file": "darts/game.json"
+    },
+    {
+      "id": "poker",
+      "file": "poker/game.json"
+    },
+    {
+      "id": "maexchen",
+      "file": "maexchen/game.json"
+    },
+    {
+      "id": "skat",
+      "file": "skat/game.json"
+    },
+    {
+      "id": "blackjack",
+      "file": "blackjack/game.json"
+    },
+    {
+      "id": "color-cards",
+      "file": "color-cards/game.json"
+    },
+    {
+      "id": "schwimmen",
+      "file": "schwimmen/game.json"
+    },
+    {
+      "id": "horse-race",
+      "file": "horse-race/game.json"
+    },
+    {
+      "id": "horse-arena",
+      "file": "horse-arena/game.json"
+    },
+    {
+      "id": "archery",
+      "file": "archery/game.json"
+    },
+    {
+      "id": "cornhole",
+      "file": "cornhole/game.json"
+    },
+    {
+      "id": "target-shooter",
+      "file": "target-shooter/game.json"
+    },
+    {
+      "id": "mini-golf",
+      "file": "mini-golf/game.json"
+    }
+  ]
+}

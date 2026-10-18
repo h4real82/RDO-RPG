@@ -1,5 +1,5 @@
 import { Schema, type, MapSchema, ArraySchema } from '@colyseus/schema';
-import { Direction, DEFAULT_SPAWN_X, DEFAULT_SPAWN_Y, DEFAULT_MAP_ID } from './constants';
+import { Direction, DEFAULT_SPAWN_X, DEFAULT_SPAWN_Y, DEFAULT_MAP_ID } from './constants.js';
 
 export class Position extends Schema {
   @type('number') x: number = DEFAULT_SPAWN_X;

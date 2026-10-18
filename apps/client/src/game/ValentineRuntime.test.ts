@@ -1,4 +1,4 @@
-import { BoxGeometry, BufferAttribute, BufferGeometry, Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, Texture, Vector3 } from 'three';
+import { BoxGeometry, BufferAttribute, BufferGeometry, Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, Raycaster, Texture, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import type { WorldManifest } from '@rdo-rpg/world-contracts';
 
@@ -81,6 +81,35 @@ it('keeps decoded mask channels from blackening diffuse-only imported materials'
   authored.dispose();
 });
 
+it('keeps verified cpv-only vertex colors and applies source alpha metadata', () => {
+  const instance = new Group();
+  const vertex = new MeshStandardMaterial({ vertexColors: true });
+  vertex.userData = { rdo_shader_hash: '0xe5d7af85', rdo_material_status: 'source-vertex-color' };
+  const cutout = new MeshStandardMaterial();
+  cutout.userData = { rdo_alpha_mode: 'MASK', rdo_draw_bucket: 3 };
+  const decal = new MeshStandardMaterial();
+  decal.userData = { rdo_alpha_mode: 'BLEND', rdo_draw_bucket: 2 };
+  instance.add(new Mesh(new BoxGeometry(), vertex), new Mesh(new BoxGeometry(), cutout), new Mesh(new BoxGeometry(), decal));
+  runtime.prepareDrawableMaterialPreview(instance);
+  expect(vertex.vertexColors).toBe(true);
+  expect(cutout.alphaTest).toBe(0.5);
+  expect(cutout.transparent).toBe(false);
+  expect(decal.transparent).toBe(true);
+  expect(decal.depthWrite).toBe(false);
+  expect(decal.polygonOffset).toBe(true);
+});
+
+it('does not paint white albedo for source decals with zero albedo-write opacity', () => {
+  const instance = new Group();
+  const material = new MeshStandardMaterial();
+  material.userData = { rdo_draw_bucket: 2, rdo_decal_albedo_opacity: 0 };
+  const mesh = new Mesh(new BoxGeometry(), material); instance.add(mesh);
+  runtime.prepareDrawableMaterialPreview(instance);
+  expect(material.colorWrite).toBe(false);
+  expect(material.depthWrite).toBe(false);
+  expect(mesh.visible).toBe(true);
+});
+
 it('configures a four-layer terrain preview only from complete exported metadata', async () => {
   const instance = new Group();
   const geometry = new BufferGeometry();
@@ -110,11 +139,11 @@ it('configures a four-layer terrain preview only from complete exported metadata
   });
 
   expect(loaded).toEqual([
-    '/runtime/valentine/local-preview/textures/terrain/lookup.png',
-    '/runtime/valentine/local-preview/textures/terrain/layer0.png',
-    '/runtime/valentine/local-preview/textures/terrain/layer1.png',
-    '/runtime/valentine/local-preview/textures/terrain/layer2.png',
-    '/runtime/valentine/local-preview/textures/terrain/layer3.png',
+    '/runtime/valentine/verified-scene/textures/terrain/lookup.png',
+    '/runtime/valentine/verified-scene/textures/terrain/layer0.png',
+    '/runtime/valentine/verified-scene/textures/terrain/layer1.png',
+    '/runtime/valentine/verified-scene/textures/terrain/layer2.png',
+    '/runtime/valentine/verified-scene/textures/terrain/layer3.png',
   ]);
   expect(material.userData.rdo_terrain_preview_ready).toBe(true);
   const shader = { uniforms: {}, vertexShader: '#include <color_vertex>', fragmentShader: 'vec4 diffuseColor = vec4( diffuse, opacity );' };
@@ -125,13 +154,23 @@ it('configures a four-layer terrain preview only from complete exported metadata
   material.dispose();
 });
 
+it('detects a blocker covering the visible player centre while the feet remain clear', () => {
+  const camera = new Vector3(0, 10, 10), feet = new Vector3(0, 0, 0);
+  const wall = new Mesh(new BoxGeometry(2, 0.1, 0.1), new MeshBasicMaterial());
+  wall.position.set(0, 5.2, 5); wall.updateMatrixWorld(true);
+  const feetRay = new Raycaster(camera, feet.clone().sub(camera).normalize(), 0, camera.distanceTo(feet));
+  expect(feetRay.intersectObject(wall)).toHaveLength(0);
+  expect(runtime.createOcclusionRay(camera, feet).intersectObject(wall).length).toBeGreaterThan(0);
+  wall.geometry.dispose(); (wall.material as MeshBasicMaterial).dispose();
+});
+
 it('checks the entire camera-player segment for occluders', () => {
   expect('createOcclusionRay' in runtime).toBe(true);
-  const ray = runtime.createOcclusionRay(new Vector3(0, 10, 10), new Vector3(0, 0, 0));
+  const ray = runtime.createOcclusionRay(new Vector3(0, 10.4, 10), new Vector3(0, 0, 0));
   expect(ray.far).toBeCloseTo(Math.sqrt(200));
   expect(ray.ray.direction.length()).toBeCloseTo(1);
   const wall = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicMaterial());
-  wall.position.set(0, 5, 5);
+  wall.position.set(0, 5.4, 5);
   wall.updateMatrixWorld(true);
   expect(ray.intersectObject(wall)).not.toHaveLength(0);
   wall.position.set(0, -5, -5);

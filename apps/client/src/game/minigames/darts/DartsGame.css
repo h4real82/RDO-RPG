@@ -1,0 +1,53 @@
+.saloon-darts[role="dialog"] { position: fixed; inset: 0; z-index: 11000; max-width:none; border:0; border-radius:0; display: grid; place-items: center; padding: 20px; overflow-y: auto; background: rgb(12 9 6 / 88%); color: #332719; font-family: Georgia, 'Times New Roman', serif; box-sizing: border-box; }
+.saloon-darts * { box-sizing: border-box; }
+.saloon-darts__paper { width: min(860px, 100%); padding: clamp(18px, 3vw, 32px); border: 7px solid #4c301e; outline: 1px solid #bd9559; background: radial-gradient(ellipse at 40% 10%, #f5e5bf, #d8bc87); box-shadow: 0 20px 90px #0009, inset 0 0 50px #89633233; }
+.saloon-darts__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 12px; border-bottom: 3px double #8a683d; }
+.saloon-darts__header h2 { margin: 6px 0 0; font-size: clamp(24px, 4vw, 36px); font-weight: 700; }
+.saloon-darts__eyebrow { margin: 0; color: #684729; font: 700 11px/1.5 system-ui, sans-serif; letter-spacing: .19em; }
+.saloon-darts__intro { margin: 14px 0 20px; font-style: italic; }
+.saloon-darts__layout { display: grid; grid-template-columns: minmax(0, 1fr) 185px; align-items: center; gap: 24px; }
+.saloon-darts__board { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; border: 8px solid #3d271a; background: repeating-linear-gradient(0deg, #513622 0, #593b26 23%, #39281b 24%, #513622 25%); box-shadow: inset 0 0 30px #0007, 0 3px 9px #27170e66; cursor: crosshair; touch-action: none; border-radius: 8px; }
+.saloon-darts__target { position: absolute; inset: 8%; border: 2px solid #b79558; border-radius: 50%; background: radial-gradient(circle closest-side, #992d23 0 var(--darts-inner,15%), #ddc393 var(--darts-inner,15%) var(--darts-middle,50%), #345145 var(--darts-middle,50%) 100%); box-shadow: 0 2px 12px #0007; }
+.saloon-darts__target::before, .saloon-darts__target::after { content: ''; position: absolute; border: 1px solid #442e1a; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); width: var(--darts-middle,50%); height: var(--darts-middle,50%); pointer-events: none; }
+.saloon-darts__target::after { width: var(--darts-inner,15%); height: var(--darts-inner,15%); border-color: #f0d19b; }
+.saloon-darts__ring-label { position: absolute; left: 50%; transform: translateX(-50%); font: 700 clamp(12px, 2vw, 18px) system-ui, sans-serif; }
+.saloon-darts__ring-label--outer { top: 8%; color: #f4e5c5; }
+.saloon-darts__ring-label--middle { top: 28%; color: #4b3420; }
+.saloon-darts__bull { position: absolute; inset: 0; display: grid; place-items: center; color: #fff1d0; font: 700 clamp(10px, 1.8vw, 15px) system-ui, sans-serif; }
+.saloon-darts__crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #fff; text-shadow: 0 1px 3px #000, 0 0 2px #000; font: 42px/1 system-ui, sans-serif; pointer-events: none; }
+.saloon-darts__hits { position: absolute; inset: 0; pointer-events: none; }
+.saloon-darts__hit { position: absolute; display: grid; place-items: center; transform: translate(-50%, -50%); width: 21px; height: 21px; border: 1px solid #fee7af; border-radius: 50%; background: #291b15; color: #fff1ca; font: 700 11px system-ui, sans-serif; box-shadow: 0 2px 3px #0008; }
+.saloon-darts__score { display: flex; flex-direction: column; text-align: center; }
+.saloon-darts__total { display: block; margin: 3px 0; font-size: 64px; font-weight: bold; line-height: 1.2; color: #7d291e; }
+.saloon-darts__score > span { font: 12px system-ui, sans-serif; }
+.saloon-darts__throws { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0; margin: 20px 0 8px; list-style: none; font: 13px system-ui, sans-serif; }
+.saloon-darts__throws li { padding: 9px 5px; border: 1px solid #ad8b58; border-radius: 3px; background: #fff2d333; }
+.saloon-darts__throws .saloon-darts__throw--done { background: #705330; color: #fff0d0; }
+.saloon-darts__status { min-height: 72px; font-size: 14px; line-height: 1.5; }
+.saloon-darts__help { margin: 20px 0 8px; font: 13px/1.6 system-ui, sans-serif; }
+.saloon-darts__legend { margin: 0 0 18px; text-align: center; font: 700 12px/1.5 system-ui, sans-serif; }
+.saloon-darts__footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 16px; border-top: 3px double #8a683d; }
+.saloon-darts button { cursor: pointer; border: 1px solid #916d3f; border-radius: 3px; padding: 11px 15px; background: #eee0bc; color: #38271b; font: 700 14px system-ui, sans-serif; box-shadow: 0 2px 0 #765534; }
+.saloon-darts button[data-action='throw'] { background: #742d24; color: #fff0cf; border-color: #4e201a; }
+.saloon-darts button:hover { filter: brightness(1.08); }
+.saloon-darts button:disabled { cursor: default; opacity: .55; }
+.saloon-darts button { margin-left:0; }
+.saloon-darts :focus-visible { outline: 3px solid #175e85; outline-offset: 3px; }
+.saloon-darts kbd { margin-left: 6px; padding: 2px 4px; border: 1px solid #bb8772; border-radius: 2px; font: 10px system-ui, sans-serif; }
+.saloon-darts__footer small { margin-left: auto; font: 11px/1.6 system-ui, sans-serif; color: #654b2f; }
+.saloon-darts--complete .saloon-darts__crosshair { display: none; }
+@media (min-width:621px) { .saloon-darts__board { width:min(100%,46vh); margin-inline:auto; } }
+@media (max-width: 620px) {
+  .saloon-darts[role="dialog"] { padding: 10px; place-items: start center; }
+  .saloon-darts__paper { padding: 16px; border-width: 4px; }
+  .saloon-darts__layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .saloon-darts__board { max-width: 380px; margin: auto; }
+  .saloon-darts__score { display: grid; grid-template-columns: 1fr 1fr; align-items: center; column-gap: 10px; }
+  .saloon-darts__score .saloon-darts__eyebrow { grid-column: 1; }
+  .saloon-darts__total { grid-column: 1; font-size: 42px; }
+  .saloon-darts__score > span { grid-column: 1; }
+  .saloon-darts__throws { grid-column: 2; grid-row: 1 / 4; margin: 0; }
+  .saloon-darts__status { grid-column: 1 / -1; min-height: 0; margin: 10px 0 0; }
+  .saloon-darts__footer small { width: 100%; margin: 5px 0 0; }
+  .saloon-darts__intro { font-size: 14px; margin-bottom: 14px; }
+}

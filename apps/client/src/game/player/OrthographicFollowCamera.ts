@@ -1,10 +1,21 @@
 import { OrthographicCamera, Vector3, type Vector3Like } from 'three';
+import type { CameraGoal } from './ContextCamera';
 
 export class OrthographicFollowCamera {
   readonly camera: OrthographicCamera;
   private readonly offset = new Vector3(0, 24, 18);
   private referenceTarget: Vector3 | undefined;
   private targetZoom = 1;
+  private yaw = 0;
+  private contextGoal?:CameraGoal;
+  private focus?:Vector3;
+  private reducedMotion=false;
+
+  get yawRadians():number{return this.yaw;}
+  setContextGoal(goal:CameraGoal,reducedMotion=false):void {
+    if(![goal.target.x,goal.target.y,goal.target.z,goal.visibleHeight].every(Number.isFinite) || goal.visibleHeight<=0)return;
+    this.contextGoal=goal;this.reducedMotion=reducedMotion;
+  }
 
   constructor(aspect: number, viewHeight = 36) {
     this.viewHeight = viewHeight;
@@ -31,13 +42,44 @@ export class OrthographicFollowCamera {
     if (!this.referenceTarget) this.targetZoom = 1;
   }
 
+  rotate(radians: number): void {
+    if (this.referenceTarget || !Number.isFinite(radians)) return;
+    this.yaw = (this.yaw + radians) % (Math.PI * 2);
+  }
+
+  resetView(): void {
+    if (this.referenceTarget) return;
+    this.yaw = 0;
+    this.resetZoom();
+  }
+
+  /** Convert screen-relative controls to PlayerController's world X / negative-Z basis. */
+  getMovement(forward: number, right: number): { forward: number; right: number } {
+    if (!Number.isFinite(forward) || !Number.isFinite(right)) return { forward: 0, right: 0 };
+    const scale = Math.max(1, Math.hypot(forward, right));
+    const sin = Math.sin(this.yaw);
+    const cos = Math.cos(this.yaw);
+    return { forward: (forward * cos + right * sin) / scale, right: (right * cos - forward * sin) / scale };
+  }
+
   update(target: Vector3Like, deltaSeconds = 1 / 60): void {
     if (!this.referenceTarget && Number.isFinite(deltaSeconds) && deltaSeconds > 0) {
-      this.camera.zoom += (this.targetZoom - this.camera.zoom) * (1 - Math.exp(-12 * Math.min(deltaSeconds, 0.1)));
+      const zoom=this.contextGoal?this.viewHeight/this.contextGoal.visibleHeight*(this.contextGoal.contain?Math.min(1,this.targetZoom):this.targetZoom):this.targetZoom;
+      this.camera.zoom += (zoom - this.camera.zoom) * (this.reducedMotion?1:1 - Math.exp(-8 * Math.min(deltaSeconds, 0.5)));
       this.camera.updateProjectionMatrix();
     }
-    const lookAt = this.referenceTarget ?? target;
-    if (!this.referenceTarget) this.camera.position.set(target.x + this.offset.x, target.y + this.offset.y, target.z + this.offset.z);
+    if(!this.referenceTarget && this.contextGoal){
+      this.focus??=new Vector3(target.x,target.y,target.z);
+      this.focus.lerp(new Vector3(this.contextGoal.target.x,this.contextGoal.target.y,this.contextGoal.target.z),
+        this.reducedMotion?1:1-Math.exp(-8*Math.max(0,Math.min(deltaSeconds,.5))));
+    }
+    const followed=this.contextGoal && this.focus?this.focus:target;
+    const lookAt = this.referenceTarget ?? followed;
+    if (!this.referenceTarget) this.camera.position.set(
+      followed.x + Math.sin(this.yaw) * this.offset.z,
+      followed.y + this.offset.y,
+      followed.z + Math.cos(this.yaw) * this.offset.z,
+    );
     this.camera.lookAt(lookAt.x, lookAt.y, lookAt.z);
     this.camera.updateMatrixWorld();
   }

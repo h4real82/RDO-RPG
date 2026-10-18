@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "darts",
+  "name": "Saloon-Darts",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-target-practice-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
+  "plannedModes": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "valentine-saloon-practice",
+      "file": "variants/valentine-saloon-practice.json"
+    }
+  ],
+  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "lifecycleContract": [
+    "available",
+    "joining",
+    "active",
+    "leaving",
+    "closed",
+    "error"
+  ],
+  "notes": "Local target practice through MinigameRegistry/MinigameHost. Configurable validated variants. No coins, persistence, 501 or multiplayer.",
+  "runtimeModule": "apps/client/src/game/minigames/darts/definition.ts"
+}

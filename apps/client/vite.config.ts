@@ -1,30 +1,53 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type ViteDevServer } from 'vite';
 import { createReadStream, existsSync, statSync } from 'node:fs';
-import { resolve, sep } from 'node:path';
+import { extname, resolve, sep } from 'node:path';
+
+/** Only the explicit local preview directories are exposed; raw inputs stay private. */
+function installLocalRuntime(server: Pick<ViteDevServer, 'middlewares'>): void {
+  const mime: Record<string,string>={'.json':'application/json','.glb':'model/gltf-binary','.png':'image/png',
+    '.jpg':'image/jpeg','.webp':'image/webp','.css':'text/css','.woff2':'font/woff2','.txt':'text/plain'};
+  const mount=(url: string,folder: string): void=> {
+    const root=resolve(__dirname,folder);
+    server.middlewares.use(url,(request,response)=> {
+      try {
+        const pathname=decodeURIComponent(new URL(request.url??'/','http://localhost').pathname);
+        const candidate=resolve(root,`.${pathname}`);
+        if(!candidate.startsWith(`${root}${sep}`) || !existsSync(candidate) || !statSync(candidate).isFile()) {
+          response.statusCode=404;response.end('Local preview asset unavailable');return;
+        }
+        response.setHeader('Content-Type',mime[extname(candidate)]??'application/octet-stream');
+        const stream=createReadStream(candidate);
+        stream.on('error',()=>{response.statusCode=500;response.end('Local preview asset unreadable');});
+        stream.pipe(response);
+      } catch {response.statusCode=400;response.end('Invalid local preview path');}
+    });
+  };
+  mount('/runtime/valentine/verified-scene','../../data/runtime/valentine/verified-scene');
+  mount('/runtime/valentine/local-preview','../../data/runtime/valentine/local-preview');
+  mount('/runtime/valentine/frontier-ui','../../data/runtime/valentine/frontier-ui');
+  const file=(url: string,path: string): void=> {
+    server.middlewares.use(url,(request,response)=> {
+      try {
+        const candidate=resolve(__dirname,path);
+        if(new URL(request.url??'/','http://localhost').pathname!=='/' || !existsSync(candidate)) {
+          response.statusCode=404;response.end('Local preview data unavailable');return;
+        }
+        response.setHeader('Content-Type','application/json');
+        const stream=createReadStream(candidate);
+        stream.on('error',()=>{response.statusCode=500;response.end('Local preview data unreadable');});
+        stream.pipe(response);
+      } catch {response.statusCode=400;response.end('Invalid local preview data path');}
+    });
+  };
+  file('/runtime/valentine/placement-recovery/landmark-source-recovery.json','../../data/runtime/valentine/placement-recovery/landmark-source-recovery.json');
+  file('/runtime/valentine/pois.json','../../data/runtime/valentine/pois.json');
+}
 
 export default defineConfig({
   plugins: [{
     name: 'local-valentine-runtime-preview',
-    configureServer(server) {
-      const runtimeRoot = resolve(__dirname, '../../data/runtime/valentine/local-preview');
-      server.middlewares.use('/runtime/valentine/placement-recovery/landmark-source-recovery.json', (_request, response) => {
-        const report = resolve(runtimeRoot, '../placement-recovery/landmark-source-recovery.json');
-        if (!existsSync(report)) { response.statusCode = 404; response.end('Source recovery report unavailable'); return; }
-        response.setHeader('Content-Type', 'application/json');
-        const stream = createReadStream(report);
-        stream.on('error', () => { response.statusCode = 500; response.end('Source recovery report unreadable'); });
-        stream.pipe(response);
-      });
-      server.middlewares.use('/runtime/valentine/local-preview', (request, response, next) => {
-        const pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname);
-        const candidate = resolve(runtimeRoot, `.${pathname}`);
-        if (!candidate.startsWith(`${runtimeRoot}${sep}`) || !existsSync(candidate) || !statSync(candidate).isFile()) return next();
-        createReadStream(candidate).pipe(response);
-      });
-      server.middlewares.use('/runtime/valentine/pois.json', (_request, response) => {
-        createReadStream(resolve(__dirname, '../../data/runtime/valentine/pois.json')).pipe(response);
-      });
-    },
+    configureServer: installLocalRuntime,
+    configurePreviewServer: installLocalRuntime,
   }],
   server: {
     port: 3000,
@@ -43,4 +66,5 @@ export default defineConfig({
   build: {
     target: 'esnext'
   }
+  ,preview:{proxy:{'/api':{target:'http://127.0.0.1:2567',changeOrigin:true}}}
 });

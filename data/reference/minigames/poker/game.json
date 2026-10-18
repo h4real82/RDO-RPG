@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "poker",
+  "name": "Poker",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-holdem-practice-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
+  "plannedModes": [
+    "private-session"
+  ],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "valentine-holdem-practice",
+      "file": "variants/valentine-holdem-practice.json"
+    }
+  ],
+  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "lifecycleContract": [
+    "available",
+    "joining",
+    "active",
+    "leaving",
+    "closed",
+    "error"
+  ],
+  "notes": "Heads-up local practice only; passive check/call bot; fresh 100 test chips each hand, no account coins or online authority."
+}

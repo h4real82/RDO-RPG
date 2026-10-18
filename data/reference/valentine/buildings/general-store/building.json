@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "general-store",
+  "name": "General Store",
+  "sourcePlacementIds": [
+    "valentine:3d7303bdb5f77f77"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_genstore_ext.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

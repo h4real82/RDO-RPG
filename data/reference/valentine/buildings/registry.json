@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "status": "runtime-connected-two-ground-floor-pilots",
+  "sourceInventory": "data/reference/valentine/interior-rollout-inventory.json",
+  "coverageNote": "31 candidate/review records, not final number of houses. Supporting placements and additional screenshot buildings remain to be reconciled.",
+  "buildings": [
+    {
+      "id": "station",
+      "file": "station/building.json"
+    },
+    {
+      "id": "val-01-aucyard-stables",
+      "file": "val-01-aucyard-stables/building.json"
+    },
+    {
+      "id": "val-01-aucbarns-barn3",
+      "file": "val-01-aucbarns-barn3/building.json"
+    },
+    {
+      "id": "val-01-aucyard-chkcoop",
+      "file": "val-01-aucyard-chkcoop/building.json"
+    },
+    {
+      "id": "val-01-aucyard-stable2",
+      "file": "val-01-aucyard-stable2/building.json"
+    },
+    {
+      "id": "val-01-aucbarns-barn2",
+      "file": "val-01-aucbarns-barn2/building.json"
+    },
+    {
+      "id": "val-01-aucyard-shed",
+      "file": "val-01-aucyard-shed/building.json"
+    },
+    {
+      "id": "val-01-aucyard-barn",
+      "file": "val-01-aucyard-barn/building.json"
+    },
+    {
+      "id": "church",
+      "file": "church/building.json"
+    },
+    {
+      "id": "val-07-resf-ext",
+      "file": "val-07-resf-ext/building.json"
+    },
+    {
+      "id": "val-07-magic-ticketbooth",
+      "file": "val-07-magic-ticketbooth/building.json"
+    },
+    {
+      "id": "val-03-stable-ext",
+      "file": "val-03-stable-ext/building.json"
+    },
+    {
+      "id": "general-store",
+      "file": "general-store/building.json"
+    },
+    {
+      "id": "val-05-res-e",
+      "file": "val-05-res-e/building.json"
+    },
+    {
+      "id": "val-05-res-d",
+      "file": "val-05-res-d/building.json"
+    },
+    {
+      "id": "val-07-magiclantern-ext",
+      "file": "val-07-magiclantern-ext/building.json"
+    },
+    {
+      "id": "val-03-jail-ext",
+      "file": "val-03-jail-ext/building.json"
+    },
+    {
+      "id": "gunsmith",
+      "file": "gunsmith/building.json"
+    },
+    {
+      "id": "bank",
+      "file": "bank/building.json"
+    },
+    {
+      "id": "val-freightstn",
+      "file": "val-freightstn/building.json"
+    },
+    {
+      "id": "law-office",
+      "file": "law-office/building.json"
+    },
+    {
+      "id": "smithfields-saloon",
+      "file": "smithfields-saloon/building.json"
+    },
+    {
+      "id": "val-auchouse-ext",
+      "file": "val-auchouse-ext/building.json"
+    },
+    {
+      "id": "val-06-auchouseb-ext",
+      "file": "val-06-auchouseb-ext/building.json"
+    },
+    {
+      "id": "val-03-default-jail",
+      "file": "val-03-default-jail/building.json"
+    },
+    {
+      "id": "hotel",
+      "file": "hotel/building.json"
+    },
+    {
+      "id": "sheriff-house",
+      "file": "sheriff-house/building.json"
+    },
+    {
+      "id": "val-butcher-collapsed",
+      "file": "val-butcher-collapsed/building.json"
+    },
+    {
+      "id": "smithy",
+      "file": "smithy/building.json"
+    },
+    {
+      "id": "doctor",
+      "file": "doctor/building.json"
+    },
+    {
+      "id": "second-saloon",
+      "file": "second-saloon/building.json"
+    }
+  ]
+}

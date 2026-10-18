@@ -9,6 +9,7 @@ export type PlacementFactory = (placement: WorldPlacement) => Promise<ChunkResou
 export class WorldChunkManager {
   private readonly placementsByChunk = new Map<string, WorldPlacement[]>();
   private readonly loadedChunks = new Map<string, ChunkResource[]>();
+  private readonly failedChunks = new Set<string>();
   private updateQueue: Promise<void> = Promise.resolve();
   private pendingPosition: { x: number; z: number } | undefined;
   private updating = false;
@@ -48,11 +49,16 @@ export class WorldChunkManager {
     if (this.disposed) return;
     const wanted = this.getNeighbourhood(playerX, playerZ);
     for (const chunkId of wanted) {
+      if (this.disposed) break;
       if (this.loadedChunks.has(chunkId)) continue;
       const resources: ChunkResource[] = [];
       for (const placement of this.placementsByChunk.get(chunkId) ?? []) {
+        if (this.disposed) break;
         try { resources.push(await this.instantiate(placement)); }
-        catch (error) { console.error(`Could not instantiate world placement ${placement.id}.`, error); }
+        catch (error) {
+          this.failedChunks.add(chunkId);
+          console.error(`Could not instantiate world placement ${placement.id}.`, error);
+        }
       }
       if (this.disposed || !wanted.has(chunkId)) this.disposeResources(resources);
       else this.loadedChunks.set(chunkId, resources);
@@ -61,6 +67,7 @@ export class WorldChunkManager {
       if (wanted.has(chunkId)) continue;
       this.disposeResources(resources);
       this.loadedChunks.delete(chunkId);
+      this.failedChunks.delete(chunkId);
     }
   }
 
@@ -69,6 +76,16 @@ export class WorldChunkManager {
     this.pendingPosition = undefined;
     for (const resources of this.loadedChunks.values()) this.disposeResources(resources);
     this.loadedChunks.clear();
+    this.failedChunks.clear();
+  }
+
+  isRegionReady(x: number, z: number): boolean {
+    return !this.disposed && [...this.getNeighbourhood(x, z)].every(id => this.loadedChunks.has(id) && !this.failedChunks.has(id));
+  }
+
+  async prepareRegion(x: number, z: number): Promise<void> {
+    await this.update(x, z);
+    if (!this.isRegionReady(x, z)) throw new Error('Die Straßenumgebung ist nicht vollständig geladen.');
   }
 
   async waitForIdle(): Promise<void> {

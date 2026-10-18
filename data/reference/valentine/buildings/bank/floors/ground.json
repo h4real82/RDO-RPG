@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss",
+  "status": "built-pilot",
+  "layout": {
+    "x": -306.4235,
+    "z": -771.1453,
+    "width": 10.05,
+    "depth": 17.7,
+    "floorY": 117.77,
+    "front": -779.9953,
+    "doorX": -306.4235,
+    "doorWidth": 2.3,
+    "rampStart": -784.1953000000001,
+    "rampLow": 116.95,
+    "frontDirection": -1,
+    "yaw": 0.17453292519943295,
+    "porch": {
+      "x": -306.4235,
+      "z": -781.4203,
+      "width": 12.45,
+      "depth": 2.85,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -306.4235,
+            "y": 116.95,
+            "z": -784.1953000000001
+          },
+          "to": {
+            "x": -306.4235,
+            "y": 117.77,
+            "z": -782.8453000000001
+          },
+          "width": 2.05
+        },
+        {
+          "id": "west",
+          "from": {
+            "x": -314.0985,
+            "y": 116.95,
+            "z": -781.4203
+          },
+          "to": {
+            "x": -312.6485,
+            "y": 117.77,
+            "z": -781.4203
+          },
+          "width": 1.55
+        },
+        {
+          "id": "east",
+          "from": {
+            "x": -298.7485,
+            "y": 116.95,
+            "z": -781.4203
+          },
+          "to": {
+            "x": -300.19849999999997,
+            "y": 117.77,
+            "z": -781.4203
+          },
+          "width": 1.55
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "bank-counter",
+        "kind": "bank-counter",
+        "position": {
+          "x": -306.4235,
+          "y": 117.77,
+          "z": -770.1453
+        },
+        "size": {
+          "x": 7.8,
+          "y": 1.35,
+          "z": 1.2
+        },
+        "color": "#68482d",
+        "collision": true
+      },
+      {
+        "id": "bank-clerk-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -306.4235,
+          "y": 117.77,
+          "z": -769.1453
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead8ba",
+        "collision": false,
+        "yaw": 3.141592653589793
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 10,
+    "note": "Local coordinate frame rotated around layout centre; no changes to imported transforms. Access supports remain independent from source rendering. Front veranda upward triangles 117.703–117.758; authored support 117.77 keeps the visible surface pickable."
+  },
+  "designStatus": "Authored bank counter and clerk; shared source-derived wood textures, no original bank interior/NPC claim."
+}

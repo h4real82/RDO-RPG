@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "valentine-saloon-practice",
+  "gameId": "darts",
+  "rulesVersion": "valentine-target-practice-v1",
+  "status": "runtime-loaded-validated",
+  "throws": 6,
+  "maximumScore": 300,
+  "rings": [
+    {
+      "maximumNormalizedRadius": 0.15,
+      "points": 50
+    },
+    {
+      "maximumNormalizedRadius": 0.5,
+      "points": 25
+    },
+    {
+      "maximumNormalizedRadius": 1,
+      "points": 10
+    }
+  ],
+  "missPoints": 0,
+  "minimumThrowIntervalMs": 350,
+  "persistence": "none",
+  "economy": "none",
+  "sourceFiles": [
+    "apps/client/src/game/minigames/darts/DartsGame.ts",
+    "apps/client/src/game/minigames/darts/rules.ts"
+  ]
+}

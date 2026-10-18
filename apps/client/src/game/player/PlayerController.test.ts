@@ -3,6 +3,23 @@ import { describe, expect, it } from 'vitest';
 import { PlayerController } from './PlayerController';
 
 describe('PlayerController', () => {
+  it('preserves a fractional final click step at low frame rates without overshooting',()=>{
+    const player=new PlayerController({x:0,y:0,z:0});
+    player.setMovement({forward:0,right:0.15/(6*0.05)});player.update(0.05);
+    expect(player.position.x).toBeCloseTo(0.15);
+  });
+  it('commits resolved source height only when the candidate move is accepted', () => {
+    const player = new PlayerController({ x: 0, y: 0, z: 0 }, 1, (candidate) => {
+      candidate.y = 0.3;
+      return candidate.x < 0.15;
+    });
+    player.setMovement({ forward: 0, right: 1 });
+    player.update(0.1);
+    expect(player.position.y).toBe(0.3);
+    player.update(0.1);
+    expect(player.position.x).toBe(0.1);
+    expect(player.position.y).toBe(0.3);
+  });
   it('publishes deterministic position and facing without creating world objects', () => {
     const player = new PlayerController({ x: 0, y: 0, z: 0 });
     player.setMovement({ forward: 1, right: 0 });

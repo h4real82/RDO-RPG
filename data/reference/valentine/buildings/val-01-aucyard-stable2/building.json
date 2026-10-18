@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-01-aucyard-stable2",
+  "name": "Viehmarkt-Stall 2",
+  "sourcePlacementIds": [
+    "source:6d944660a55d294b"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_01_aucyard_stable2.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

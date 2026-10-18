@@ -14,7 +14,8 @@
     "@rdo-rpg/shared": "workspace:*",
     "@rdo-rpg/world-contracts": "workspace:*",
     "colyseus.js": "^0.15.17",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "three-mesh-bvh": "0.9.16"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

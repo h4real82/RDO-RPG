@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-05-res-d",
+  "name": "Wohnhaus D",
+  "sourcePlacementIds": [
+    "valentine:47508410ee74f2ff"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_05_res_d.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

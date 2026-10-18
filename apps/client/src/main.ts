@@ -14,6 +14,7 @@ function showStartupError(message: string): void {
     panel.append(text, closeButton);
     closeButton?.addEventListener('click', () => {
       try {
+        if (!panel.isConnected) return;
         panel.remove();
       } catch (error) {
         console.error('Could not close the startup error panel.', error);
@@ -29,7 +30,13 @@ function showStartupError(message: string): void {
 try {
   const root = document.getElementById('game-container');
   if (!root) throw new Error('Game root is required');
-  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('view') === 'inspector') {
+  const view = new URLSearchParams(window.location.search).get('view');
+  if (import.meta.env.DEV && view !== 'app-concept') document.getElementById('dev-app-entry')?.removeAttribute('hidden');
+  if (!import.meta.env.DEV || view === 'app-concept') {
+    void import('./app/AppShell').then(({startAppShell})=>startAppShell(root)).then((dispose)=> {
+      if(import.meta.hot) import.meta.hot.dispose(dispose);
+    }).catch((error)=>showStartupError(`App-Konzept konnte nicht starten: ${String(error)}`));
+  } else if (import.meta.env.DEV && view === 'inspector') {
     void import('./game/dev/MapInspector').then(({ startMapInspector }) => startMapInspector(root)).then((dispose) => {
       if (import.meta.hot) import.meta.hot.dispose(dispose);
     }).catch((error) => {

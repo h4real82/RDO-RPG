@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-01-aucbarns-barn2",
+  "name": "Auktionsscheune 2",
+  "sourcePlacementIds": [
+    "source:6f1907a25c9b8012"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_01_aucbarns_barn2.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-03-default-jail",
+  "name": "Zusammenhang mit Gefängnis/Sheriff-Hüllen prüfen; nicht doppelt als Haus zählen",
+  "sourcePlacementIds": [
+    "valentine:bf867eeb3ba101d0"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_03_default_jail.glb"
+  ],
+  "classification": "classification-required",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "review",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

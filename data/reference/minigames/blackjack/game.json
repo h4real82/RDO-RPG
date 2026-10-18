@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "blackjack",
+  "name": "Blackjack",
+  "implementationStatus": "planned",
+  "rulesVersion": null,
+  "implementedModes": [],
+  "plannedModes": [
+    "private-session"
+  ],
+  "runtimeRegistryWired": false,
+  "variants": [],
+  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "lifecycleContract": [
+    "available",
+    "joining",
+    "active",
+    "leaving",
+    "closed",
+    "error"
+  ],
+  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+}

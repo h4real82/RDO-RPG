@@ -60,3 +60,53 @@ it('projects an overhead map north-up without shifting elevated roof outlines', 
   expect(north.y).toBeGreaterThan(ground.y);
   expect(east.x).toBeGreaterThan(ground.x);
 });
+
+it('rotates the follow offset and movement basis together, keeping screen-forward aligned', () => {
+  const c = new OrthographicFollowCamera(2);
+  c.rotate(Math.PI / 2);
+  c.update(player);
+  expect(c.camera.position.x - player.x).toBeCloseTo(18);
+  expect(c.camera.position.z - player.z).toBeCloseTo(0);
+  expect(c.getMovement(1, 0).right).toBeCloseTo(-1);
+  expect(c.getMovement(1, 0).forward).toBeCloseTo(0);
+  expect(c.getMovement(0, 1).forward).toBeCloseTo(1);
+  const diagonal = c.getMovement(1, 1);
+  expect(Math.hypot(diagonal.forward, diagonal.right)).toBeCloseTo(1);
+  const ahead = new Vector3(player.x - 2, player.y, player.z).project(c.camera);
+  expect(ahead.y).toBeGreaterThan(0);
+  expect(ahead.x).toBeCloseTo(0);
+});
+
+it('ignores rotation during reference framing and resets gameplay yaw separately from zoom', () => {
+  const c = new OrthographicFollowCamera(2);
+  c.rotate(Math.PI / 2);
+  c.setReferencePose({ x: 5, y: 402, z: 10 }, player);
+  c.rotate(Math.PI / 2);
+  c.update(player);
+  expect(c.camera.position.toArray()).toEqual([5, 402, 10]);
+  c.clearReferencePose();
+  c.resetZoom();
+  c.update(player);
+  expect(c.camera.position.x - player.x).toBeCloseTo(18);
+  c.resetView();
+  c.rotate(NaN);
+  c.rotate(Infinity);
+  c.update(player);
+  expect(c.camera.position.x).toBeCloseTo(player.x);
+  expect(c.camera.position.z - player.z).toBeCloseTo(18);
+});
+
+it('keeps the full active floor within frame at varied yaw/aspect and honors reduced motion/reference framing',()=>{
+  for(const aspect of [.5,1.6])for(const yaw of [0,.7,1.57,3.14]){
+    const camera=new OrthographicFollowCamera(aspect);camera.rotate(yaw);
+    const width=14.2,depth=22,fit=Math.max((.8*(Math.abs(width*Math.sin(yaw))+Math.abs(depth*Math.cos(yaw)))+1.8)/.84,
+      (Math.abs(width*Math.cos(yaw))+Math.abs(depth*Math.sin(yaw)))/(aspect*.84));
+    camera.setContextGoal({target:{x:0,y:.6,z:0},visibleHeight:fit,contain:true},true);
+    camera.adjustZoom(-10000);camera.update({x:0,y:0,z:0},.001);
+    for(const x of [-width/2,width/2])for(const z of [-depth/2,depth/2]){
+      const projected=new Vector3(x,0,z).project(camera.camera);expect(Math.abs(projected.x)).toBeLessThan(.9);expect(Math.abs(projected.y)).toBeLessThan(.9);
+    }
+    expect(height(camera)).toBeCloseTo(fit);
+    camera.setReferencePose({x:0,y:400,z:0},{x:0,y:0,z:0},100);camera.update(player);expect(height(camera)).toBe(100);
+  }
+});

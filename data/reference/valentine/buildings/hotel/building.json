@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "hotel",
+  "name": "Hotel",
+  "sourcePlacementIds": [
+    "valentine:cb03cea32867a99b"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_hotel_ext.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "confirmed-open",
+    "edition": "unspecified",
+    "evidenceRefs": [
+      {
+        "path": "docs/planning/Investigation-P1-P8-2026-10-18.md",
+        "section": "P6",
+        "kind": "user-gameplay-photo-review"
+      }
+    ],
+    "notes": "Interior traversal documented by supplied in-game screenshots; Story/RDO edition not inferred."
+  },
+  "interior": {
+    "policy": "recognizable-adaptation",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [
+      "Empfang",
+      "Innentreppe",
+      "Zimmerflur und einfache Zimmer"
+    ],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}

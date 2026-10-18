@@ -1,8 +1,30 @@
 import { describe, expect, it } from 'vitest';
 import { BoxGeometry, Group, Mesh, MeshStandardMaterial, Texture } from 'three';
 import { ModelAssetCache } from './ModelAssetCache';
+import { Raycaster, Vector3 } from 'three';
+import { OcclusionController } from '../player/OcclusionController';
 
 describe('ModelAssetCache', () => {
+  it('keeps an unhit floor opaque when its roof reuses the same source material', async () => {
+    const source = new Group(), shared = new MeshStandardMaterial({ map: new Texture(), alphaTest: 0.4 });
+    const roof = new Mesh(new BoxGeometry(1, 1, 1), shared), floor = new Mesh(new BoxGeometry(1, 1, 1), shared);
+    floor.position.x = 5; source.add(roof, floor);
+    const cache = new ModelAssetCache(async () => source);
+    const lease = await cache.acquire('house'); lease.instance.updateWorldMatrix(true, true);
+    const [a, b] = lease.instance.children as Mesh<BoxGeometry, MeshStandardMaterial>[];
+    const occlusion = new OcclusionController([lease.instance]);
+    const ray = new Raycaster(new Vector3(0, 0, 2), new Vector3(0, 0, -1), 0, 4);
+    for (let i = 0; i < 30; i++) occlusion.update(ray);
+    expect(a.material.opacity).toBeCloseTo(0.15, 3);
+    expect(b.material.opacity).toBe(1);
+    expect(b.material.depthWrite).toBe(true);
+    expect(shared.opacity).toBe(1);
+    expect(a.material.map).toBe(b.material.map);
+    let disposed = 0;
+    for (const m of [a.material, b.material]) m.addEventListener('dispose', () => { disposed++; });
+    occlusion.dispose(); lease.dispose(); lease.dispose();
+    expect(disposed).toBe(2);
+  });
   it('shares geometry and textures across concurrent placements but isolates opacity', async () => {
     const source = new Group();
     const material = new MeshStandardMaterial({ map: new Texture() });

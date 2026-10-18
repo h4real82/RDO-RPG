@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "val-07-magic-ticketbooth",
+  "name": "Kassenhäuschen",
+  "sourcePlacementIds": [
+    "valentine:24c0c78c63cc346a"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_07_magic_ticketbooth.glb"
+  ],
+  "classification": "building-candidate",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
+    "coverage": "planned",
+    "floorDefinitions": []
+  },
+  "actions": []
+}
