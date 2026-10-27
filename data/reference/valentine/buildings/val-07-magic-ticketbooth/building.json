@@ -8,7 +8,7 @@
   "sourceAssets": [
     "models/valentine/val_07_magic_ticketbooth.glb"
   ],
-  "classification": "building-candidate",
+  "classification": "playable-building",
   "originalAccess": {
     "status": "unknown",
     "edition": "unspecified",
@@ -20,8 +20,33 @@
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-authored",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ],
+    "notes": "Own walkable adaptation, including real floor/entry. Original access status retained without invention."
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "magic-lantern-tickets",
+      "kind": "cinema",
+      "label": "Kinokasse: Ticket lösen & Einlass erhalten",
+      "position": {
+        "x": -355.511540195965,
+        "y": 117.05,
+        "z": -705.3833202591758
+      },
+      "interactionPosition": {
+        "x": -355.511540195965,
+        "y": 116.05,
+        "z": -704.9833202591758
+      },
+      "radius": 2.2,
+      "anchorStatus": "authored-gameplay",
+      "floorId": "ground"
+    }
+  ]
 }

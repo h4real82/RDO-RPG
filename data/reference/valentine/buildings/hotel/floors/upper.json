@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "id": "upper",
+  "label": "1. Obergeschoss & Zimmer",
+  "status": "built-pilot",
+  "layout": {
+    "x": -322.7087,
+    "z": -767.6314,
+    "width": 14.2,
+    "depth": 18.6,
+    "floorY": 120.6,
+    "front": -776.9314,
+    "doorX": -322.7087,
+    "doorWidth": 2.3,
+    "rampStart": -781.1314,
+    "rampLow": 120.6,
+    "frontDirection": -1,
+    "yaw": 0.17453292519943295,
+    "fixtures": [
+      {
+        "id": "deluxe-bed",
+        "kind": "bed",
+        "position": {
+          "x": -325.5,
+          "y": 120.6,
+          "z": -765.0
+        },
+        "size": {
+          "x": 1.810546875,
+          "y": 1.4443359375,
+          "z": 2.15283203125
+        },
+        "color": "#5c4028",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "deluxe-wardrobe",
+        "kind": "wardrobe",
+        "position": {
+          "x": -328.0,
+          "y": 120.6,
+          "z": -765.0
+        },
+        "size": {
+          "x": 1.8,
+          "y": 2.4,
+          "z": 0.65
+        },
+        "color": "#4a3320",
+        "collision": true,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "bathtub",
+        "kind": "bathtub",
+        "position": {
+          "x": -320.0,
+          "y": 120.6,
+          "z": -764.0
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.7,
+          "z": 2.0
+        },
+        "color": "#808a8e",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "upper-hall-rug",
+        "kind": "rug",
+        "position": {
+          "x": -322.7,
+          "y": 120.6,
+          "z": -770.0
+        },
+        "size": {
+          "x": 2.0,
+          "y": 0.02,
+          "z": 8.0
+        },
+        "color": "#6a2e2e",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "room-dresser",
+        "kind": "dresser",
+        "position": {
+          "x": -326.9087,
+          "y": 120.6,
+          "z": -773.4313999999999
+        },
+        "size": {
+          "x": 1.25,
+          "y": 1,
+          "z": 0.65
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      },
+      {
+        "id": "room-washstand",
+        "kind": "washstand",
+        "position": {
+          "x": -328.2087,
+          "y": 120.6,
+          "z": -771.4313999999999
+        },
+        "size": {
+          "x": 0.9,
+          "y": 0.9,
+          "z": 0.65
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      },
+      {
+        "id": "room-armchair",
+        "kind": "armchair",
+        "position": {
+          "x": -324.50870000000003,
+          "y": 120.6,
+          "z": -773.1314
+        },
+        "size": {
+          "x": 0.9,
+          "y": 1.05,
+          "z": 0.9
+        },
+        "yaw": 0.4,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/hotel/textures/val_hotel_floor01_ab.png",
+          "repeat": [
+            4,
+            5
+          ]
+        },
+        "wood": {
+          "url": "interiors/hotel/textures/val_cs_salwoodtrim02_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png"
+        },
+        "rug": {
+          "url": "interiors/hotel/textures/val_hotel_rug_01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      },
+      "models": [
+        {
+          "url": "interiors/hotel/bed-v1.glb",
+          "replaces": [
+            "deluxe-bed"
+          ],
+          "position": {
+            "x": -2.7912999999999784,
+            "y": 0,
+            "z": 2.631399999999985
+          },
+          "size": {
+            "x": 1.810546875,
+            "y": 1.4443359375,
+            "z": 2.15283203125
+          },
+          "yaw": 0
+        }
+      ]
+    },
+    "exteriorEntrance": false,
+    "floorHoles": [
+      [
+        {
+          "x": -317.95,
+          "z": -772.7
+        },
+        {
+          "x": -316.05,
+          "z": -772.7
+        },
+        {
+          "x": -316.05,
+          "z": -763.85
+        },
+        {
+          "x": -317.95,
+          "z": -763.85
+        }
+      ]
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 10,
+    "note": "Upper floor level aligned to verified 120.6m plane in val_hotel_ext.glb."
+  },
+  "designStatus": "Authored hotel upper rooms, hallway runner, deluxe bed and bath tub.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim",
+  "furnitureEvidence": "data/reference/valentine/buildings/hotel/interior-photo-evidence-2026-10-24.json"
+}

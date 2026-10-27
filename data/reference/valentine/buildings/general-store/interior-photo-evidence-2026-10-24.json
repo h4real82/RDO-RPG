@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "general-store",
+  "observations": [
+    "Warenregale an den Wänden, Theke mit Registrierkasse und freistehende Warenpräsentation.",
+    "Zusätzliche Treppe/Fortsetzung sichtbar; nicht als bereits eingebautes Obergeschoss melden."
+  ],
+  "images": [
+    {
+      "folder": "Worths General Store",
+      "file": "RDR2_ImD8yKPFPG.png",
+      "width": 197,
+      "height": 246,
+      "sha256": "d05d8f158cf39784f274b0388e8e4910d24f7f062930a0454b5de540dc1e1808",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Worths General Store/RDR2_ImD8yKPFPG.png"
+    },
+    {
+      "folder": "Worths General Store",
+      "file": "RDR2_JrKzTHBfrM.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "1c5c18491db2d771e4f415fd2214321c7e73d32969bffe4bb1e84f20fc4f2c0e",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Worths General Store/RDR2_JrKzTHBfrM.jpg"
+    },
+    {
+      "folder": "Worths General Store",
+      "file": "RDR2_klMfta6jNU.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "c401a98387c95ab3ea7ff5dddff6a99a00bab8ccf729566ad83a4332502e36e2",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Worths General Store/RDR2_klMfta6jNU.jpg"
+    },
+    {
+      "folder": "Worths General Store",
+      "file": "RDR2_mY2xVxsltf.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "54178b7cc713ad4f6edd7f56fbb4653de3dd03449d934364789383891fe43682",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Worths General Store/RDR2_mY2xVxsltf.jpg"
+    },
+    {
+      "folder": "Worths General Store",
+      "file": "RDR2_oZWKEdgITG.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "a8fda914c7638512b06cdf8c8852f4b316ffff12e393f106bdca91a378c588ba",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Worths General Store/RDR2_oZWKEdgITG.jpg"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

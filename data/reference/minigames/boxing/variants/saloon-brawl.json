@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "id": "saloon-brawl",
+  "gameId": "boxing",
+  "rulesVersion": "valentine-boxing-v1",
+  "status": "runtime-loaded"
+}

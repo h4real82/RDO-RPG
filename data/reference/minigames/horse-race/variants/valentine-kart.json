@@ -1,0 +1,11 @@
+{
+  "id": "valentine-kart",
+  "gameId": "horse-race",
+  "rulesVersion": "valentine-horse-race-v2",
+  "status": "runtime-loaded",
+  "name": "Hufeisen-Rallye · Valentine Kart",
+  "mode": "arcade",
+  "laps": 3,
+  "rivals": 3,
+  "halfWidth": 4
+}

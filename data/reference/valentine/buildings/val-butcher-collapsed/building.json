@@ -8,7 +8,7 @@
   "sourceAssets": [
     "models/valentine/val_butcher_collapsed.glb"
   ],
-  "classification": "classification-required",
+  "classification": "open-ruin",
   "originalAccess": {
     "status": "unknown",
     "edition": "unspecified",
@@ -20,8 +20,9 @@
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "review",
-    "floorDefinitions": []
+    "coverage": "not-a-separate-interior",
+    "floorDefinitions": [],
+    "notes": "Collapsed outdoor butcher stand, no intact enclosed room. Retained as exterior prop, not a missing interior."
   },
   "actions": []
 }

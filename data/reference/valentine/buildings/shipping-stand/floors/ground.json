@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Versandschalter",
+  "status": "built-authored",
+  "layout": {
+    "x": -179.1613,
+    "z": -647.3991,
+    "width": 3.8,
+    "depth": 2.6,
+    "floorY": 112.6,
+    "front": -648.6990999999999,
+    "doorX": -179.1613,
+    "doorWidth": 1.6,
+    "rampStart": -651.1990999999999,
+    "rampLow": 112.47158413325016,
+    "frontDirection": -1,
+    "yaw": 0.9599310885968813,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "service-desk",
+        "kind": "desk",
+        "position": {
+          "x": -177.8613,
+          "y": 112.6,
+          "z": -646.7491
+        },
+        "size": {
+          "x": 0.85,
+          "y": 0.9,
+          "z": 0.45
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "clerk",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -179.6113,
+          "y": 112.6,
+          "z": -646.6990999999999
+        },
+        "size": {
+          "x": 0.45,
+          "y": 1.7,
+          "z": 0.45
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": false
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

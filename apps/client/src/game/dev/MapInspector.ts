@@ -17,6 +17,7 @@ import { palette, sourceCoordinates, visualCategory } from './MapData';
 import { sceneManifestUrl, sceneAssetUrl } from '../world/SceneSource';
 import { VALENTINE_BOUNDARY } from '@rdo-rpg/world-contracts';
 import { placementRoles } from '../world/PlacementRoles';
+import {prepareSourceAppearance} from '../world/SourceAppearance';
 import { describeSelection, type MapSelection } from './MapDiagnostics';
 import { isDetachedTarget, isEditableTarget } from '../input/InputTarget';
 import './MapInspector.css';
@@ -301,6 +302,7 @@ export async function startMapInspector(root: HTMLElement): Promise<() => void> 
           selectHighestDrawableLod(instance);
           if (record.placement.asset.endsWith('_reflection_proxy.glb')) { disposeObjectResources(instance); continue; }
           prepareDrawableMaterialPreview(instance);
+          await prepareSourceAppearance(instance,{asset:record.placement.asset,loadTexture:url=>textures.loadAsync(url)});
           await prepareTerrainFourLayerPreview(instance, (url) => textures.loadAsync(url));
           if (disposed) { disposeObjectResources(instance); return; }
           applyPlacementTransform(instance, record.placement);

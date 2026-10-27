@@ -1,4 +1,5 @@
-import {BoxGeometry,CanvasTexture,CylinderGeometry,DoubleSide,Group,Mesh,MeshStandardMaterial,PlaneGeometry,SphereGeometry,SRGBColorSpace} from 'three';
+import {BoxGeometry,CanvasTexture,CylinderGeometry,DoubleSide,Group,LatheGeometry,Mesh,MeshStandardMaterial,PlaneGeometry,SphereGeometry,SRGBColorSpace,TorusGeometry,Vector2} from 'three';
+import {createReferenceFurniture} from './ReferenceFurniture';
 export function makeWoodTexture():CanvasTexture|undefined {
  if(typeof document==='undefined')return;
  const canvas=document.createElement('canvas');canvas.width=128;canvas.height=256;const ctx=canvas.getContext?.('2d');if(!ctx)return;
@@ -7,7 +8,8 @@ export function makeWoodTexture():CanvasTexture|undefined {
  const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;return texture;
 }
 /** Own simplified furniture silhouettes based on supplied P5-17/18 photos; no original asset claim. */
-export function createSaloonFurniture(kind:string,width:number,depth:number):Group {
+export function createSaloonFurniture(kind:string,width:number,depth:number,height?:number):Group {
+ const reference=createReferenceFurniture(kind,width,depth,height);if(reference)return reference;
  const group=new Group();
  const wood=new MeshStandardMaterial({color:'#50372e',roughness:.76}),trim=new MeshStandardMaterial({color:'#916844',roughness:.6}),dark=new MeshStandardMaterial({color:'#28221e',roughness:.9}),brass=new MeshStandardMaterial({color:'#b79752',metalness:.55,roughness:.4}),ivory=new MeshStandardMaterial({color:'#eee5d2'}),fabric=new MeshStandardMaterial({color:'#385e50',roughness:1});
  for(const material of [wood,trim])material.userData.interiorRole='wood';
@@ -39,6 +41,40 @@ export function createSaloonFurniture(kind:string,width:number,depth:number):Gro
   box('table-apron',0,.68,0,width-.15,.2,depth-.15);
   chair(0,depth/2+.43,0);chair(0,-depth/2-.43,Math.PI);chair(width/2+.43,0,Math.PI/2);chair(-width/2-.43,0,-Math.PI/2);
   cylinder(.1,.97,.1,.10,.18,brass);
+ }else if(kind==='shelf'){
+  box('shelf-back',0,1.15,-depth/2+.035,width,2.3,.07);
+  for(const x of [-width/2+.055,width/2-.055])box('shelf-upright',x,1.18,0,.11,2.36,depth,trim);
+  for(const y of [.12,.63,1.14,1.65,2.22])box('shelf-board',0,y,0,width,.09,depth,trim);
+  box('shelf-cornice',0,2.38,0,width+.1,.12,depth+.04,trim);
+ }else if(kind==='bench'){
+  box('bench-seat',0,.48,0,width,.12,depth,trim);
+  for(const x of [-width/2+.18,width/2-.18])for(const z of [-depth/2+.1,depth/2-.1])box('bench-leg',x,.22,z,.09,.44,.09);
+  for(const x of [-width/2+.1,width/2-.1])box('bench-back-post',x,.75,-depth/2+.03,.09,1.05,.09);
+  for(const y of [.76,1.03])box('bench-back-board',0,y,-depth/2+.03,width,.17,.08,trim);
+ }else if(kind==='bed'){
+  const linen=new MeshStandardMaterial({color:'#ded2b8',roughness:1});linen.userData.interiorRole='rug';
+  for(const x of [-width/2+.09,width/2-.09])for(const z of [-depth/2+.09,depth/2-.09]){
+   box('bed-post',x,.55,z,.11,1.1,.11,trim);cylinder(x,1.13,z,.085,.1,trim);
+  }
+  box('bed-frame',0,.35,0,width,.22,depth);
+  box('bed-mattress',0,.55,0,width-.15,.2,depth-.1,linen);
+  box('bed-headboard',0,.91,-depth/2+.07,width-.12,.6,.08,trim);
+  box('bed-footboard',0,.74,depth/2-.07,width-.12,.38,.08);
+  box('bed-blanket',0,.67,.18,width-.13,.045,depth*.66,fabric);fabric.userData.interiorRole='rug';
+  box('bed-pillow',0,.70,-depth/2+.42,width*.6,.14,.4,ivory);
+ }else if(kind==='bathtub'){
+  // Own open copper vessel, not an imported hotel model. UVs follow the lathe.
+  const copper=new MeshStandardMaterial({color:'#956a49',metalness:.65,roughness:.48});
+  const profile=[[0,.1],[.37,.1],[.5,.5],[.48,.53],[.45,.49],[.34,.15],[0,.15]].map(([x,y])=>new Vector2(x,y));
+  const shell=new Mesh(new LatheGeometry(profile,32),copper);shell.name='bath-shell';shell.scale.set(width,1,depth);shell.position.y=.12;group.add(shell);
+  const rim=new Mesh(new TorusGeometry(.48,.02,8,40),copper);rim.name='bath-rim';rim.rotation.x=Math.PI/2;rim.scale.set(width,depth,1);rim.position.y=.64;group.add(rim);
+  for(const x of [-width*.3,width*.3])for(const z of [-depth*.3,depth*.3])box('bath-foot',x,.09,z,.12,.18,.13,brass);
+ }else if(kind==='desk'){
+  box('desk-top',0,.84,0,width+.04,.12,depth+.04,trim);
+  for(const x of [-width/2+.12,width/2-.12])for(const z of [-depth/2+.1,depth/2-.1])box('desk-leg',x,.4,z,.1,.8,.1);
+  box('desk-drawer',0,.67,0,width-.15,.2,depth-.12);
+  for(const x of [-width*.25,width*.25])box('desk-drawer-pull',x,.67,depth/2,.16,.04,.04,brass);
+  box('desk-ledger',-.3,.92,0,.38,.05,.3,dark);
  }else if(kind==='bank-counter'){
   box('bank-counter-cabinet',0,.55,0,width,1.1,depth);box('bank-counter-top',0,1.18,0,width+.16,.15,depth+.14,trim);
   for(let x=-width/2+.6;x<width/2;x+=1.2){box('bank-raised-panel',x,.58,-depth/2-.02,1.03,.8,.05,trim);box('bank-panel-inset',x,.58,-depth/2-.05,.83,.6,.03);}

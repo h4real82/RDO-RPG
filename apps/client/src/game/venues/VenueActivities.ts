@@ -1,30 +1,109 @@
-import {MusicStream} from './MusicStream';
-import {VenueDialog,text} from './VenueDialog';
-import {BankDesk} from './BankDesk';
+import { MusicPlayer } from './MusicPlayer';
+import { VenueDialog, text } from './VenueDialog';
+import { BankDesk } from './BankDesk';
+import { SaloonBar } from './SaloonBar';
+import { CinemaPlayer } from './CinemaPlayer';
+import { MemorialRoom } from './MemorialRoom';
+
 export class VenueActivities {
- private dialog?:VenueDialog;private bank:BankDesk;private audio=document.createElement('audio');
- private music=new MusicStream(this.audio,()=>{if(this.dialog?.panel.dataset.venue==='music')this.dialog.status.textContent=this.music.status;});
- private url='';private saloon=false;
- constructor(private parent:HTMLElement,changed:()=>void=()=>{}){this.bank=new BankDesk(changed);this.audio.hidden=true;this.audio.dataset.saloonMusic='true';parent.append(this.audio);}
- get isOpen(){return Boolean(this.dialog?.isOpen);}
- supports(kind?:string){return kind==='music'||kind==='drinks'||kind==='bank';}
- open(kind?:string){
-  this.close();
-  if(kind==='bank'){this.dialog=this.bank.open(this.parent);return;}
-  const d=this.dialog=new VenueDialog(this.parent,kind==='music'?'Musik am Klavier':kind==='drinks'?'Barkeeper':'Interaktion');d.panel.dataset.venue=kind??'unknown';
-  if(kind==='music'){
-   text('p','Dein lokaler Musikstream. Die Musik endet beim Verlassen des Saloons. Kein gemeinsamer Session-Player.',d.content);
-   const input=d.input('Direkte HTTPS-Audio-URL','url',this.url);input.placeholder='https://…/stream.mp3';
-   d.button('Stream starten',()=>{this.url=input.value;return this.music.start(input.value);});d.button('Musik stoppen',()=>this.music.stop());
-   const volume=d.input('Lautstärke','range',String(this.audio.volume));volume.min='0';volume.max='1';volume.step='.05';d.listen(volume,'input',()=>{this.audio.volume=Number(volume.value);});
-   d.button('Ton an / aus',()=>{this.audio.muted=!this.audio.muted;d.status.textContent=this.audio.muted?'Ton aus':this.music.status;});
-   d.status.textContent=this.music.status;
-  }else if(kind==='drinks'){
-   text('p','Was darf es sein? Die Bestellung ist in dieser lokalen Vorschau kostenlos und kosmetisch.',d.content);
-   for(const drink of ['Bier','Whiskey','Kaffee','Wasser'])d.button(drink+' bestellen',()=>{d.status.textContent=`Der Barkeeper serviert dir ${drink}. Zum Wohl!`;});
-  }else text('p','Diese Interaktion ist derzeit nicht verfügbar.',d.content);
- }
- setBuilding(id?:string){const inside=id==='smithfields-saloon';if(this.saloon&&!inside){this.music.stop();this.close();}this.saloon=inside;}
- close(){this.dialog?.close();this.dialog=undefined;}
- dispose(){this.close();this.music.dispose();this.audio.remove();this.bank.dispose();}
+  private dialog?: VenueDialog;
+  private bank: BankDesk;
+  private bar: SaloonBar;
+  private cinema: CinemaPlayer;
+  private memorial: MemorialRoom;
+  private music: MusicPlayer;
+  private saloon = false;
+
+  constructor(
+    private parent: HTMLElement,
+    changed: () => void = () => {},
+    onMusicExpand: () => void = () => {}
+  ) {
+    this.bank = new BankDesk(changed);
+    this.bar = new SaloonBar(changed);
+    this.cinema = new CinemaPlayer(parent, changed);
+    this.memorial = new MemorialRoom(changed);
+    this.music = new MusicPlayer(parent, () => {
+      this.dialog?.close();
+      this.dialog = undefined;
+      onMusicExpand();
+    });
+  }
+
+  get isOpen() {
+    return Boolean(this.dialog?.isOpen) || this.music.isOpen || this.cinema.isOpen || this.memorial.isOpen;
+  }
+
+  supports(kind?: string) {
+    return (
+      kind === 'music' ||
+      kind === 'drinks' ||
+      kind === 'bank' ||
+      kind === 'cinema' ||
+      kind === 'theater' ||
+      kind === 'memorial' ||
+      kind === 'trophy'
+    );
+  }
+
+  open(kind?: string) {
+    this.close();
+    if (kind === 'music') {
+      this.music.open();
+      return;
+    }
+    if (kind === 'cinema' || kind === 'theater') {
+      this.dialog = this.cinema.open(this.parent);
+      return;
+    }
+    if (kind === 'memorial' || kind === 'trophy') {
+      this.dialog = this.memorial.open(this.parent);
+      return;
+    }
+    if (kind === 'bank') {
+      this.dialog = this.bank.open(this.parent);
+      return;
+    }
+    if (kind === 'drinks') {
+      this.dialog = this.bar.open(this.parent);
+      return;
+    }
+    const d = (this.dialog = new VenueDialog(this.parent, 'Interaktion'));
+    d.panel.dataset.venue = kind ?? 'unknown';
+    text('p', 'Diese Interaktion ist derzeit nicht verfügbar.', d.content);
+  }
+
+  setBuilding(id?: string) {
+    const inside = id === 'smithfields-saloon';
+    if (this.saloon && !inside) {
+      this.music.stop();
+      this.close();
+    }
+    this.saloon = inside;
+  }
+
+  setSystemPaused(paused: boolean) {
+    this.music.setSystemPaused(paused);
+    if (paused) {
+      this.cinema.stop();
+      this.memorial.close();
+    }
+  }
+
+  close() {
+    this.dialog?.close();
+    this.dialog = undefined;
+    this.cinema.stop();
+    this.memorial.close();
+    this.music.collapse();
+  }
+
+  dispose() {
+    this.close();
+    this.music.dispose();
+    this.bank.dispose();
+    this.bar.dispose();
+    this.cinema.dispose();
+    this.memorial.dispose();
+  }
 }

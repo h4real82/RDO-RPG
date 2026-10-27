@@ -1,5 +1,6 @@
 import index from '../../../../../data/reference/valentine/buildings/registry.json';
 import type { BuildingDefinition, FloorDefinition, RoomLayout } from './BuildingTypes';
+import {containsRoomPoint,toRoom,toWorld} from './RoomTransform';
 
 const base='../../../../../data/reference/valentine/buildings/';
 const buildingFiles=import.meta.glob('../../../../../data/reference/valentine/buildings/*/building.json',{eager:true,import:'default'});
@@ -33,6 +34,18 @@ export function createBuildingRegistry(definitions:BuildingDefinition[]) {
           &&[model.position.x,model.position.y,model.position.z,model.size.x,model.size.y,model.size.z,model.yaw??0].every(Number.isFinite)
           &&model.size.x>0&&model.size.y>0&&model.size.z>0&&Array.isArray(model.replaces)&&model.replaces.length>0
           &&model.replaces.every(id=>c.fixtures?.some(fixture=>fixture.id===id)),`Invalid appearance model: ${b.id}`);
+      }
+    }
+    for(const floor of b.floors){
+      const ids=new Set<string>();
+      for(const stair of floor.layout.stairs??[]){
+        const target=b.floors.find(f=>f.id===stair.toFloorId);
+        check(stair.id && !ids.has(stair.id) && target && target!==floor,`Invalid stair destination: ${b.id}/${floor.id}`);ids.add(stair.id);
+        check([stair.width,stair.from?.x,stair.from?.y,stair.from?.z,stair.to?.x,stair.to?.y,stair.to?.z].every(Number.isFinite)
+          && stair.width>=.8 && Math.hypot(stair.to.x-stair.from.x,stair.to.z-stair.from.z)>1
+          && Math.abs(stair.from.y-floor.layout.floorY)<.05 && Math.abs(stair.to.y-target.layout.floorY)<.05,`Invalid stair dimensions: ${b.id}/${floor.id}`);
+        const end=toRoom(target.layout,toWorld(floor.layout,stair.to));
+        check(containsRoomPoint(floor.layout,stair.from,.25) && containsRoomPoint(target.layout,end,.25),`Stair misses floor landing: ${b.id}/${floor.id}`);
       }
     }
     for(const action of b.actions) if(action.floorId)check(floors.has(action.floorId),`Unknown action floor: ${b.id}/${action.id}`);

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Futtergang & Unterstand",
+  "status": "built-authored",
+  "layout": {
+    "x": -297.82660000000004,
+    "z": -841.7905000000001,
+    "width": 6,
+    "depth": 8.8,
+    "floorY": 119.1,
+    "front": -837.3905000000001,
+    "doorX": -297.82660000000004,
+    "doorWidth": 2.4,
+    "rampStart": -833.3905000000001,
+    "rampLow": 119.0695271681075,
+    "frontDirection": 1,
+    "yaw": 0,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "feed-trough",
+        "kind": "trough",
+        "position": {
+          "x": -299.82660000000004,
+          "y": 119.1,
+          "z": -843.7905000000001
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.8,
+          "z": 2
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "feed-store",
+        "kind": "crate-stack",
+        "position": {
+          "x": -299.82660000000004,
+          "y": 119.1,
+          "z": -839.7905000000001
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.95,
+          "z": 1
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "stall-division",
+        "kind": "stall-divider",
+        "position": {
+          "x": -299.32660000000004,
+          "y": 119.1,
+          "z": -841.7905000000001
+        },
+        "size": {
+          "x": 2,
+          "y": 1.4,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

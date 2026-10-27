@@ -48,3 +48,13 @@ it('reserves the upper interior view for wall-mounted interaction prompts', () =
  expect(attributes['data-interior']).toBe('true');
  hud.update({x:0,y:0,z:0});expect(attributes['data-interior']).toBe('false');
 });
+
+it('keeps the debug map readout compact and does not rewrite stationary announcements',()=>{
+ let text='',writes=0;const attributes:Record<string,string>={};
+ const element={get textContent(){return text;},set textContent(value:string){text=value;writes++;},setAttribute(key:string,value:string){attributes[key]=value;},remove(){}};
+ vi.stubGlobal('document',{createElement:()=>element});const hud=new Hud({appendChild(){}} as unknown as HTMLElement,true);
+ hud.update({x:1,y:2,z:3},undefined,{x:4,y:5},1595);
+ expect(text).toContain('X 1.0');expect(text).not.toContain('Quellinventur');expect(text.length).toBeLessThan(100);
+ const count=writes;hud.update({x:1,y:2,z:3},undefined,{x:4,y:5},1595);expect(writes).toBe(count);
+ expect(attributes.title).toContain('1595');expect(attributes.title).toContain('WASD');hud.dispose();
+});

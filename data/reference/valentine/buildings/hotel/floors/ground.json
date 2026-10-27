@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss & Lobby",
+  "status": "built-pilot",
+  "layout": {
+    "x": -322.7087,
+    "z": -767.6314,
+    "width": 14.2,
+    "depth": 18.6,
+    "floorY": 117.1,
+    "front": -776.9314,
+    "doorX": -322.7087,
+    "doorWidth": 2.3,
+    "rampStart": -781.1314,
+    "rampLow": 115.63022179159945,
+    "frontDirection": -1,
+    "yaw": 0.17453292519943295,
+    "porch": {
+      "x": -322.7087,
+      "z": -778.3564,
+      "width": 15.8,
+      "depth": 2.85,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -322.7087,
+            "y": 115.63022179159945,
+            "z": -781.1314
+          },
+          "to": {
+            "x": -322.7087,
+            "y": 117.1,
+            "z": -779.7814
+          },
+          "width": 2.4
+        },
+        {
+          "id": "west",
+          "from": {
+            "x": -331.80870000000004,
+            "y": 115.20929593745532,
+            "z": -778.3564
+          },
+          "to": {
+            "x": -328.3587,
+            "y": 117.1,
+            "z": -778.3564
+          },
+          "width": 1.6
+        },
+        {
+          "id": "east",
+          "from": {
+            "x": -313.6087,
+            "y": 116.42750074928418,
+            "z": -778.3564
+          },
+          "to": {
+            "x": -317.0587,
+            "y": 117.1,
+            "z": -778.3564
+          },
+          "width": 1.6
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "reception-desk",
+        "kind": "bar",
+        "position": {
+          "x": -325.2,
+          "y": 117.1,
+          "z": -772
+        },
+        "size": {
+          "x": 1.4,
+          "y": 1.25,
+          "z": 4.2
+        },
+        "color": "#5c4028",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "key-rack",
+        "kind": "backbar",
+        "position": {
+          "x": -326.5,
+          "y": 117.1,
+          "z": -772
+        },
+        "size": {
+          "x": 0.6,
+          "y": 2.5,
+          "z": 4
+        },
+        "color": "#4a3320",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "hotelier-clerk-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -325.8,
+          "y": 117.1,
+          "z": -772
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead8ba",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "lounge-table",
+        "kind": "table-round",
+        "position": {
+          "x": -320,
+          "y": 117.1,
+          "z": -771.5
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.9,
+          "z": 1.4
+        },
+        "color": "#5c4028",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "lounge-rug",
+        "kind": "rug",
+        "position": {
+          "x": -320,
+          "y": 117.1,
+          "z": -771.5
+        },
+        "size": {
+          "x": 3.2,
+          "y": 0.02,
+          "z": 3.6
+        },
+        "color": "#6a2e2e",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "lobby-sofa",
+        "kind": "sofa",
+        "position": {
+          "x": -326.4087,
+          "y": 117.1,
+          "z": -762.6314
+        },
+        "size": {
+          "x": 2.2,
+          "y": 1.05,
+          "z": 0.95
+        },
+        "color": "#4a2d18",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "lobby-stove",
+        "kind": "stove",
+        "size": {
+          "x": 0.7,
+          "y": 2.3,
+          "z": 0.7
+        },
+        "position": {
+          "x": -328.50870000000003,
+          "y": 117.1,
+          "z": -768.1314
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      },
+      {
+        "id": "lobby-armchair",
+        "kind": "armchair",
+        "size": {
+          "x": 0.9,
+          "y": 1.05,
+          "z": 0.9
+        },
+        "position": {
+          "x": -327.4087,
+          "y": 117.1,
+          "z": -764.5314
+        },
+        "yaw": 0.35,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/hotel/textures/val_hotel_floor01_ab.png",
+          "repeat": [
+            4,
+            5
+          ]
+        },
+        "wood": {
+          "url": "interiors/hotel/textures/val_cs_salwoodtrim02_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png"
+        },
+        "rug": {
+          "url": "interiors/hotel/textures/val_hotel_rug_01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    },
+    "stairs": [
+      {
+        "id": "main-stair",
+        "from": {
+          "x": -317,
+          "y": 117.1,
+          "z": -772.6
+        },
+        "to": {
+          "x": -317,
+          "y": 120.6,
+          "z": -763.6
+        },
+        "width": 1.6,
+        "toFloorId": "upper"
+      }
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 10,
+    "note": "Aligned to val_hotel_ext.glb placement [-322.7087, 121.7168, -767.6314] with verified porch elevation 117.0 and ground approach at 116.4."
+  },
+  "designStatus": "Authored hotel lobby, reception desk, clerk and lounge; shared authentic western wood and wallpaper styling.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim",
+  "furnitureEvidence": "data/reference/valentine/buildings/hotel/interior-photo-evidence-2026-10-24.json"
+}

@@ -13,6 +13,18 @@ export function createMinigameRegistry(all:MinigameDefinition[]){
     return {variant,load:game.load};
   }};
 }
+const LOADERS: Record<string, () => Promise<unknown>> = {
+  darts: () => import('./darts/definition'),
+  poker: () => import('./poker/definition'),
+  blackjack: () => import('./blackjack/definition'),
+  archery: () => import('./archery/definition'),
+  boxing: () => import('./boxing/definition'),
+  'color-cards': () => import('./color-cards/definition'),
+  'horse-race': () => import('./horse-race/definition'),
+  'mini-golf': () => import('./golf/definition'),
+  schwimmen: () => import('./schwimmen/definition'),
+  wettsaufen: () => import('./wettsaufen/definition'),
+};
 export const MINIGAMES=createMinigameRegistry(index.games.map(ref=>{
   const raw=files[base+ref.file] as {id:string;implementationStatus:string;implementedModes:string[];variants:{id:string;file:string}[]};
   if(!raw || raw.id!==ref.id)throw new Error('Invalid game catalog');
@@ -23,5 +35,5 @@ export const MINIGAMES=createMinigameRegistry(index.games.map(ref=>{
     configs.set(value.id,value);
   }
   return {id:raw.id,status:raw.implementationStatus,modes:raw.implementedModes,variants:configs,
-    load:raw.id==='darts'?()=>import('./darts/definition'):raw.id==='poker'?()=>import('./poker/definition'):undefined};
+    load:(LOADERS[raw.id] as unknown as MinigameDefinition['load']) ?? undefined};
 }));

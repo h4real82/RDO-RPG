@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "val-05-pigpen-a",
+  "name": "Schweinestall A",
+  "sourcePlacementIds": [
+    "source:735f6ec5898228fc"
+  ],
+  "sourceAssets": [
+    "models/valentine/val_05_pigpen_a.glb"
+  ],
+  "classification": "playable-building",
+  "originalAccess": {
+    "status": "unknown",
+    "edition": "unspecified",
+    "evidenceRefs": [],
+    "notes": "[FLAG: Data Missing] Original human access remains unknown; authored gameplay entry is not an original access claim."
+  },
+  "interior": {
+    "policy": "provisional-wood",
+    "minimum": "walkable-empty-wood-floor-with-safe-exit",
+    "recognitionFeatures": [],
+    "detailBudget": "simple safe room; no original interior provenance claim",
+    "coverage": "built-authored",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ],
+    "notes": "Own walkable adaptation, including real floor/entry. Original access status retained without invention."
+  },
+  "actions": []
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "station",
+  "observations": [
+    "Geschlossener hölzerner Ticketschalter mit Bedienfenstern/Gittern als zentraler Einbau.",
+    "Wartebänke längs der Fenster; dunkle Holzvertäfelung und freier Umlauf."
+  ],
+  "images": [
+    {
+      "folder": "Bahnhof",
+      "file": "RDR2_2cm2XYfPxt.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "3bcbb9e6fd6946112b72d28e1d22892da86223a6148c1e9e2bfdaf3a59d73b18",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Bahnhof/RDR2_2cm2XYfPxt.jpg"
+    },
+    {
+      "folder": "Bahnhof",
+      "file": "RDR2_60RcHCzt9f.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "870303b56f976d1760ffb50a688b5826b32b9010fa248464c1529dd7429fa0d4",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Bahnhof/RDR2_60RcHCzt9f.jpg"
+    },
+    {
+      "folder": "Bahnhof",
+      "file": "RDR2_vFAdJFaq2A.png",
+      "width": 371,
+      "height": 544,
+      "sha256": "a072ef33b632b6f0ce0fbce4b6c4e293ccaf841e5e829e860773444a820fabae",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Bahnhof/RDR2_vFAdJFaq2A.png"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

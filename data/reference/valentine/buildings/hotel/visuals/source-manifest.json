@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "sourceArchive": "[FLAG: Data Missing] exact original archive path not proven; supplied local model name preserved",
+  "sourceYdr": {
+    "pathRelative": "models/val_hotel_room1a_furni_ydr/val_hotel_room1a_furni.ydr.full",
+    "sha256": "9920e8e8ed76df4bfdce9ffeb779610129a91cc5a4773993c589a1cce1840deb"
+  },
+  "bed": {
+    "sourceSha256": "8c6d554588a1033d1e8181ab8208db60088dbd7c3135244e0b97d6d2a85b2d91",
+    "sourceTriangles": 22132,
+    "selectedTriangles": 19096,
+    "runtimeTriangles": 19096,
+    "runtimeSha256": "bbf8f2863208f1d0293098a6591a3879978598aaff900767fb6eba2848e5a0dd",
+    "textureSha256": [
+      "0836453f37d6eb981b91c3993d3976822f54c4713b9f8fd7ee1995de398c9f1b",
+      "aa34889d5d1ac2a720c7c59881b2c91243e755fc2838cd16a1766d58bd9c7ae9",
+      "b590a895c789bf66c8197398f5ab5a9436e7f291897f9ea736be2f00b9e9114c",
+      "edd0b5b5618e98a5e88c7ea333f566dd137c0ce550a78b247be02c878d64c3d7"
+    ],
+    "region": {
+      "min": [
+        -1,
+        -0.8,
+        -1.2
+      ],
+      "max": [
+        1,
+        0.8,
+        1.2
+      ],
+      "yaw": 0
+    },
+    "dimensions": [
+      1.810546875,
+      1.4443359375,
+      2.15283203125
+    ],
+    "operation": "authored region selection; UV-preserving simplification; original embedded albedo bytes retained",
+    "shaderLimit": "diffuse-preview, not native RDR2 shader parity"
+  },
+  "runtime": "interiors/hotel/bed-v1.glb",
+  "textures": [
+    {
+      "sourceRelative": "textures/val_hotel_floor01_ab.png",
+      "runtimeRelative": "interiors/hotel/textures/val_hotel_floor01_ab.png",
+      "sha256": "cfbf1b7b17e978aa3fedc7c3faaea16e26fda7fed0ae0cc0590ab7fcd4162090",
+      "use": "original texture on authored gameplay geometry; tiling and placement authored"
+    },
+    {
+      "sourceRelative": "textures/val_cs_salwoodtrim02_ab.png",
+      "runtimeRelative": "interiors/hotel/textures/val_cs_salwoodtrim02_ab.png",
+      "sha256": "6a60ee0be0086d28d19facfc2339b63fc56989bc2c6f479693067dcbcdea9163",
+      "use": "original texture on authored gameplay geometry; tiling and placement authored"
+    },
+    {
+      "sourceRelative": "textures/val_cs_hotelwallpaper_03_ab.png",
+      "runtimeRelative": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png",
+      "sha256": "d4c528dd7a35dadb7e9277c0880bd46291ee0d68ae12ff9bdfbb49d9ffd762bd",
+      "use": "original texture on authored gameplay geometry; tiling and placement authored"
+    },
+    {
+      "sourceRelative": "textures/val_hotel_rug_01_ab.png",
+      "runtimeRelative": "interiors/hotel/textures/val_hotel_rug_01_ab.png",
+      "sha256": "642e74864659916b9acc3de3486d47ede9b13b4d58b93d7651be6e4b7715e954",
+      "use": "original texture on authored gameplay geometry; tiling and placement authored"
+    }
+  ],
+  "limits": "Only bed imported and visually inspected. Bath stays authored copper geometry; no source bath identity claimed. No percentage simplification achieved beyond region selection."
+}

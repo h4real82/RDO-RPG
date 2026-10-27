@@ -14,3 +14,18 @@ it('keeps the fallback fixture on failed source load and records missing data',a
  const result=await installRoomAppearance({support,interior},{models:[{url:'missing.glb',replaces:['bar'],position:{x:0,y:0,z:0},size:{x:1,y:1,z:1}}]},async()=>{throw new Error('missing');},async()=>new Texture());
  expect(block.visible).toBe(true);expect(result.missing).toEqual(['missing.glb']);result.dispose();
 });
+
+it('shares replacement materials and texture bindings across repeated furniture parts',async()=>{
+ const support=new Group(),interior=new Group(),base=new MeshStandardMaterial();base.userData.interiorRole='wood';
+ const parts=Array.from({length:40},()=>new Mesh(new BoxGeometry(),base));interior.add(...parts);
+ const result=await installRoomAppearance({support,interior},{textures:{wood:{url:'wood.png'}}},async()=>{throw new Error('unused');},async()=>new Texture());
+ expect(new Set(parts.map(p=>p.material)).size).toBe(1);
+ expect(new Set(parts.map(p=>p.material.map)).size).toBe(1);
+ const replacement=parts[0].material,dispose=vi.spyOn(replacement,'dispose');
+ result.dispose();expect(dispose).toHaveBeenCalledTimes(1);expect(parts.every(p=>p.material===base)).toBe(true);
+});
+it('uses the existing wood binding for new furniture roles in older room definitions',async()=>{
+ const interior=new Group(),support=new Group(),material=new MeshStandardMaterial();material.userData.interiorRole='furnitureWood';interior.add(new Mesh(new BoxGeometry(),material));
+ const texture=new Texture(),lease=await installRoomAppearance({interior,support},{textures:{wood:{url:'existing-wood.png'}}},async()=>{throw new Error('unused');},async()=>texture);
+ const meshes:Mesh[]=[];interior.traverse(o=>{if(o instanceof Mesh)meshes.push(o);});expect(meshes.some(m=>m.material instanceof MeshStandardMaterial&&Boolean(m.material.map))).toBe(true);expect(lease.missing).toEqual([]);lease.dispose();
+});

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "counter-duel",
+  "gameId": "wettsaufen",
+  "rulesVersion": "valentine-wettsaufen-v1",
+  "status": "runtime-loaded",
+  "minBet": 15,
+  "maxBet": 150,
+  "initialEnergy": 100,
+  "koThreshold": 0
+}

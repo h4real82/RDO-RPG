@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "poker",
   "name": "Poker",
-  "implementationStatus": "local-prototype",
+  "implementationStatus": "runtime-connected-with-coins",
   "rulesVersion": "valentine-holdem-practice-v1",
   "implementedModes": [
     "local-practice"
@@ -26,5 +26,5 @@
     "closed",
     "error"
   ],
-  "notes": "Heads-up local practice only; passive check/call bot; fresh 100 test chips each hand, no account coins or online authority."
+  "notes": "No-Limit Texas Hold’em at Smithfield's Saloon against Doc Holliday; wagers player Coins via WalletService with authentic buy-ins, street betting, and cashout settlement."
 }

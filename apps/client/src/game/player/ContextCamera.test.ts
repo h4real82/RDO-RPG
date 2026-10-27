@@ -12,3 +12,8 @@ it('keeps the street wide, approaches smoothly and fits the active floor at any 
   expect(inside.target.z).toBe(floor.layout.z);expect(inside.visibleHeight).toBeLessThan(42);
   expect(portrait.visibleHeight).toBeGreaterThan(inside.visibleHeight);
 });
+
+it('frames a small ticket booth at a useful size instead of leaving a tiny floor in empty space',()=>{
+ const building=BUILDINGS.byId.get('val-07-magic-ticketbooth')!,floor=building.floors[0],p={x:floor.layout.x,y:floor.layout.floorY,z:floor.layout.z};
+ const goal=resolveContextCamera({mode:'indoor',building,floor,approach:1},p,1.5,0);expect(goal.visibleHeight).toBeGreaterThanOrEqual(5);expect(goal.visibleHeight).toBeLessThanOrEqual(8);
+});

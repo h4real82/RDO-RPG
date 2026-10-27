@@ -1,9 +1,18 @@
 export interface Position {x:number;y:number;z:number}
+export interface RoomStair {id:string;from:Position;to:Position;width:number;toFloorId:string}
 export interface RoomAppearance {
  textures?:Record<string,{url:string;repeat?:[number,number];offset?:[number,number]}>;
  models?:{url:string;replaces:string[];position:Position;size:Position;yaw?:number}[];
 }
 export interface RoomLayout {
+  /** Authored outline in the same unrotated world frame as x/z, not a source MLO claim. */
+  footprint?:{x:number;z:number}[];
+  floorHoles?:{x:number;z:number}[][];
+  exteriorEntrance?:boolean;
+  openPerimeter?:boolean;
+  wallHeight?:number;
+  /** Physical walkable connector, owned by this floor; positions use the layout frame. */
+  stairs?:RoomStair[];
   appearance?:RoomAppearance;
   yaw?:number;
   porch?:{x:number;z:number;width:number;depth:number;stairs:{id:string;from:Position;to:Position;width:number}[]};

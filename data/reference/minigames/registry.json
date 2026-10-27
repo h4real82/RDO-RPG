@@ -53,6 +53,14 @@
     {
       "id": "mini-golf",
       "file": "mini-golf/game.json"
+    },
+    {
+      "id": "boxing",
+      "file": "boxing/game.json"
+    },
+    {
+      "id": "wettsaufen",
+      "file": "wettsaufen/game.json"
     }
   ]
 }

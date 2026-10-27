@@ -1,5 +1,5 @@
 import {it,expect} from 'vitest';
-import {rankHand,compareHands,PokerPractice} from './PokerRules';
+import {rankHand,compareHands,PokerPractice,parsePokerVariant} from './PokerRules';
 it('compares seven-card hands including wheel, flush kickers and full houses',()=>{
  expect(rankHand(['AS','KS','QS','JS','TS','2D','3C']).name).toBe('Straight Flush');
  expect(compareHands(['AS','2D','3C','4H','5S','8S','9D'],['2S','3D','4C','5H','6S','8C','9H'])).toBeLessThan(0);
@@ -18,4 +18,10 @@ it('keeps chips conserved over streets, all-in, folding and repeated actions aft
 it('allows a short remaining-stack all-in and settles only once',()=>{
  const game=new PokerPractice(()=>.19);game.act('raise',98);expect(game.stacks).toEqual([2,2]);
  game.act('raise',2);expect(game.finished).toBe(true);expect(game.stacks[0]+game.stacks[1]).toBe(200);expect(game.pot).toBe(0);
+});
+
+it('uses the catalog variant for practice blinds and stack, rejects malformed economy settings',()=>{
+ const config=parsePokerVariant({gameId:'poker',rulesVersion:'valentine-holdem-practice-v1',startingChips:60,smallBlind:3,bigBlind:6});
+ const game=new PokerPractice(()=>.17,config);expect(game.stacks).toEqual([57,54]);expect(game.pot).toBe(9);game.act('raise',60);expect(game.stacks[0]+game.stacks[1]).toBe(120);
+ expect(()=>parsePokerVariant({...config,startingChips:-1})).toThrow();expect(()=>parsePokerVariant({...config,bigBlind:0})).toThrow();
 });

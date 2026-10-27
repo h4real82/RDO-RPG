@@ -1,5 +1,8 @@
+import{planExitRoute,WaypointMovement}from'./interiors/ExitRoute';
+import{prepareDrawableMaterialPreview}from'./world/DrawableMaterialPreview';
 import {VenueActivities} from './venues/VenueActivities';
-import { HemisphereLight, Box3, Color, DirectionalLight, Group, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector2, Vector3, Vector4, WebGLRenderer } from 'three';
+import { WalletService } from './economy/WalletService';
+import { ACESFilmicToneMapping, Box3, Color, DirectionalLight, FogExp2, Group, HemisphereLight, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector2, Vector3, Vector4, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 import { createPlayableBoundary, VALENTINE_BOUNDARY } from '@rdo-rpg/world-contracts';
@@ -22,6 +25,7 @@ import { TerrainGround } from './world/TerrainGround';
 import { VisibleMeshCollision } from './world/VisibleMeshCollision';
 import { sceneAssetUrl, sceneManifestUrl } from './world/SceneSource';
 import { placementRoles } from './world/PlacementRoles';
+import {prepareSourceAppearance} from './world/SourceAppearance';
 import { SourceTraversal } from './world/SourceTraversal';
 import { createAuthoredRoom } from './world/AuthoredBank';
 import { BUILDINGS } from './buildings/BuildingRegistry';
@@ -42,6 +46,8 @@ import { MINIGAMES } from './minigames/MinigameRegistry';
 import type { ContextAction } from './interaction/FallbackMenu';
 import { validateRoadSurface } from './world/RoadRecoverySurface';
 import previewSpawn from './data/preview-spawn.json';
+import{isOutdoorPoi}from'./interaction/LegacyPoiPolicy';
+import{createAuthoredCollisionOwnership}from'./interiors/CollisionOwnership';
 
 export function selectSpawnPosition(manifest: WorldManifest, roadPoint?: { x: number; z: number }): { x: number; y: number; z: number } {
   if (roadPoint && Number.isFinite(roadPoint.x) && Number.isFinite(roadPoint.z)) {
@@ -56,7 +62,7 @@ export function placementBlocksPlayerAndCamera(placement: Pick<WorldPlacement, '
 }
 
 export function isRenderablePlacement(placement: Pick<WorldPlacement, 'asset'>): boolean {
-  return !placement.asset.endsWith('_reflection_proxy.glb');
+  return !placement.asset.endsWith('_reflection_proxy.glb') && !placement.asset.includes('road_d_');
 }
 
 export function disableTerrainVertexColorMultiplication(instance: Group): void {
@@ -64,7 +70,7 @@ export function disableTerrainVertexColorMultiplication(instance: Group): void {
     if (!(object instanceof Mesh)) return;
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
-      if ('vertexColors' in material && material.vertexColors) {
+      if ('vertexColors' in material && material.vertexColors && material.userData.provenance!=='authored-gameplay') {
         material.vertexColors = false;
         material.needsUpdate = true;
       }
@@ -72,38 +78,7 @@ export function disableTerrainVertexColorMultiplication(instance: Group): void {
   });
 }
 
-export function prepareDrawableMaterialPreview(instance: Group): void {
-  instance.traverse((object) => {
-    if (!(object instanceof Mesh)) return;
-    const materials = Array.isArray(object.material) ? object.material : [object.material];
-    for (const material of materials) {
-      // The converter preserves original shader masks, whose blend equation
-      // is not represented by its explicitly labelled diffuse-only preview.
-      if (typeof material.userData.rdo_material_status === 'string' && material.vertexColors
-        && material.userData.rdo_shader_hash !== '0xe5d7af85') {
-        material.vertexColors = false;
-        material.needsUpdate = true;
-      }
-      if (material.userData.rdo_alpha_mode === 'MASK') {
-        material.alphaTest = 0.5; material.transparent = false;
-      } else if (material.userData.rdo_alpha_mode === 'BLEND') {
-        material.transparent = true; material.depthWrite = false;
-      }
-      if (material.userData.rdo_draw_bucket === 2) {
-        material.polygonOffset = true; material.polygonOffsetFactor = -2; material.polygonOffsetUnits = -2;
-        object.renderOrder = 2;
-        if (material.userData.rdo_decal_albedo_opacity === 0) {
-          // The source explicitly writes no albedo. A forward diffuse pass
-          // would paint white tire marks. Retain the geometry for source/debug
-          // inspection; the native normal/roughness-only pass remains pending.
-          material.colorWrite = false;
-          material.depthWrite = false;
-          material.userData.rdo_preview_limitation = 'normal-roughness-decal-pass-pending';
-        }
-      }
-    }
-  });
-}
+export {prepareDrawableMaterialPreview} from './world/DrawableMaterialPreview';
 
 export async function prepareTerrainFourLayerPreview(
   instance: Group,
@@ -214,8 +189,10 @@ declare global {
       getCollisionHit(): { asset: string; mesh: string } | undefined;
       getInteriorVisuals(): {room:string;models:string[];texturedMeshes:number;missing:string[]}[];
       getLoadedTransforms(): { asset: string; determinant: number }[];
+      getPerformance(): {drawCalls:number;triangles:number;geometries:number;textures:number;programs:number};
       getSceneState(): { manifestUrl: string; placements: WorldPlacement[]; blockedReason?: string; blocked: boolean; boundary: typeof VALENTINE_BOUNDARY };
       sampleGround(x: number, z: number, referenceY?: number): number | undefined;
+      probeClick(x:number,y:number):{point?:{x:number;y:number;z:number};message:string};
       probeMove(from: { x: number; y: number; z: number }, to: { x: number; y: number; z: number }): {
         allowed: boolean; position: { x: number; y: number; z: number }; reason?: string; hit?: { asset: string; mesh: string };
       };
@@ -270,20 +247,37 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   ]);
   options.signal?.throwIfAborted();
   const scene = new Scene();
-  scene.background = new Color('#151c21');
-  scene.add(new HemisphereLight('#dfeeff','#8d9180',2.1));
-  const sunlight = new DirectionalLight('#fff8ec', 2.6);
-  sunlight.position.set(30, 50, 20);
+  renderer.toneMapping = ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  scene.background = new Color('#5c788d');
+  scene.fog = new FogExp2('#9e9484', 0.0022);
+  const skyLight=new HemisphereLight('#b8dcff', '#6e543c', 0.95);
+  scene.add(skyLight);
+  const sunlight = new DirectionalLight('#fff5df', 2.2);
+  sunlight.position.set(40, 55, 25);
+  const fillLight = new DirectionalLight('#869db3', 0.55);
+  fillLight.position.set(-25, 30, -20);
+  scene.add(fillLight);
   scene.add(sunlight);
 
   const spawn = selectSpawnPosition(manifest, previewSpawn.position);
   const collision = new VisibleMeshCollision();
   const ground = new TerrainGround();
+  const ownership=createAuthoredCollisionOwnership(BUILDINGS.playable.flatMap(b=>b.floors.map(f=>f.layout)));
+  collision.setAuthoredSourceMask(ownership.coversTransition);ground.setAuthoredSourceMask(ownership.coversSupport);
   const boundary = createPlayableBoundary(VALENTINE_BOUNDARY.polygon, VALENTINE_BOUNDARY.playerRadiusMetres);
   const traversal = new SourceTraversal(ground, collision, boundary);
   const authoredRooms = new Map(BUILDINGS.playable.flatMap(building=>building.floors.map(floor=>[
-    floor.layout.placementId,{...createAuthoredRoom(floor.layout),floorY:floor.layout.floorY,key:`${building.id}/${floor.id}`},
+    `${building.id}/${floor.id}`,{...createAuthoredRoom(floor.layout),floorY:floor.layout.floorY,key:`${building.id}/${floor.id}`},
   ] as const)));
+  const roomsForPlacement=(id:string)=>{
+    const building=BUILDINGS.byPlacement.get(id);
+    // Supporting shell/detail aliases share collision ownership but must not
+    // register the same authored floor twice while separate chunks stream.
+    return building?.sourcePlacementIds[0]===id ? building.floors.flatMap(floor=>{
+      const room=authoredRooms.get(`${building.id}/${floor.id}`);return room?[room]:[];
+    }):[];
+  };
   const presentation=new InteriorPresentation();
   const spatial=new SpatialContextResolver(BUILDINGS.playable,(_building,floor,position)=>{
     const c=floor.layout,candidate=toWorld(c,{x:c.doorX,y:position.y,z:c.front+c.frontDirection*.3});
@@ -306,7 +300,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   player = new PlayerController(spawn, 6, canOccupy,position=>{
     const restricted=spatial.restrictsRunning(position);
     if(restricted)pathMode='walk';
-    travelMode=movementMode.resolve(restricted,false,moveTarget?pathMode:undefined);
+    travelMode=movementMode.resolve(restricted,false,movePath.target?pathMode:undefined);
     return travelMode==='run'?1.5:1;
   });
   const playerMarker = new Mesh(new SphereGeometry(PLAYER_MARKER_RADIUS, 16, 12), new MeshStandardMaterial({ color: '#eac573', emissive:'#6e4a16', depthTest:false,transparent:true,depthWrite:false }));
@@ -314,11 +308,13 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   playerMarker.position.set(spawn.x, spawn.y + PLAYER_MARKER_RADIUS, spawn.z);
   scene.add(playerMarker);
   const cameraController = new OrthographicFollowCamera(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
+  cameraController.enableSmoothing(!options.reducedMotion?.());
   const loader = new GLTFLoader();
   const textureLoader = new TextureLoader();
   const assets = new ModelAssetCache(async (asset) => {
     const gltf = await loader.loadAsync(sceneAssetUrl(asset));
     prepareDrawableMaterialPreview(gltf.scene);
+    await prepareSourceAppearance(gltf.scene,{asset,loadTexture:url=>textureLoader.loadAsync(url)});
     await prepareTerrainFourLayerPreview(gltf.scene, (url) => textureLoader.loadAsync(url));
     selectHighestDrawableLod(gltf.scene);
     return gltf.scene;
@@ -336,16 +332,19 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     applyPlacementTransform(instance, placement);
     if (placement.layer === 'terrain') disableTerrainVertexColorMultiplication(instance);
     scene.add(instance);
-    const roles = placementRoles(placement);
-    const authoredRoom = authoredRooms.get(placement.id);
-    if(authoredRoom) {
+    const roles = placementRoles(placement, Boolean(BUILDINGS.byPlacement.get(placement.id)?.floors.length));
+    const placementRooms=roomsForPlacement(placement.id);
+    for(const authoredRoom of placementRooms) {
       scene.add(authoredRoom.support,authoredRoom.interior); ground.add(authoredRoom.support,'structure'); collision.add(authoredRoom.walls);
       presentation.registerRoom(authoredRoom.key,authoredRoom);
     }
     if (roles.occluder) occluders.push(instance);
     instance.updateWorldMatrix(true, true);
     if (roles.support) ground.add(instance, placement.layer === 'terrain' ? 'terrain' : 'structure');
-    if (roles.obstacle && !authoredRoom) collision.add(instance);
+    if (roles.obstacle) collision.add(instance);
+    // Retain source provenance/loading and the shared room owner while showing
+    // an explicitly authored replacement shell. Never restore the broken shell.
+    if(placement.tags?.some(tag=>tag==='render:authored-replaced'||tag==='render:physics-only'))instance.visible=false;
     presentation.trackSource(instance);
     return { dispose: () => {
       presentation.untrackSource(instance);scene.remove(instance);
@@ -353,7 +352,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       if (index >= 0) occluders.splice(index, 1);
       collision.remove(instance);
       ground.remove(instance);
-      if(authoredRoom) {presentation.unregisterRoom(authoredRoom.key);scene.remove(authoredRoom.support,authoredRoom.interior);ground.remove(authoredRoom.support);collision.remove(authoredRoom.walls);}
+      for(const authoredRoom of placementRooms) {presentation.unregisterRoom(authoredRoom.key);scene.remove(authoredRoom.support,authoredRoom.interior);ground.remove(authoredRoom.support);collision.remove(authoredRoom.walls);}
       lease.dispose();
     } };
   });
@@ -363,7 +362,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   options.signal?.addEventListener('abort',cancelStartup,{once:true});
   try {
     for(const building of BUILDINGS.playable)for(const floor of building.floors){
-      const appearance=floor.layout.appearance,room=authoredRooms.get(floor.layout.placementId);if(!appearance || !room)continue;
+      const appearance=floor.layout.appearance,room=authoredRooms.get(`${building.id}/${floor.id}`);if(!appearance || !room)continue;
       const lease=await installRoomAppearance(room,appearance,url=>assets.acquire(url),url=>textureLoader.loadAsync(sceneAssetUrl(url)));
       appearanceLeases.push(lease);if(lease.missing.length)console.warn('Interior source visuals missing; keeping fallback.',lease.missing);
     }
@@ -383,17 +382,20 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     playerMarker.position.y = spawnGroundHeight + PLAYER_MARKER_RADIUS;
   }
 
-  spatial.reset(player.position);presentation.apply(spatial.current);
+  spatial.reset(player.position);presentation.apply(spatial.current,player.position);
   ground.setPickFilter(group=>group.visible);
   const releaseNativeContext=bindNativeContextGuard(root);
   const menu = new FallbackMenu();
   const darts = new MinigameHost(root,MINIGAMES,message=>menu.open(message));
-  const venues=new VenueActivities(root,options.onAccountChanged);
-  options.onInteractionMenu?.({get isOpen(){return menu.isOpen || darts.isOpen || venues.isOpen;},close(){menu.close();darts.close();venues.close();}});
+
   const hud = new Hud(root);
+  const venues=new VenueActivities(root,()=>{options.onAccountChanged?.();hud.setWallet(WalletService.getSyncBalance());},()=>{darts.close();menu.close();});
+  options.onInteractionMenu?.({get isOpen(){return menu.isOpen || darts.isOpen || venues.isOpen;},close(){menu.close();darts.close();venues.close();}});
+
+  hud.setWallet(WalletService.getSyncBalance());
   const minimap = new Minimap();
   const occlusion = new OcclusionController(occluders);
-  const saloon=BUILDINGS.byId.get('smithfields-saloon')!;
+  const indoorPlacements=new Set(BUILDINGS.playable.flatMap(b=>b.sourcePlacementIds));
   const activeHints=()=>resolveProximityHints(spatial.current,player.position,(from,to)=>!collision.blocksTransition(from,to),action=>{
     if(venues.supports(action.kind))return true;
     try{MINIGAMES.resolve(action.gameId!,action.variantId!);return true;}catch{return false;}
@@ -408,15 +410,19 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const context=spatial.current;
     if(context.mode==='indoor'){const current=nearbyAction();return current?{id:'authored-'+current.building.id+'-'+current.action.id,name:current.action.label??current.action.id,
       category:'building-action',position:current.hint.position,radius:current.action.radius!}:undefined;}
-    return pois.filter(p=>p.category!=='saloon-darts' && p.manifestRef!==saloon.sourcePlacementIds[0]).find((poi)=>Math.hypot(player.position.x-poi.position.x,player.position.z-poi.position.z)<=poi.radius);
+    return pois.filter(p=>isOutdoorPoi(p,indoorPlacements)).find((poi)=>Math.hypot(player.position.x-poi.position.x,player.position.z-poi.position.z)<=poi.radius);
   };
-  let moveTarget: {x:number;y:number;z:number}|undefined;
+  const movePath=new WaypointMovement();
   const openPoi = (): void => {
-    moveTarget=undefined;pressed.clear();movementMode.cancel();gestures?.cancel();
+    movePath.target=undefined;pressed.clear();movementMode.cancel();gestures?.cancel();
     const poi=nearbyPoi();
     if(poi?.category==='building-action'){const current=nearbyAction();if(!current)return;const {action,building}=current;
       if(venues.supports(action.kind))venues.open(action.kind);else void darts.open(action.gameId!,action.variantId!,{buildingId:building.id,floorId:action.floorId!,actionId:action.id});}
-    else if(poi) menu.open(`Interaktion für „${poi.name}“ ist noch nicht verfügbar.`);
+    else if(poi) {
+      if(venues.supports(poi.category))venues.open(poi.category);
+      else if(poi.category==='archery') void darts.open('archery','target-practice',{buildingId:'valentine-outdoors',floorId:'ground',actionId:poi.id});
+      else menu.open(`Interaktion für „${poi.name}“ ist noch nicht verfügbar.`);
+    }
   };
   const interactions = new InteractionRuntime({ getActivePoi: () => nearbyPoi(), menu,onInteract:openPoi });
   const dartsPrompt=document.createElement('button');
@@ -432,9 +438,9 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   exitPrompt.hidden=true;root.append(exitPrompt);
   const onExitPrompt=(event:MouseEvent)=>{try{
     if(!event || event.defaultPrevented || !exitPrompt.isConnected || inputCaptured() || spatial.current.mode!=='indoor' || !spatial.current.floor)return;
-    const c=spatial.current.floor.layout,destination=toWorld(c,{x:c.doorX,y:c.floorY,z:c.front+c.frontDirection*.85});
-    if(!traversal.resolve(player.position,destination))return;
-    event.preventDefault();movementMode.cancel();pressed.clear();gestures.cancel();pathMode='walk';moveTarget=destination;
+    const route=planExitRoute(spatial.current.floor.layout,player.position,(x,z,y)=>ground.heightAt(x,z,y),(from,to)=>traversal.resolve(from,to));
+    if(!route)return;
+    event.preventDefault();movementMode.cancel();pressed.clear();gestures.cancel();pathMode='walk';movePath.start(route);
   }catch(error){console.error('Could not leave interior.',error);}};
   exitPrompt.addEventListener('click',onExitPrompt);
   const validateRoadTarget=(target:RoadTarget)=>validateRoadSurface(target.position,ground,collision,boundary);
@@ -444,10 +450,10 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     prepare:target=>world.prepareRegion(target.position.x,target.position.z),validate:validateRoadTarget,
     isActive:()=>!disposed && !options.signal?.aborted && root.isConnected,
     apply:position=>{
-      pressed.clear();moveTarget=undefined;gestures?.cancel();player.setMovement({forward:0,right:0});Object.assign(player.position,position);player.blocked=false;
+      pressed.clear();movePath.target=undefined;gestures?.cancel();player.setMovement({forward:0,right:0});Object.assign(player.position,position);player.blocked=false;
       blockedReason=undefined;frameFailed=false;menu.close();cameraController.clearReferencePose();
       playerMarker.position.set(position.x,position.y+PLAYER_MARKER_RADIUS,position.z);
-      movementMode.cancel();spatial.reset(position);presentation.apply(spatial.current);
+      movementMode.cancel();spatial.reset(position);presentation.apply(spatial.current,player.position);
       cameraController.update(position);lastBlock=undefined;
     },
   });
@@ -455,7 +461,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const recoveryActions:RoadRecoveryActions={resetToRoad:()=>{
     if(pendingRecovery) return pendingRecovery;
     if(disposed || options.signal?.aborted || !root.isConnected) return Promise.resolve({status:'cancelled',message:'Die Szene ist beendet.'});
-    recovering=true;movementMode.cancel();pressed.clear();moveTarget=undefined;gestures?.cancel();player.setMovement({forward:0,right:0});menu.close();darts.close();venues.close();
+    recovering=true;movementMode.cancel();pressed.clear();movePath.target=undefined;gestures?.cancel();player.setMovement({forward:0,right:0});menu.close();darts.close();venues.close();
     pendingRecovery=(async()=>{
       try {recoveryResult=await recovery.reset();return recoveryResult;}
       finally {
@@ -466,11 +472,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   }};
   const previewApi: Window['__rdoPreview'] = import.meta.env.DEV ? {
     teleport(position): void {
-      moveTarget=undefined;
+      movePath.target=undefined;
       player.position.x = position.x;
       player.position.y = position.y;
       player.position.z = position.z;
-      movementMode.cancel();spatial.reset(position);presentation.apply(spatial.current);
+      movementMode.cancel();spatial.reset(position);presentation.apply(spatial.current,player.position);
     },
     setReferenceCamera(position, target, visibleHeight): void {
       cameraController.setReferencePose(position, target, visibleHeight);
@@ -479,9 +485,12 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     getCollisionHit: () => collision.lastHit,
     getRecoveryState:()=>({result:recoveryResult,lastSafe:recovery.lastSafeTarget,lastBlock,recovering}),
     getOcclusionState:()=>occlusion.getState(),
+    getPerformance:()=>({drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,
+      geometries:renderer.info.memory.geometries,textures:renderer.info.memory.textures,programs:renderer.info.programs?.length??0}),
     getSceneState: () => ({ manifestUrl: sceneManifestUrl(), placements: manifest.placements, blockedReason, blocked: player.blocked,
       boundary: VALENTINE_BOUNDARY }),
     sampleGround: (x, z, referenceY) => ground.heightAt(x, z, referenceY),
+    probeClick:(x,y)=>pickDestination(x,y),
     probeMove: (from, to) => {
       const candidate = { ...to };
       const allowed = traversal.resolve(from, candidate);
@@ -504,7 +513,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       return transforms;
     },
     getState: () => ({ frame: frameCount, player: { ...player.position }, cameraType: cameraController.camera.type,context:{mode:spatial.current.mode,buildingId:spatial.current.building?.id,floorId:spatial.current.floor?.id},travelMode,speed:player.speedPerSecond,visibleSources:occluders.filter(g=>g.visible).length,
-      cameraPosition:{x:cameraController.camera.position.x,y:cameraController.camera.position.y,z:cameraController.camera.position.z},moveTarget,
+      cameraPosition:{x:cameraController.camera.position.x,y:cameraController.camera.position.y,z:cameraController.camera.position.z},moveTarget:movePath.target,
       viewHeight: (cameraController.camera.top - cameraController.camera.bottom) / cameraController.camera.zoom }),
     project: position=> {const p=new Vector3(position.x,position.y,position.z).project(cameraController.camera);
       const rect=renderer.domElement.getBoundingClientRect();return {x:rect.left+(p.x+1)*rect.width/2,y:rect.top+(1-p.y)*rect.height/2};},
@@ -512,27 +521,32 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   if (previewApi) window.__rdoPreview = previewApi;
   const pressed = new Set<string>();
   const inputCaptured=():boolean=>recovering || disposed || menu.isOpen || darts.isOpen || venues.isOpen || Boolean(options.isInputCaptured?.()) || !root.isConnected;
-  const pickDestination=(x:number,y:number):{point?:Vector3;message:string}=> {
+  const pickDestination=(x:number,y:number):{point?:Vector3;route?:{x:number;y:number;z:number}[];message:string}=> {
     const rect=renderer.domElement.getBoundingClientRect();
     if(rect.width<=0 || rect.height<=0)return {message:'Die Weltansicht ist noch nicht bereit.'};
     const ray=new Raycaster();ray.setFromCamera(new Vector2((x-rect.left)/rect.width*2-1,1-(y-rect.top)/rect.height*2),cameraController.camera);
     const entrance=pickEntrance(ray,player.position,BUILDINGS.playable,point=>traversal.resolve(player.position,{...point}));
-    if(entrance)return {point:entrance,message:'Der Eingang ist frei.'};
+    if(entrance){const context=spatial.current,route=context.mode==='indoor'&&context.floor?planExitRoute(context.floor.layout,player.position,(x,z,y)=>ground.heightAt(x,z,y),(from,to)=>traversal.resolve(from,to)):undefined;return {point:entrance,...(route?{route}:{}),message:route?'Der Ausgang führt bis auf das Gelände.':'Der Eingang ist frei.'};}
     let message='Dort ist kein erreichbarer Boden sichtbar.';
-    const point=ground.pick(ray,player.position.y,hit=>{
+    const point=ground.pick(ray,player.position.y,(hit,surface)=>{
       if(Math.hypot(hit.x-player.position.x,hit.z-player.position.z)>30){message='Bitte wähle ein näheres Ziel (bis 30 Meter).';return false;}
       const candidate={x:hit.x,y:hit.y,z:hit.z};
       if(!traversal.resolve(player.position,candidate)){message=traversal.blockedReason==='boundary'?'Das Ziel liegt hinter der Ortsgrenze.':
         traversal.blockedReason==='terrain'?'Auf dem direkten Weg fehlt begehbarer Boden.':'Der direkte Weg ist versperrt. Wähle Zwischenziele um das Hindernis.';return false;}
       // A ray may hit an inaccessible roof first: only accept the surface actually reached by walking.
-      return Math.abs(candidate.y-hit.y)<0.08;
+      // A registered stair can meet a source landing slightly above its ramp.
+      // The complete collision-checked walk must still reach that landing.
+      return Math.abs(candidate.y-hit.y)<(surface.userData.stairConnector?ground.maxStep:0.08);
     });
     return point?{point,message:'Direkter Weg ist frei.'}:{message};
   };
   const gestures=new CanvasPointerGestures(renderer.domElement,{
     isCaptured:inputCaptured,
-    onCancel:()=>{movementMode.cancel();pressed.clear();moveTarget=undefined;},
+    onCancel:()=>{movementMode.cancel();pressed.clear();movePath.target=undefined;},
     onRotate:delta=>cameraController.rotate(delta),
+    onTilt:delta=>cameraController.tilt(delta),
+    onOrbitStart:()=>{renderer.domElement.style.cursor='grabbing';},
+    onOrbitEnd:()=>{renderer.domElement.style.cursor='';},
     onMoveClick:(x,y)=> {
       const poi=nearbyPoi();
       if(poi && poi.category!=='building-action') {
@@ -543,15 +557,15 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
         while(object && typeof object.userData.placementId!=='string')object=object.parent??undefined;
         if(object && object.userData.placementId===poi.manifestRef) {openPoi();return;}
       }
-      const result=pickDestination(x,y);moveTarget=undefined;pressed.clear();
-      if(result.point){pathMode='walk';moveTarget={x:result.point.x,y:result.point.y,z:result.point.z};}
+      const result=pickDestination(x,y);movePath.target=undefined;pressed.clear();
+      if(result.point){pathMode='walk';if(result.route)movePath.start(result.route);else movePath.target={x:result.point.x,y:result.point.y,z:result.point.z};}
       else menu.open(result.message);
     },
     onContext:(x,y)=> {
-      moveTarget=undefined;pressed.clear();
+      movePath.target=undefined;pressed.clear();
       const result=pickDestination(x,y), actions:ContextAction[]=[];
-      if(result.point){const point={x:result.point.x,y:result.point.y,z:result.point.z};actions.push({label:'LAUFEN',run:()=>{pathMode='walk';moveTarget=point;}});
-        if(!spatial.restrictsRunning(player.position) && spatial.current.mode!=='indoor')actions.push({label:'RENNEN',run:()=>{pathMode='run';moveTarget=point;}});}
+      if(result.point){const point={x:result.point.x,y:result.point.y,z:result.point.z};actions.push({label:'LAUFEN',run:()=>{pathMode='walk';if(result.route)movePath.start(result.route);else movePath.target=point;}});
+        if(!spatial.restrictsRunning(player.position) && spatial.current.mode!=='indoor')actions.push({label:'RENNEN',run:()=>{pathMode='run';movePath.target=point;}});}
       const poi=nearbyPoi();
       if(poi)actions.push({label:poi.category==='building-action'?poi.name:`${poi.name}: Interagieren`,run:openPoi});
       menu.open(poi?`${poi.name} · ${result.message}`:result.message,actions);
@@ -569,9 +583,9 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
         pressed.clear();movementMode.cancel();if(event.key==='Escape') {menu.close();darts.close();venues.close();}return;
       }
       if (!menu.isOpen && !event.ctrlKey && !event.metaKey && !event.altKey) {
-        if (['+', '=', '-', '0'].includes(event.key)) {
+        if (['+', '=', '-', '0', 'Home'].includes(event.key)) {
           event.preventDefault();
-          if (event.key === '0') cameraController.resetView();
+          if (event.key === '0' || event.key === 'Home') cameraController.resetView();
           else cameraController.adjustZoom(event.key === '-' ? 120 : -120);
           return;
         }
@@ -579,7 +593,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       // A key held across a captured field/menu needs a fresh press to re-enter gameplay.
       if (event.repeat && !pressed.has(event.key.toLowerCase())) return;
       if (!menu.isOpen) {
-        if(['w','a','s','d'].includes(event.key.toLowerCase()))moveTarget=undefined;
+        if(['w','a','s','d'].includes(event.key.toLowerCase()))movePath.target=undefined;
         if(['q','e'].includes(event.key.toLowerCase()))event.preventDefault();
         pressed.add(event.key.toLowerCase());
         if(event.key==='Shift')movementMode.setShift(true);
@@ -595,7 +609,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     catch (error) { console.error('Could not process game keyup.', error); }
   };
   const clearMovement = (): void => {
-    try { movementMode.cancel();pressed.clear();moveTarget=undefined;gestures.cancel(); }
+    try { movementMode.cancel();pressed.clear();movePath.target=undefined;gestures.cancel(); }
     catch (error) { console.error('Could not clear game movement.', error); }
   };
   const onVisibilityChange = (): void => {
@@ -628,23 +642,31 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       const delta = Math.min((now - previous) / 1000, 0.5);
       previous = now;
       const captured=inputCaptured() || isEditableTarget(document.activeElement) || frameFailed;
-      if(captured) {movementMode.cancel();travelMode='stopped';pressed.clear();moveTarget=undefined;gestures.cancel();}
+      if(captured) {movementMode.cancel();travelMode='stopped';pressed.clear();movePath.target=undefined;gestures.cancel();}
       if(!captured)cameraController.rotate((Number(pressed.has('e'))-Number(pressed.has('q')))*Math.min(delta,0.1)*1.8);
       let movement=cameraController.getMovement(Number(pressed.has('w'))-Number(pressed.has('s')),Number(pressed.has('d'))-Number(pressed.has('a')));
-      if(moveTarget && !captured) {
-        const dx=moveTarget.x-player.position.x,dz=moveTarget.z-player.position.z,length=Math.hypot(dx,dz);
-        if(length<0.12)moveTarget=undefined;
+      if(movePath.target && !captured) {
+        const dx=movePath.target.x-player.position.x,dz=movePath.target.z-player.position.z,length=Math.hypot(dx,dz);
+        if(length<0.12)movePath.advance();
         else {const speed=Math.min(1,length/Math.max(player.speedPerSecond*delta,0.001));movement={forward:-dz/length*speed,right:dx/length*speed};}
       }
       player.setMovement(captured?{forward:0,right:0}:movement);
       blockedReason = undefined;
       const previousPosition={...player.position};
       player.update(delta);
-      if(player.blocked)moveTarget=undefined;
+      if(player.blocked)movePath.target=undefined;
       const terrainHeight = ground.heightAt(player.position.x, player.position.z, player.position.y);
-      if (terrainHeight !== undefined) player.position.y = terrainHeight;
-      spatial.update(previousPosition,player.position,delta);presentation.apply(spatial.current);
+      // Floors select presentation and actions; physical support supplies height,
+      // including the ramp between two registered floors.
+      if (terrainHeight !== undefined) {
+        player.position.y = terrainHeight;
+      }
+      spatial.update(previousPosition,player.position,delta);presentation.apply(spatial.current,player.position);
+      const lightingBlend=1-Math.exp(-Math.min(delta,.1)*5),inside=spatial.current.mode==='indoor';
+      skyLight.intensity+=((inside?2.3:.95)-skyLight.intensity)*lightingBlend;
+      renderer.toneMappingExposure+=((inside?1.5:1.15)-renderer.toneMappingExposure)*lightingBlend;
       venues.setBuilding(spatial.current.mode==='indoor'?spatial.current.building?.id:undefined);
+      venues.setSystemPaused(Boolean(options.isInputCaptured?.()));
       if(spatial.current.mode==='indoor')pathMode='walk';
       playerMarker.position.set(player.position.x, player.position.y + PLAYER_MARKER_RADIUS, player.position.z);
       hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount, player.blocked ? blockedReason : undefined,spatial.current.mode==='indoor'?`${spatial.current.building?.name} · ${spatial.current.floor?.label}`:undefined);
@@ -661,8 +683,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       const activityPoint=new Vector3(anchor.x,anchor.y,anchor.z).project(cameraController.camera);
       dartsPrompt.hidden=captured || !actionHint || Math.abs(activityPoint.x)>.95 || Math.abs(activityPoint.y)>.9 || Math.abs(activityPoint.z)>1;
       if(!dartsPrompt.hidden && actionHint){
-        const label=actionHint.action.label??actionHint.action.id;dartsPrompt.textContent=label+' · F';dartsPrompt.setAttribute('aria-label',label);
-        const p=placeActivityPrompt({x:(activityPoint.x+1)*root.clientWidth/2,y:(1-activityPoint.y)*root.clientHeight/2},{width:root.clientWidth,height:root.clientHeight});dartsPrompt.style.left=`${p.x}px`;dartsPrompt.style.top=`${p.y}px`;
+        const label=actionHint.action.label??actionHint.action.id;dartsPrompt.textContent=(actionHint.action.id==='darts'?'Darts spielen':label)+' · F';dartsPrompt.setAttribute('aria-label',label);
+        const p=placeActivityPrompt({x:(activityPoint.x+1)*root.clientWidth/2,y:(1-activityPoint.y)*root.clientHeight/2},{width:root.clientWidth,height:root.clientHeight},dartsPrompt.offsetWidth);dartsPrompt.style.left=`${p.x}px`;dartsPrompt.style.top=`${p.y}px`;
       }
       const exitHint=activeHints().find(h=>h.kind==='exit');
       exitPrompt.hidden=captured || !exitHint;
@@ -677,7 +699,8 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       occlusion.update(ray,target,delta);
       renderer.setSize(Math.max(root.clientWidth, 1), Math.max(root.clientHeight, 1), false);
       cameraController.resize(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
-      renderer.render(scene, cameraController.camera);
+      // Venue overlays fully cover the world; avoid rendering two 3D scenes.
+      if(!darts.isOpen)renderer.render(scene, cameraController.camera);
       frameCount += 1;
       frameFailed = false;
     } catch (error) {

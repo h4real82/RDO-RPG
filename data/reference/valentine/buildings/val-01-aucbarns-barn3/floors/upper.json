@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "upper",
+  "label": "Oberer Heuboden",
+  "status": "built-pilot",
+  "layout": {
+    "x": -221.38628185854702,
+    "z": -673.6330066664678,
+    "width": 24,
+    "depth": 11.8,
+    "floorY": 115.75,
+    "front": -667.7330066664679,
+    "doorX": -215.22628185854703,
+    "doorWidth": 2,
+    "rampStart": -662.2330066664679,
+    "rampLow": 115.75,
+    "frontDirection": 1,
+    "yaw": 2.443460952792061,
+    "fixtures": [
+      {
+        "id": "straw-bale-cluster",
+        "kind": "table",
+        "position": {
+          "x": -226.10621935854704,
+          "y": 115.75,
+          "z": -674.8389666664679
+        },
+        "size": {
+          "x": 2.4,
+          "y": 1.4,
+          "z": 4
+        },
+        "color": "#947b3b",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "saddle-rack",
+        "kind": "table",
+        "position": {
+          "x": -215.79371935854704,
+          "y": 115.75,
+          "z": -674.8389666664679
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.2,
+          "z": 3
+        },
+        "color": "#523720",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    },
+    "exteriorEntrance": false,
+    "floorHoles": [
+      [
+        {
+          "x": -223.167531858547,
+          "z": -676.2778342526748
+        },
+        {
+          "x": -219.60503185854705,
+          "z": -676.2778342526748
+        },
+        {
+          "x": -219.60503185854705,
+          "z": -670.703351494054
+        },
+        {
+          "x": -223.167531858547,
+          "z": -670.703351494054
+        }
+      ]
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay loft",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "note": "Simplified connected loft, not a verified original floor."
+  },
+  "designStatus": "Authored hay loft with stacked straw and saddle tack racks.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim"
+}

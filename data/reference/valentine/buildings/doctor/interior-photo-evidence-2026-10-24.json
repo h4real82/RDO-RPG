@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "doctor",
+  "observations": [
+    "Verkaufstheke mit dichtem Arzneischrank dahinter.",
+    "Getrennter Untersuchungsbereich mit einfacher Liege, Waschgelegenheit und hellen Wandflächen."
+  ],
+  "images": [
+    {
+      "folder": "Doctor",
+      "file": "RDR2_Np0qJ5FiFL.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "18124c719f32ec7b7a1136782aa6f9f8de15365399478f566ce16fb6086a041c",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Doctor/RDR2_Np0qJ5FiFL.jpg"
+    },
+    {
+      "folder": "Doctor",
+      "file": "RDR2_W9pjj5fn95.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "208a6ab55d41b0e2414894e98d5062c538b7b102f79da72b68164db42aafb1e2",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Doctor/RDR2_W9pjj5fn95.jpg"
+    },
+    {
+      "folder": "Doctor",
+      "file": "RDR2_YiUJ7VUYtz.png",
+      "width": 235,
+      "height": 267,
+      "sha256": "c608f9809d3abb6e06b96dd5fcaabda71aa8761b38636909cbfca449abb0ceee",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Doctor/RDR2_YiUJ7VUYtz.png"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

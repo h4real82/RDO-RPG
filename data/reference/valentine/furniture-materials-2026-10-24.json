@@ -1,0 +1,10 @@
+{
+  "provenance": "authored-gameplay",
+  "bodyWood": {
+    "source": "D:\\Projects\\RDO-RPG\\data\\raw\\textures\\val_sal2_woodplank03_ab.png",
+    "sha256": "93cf57c2e9b7e054b304b51356c2dd5f380570fd6fe5f4932bf304b0219f7826",
+    "runtime": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png",
+    "usage": "Existing Valentine albedo reused on own primitive-UV furniture; not an original furniture mesh",
+    "archiveProvenance": "not asserted"
+  }
+}

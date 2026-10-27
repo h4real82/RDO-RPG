@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "id": "cross-golf",
+  "gameId": "mini-golf",
+  "rulesVersion": "valentine-mini-golf-v1",
+  "status": "runtime-loaded"
+}

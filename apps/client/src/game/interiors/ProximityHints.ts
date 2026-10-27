@@ -7,7 +7,7 @@ export function resolveProximityHints(context:SpatialContext,position:Position,
   if(context.mode!=='indoor' || !context.building || !context.floor)return [];
   const c=context.floor.layout,hints:ProximityHint[]=[];
   const threshold=toWorld(c,{x:c.doorX,y:c.floorY,z:c.front}),exit=toWorld(c,{x:c.doorX,y:c.floorY,z:c.front-c.frontDirection*.5}),distance=Math.hypot(position.x-threshold.x,position.z-threshold.z);
-  if(distance<3.5 && reachable(position,exit))hints.push({kind:'exit',label:'↗ Draußen',position:{...threshold,y:c.floorY+.35},opacity:Math.min(1,(3.5-distance)/1.2)});
+  if(c.exteriorEntrance!==false && distance<3.5 && reachable(position,exit))hints.push({kind:'exit',label:'↗ Draußen',position:{...threshold,y:c.floorY+.35},opacity:Math.min(1,(3.5-distance)/1.2)});
   for(const action of context.building.actions){
     if(action.floorId!==context.floor.id || !action.position || !action.interactionPosition || !action.radius || !available(action))continue;
     const stand=toWorld(c,action.interactionPosition),anchor=toWorld(c,action.position);

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "references": [
+    {
+      "folder": "Auction Yard",
+      "count": 6,
+      "file": "data/reference/valentine/interior-photo-intake-2026-10-24/auction-yard.json"
+    },
+    {
+      "folder": "Bahnhof",
+      "count": 3,
+      "file": "data/reference/valentine/buildings/station/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Doctor",
+      "count": 3,
+      "file": "data/reference/valentine/buildings/doctor/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Gun Smith",
+      "count": 3,
+      "file": "data/reference/valentine/buildings/gunsmith/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Hof",
+      "count": 6,
+      "file": "data/reference/valentine/interior-photo-intake-2026-10-24/hof.json"
+    },
+    {
+      "folder": "Keanes Saloon",
+      "count": 2,
+      "file": "data/reference/valentine/buildings/second-saloon/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Kino Zelt",
+      "count": 4,
+      "file": "data/reference/valentine/interior-photo-intake-2026-10-24/kino-zelt.json"
+    },
+    {
+      "folder": "Saints Hotel",
+      "count": 11,
+      "file": "data/reference/valentine/buildings/hotel/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Sheriff Office",
+      "count": 3,
+      "file": "data/reference/valentine/buildings/val-03-jail-ext/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "count": 7,
+      "file": "data/reference/valentine/buildings/smithfields-saloon/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Worths General Store",
+      "count": 5,
+      "file": "data/reference/valentine/buildings/general-store/interior-photo-evidence-2026-10-24.json"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "count": 7,
+      "file": "data/reference/valentine/interior-photo-intake-2026-10-24/zigeuner-camp.json"
+    }
+  ],
+  "images": 60
+}

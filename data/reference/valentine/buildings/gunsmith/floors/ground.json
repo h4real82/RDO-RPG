@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Werkstatt & Waffenladen",
+  "status": "built-pilot",
+  "layout": {
+    "x": -279.6426,
+    "z": -782.0623,
+    "width": 9.8,
+    "depth": 12.6,
+    "floorY": 118.5,
+    "front": -788.3623,
+    "doorX": -279.6426,
+    "doorWidth": 2.0,
+    "rampStart": -792.5623,
+    "rampLow": 117.8,
+    "frontDirection": -1,
+    "yaw": 0.0,
+    "porch": {
+      "x": -279.6426,
+      "z": -789.7123,
+      "width": 10.6,
+      "depth": 2.7,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -279.6426,
+            "y": 117.8,
+            "z": -792.5623
+          },
+          "to": {
+            "x": -279.6426,
+            "y": 118.5,
+            "z": -791.0623
+          },
+          "width": 2.0
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "gun-counter",
+        "kind": "bar",
+        "position": {
+          "x": -278.0,
+          "y": 118.5,
+          "z": -783.5
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.15,
+          "z": 4.2
+        },
+        "color": "#4a3320",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "rifle-rack",
+        "kind": "rifle-rack",
+        "position": {
+          "x": -275.3426,
+          "y": 118.5,
+          "z": -783.4623
+        },
+        "size": {
+          "x": 4.3,
+          "y": 2.35,
+          "z": 0.55
+        },
+        "color": "#382414",
+        "collision": true,
+        "yaw": -1.5707963268
+      },
+      {
+        "id": "gunsmith-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -277.4,
+          "y": 118.5,
+          "z": -783.5
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead8ba",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "workbench",
+        "kind": "plain-table",
+        "position": {
+          "x": -282.49260000000004,
+          "y": 118.5,
+          "z": -781.0623
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.92,
+          "z": 2.6
+        },
+        "color": "#543924",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "gunshop-chair",
+        "kind": "chair",
+        "size": {
+          "x": 0.65,
+          "y": 1.15,
+          "z": 0.65
+        },
+        "position": {
+          "x": -282.6426,
+          "y": 118.5,
+          "z": -778.8623
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      },
+      {
+        "id": "gunshop-stove",
+        "kind": "stove",
+        "size": {
+          "x": 0.7,
+          "y": 2.1,
+          "z": 0.7
+        },
+        "position": {
+          "x": -283.4426,
+          "y": 118.5,
+          "z": -777.2623000000001
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 0,
+    "note": "Gunsmith aligned to val_gunsmith_ext.glb at [-279.6426, 121.7859, -782.0623] with verified floor plane at 118.5m."
+  },
+  "designStatus": "Authored gunsmith workshop with weapons display counter, rifle wall rack, work bench and gunsmith NPC.",
+  "furnitureEvidence": "data/reference/valentine/buildings/gunsmith/interior-photo-evidence-2026-10-24.json"
+}

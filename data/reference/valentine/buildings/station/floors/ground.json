@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Wartehalle & Fahrkartenschalter",
+  "status": "built-pilot",
+  "layout": {
+    "x": -177.84532831333587,
+    "z": -632.4185626614704,
+    "width": 22.6,
+    "depth": 8.6,
+    "floorY": 112.95,
+    "front": -636.7185626614704,
+    "doorX": -177.45532831333585,
+    "doorWidth": 2.2,
+    "rampStart": -642.2185626614704,
+    "rampLow": 112.32947515523408,
+    "frontDirection": -1,
+    "yaw": 0.9599310885968813,
+    "porch": {
+      "x": -177.45532831333585,
+      "z": -637.8185626614704,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -177.45532831333585,
+            "y": 112.32947515523408,
+            "z": -642.2185626614704
+          },
+          "to": {
+            "x": -177.45532831333585,
+            "y": 112.95,
+            "z": -638.9185626614704
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "ticket-counter",
+        "kind": "ticket-booth",
+        "position": {
+          "x": -182.84532831333587,
+          "y": 112.95,
+          "z": -632.4185626614704
+        },
+        "size": {
+          "x": 4,
+          "y": 2.7,
+          "z": 3.2
+        },
+        "color": "#523720",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "stationmaster-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -182.95479865816344,
+          "y": 112.95,
+          "z": -632.5309881160159
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead3b8",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "waiting-bench-1",
+        "kind": "bench",
+        "position": {
+          "x": -173.84532831333587,
+          "y": 112.95,
+          "z": -635.0185626614705
+        },
+        "size": {
+          "x": 3,
+          "y": 0.95,
+          "z": 0.65
+        },
+        "color": "#452b18",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "waiting-bench-2",
+        "kind": "bench",
+        "position": {
+          "x": -170.84532831333587,
+          "y": 112.95,
+          "z": -635.0185626614705
+        },
+        "size": {
+          "x": 3,
+          "y": 0.95,
+          "z": 0.65
+        },
+        "color": "#452b18",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "luggage-crates",
+        "kind": "crate-stack",
+        "position": {
+          "x": -185.84532831333587,
+          "y": 112.95,
+          "z": -629.9185626614704
+        },
+        "size": {
+          "x": 1.6,
+          "y": 1.15,
+          "z": 1.1
+        },
+        "color": "#6b4c30",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "station-stove",
+        "kind": "stove",
+        "size": {
+          "x": 0.7,
+          "y": 2.2,
+          "z": 0.7
+        },
+        "position": {
+          "x": -185.84532831333587,
+          "y": 112.95,
+          "z": -634.8185626614704
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            4,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 55,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -185.64932353719104,
+      "z": -638.3590810349833,
+      "y": 112.32947515523408
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored train station interior with ticket office counter, waiting benches, baggage crates and station master NPC.",
+  "furnitureEvidence": "data/reference/valentine/buildings/station/interior-photo-evidence-2026-10-24.json"
+}

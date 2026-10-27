@@ -1,0 +1,95 @@
+{
+  "classification": "source-derived-gameplay-variant",
+  "variants": [
+    {
+      "source": "models/valentine/val_hotel_ext.glb",
+      "sourceSha256": "6265dd0597014d09f6d7e2728e6d72a2e2eff95ecd59b3a468de2119f886417e",
+      "asset": "minigames/scenery/val_hotel_ext.glb",
+      "sourceBytes": 12353792,
+      "runtimeBytes": 4684404,
+      "sourceTriangles": 30670,
+      "runtimeTriangles": 30670,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_genstore_ext.glb",
+      "sourceSha256": "7b7a4960804afd18b7e5d889a805e81919915cdb832ffbeef8d1ea68d912fc99",
+      "asset": "minigames/scenery/val_genstore_ext.glb",
+      "sourceBytes": 11266248,
+      "runtimeBytes": 3660760,
+      "sourceTriangles": 21649,
+      "runtimeTriangles": 21649,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_03_saloon_ext.glb",
+      "sourceSha256": "22ff76c650b344416333bb1e599fc2b34bce25acd4810bfaa10b427e6d07f7b8",
+      "asset": "minigames/scenery/val_03_saloon_ext.glb",
+      "sourceBytes": 25176404,
+      "runtimeBytes": 10881468,
+      "sourceTriangles": 73355,
+      "runtimeTriangles": 73355,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/authored/livery-adaptation.glb",
+      "sourceSha256": "6fb47810a226ace330e2db20f94ea3f60233c9498278da6df1856b8ff020eb0b",
+      "asset": "minigames/scenery/livery-adaptation.glb",
+      "sourceBytes": 1276004,
+      "runtimeBytes": 132592,
+      "sourceTriangles": 258,
+      "runtimeTriangles": 258,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_bank.glb",
+      "sourceSha256": "47332382e314cd4b2dc38d2a4c2b12a2d0a8b1a704cc06fe32853a58bb272aaf",
+      "asset": "minigames/scenery/val_bank.glb",
+      "sourceBytes": 20364284,
+      "runtimeBytes": 7573892,
+      "sourceTriangles": 50548,
+      "runtimeTriangles": 50548,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_saloon2.glb",
+      "sourceSha256": "929e71d73fa3053d0278fc794c7573d2ebf4bc693ad3cdb47d34e3449fda6405",
+      "asset": "minigames/scenery/val_saloon2.glb",
+      "sourceBytes": 9444888,
+      "runtimeBytes": 2920836,
+      "sourceTriangles": 18471,
+      "runtimeTriangles": 18471,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_05_church_ext.glb",
+      "sourceSha256": "8047ca57143e0d754a05afaff14e42ea4a97cf8a0b186976db95248102ad1da2",
+      "asset": "minigames/scenery/val_05_church_ext.glb",
+      "sourceBytes": 13005424,
+      "runtimeBytes": 3632860,
+      "sourceTriangles": 22304,
+      "runtimeTriangles": 22304,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/valentine/val_01_trainstn_ext.glb",
+      "sourceSha256": "00f80fbb53d4ae0885e2b0feb492aec7371dd94c50fbe967f9ef658d65bd42c1",
+      "asset": "minigames/scenery/val_01_trainstn_ext.glb",
+      "sourceBytes": 10876152,
+      "runtimeBytes": 3005148,
+      "sourceTriangles": 18080,
+      "runtimeTriangles": 18080,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    },
+    {
+      "source": "models/authored/cinema-camp.glb",
+      "sourceSha256": "3144657990df7d959610d36f56aee6c2b4b0e47c02f2eeead84bf0d404cb15f7",
+      "asset": "minigames/scenery/cinema-camp.glb",
+      "sourceBytes": 4423940,
+      "runtimeBytes": 375460,
+      "sourceTriangles": 4075,
+      "runtimeTriangles": 4075,
+      "changes": "highest drawable LOD only; original UVs preserved; exact vertex welding/deduplication; texture resolution capped512 WebP quality88; no triangle reduction"
+    }
+  ]
+}

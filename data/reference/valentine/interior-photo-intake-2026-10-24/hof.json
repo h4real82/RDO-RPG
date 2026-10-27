@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "observations": [
+    "Außenhof mit Schuppen, offenem Stall, Säcken/Trögen und kleineren Tiergehegen. Gebäudeidentität aus Außenkoordinaten abgleichen."
+  ],
+  "images": [
+    {
+      "folder": "Hof",
+      "file": "RDR2_5JbXOIxhuP.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "3d3de824dbbc58ba42863c62626bfaf94f78fdd7dcb042350607d2087b0704ca",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_5JbXOIxhuP.jpg"
+    },
+    {
+      "folder": "Hof",
+      "file": "RDR2_bsTBzFoCBc.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "c33673893f118e85317fc4c5451e6fe1170c1b7376e1a257aec5fd9f8d9f89ad",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_bsTBzFoCBc.jpg"
+    },
+    {
+      "folder": "Hof",
+      "file": "RDR2_HuzRIPjVlc.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "c1891f22532d5e5ef2f1487507cd3bad8218c48168dbdb55aecee47ebb445277",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg"
+    },
+    {
+      "folder": "Hof",
+      "file": "RDR2_lBfCBApy5C.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "527bd132a3fd6dbb1ca909f0213f916c689e46765d9b562779522bde4fe81223",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_lBfCBApy5C.jpg"
+    },
+    {
+      "folder": "Hof",
+      "file": "RDR2_mx0zCtdjZl.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "ba0364a4f08a90f74930089f6fabf9daa62eff51a6926d97bb9196a0be80790a",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_mx0zCtdjZl.jpg"
+    },
+    {
+      "folder": "Hof",
+      "file": "RDR2_VTgwyG4s9t.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "edbbd2ae44f4e6874dd2aa7f0fba94b113a910d3c873ad6f9a4c9798c4f99a32",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_VTgwyG4s9t.jpg"
+    }
+  ],
+  "status": "reviewed-unbound-reference",
+  "runtimeBuildingId": null
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "gunsmith",
+  "observations": [
+    "Lange dunkle Verkaufstheke und vertikale Gewehrständer an der Wand.",
+    "Werkbank, Stühle, Ofen und Läufer; kein Schankraum."
+  ],
+  "images": [
+    {
+      "folder": "Gun Smith",
+      "file": "RDR2_bWMr5UcPyX.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "e0af575e41c08f0d89a6b3c6670fa3680ae0990e757de8357e60481e3e8b2224",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Gun Smith/RDR2_bWMr5UcPyX.jpg"
+    },
+    {
+      "folder": "Gun Smith",
+      "file": "RDR2_NzE9LfYktw.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "8baf875cb0d6d91d2f7480666f8a229ad9518882fe96b33ed1826cacffb7c6f7",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Gun Smith/RDR2_NzE9LfYktw.jpg"
+    },
+    {
+      "folder": "Gun Smith",
+      "file": "RDR2_RA56OSSFmg.png",
+      "width": 216,
+      "height": 176,
+      "sha256": "72f29183ba39276e7ad39b2385fb51d1507b95b17287205dcce57eb4e1dff78d",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Gun Smith/RDR2_RA56OSSFmg.png"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "placement": {
+    "id": "source:val_01_emrfencegate02x_open:2026-10-24",
+    "asset": "models/valentine/val_01_emrfencegate02x_open.glb",
+    "position": {
+      "x": -246.7488,
+      "y": 113.3187,
+      "z": -659.7882
+    },
+    "rotation": {
+      "x": 0.0,
+      "y": -0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "layer": "buildings",
+    "chunkId": "-1:-3",
+    "lod": 0,
+    "tags": [
+      "exterior",
+      "source-verified",
+      "source:root-ymap",
+      "state-selection:authored-gameplay-open",
+      "collision:none"
+    ]
+  },
+  "sourceMap": {
+    "file": "D:\\Projects\\RDO-RPG\\data\\raw\\placement-recovery\\levels_1\\0x2B2E065D_ymap.xml",
+    "entityIndex": 1,
+    "position": {
+      "x": "-246.74880000",
+      "y": "659.78820000",
+      "z": "113.31870000"
+    },
+    "rotation": {
+      "x": "0.00000000",
+      "y": "0.00000000",
+      "z": "0.00000000",
+      "w": "1.00000000"
+    },
+    "lod": "LODTYPES_DEPTH_ORPHANHD",
+    "flags": {
+      "value": "1572864"
+    }
+  },
+  "rawResource": {
+    "path": "D:\\Projects\\RDO-RPG\\data\\raw\\models\\val_01_emrfencegate02x_open_ydr\\val_01_emrfencegate02x_open.ydr.full",
+    "sha256": "1de4a1e685e4f6eea08eab042db75a42028fe5531ce8635052c0b743de3d1353"
+  },
+  "runtimeSha256": "e3d788408e70af7d9a5ca3c654c3969e1e1addc57552849d900d3ac8fedb9cd9",
+  "stateNote": "Original model/source transform retained. Open state selected for authored gameplay, not verified original world-state activation; no new original fence coordinates invented."
+}

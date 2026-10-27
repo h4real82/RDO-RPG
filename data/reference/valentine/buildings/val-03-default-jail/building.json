@@ -8,7 +8,7 @@
   "sourceAssets": [
     "models/valentine/val_03_default_jail.glb"
   ],
-  "classification": "classification-required",
+  "classification": "supporting-detail",
   "originalAccess": {
     "status": "unknown",
     "edition": "unspecified",
@@ -20,8 +20,9 @@
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "review",
-    "floorDefinitions": []
+    "coverage": "not-a-separate-interior",
+    "floorDefinitions": [],
+    "notes": "Measured3.573x1x1m helper, not a separate human building; main jail has its own room."
   },
   "actions": []
 }

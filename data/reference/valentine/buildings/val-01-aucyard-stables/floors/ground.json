@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Pferdestallungen & Sattelkammer",
+  "status": "built-pilot",
+  "layout": {
+    "x": -243.6202625638693,
+    "z": -690.0969328144988,
+    "width": 18.6,
+    "depth": 7.6,
+    "floorY": 112.4,
+    "front": -686.2969328144989,
+    "doorX": -236.02026256386927,
+    "doorWidth": 2.4,
+    "rampStart": -680.7969328144989,
+    "rampLow": 112.40656755308781,
+    "frontDirection": 1,
+    "yaw": 2.5307274153917776,
+    "porch": {
+      "x": -236.02026256386927,
+      "z": -685.1969328144988,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -236.02026256386927,
+            "y": 112.40656755308781,
+            "z": -680.7969328144989
+          },
+          "to": {
+            "x": -236.02026256386927,
+            "y": 112.4,
+            "z": -684.0969328144988
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "horse-stall-1",
+        "kind": "bar",
+        "position": {
+          "x": -249.13653734647798,
+          "y": 112.4,
+          "z": -690.6164181478322
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.4,
+          "z": 4.5
+        },
+        "color": "#422e1c",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "horse-stall-2",
+        "kind": "bar",
+        "position": {
+          "x": -237.81479821604322,
+          "y": 112.4,
+          "z": -690.6164181478322
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.4,
+          "z": 4.5
+        },
+        "color": "#422e1c",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "oat-barrel",
+        "kind": "table",
+        "position": {
+          "x": -243.6202625638693,
+          "y": 112.4,
+          "z": -692.6430848144988
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.9,
+          "z": 1.2
+        },
+        "color": "#5e432b",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 145,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -244.51155724240093,
+      "z": -702.0742277426543,
+      "y": 112.40656755308781
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored auction stables with horse stalls, feeding buckets and tack equipment."
+}

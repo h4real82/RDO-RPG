@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "second-saloon",
+  "observations": [
+    "Einfacher rustikaler Schankraum mit gerader Theke und Flaschenregalen.",
+    "Schlichte Holztische und Stühle; die Bilder belegen kein Klavier und keinen Pokertisch."
+  ],
+  "images": [
+    {
+      "folder": "Keanes Saloon",
+      "file": "RDR2_4HX4vWwCeh.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "c0a3d66fd8eaec6e3fb5578d178cf73f10c8badb5d5c77bde01115a7b6880151",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Keanes Saloon/RDR2_4HX4vWwCeh.jpg"
+    },
+    {
+      "folder": "Keanes Saloon",
+      "file": "RDR2_Mlkm8d5f29.png",
+      "width": 261,
+      "height": 241,
+      "sha256": "90a29e26b47da36bdbff8bc12b44868e7d791956cb3cfec475e85335954dc3ed",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Keanes Saloon/RDR2_Mlkm8d5f29.png"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

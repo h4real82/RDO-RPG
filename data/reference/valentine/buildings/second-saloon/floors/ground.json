@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Schankraum & Spieltische",
+  "status": "built-pilot",
+  "layout": {
+    "x": -242.47217879140047,
+    "z": -769.4985184427528,
+    "width": 10.8,
+    "depth": 8.8,
+    "floorY": 117,
+    "front": -765.0985184427528,
+    "doorX": -244.57217879140046,
+    "doorWidth": 2,
+    "rampStart": -761.8985184427528,
+    "rampLow": 116.29977108764649,
+    "frontDirection": 1,
+    "yaw": 0.3490658503988659,
+    "porch": {
+      "x": -244.57217879140046,
+      "z": -763.9985184427528,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -244.57217879140046,
+            "y": 116.29977108764649,
+            "z": -761.8985184427528
+          },
+          "to": {
+            "x": -244.57217879140046,
+            "y": 117,
+            "z": -762.8985184427528
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "saloon-bar",
+        "kind": "bar",
+        "position": {
+          "x": -245.47217879140047,
+          "y": 117,
+          "z": -770.5985184427528
+        },
+        "size": {
+          "x": 1.4,
+          "y": 1.15,
+          "z": 5.4
+        },
+        "color": "#52351e",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "bottle-shelf",
+        "kind": "backbar",
+        "position": {
+          "x": -246.77217879140048,
+          "y": 117,
+          "z": -770.5985184427528
+        },
+        "size": {
+          "x": 0.6,
+          "y": 2.4,
+          "z": 5.6
+        },
+        "color": "#3b2413",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "bartender-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -246.27217879140048,
+          "y": 117,
+          "z": -770.5985184427528
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ecd9c1",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "poker-table-1",
+        "kind": "table",
+        "position": {
+          "x": -239.77217879140048,
+          "y": 117,
+          "z": -770.3985184427528
+        },
+        "size": {
+          "x": 1.5,
+          "y": 0.85,
+          "z": 1.1
+        },
+        "color": "#2d4a2d",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "poker-table-2",
+        "kind": "table",
+        "position": {
+          "x": -239.77217879140048,
+          "y": 117,
+          "z": -767.1985184427529
+        },
+        "size": {
+          "x": 1.5,
+          "y": 0.85,
+          "z": 1.1
+        },
+        "color": "#2d4a2d",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "piano",
+        "kind": "crate-stack",
+        "position": {
+          "x": -238.57217879140046,
+          "y": 117,
+          "z": -772.4985184427528
+        },
+        "size": {
+          "x": 1,
+          "y": 0.8,
+          "z": 0.75
+        },
+        "color": "#1a1410",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 20,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -241.84618020577577,
+      "z": -761.638612223796,
+      "y": 116.29977108764649
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored second saloon interior with whiskey bar, bottle backbar, two poker tables, piano and saloon tender.",
+  "furnitureEvidence": "data/reference/valentine/buildings/second-saloon/interior-photo-evidence-2026-10-24.json"
+}

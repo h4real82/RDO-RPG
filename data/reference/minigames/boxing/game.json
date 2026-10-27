@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "boxing",
+  "name": "Saloon-Faustkampf",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-boxing-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
+  "plannedModes": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "saloon-brawl",
+      "file": "variants/saloon-brawl.json"
+    }
+  ],
+  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "lifecycleContract": [
+    "available",
+    "joining",
+    "active",
+    "leaving",
+    "closed",
+    "error"
+  ],
+  "notes": "Arcade brawl against saloon champion with jabs, hooks, and guarding.",
+  "runtimeModule": "apps/client/src/game/minigames/boxing/definition.ts"
+}

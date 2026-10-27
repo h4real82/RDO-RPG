@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "smithfields-saloon",
+  "observations": [
+    "Gerundete Bar, grüner Spieltisch, einfache weitere Tische und Stühle, Klavier mit Bank/Teppich.",
+    "Obere Zimmer mit Bett, Waschtisch und Stuhl sowie Frisierplatz an der Treppe.",
+    "Zusätzliche obere Raumdarstellung im Bestand noch nicht angeschlossen."
+  ],
+  "images": [
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_2Oj6R0WZSc.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "ca2e009196af978a359c204b9de4a71d35b08de6c09c573c573d3d9ddd8f2e1f",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_2Oj6R0WZSc.jpg"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_6iMdSO3LaP.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "b78593ee6c243875b408c6f2c67420e7459b10a81f08ac304298716c11a7d2c1",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_6iMdSO3LaP.jpg"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_arPkUBobTg.png",
+      "width": 311,
+      "height": 411,
+      "sha256": "314a6ab16afa6ad03750d2458429645e45294a11475fef41e651934834b870d8",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_arPkUBobTg.png"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_KZVl9Ad8ev.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "b49fd7e8a79f26adc1ea6388ef3868c39740b049244a793ddcd157dcb2b6b3a7",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_KZVl9Ad8ev.jpg"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_m1pVlnCooB.png",
+      "width": 342,
+      "height": 421,
+      "sha256": "40676f5cce799f13d781737d75fe0af3e026731832924492719c7b6e9ccdc40d",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_m1pVlnCooB.png"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_PHFltvoLgY.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "d23b7b8002f92974183c91f4d828fb9f8b6a9448f189578835a76faae0904681",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_PHFltvoLgY.jpg"
+    },
+    {
+      "folder": "Smithfields Saloon",
+      "file": "RDR2_ZbEoJ45Fja.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "a4242e6357cb58d5d976fee402b61a07c4bdf1eae8daeb81a9cbeb3d9133a900",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Smithfields Saloon/RDR2_ZbEoJ45Fja.jpg"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

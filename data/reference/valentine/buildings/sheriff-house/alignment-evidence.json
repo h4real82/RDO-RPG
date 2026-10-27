@@ -1,0 +1,47 @@
+{
+  "name": "val_shrffhs",
+  "yaw": 20,
+  "originY": 120.1503,
+  "floorY": 117.1,
+  "candidates": [
+    {
+      "min": [
+        2.695454281828556,
+        117.1278390625,
+        0.5494986956475203
+      ],
+      "max": [
+        2.715479358663581,
+        119.3251046875,
+        1.6498135605791897
+      ],
+      "normal": [
+        0.9998667573730579,
+        -0.009090061387442191,
+        0.013558697734633158
+      ],
+      "area": 1.2090022206966369
+    },
+    {
+      "min": [
+        2.669663069024723,
+        117.12832734375,
+        0.5494986956475203
+      ],
+      "max": [
+        2.715479358663581,
+        119.3251046875,
+        1.6461901133737311
+      ],
+      "normal": [
+        0.9989506601207665,
+        0.01857935261650647,
+        -0.041861513358172286
+      ],
+      "area": 1.2021565750881007
+    }
+  ],
+  "runtimeSource": "models/valentine/val_shrffhs.glb",
+  "runtimeSourceSha256": "408f04e9211a1d65928530fc73cfd841e69b5954e6643978577de6faa6e787ee",
+  "interpretation": "Door-sized vertical source planes near measured floor level. Candidate alignment evidence only; not original accessibility, door portal or MLO proof. Gameplay width, room outline and ramp are authored."
+}

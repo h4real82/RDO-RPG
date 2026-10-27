@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Sortierhalle & Auktionsfläche",
+  "status": "built-pilot",
+  "layout": {
+    "x": -276.82549899224784,
+    "z": -685.1972607754743,
+    "width": 22,
+    "depth": 13,
+    "floorY": 112.4,
+    "front": -678.6972607754743,
+    "doorX": -275.45549899224784,
+    "doorWidth": 2.4,
+    "rampStart": -673.1972607754743,
+    "rampLow": 112.2554260647126,
+    "frontDirection": 1,
+    "yaw": 0.8726646259971648,
+    "openPerimeter": true,
+    "porch": {
+      "x": -275.45549899224784,
+      "z": -677.5972607754743,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -275.45549899224784,
+            "y": 112.2554260647126,
+            "z": -673.1972607754743
+          },
+          "to": {
+            "x": -275.45549899224784,
+            "y": 112.4,
+            "z": -676.4972607754743
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "auction-gate",
+        "kind": "bar",
+        "position": {
+          "x": -282.869745146094,
+          "y": 112.4,
+          "z": -685.9086207754743
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.4,
+          "z": 5
+        },
+        "color": "#4a321d",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "weigh-scale",
+        "position": {
+          "x": -270.1774374537863,
+          "y": 112.45000000000002,
+          "z": -685.9086207754743
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.15,
+          "z": 2.4
+        },
+        "color": "#2c2621",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 50,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -266.75234664954957,
+      "z": -678.533290346309,
+      "y": 112.2554260647126
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored auction yard barn with cattle sorting pen and heavy iron weighing platform."
+}

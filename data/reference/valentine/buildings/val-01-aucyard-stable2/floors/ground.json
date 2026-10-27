@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Stallgang & Futterlager",
+  "status": "built-authored",
+  "layout": {
+    "x": -276.1919,
+    "z": -656.0513000000001,
+    "width": 7.2,
+    "depth": 15,
+    "floorY": 112.55,
+    "front": -648.5513000000001,
+    "doorX": -276.1919,
+    "doorWidth": 3.4,
+    "rampStart": -644.5513000000001,
+    "rampLow": 112.42849595335399,
+    "frontDirection": 1,
+    "yaw": 0.6108652381980153,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "feed-trough",
+        "kind": "trough",
+        "position": {
+          "x": -278.7919,
+          "y": 112.55,
+          "z": -658.0513000000001
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.8,
+          "z": 2
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "feed-store",
+        "kind": "crate-stack",
+        "position": {
+          "x": -278.7919,
+          "y": 112.55,
+          "z": -654.0513000000001
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.95,
+          "z": 1
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "stall-division",
+        "kind": "stall-divider",
+        "position": {
+          "x": -278.2919,
+          "y": 112.55,
+          "z": -656.0513000000001
+        },
+        "size": {
+          "x": 2,
+          "y": 1.4,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    },
+    "stairs": [
+      {
+        "id": "authored-loft-stair",
+        "from": {
+          "x": -273.79189999999994,
+          "y": 112.55,
+          "z": -653.2513000000001
+        },
+        "to": {
+          "x": -273.79189999999994,
+          "y": 115.75,
+          "z": -659.2513000000001
+        },
+        "width": 1.5,
+        "toFloorId": "upper"
+      }
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

@@ -17,9 +17,10 @@ export class WorldChunkManager {
 
   constructor(private readonly manifest: WorldManifest, private readonly instantiate: PlacementFactory) {
     for (const placement of manifest.placements) {
-      const placements = this.placementsByChunk.get(placement.chunkId) ?? [];
+      const key = (placement.chunkId === 'global' || placement.tags?.includes('persistent')) ? 'global' : placement.chunkId;
+      const placements = this.placementsByChunk.get(key) ?? [];
       placements.push(placement);
-      this.placementsByChunk.set(placement.chunkId, placements);
+      this.placementsByChunk.set(key, placements);
     }
   }
 
@@ -94,6 +95,7 @@ export class WorldChunkManager {
 
   private getNeighbourhood(playerX: number, playerZ: number): Set<string> {
     const chunks = new Set<string>();
+    if (this.placementsByChunk.has('global')) chunks.add('global');
     for (let x = -1; x <= 1; x += 1) {
       for (let z = -1; z <= 1; z += 1) {
         chunks.add(getChunkId(playerX + x * CHUNK_SIZE, playerZ + z * CHUNK_SIZE));

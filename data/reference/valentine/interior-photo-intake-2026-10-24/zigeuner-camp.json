@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "observations": [
+    "Offenes Wagen-/Zeltlager mit Kisten, Fässern, Tischen und Feuerstelle; kein geschlossener Innenraum. Exakte Runtime-Zuordnung offen."
+  ],
+  "images": [
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_5XuLVSAfaM.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "7ab0079779471380407b2442ba0826e111a34610b93f2aaff7655a5bb7f27ebd",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_5XuLVSAfaM.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_8CuVBxnwAN.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "8bb7a674249d4233776cff5f2d59f0fc470d9a409999b55d78031c7e3eb51b65",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_8CuVBxnwAN.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_lb7gh6RhrK.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "91d807dffaa003622e2024a3f048324e81361727fded6742b3d7244fa3528f81",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_lb7gh6RhrK.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_nRzHJZx5wj.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "7c69a45b16e4c852bf9604b4a4dd9a45728328e29058d55077a2dbd37cb947aa",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_nRzHJZx5wj.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_obGVELIjlJ.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "b17c357e634d7aa93eaf1879e4e9c0c1f922da0729eab58d2c2b226abe2ecb1d",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_obGVELIjlJ.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_U3cGRYY1Ld.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "48c429cf494c0a618e092a244c638ca8eca7369093b27cce32acb9d2ce25ba64",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_U3cGRYY1Ld.jpg"
+    },
+    {
+      "folder": "Zigeuner Camp",
+      "file": "RDR2_wBwEPo6UQe.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "df83627d54f2c2d44c92951b7c3e1e9547e111877742bb3269a7521fe0cd5794",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Zigeuner Camp/RDR2_wBwEPo6UQe.jpg"
+    }
+  ],
+  "status": "reviewed-unbound-reference",
+  "runtimeBuildingId": null
+}

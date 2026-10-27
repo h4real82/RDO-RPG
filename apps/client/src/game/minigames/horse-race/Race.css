@@ -1,0 +1,13 @@
+.rdo-race .rdo-venue__paper{width:min(1280px,100%);padding:16px;background:#1d211c}
+.rdo-race h2{font-size:24px;margin:3px 0 8px}.rdo-race small{font-size:11px}.rdo-race .rdo-venue__paper>p[role=status]:empty{display:none}
+.rdo-race__stage{position:relative;height:min(60vh,620px);min-height:260px;overflow:hidden;background:#9caeae;border:1px solid #796743}
+.rdo-race__viewport{position:absolute;inset:0}.rdo-race__viewport canvas{display:block;width:100%;height:100%}
+.rdo-race__hud,.rdo-race__notice{position:absolute;top:12px;left:12px;padding:7px 12px;background:#181b16df;border:1px solid #92764c;color:#f2e3bf;font-size:15px;pointer-events:none}.rdo-race__notice{top:54px;font-size:13px;border:0}
+.rdo-race__count{position:absolute;inset:25% 15%;display:grid;place-items:center;color:#fff0c2;font-size:clamp(52px,10vw,120px);text-shadow:0 4px 16px #000;pointer-events:none}
+.rdo-race__result{position:absolute;inset:25% 15%;padding:24px;align-content:center;background:#171b17ed;border:1px solid #b69b62;text-align:center;font-size:clamp(20px,3vw,36px);color:#f8e4af}.rdo-race__result[hidden]{display:none}
+.rdo-race__map{position:absolute;top:12px;right:12px;background:#171b17bb;border:1px solid #756542;width:120px;height:128px;pointer-events:none}
+.rdo-race details{font-size:13px;color:#c8bfa9;margin:8px 0}.rdo-race details p{max-width:100ch}.rdo-race button{padding:6px 12px;font-size:14px}
+.rdo-race__choice{border-top:1px solid #6d5a39;padding:12px 0}.rdo-race__choice h3{color:#dcc393;margin:4px 0}.rdo-race__choice p{margin:6px 0;color:#d0c6ad}
+.rdo-race__touch{display:none;position:absolute;bottom:8px;left:8px;right:8px;gap:4px;flex-wrap:wrap}.rdo-race__touch button{touch-action:none;background:#26271bdd;margin:0;user-select:none}
+@media(pointer:coarse){.rdo-race__touch{display:flex}.rdo-race__notice{max-width:55%}}
+@media(max-width:600px){.rdo-race[role=dialog]{padding:6px}.rdo-race .rdo-venue__paper{padding:8px}.rdo-race__stage{height:52vh}.rdo-race__map{width:75px;height:80px}.rdo-race__hud{font-size:11px;max-width:65%}.rdo-race__notice{font-size:11px;max-width:60%}.rdo-race h2{font-size:19px}}

@@ -18,10 +18,41 @@
   "interior": {
     "policy": "provisional-wood",
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
-    "recognitionFeatures": [],
+    "recognitionFeatures": [
+      "wide barn aisle",
+      "wooden horse stalls",
+      "tack and feed",
+      "horse dealer"
+    ],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "ground-floor-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "horse-dealer",
+      "kind": "game",
+      "label": "Pferdehändler ansprechen",
+      "gameId": "horse-race",
+      "variantId": "stable-menu",
+      "floorId": "ground",
+      "position": {
+        "x": -374.1,
+        "z": -784,
+        "y": 116.6
+      },
+      "interactionPosition": {
+        "x": -374.1,
+        "z": -784,
+        "y": 115.6
+      },
+      "radius": 2.3,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

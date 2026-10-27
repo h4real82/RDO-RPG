@@ -1,0 +1,7 @@
+{
+  "id": "stable-menu",
+  "gameId": "horse-race",
+  "kind": "stable-menu",
+  "status": "runtime-loaded",
+  "rulesVersion": "valentine-horse-race-v2"
+}

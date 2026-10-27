@@ -3,6 +3,13 @@ import { describe, expect, it } from 'vitest';
 import { PlayerController } from './PlayerController';
 
 describe('PlayerController', () => {
+  it('follows a collision-cleared diagonal corridor rather than hitting its axis-split corners',()=>{
+    const player=new PlayerController({x:0,y:0,z:0},6,p=>Math.abs(p.x-p.z)<.15);
+    player.setMovement({forward:-1,right:1});player.update(.5);
+    expect(player.position.x).toBeCloseTo(3*Math.SQRT1_2);
+    expect(player.position.z).toBeCloseTo(player.position.x);
+    expect(player.blocked).toBe(false);
+  });
   it('preserves a fractional final click step at low frame rates without overshooting',()=>{
     const player=new PlayerController({x:0,y:0,z:0});
     player.setMovement({forward:0,right:0.15/(6*0.05)});player.update(0.05);

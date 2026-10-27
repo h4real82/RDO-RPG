@@ -43,13 +43,25 @@ export class PlayerController {
     const steps = Math.ceil(deltaSeconds / 0.1);
     const stepSeconds = deltaSeconds / steps;
     for (let step = 0; step < steps; step += 1) {
-      const nextX = this.position.x + right * this.speedPerSecond * stepSeconds;
+      const distance=this.speedPerSecond*stepSeconds;
+      const nextX = this.position.x + right * distance;
+      const nextZ = this.position.z - forward * distance;
+      // The traversal probe validates a segment. Follow that same diagonal
+      // before attempting wall sliding; an X/Z staircase can hit a narrow
+      // trunk or doorway corner even when the intended segment is clear.
+      if(right!==0&&forward!==0){
+        const candidate={x:nextX,y:this.position.y,z:nextZ};
+        if(this.canOccupy(candidate)){
+          this.position.x=nextX;this.position.y=candidate.y;this.position.z=nextZ;
+          continue;
+        }
+        this.blocked=true;
+      }
       if (right !== 0) {
         const candidate = { x: nextX, y: this.position.y, z: this.position.z };
         if (this.canOccupy(candidate)) { this.position.x = nextX; this.position.y = candidate.y; }
         else this.blocked = true;
       }
-      const nextZ = this.position.z - forward * this.speedPerSecond * stepSeconds;
       if (forward !== 0) {
         const candidate = { x: this.position.x, y: this.position.y, z: nextZ };
         if (this.canOccupy(candidate)) { this.position.z = nextZ; this.position.y = candidate.y; }

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "sourceReferences": [
+    {
+      "project": "Sollumz_RDR",
+      "commit": "3e4ddd0cc4e809843e09538baf32f1014fb301aa",
+      "file": "ymap/ymapimport.py",
+      "rule": "CEntityDef rotation inverted, MLO instance special handling"
+    },
+    {
+      "project": "CodeWalker",
+      "commit": "485d56bec00262ed7fa472261cce7bbc6202b96e",
+      "file": "CodeWalker.Core/GameFiles/FileTypes/YmapFile.cs",
+      "rule": "YmapEntityDef orientation inverts CEntityDef quaternion"
+    }
+  ],
+  "coordinateBasis": "Three X=gameX, Y=gameZ elevation, Z=-gameY",
+  "corrections": [
+    {
+      "id": "valentine:d39386b4eb21ae1a",
+      "action": "remove obsolete duplicate at [-258.5855,116.487,-739.0651]; retain source instance [-259.0177,120.1503,-741.3681]",
+      "source": "ymap/val_04__strm_0_ymap.xml entity23"
+    },
+    {
+      "id": "valentine:bf867eeb3ba101d0",
+      "action": "correct Y from121.7221 to114.9548; preserve X/Z/model/ID",
+      "source": "ymap/val_03_default_jail_ymap.xml entity0"
+    }
+  ],
+  "nativeTerrainFilesChecked": 25,
+  "nativeTerrainFilesChanged": [],
+  "terrainOverlapAtTestedTriangleCentres": {
+    "beforeMaxPositive": 2.328671535552175,
+    "afterMaxPositive": 0,
+    "scope": "native walkable surfaces only; not an exhaustive pointwise error bound"
+  },
+  "gateAddition": "data/reference/valentine/source-gate-addition-2026-10-24.json",
+  "treeAddition": "8 authored shade trees on exact native terrain; original tree identities/placements not asserted",
+  "limitations": [
+    "Native YDR-derived render meshes and XML world transforms compared; sixteen binary terrain YBN resources were not independently decoded. Current RedDeadBlend2 importer does not import YBN; Sollumz_RDR requires compatible XML.",
+    "Interpolation and boundary tessellation remain authored-gameplay; no original terrain recovery claim."
+  ]
+}

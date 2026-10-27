@@ -2,6 +2,19 @@ import { DoubleSide, Group, Mesh, MeshBasicMaterial, PlaneGeometry, Raycaster, V
 import { expect, it } from 'vitest';
 import { TerrainGround } from './TerrainGround';
 
+it('gives an actual authored room floor priority over legacy interior bumps and native ground only in its owned region',()=>{
+ const ground=new TerrainGround();for(const[kind,y,asset,own]of[['terrain',.2,'native',false],['structure',.4,'models/valentine/old_int.glb',false],['structure',0,'authored-gameplay/room',true]] as const){const group=new Group(),mesh=new Mesh(new PlaneGeometry(10,10),new MeshBasicMaterial({side:DoubleSide}));mesh.rotation.x=-Math.PI/2;mesh.position.y=y;group.add(mesh);group.userData.sourceAsset=asset;if(own)group.userData.provenance='authored-gameplay';ground.add(group,kind);}
+ expect(ground.heightAt(0,0,0)).toBeCloseTo(.4);ground.setAuthoredSourceMask(x=>x<1);expect(ground.heightAt(0,0,0)).toBeCloseTo(0);expect(ground.heightAt(3,0,0)).toBeCloseTo(.4);expect(ground.heightAt(0,0)).toBeCloseTo(.2);
+});
+
+it('supports a sub-centimetre terrain seam only with matching real faces on opposite sides',()=>{
+ const fixture=(gap:number,rightY=0,both=true)=>{const g=new TerrainGround(),tile=new Group();for(const side of both?[-1,1]:[-1]){const p=new Mesh(new PlaneGeometry(2,2),new MeshBasicMaterial({side:DoubleSide}));p.rotation.x=-Math.PI/2;p.position.set(0,side===1?rightY:0,side*(1+gap/2));tile.add(p);}g.add(tile);return g;};
+ expect(fixture(.001).heightAt(0,0,0)).toBeCloseTo(0);
+ expect(fixture(.03).heightAt(0,0,0)).toBeUndefined();
+ expect(fixture(.001,1).heightAt(0,0,1)).toBeUndefined();
+ expect(fixture(.001,0,false).heightAt(0,0,0)).toBeUndefined();
+});
+
 it('picks actual floor triangles below a roof and rejects empty screen rays', () => {
   const ground=new TerrainGround(),group=new Group();
   for(const y of [0,5]){const mesh=new Mesh(new PlaneGeometry(4,4),new MeshBasicMaterial({side:DoubleSide}));
@@ -90,4 +103,15 @@ it('rejects a ramp hidden after registration as a click target but preserves phy
   expect(ground.pick(ray,0)?.y).toBeCloseTo(0);ramp.visible=false;
   expect(ground.pick(ray,0)).toBeUndefined();expect(ground.heightAt(0,0,0)).toBeCloseTo(0);
   ramp.visible=true;support.visible=false;expect(ground.pick(ray,0)).toBeUndefined();expect(ground.heightAt(0,0,0)).toBeCloseTo(0);
+});
+
+it('allows explicitly authored exterior access support to receive clicks without exposing hidden rooms',()=>{
+ const ground=new TerrainGround(),support=new Group();support.userData.provenance='authored-gameplay';
+ const mesh=new Mesh(new PlaneGeometry(3,5),new MeshBasicMaterial({side:DoubleSide}));mesh.rotation.x=-Math.PI/2;mesh.visible=false;
+ mesh.userData.physicsOnly=true;mesh.userData.exteriorAccess=true;support.add(mesh);ground.add(support,'structure');
+ const ray=new Raycaster(new Vector3(0,10,0),new Vector3(0,-1,0));
+ expect(ground.pick(ray,0,()=>true)?.y).toBeCloseTo(0);
+ mesh.userData.exteriorAccess=false;expect(ground.pick(ray,0,()=>true)).toBeUndefined();
+ mesh.userData.exteriorAccess=true;support.visible=false;expect(ground.pick(ray,0,()=>true)).toBeUndefined();
+ mesh.geometry.dispose();mesh.material.dispose();
 });

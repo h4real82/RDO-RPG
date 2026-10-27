@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "id": "upper",
+  "label": "Heuboden & Ballenlager",
+  "status": "built-pilot",
+  "layout": {
+    "x": -257.156218141453,
+    "z": -634.6964933335322,
+    "width": 24,
+    "depth": 11.8,
+    "floorY": 115.75,
+    "front": -640.5964933335322,
+    "doorX": -263.316218141453,
+    "doorWidth": 2,
+    "rampStart": -646.0964933335322,
+    "rampLow": 115.75,
+    "frontDirection": -1,
+    "yaw": 2.443460952792061,
+    "fixtures": [
+      {
+        "id": "hay-bales-row-1",
+        "kind": "table",
+        "position": {
+          "x": -262.3832403636752,
+          "y": 115.75,
+          "z": -635.6983133335322
+        },
+        "size": {
+          "x": 2.2,
+          "y": 1.2,
+          "z": 4.5
+        },
+        "color": "#9e8341",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "hay-bales-row-2",
+        "kind": "table",
+        "position": {
+          "x": -251.71657369700856,
+          "y": 115.75,
+          "z": -635.6983133335322
+        },
+        "size": {
+          "x": 2.2,
+          "y": 1.2,
+          "z": 4.5
+        },
+        "color": "#9e8341",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "loft-hatch",
+        "kind": "table",
+        "position": {
+          "x": -253.60066258589745,
+          "y": 115.75,
+          "z": -632.3268847621036
+        },
+        "size": {
+          "x": 1.6,
+          "y": 0.2,
+          "z": 1.6
+        },
+        "color": "#3d2716",
+        "collision": false,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    },
+    "exteriorEntrance": false,
+    "floorHoles": [
+      [
+        {
+          "x": -258.84510703034186,
+          "z": -637.435779047818
+        },
+        {
+          "x": -255.46732925256413,
+          "z": -637.435779047818
+        },
+        {
+          "x": -255.46732925256413,
+          "z": -631.6622076192465
+        },
+        {
+          "x": -258.84510703034186,
+          "z": -631.6622076192465
+        }
+      ]
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay loft",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "note": "Simplified connected loft, not a verified original floor."
+  },
+  "designStatus": "Authored hay loft with stacked dried straw bales, feeding hatch opening and timber floorboards.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim"
+}

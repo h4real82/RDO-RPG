@@ -1,4 +1,4 @@
-import { WebGLRenderer } from 'three';
+import { ACESFilmicToneMapping, WebGLRenderer } from 'three';
 import { startValentineRuntime } from './ValentineRuntime';
 import type { ValentineRuntimeOptions } from './ValentineRuntime';
 import type { RoadRecoveryActions, RoadRecoveryResult } from './player/RoadRecovery';
@@ -25,8 +25,10 @@ export interface GameSession {
 }
 
 function createDefaultRenderer(): GameRenderer {
-  const renderer = new WebGLRenderer({ antialias: true });
+  const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.toneMapping = ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
   return { element: renderer.domElement, nativeRenderer: renderer, dispose: () => renderer.dispose() };
 }
 

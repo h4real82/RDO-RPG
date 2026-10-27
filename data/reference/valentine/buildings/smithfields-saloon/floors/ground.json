@@ -168,6 +168,23 @@
         "color": "#ead8ba",
         "collision": false,
         "yaw": 1.5707963267948966
+      },
+      {
+        "id": "saloon-side-chair",
+        "kind": "chair",
+        "size": {
+          "x": 0.65,
+          "y": 1.2,
+          "z": 0.65
+        },
+        "position": {
+          "x": -306.3968838354087,
+          "y": 117.99,
+          "z": -804.0920702727412
+        },
+        "yaw": 1.57,
+        "color": "#826d51",
+        "collision": true
       }
     ],
     "wallTargets": [
@@ -262,6 +279,9 @@
             0.5,
             0
           ]
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
         }
       },
       "models": [
@@ -291,5 +311,6 @@
     "source": "tools/measure_pilot_geometry.py",
     "yawDegrees": 10,
     "note": "Local coordinate frame rotated around layout centre; no changes to imported transforms. Access supports remain independent from source rendering."
-  }
+  },
+  "furnitureEvidence": "data/reference/valentine/buildings/smithfields-saloon/interior-photo-evidence-2026-10-24.json"
 }

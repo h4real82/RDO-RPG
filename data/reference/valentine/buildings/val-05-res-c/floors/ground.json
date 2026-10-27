@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Stube & Schlafbereich",
+  "status": "built-pilot",
+  "layout": {
+    "x": -259.4774567607472,
+    "z": -845.9829258800929,
+    "width": 10.8,
+    "depth": 9.2,
+    "floorY": 122.45,
+    "front": -850.582925880093,
+    "doorX": -259.4574567607472,
+    "doorWidth": 1.8,
+    "rampStart": -856.082925880093,
+    "rampLow": 121.3985157132388,
+    "frontDirection": -1,
+    "yaw": 0.2617993877991494,
+    "porch": {
+      "x": -259.4574567607472,
+      "z": -851.682925880093,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -259.4574567607472,
+            "y": 121.3985157132388,
+            "z": -856.082925880093
+          },
+          "to": {
+            "x": -259.4574567607472,
+            "y": 122.45,
+            "z": -852.782925880093
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "cast-iron-stove",
+        "kind": "bar",
+        "position": {
+          "x": -262.5124865479812,
+          "y": 122.45000000000003,
+          "z": -844.2135749366968
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.2,
+          "z": 1.2
+        },
+        "color": "#212121",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "dining-table",
+        "kind": "table",
+        "position": {
+          "x": -257.34227378202377,
+          "y": 122.45000000000003,
+          "z": -847.2513107857533
+        },
+        "size": {
+          "x": 1.6,
+          "y": 0.85,
+          "z": 1.2
+        },
+        "color": "#4d3623",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "cot-bed",
+        "kind": "table",
+        "position": {
+          "x": -256.7678056969174,
+          "y": 122.45000000000003,
+          "z": -843.3456504083948
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.7,
+          "z": 2
+        },
+        "color": "#634731",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 15,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -262.07221059975694,
+      "z": -855.7439531065146,
+      "y": 121.3985157132388
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored residence cottage with iron stove, dining table and sleeping cot."
+}

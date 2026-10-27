@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "classification": "authored-gameplay",
+  "purpose": "Complete active Valentine streets, yards, church grounds, market and station using own geometry; no surveyed original prop claim.",
+  "yardBuildings": [
+    "church",
+    "val-05-res-a",
+    "val-05-res-c",
+    "val-05-res-d",
+    "val-05-res-e",
+    "val-07-resf-ext",
+    "sheriff-house",
+    "val-01-aucyard-barn",
+    "val-01-aucbarns-barn2",
+    "val-01-aucbarns-barn3",
+    "val-01-aucyard-stables",
+    "val-06-auchouseb-ext",
+    "val-05-pigpen-a"
+  ],
+  "yard": {
+    "padding": 5,
+    "gateWidth": 4.5,
+    "panelLength": 2.3,
+    "height": 1.25
+  },
+  "frontages": {
+    "station": [
+      "bench",
+      "cargo",
+      "barrel",
+      "hitch"
+    ],
+    "smithfields-saloon": [
+      "hitch",
+      "trough",
+      "barrel"
+    ],
+    "second-saloon": [
+      "bench",
+      "hitch",
+      "barrel"
+    ],
+    "hotel": [
+      "bench",
+      "planter",
+      "hitch"
+    ],
+    "bank": [
+      "bench",
+      "planter"
+    ],
+    "general-store": [
+      "cargo",
+      "barrel",
+      "bench"
+    ],
+    "gunsmith": [
+      "cargo",
+      "hitch"
+    ],
+    "doctor": [
+      "bench",
+      "planter"
+    ],
+    "law-office": [
+      "bench",
+      "hitch"
+    ],
+    "sheriff-house": [
+      "bench",
+      "woodpile"
+    ],
+    "val-03-jail-ext": [
+      "woodpile",
+      "barrel"
+    ],
+    "val-03-stable-ext": [
+      "trough",
+      "hay",
+      "hitch"
+    ],
+    "smithy": [
+      "woodpile",
+      "cargo",
+      "barrel"
+    ],
+    "val-freightstn": [
+      "cargo",
+      "cargo",
+      "barrel"
+    ],
+    "val-auchouse-ext": [
+      "bench",
+      "barrel"
+    ],
+    "church": [
+      "bench",
+      "bench"
+    ],
+    "val-05-res-a": [
+      "woodpile",
+      "barrel",
+      "planter"
+    ],
+    "val-05-res-c": [
+      "woodpile",
+      "barrel",
+      "planter"
+    ],
+    "val-05-res-d": [
+      "woodpile",
+      "bench",
+      "planter"
+    ],
+    "val-05-res-e": [
+      "woodpile",
+      "barrel",
+      "planter"
+    ],
+    "val-07-resf-ext": [
+      "woodpile",
+      "bench",
+      "barrel"
+    ],
+    "val-01-aucyard-barn": [
+      "hay",
+      "trough",
+      "cargo"
+    ],
+    "val-01-aucbarns-barn2": [
+      "hay",
+      "hay",
+      "trough"
+    ],
+    "val-01-aucbarns-barn3": [
+      "hay",
+      "trough",
+      "barrel"
+    ],
+    "val-01-aucyard-stables": [
+      "hay",
+      "trough",
+      "hitch"
+    ],
+    "val-01-aucyard-stable2": [
+      "hay",
+      "trough"
+    ],
+    "val-01-aucyard-shed": [
+      "cargo"
+    ],
+    "val-01-aucyard-chkcoop": [
+      "barrel",
+      "hay"
+    ],
+    "val-07-magic-ticketbooth": [
+      "planter"
+    ],
+    "val-07-magiclantern-ext": [
+      "bench",
+      "bench",
+      "barrel"
+    ],
+    "val-06-auchouseb-ext": [
+      "woodpile",
+      "bench",
+      "planter"
+    ],
+    "shipping-stand": [
+      "cargo",
+      "barrel"
+    ],
+    "val-05-pigpen-a": [
+      "hay",
+      "trough"
+    ]
+  },
+  "textures": {
+    "wood": "textures/dressing/val_jail_woodbeam01_ab.png",
+    "barrel": "textures/dressing/p_barrela_1_ab.png",
+    "hay": "textures/terrain/hea_grass_val_01_abte.png",
+    "stone": "textures/terrain/hea_dirt_stones_je_02_abte.png"
+  },
+  "placementGuards": "Native-ground support, road centerline clearance and rotated building/entrance keepouts. Visual meshes never duplicate collider ownership."
+}

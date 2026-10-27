@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "hotel",
+  "observations": [
+    "Empfang mit Schlüssel-/Postfächern, Ofen und Treppe.",
+    "Mehrere unterschiedlich ausgestattete Zimmer: einfache Betten, Kommoden, Schränke, Waschtische, gepolsterte Sessel; teils Kamin und Tapeten.",
+    "Grundrissbilder zeigen Flur/Zimmeraufteilung und Außenbalkon; keine exakten Raummaße daraus ableiten."
+  ],
+  "images": [
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_1AcqAiMqnv.png",
+      "width": 274,
+      "height": 323,
+      "sha256": "0e6ba62b5ae2b14e4b0c374b34217cee02f9ee139acd38f664c9d169d9e4756b",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_1AcqAiMqnv.png"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_1JctHhoazl.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "45ce4764dad42cfb14fa110241391256085594536457030af881d716d9445226",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_1JctHhoazl.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_3ZzTV1VXUE.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "818f6b70d2a03629fc2ed2da939532433858d1220e31a8ae35a2055ebfe5bf50",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_3ZzTV1VXUE.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_4lcPPb0tJJ.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "a80e631336cf5e87927d6ca6b67b81a83cc5534a35d1fd845f10476fdd4bf409",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_4lcPPb0tJJ.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_9oBfGQsgGx.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "55b079d8009505bcb229ad269bf74874693b9f6202045a18a0368b644a24c8e6",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_9oBfGQsgGx.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_d1YKRskJZb.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "7540bc545fe0b6f53ae5d58b34e0b9ed63474c416c9c4e3a2013267d7d471563",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_d1YKRskJZb.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_GA7roNqw8t.png",
+      "width": 299,
+      "height": 333,
+      "sha256": "b7ff8cdaff53497bb211bdaa49ebf92abaf51b7fd7ea4ee30e7a94bb50696fc2",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_GA7roNqw8t.png"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_PekBopEK4L.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "c8e812c3adbc265780f5f57cebce266c61a86fc660476c0dfaf7f05a48cbb448",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_PekBopEK4L.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_teuxBn4eZL.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "29cf489f832c2763b57130fbe77cf916d7b0e5366b127e8763aa048ccc0ffb1b",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_teuxBn4eZL.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_Xp2X1K1SMg.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "01263ce042cf0661b15653311f5869e7f5732135b51ee2c7c0875a5cabab1915",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_Xp2X1K1SMg.jpg"
+    },
+    {
+      "folder": "Saints Hotel",
+      "file": "RDR2_yYQN0iuG2H.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "a737137ab92800f262c69108d99dc68a0b7fb4580951e4bdb9e47282d3582d61",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Saints Hotel/RDR2_yYQN0iuG2H.jpg"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

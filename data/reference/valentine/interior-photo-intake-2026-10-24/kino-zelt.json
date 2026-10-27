@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "observations": [
+    "Projektor auf erhöhtem Tisch, viele Klappstuhlreihen mit Mittelgang, Leinwand und dekorative Tuchbahnen. Runtime-Innenraum noch nicht angeschlossen."
+  ],
+  "images": [
+    {
+      "folder": "Kino Zelt",
+      "file": "RDR2_kdsYIzvI9v.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "2f55fd6bc3e425f21fc2ab514baa791bd1308efed1b38c1bd2a4f5f191ee0032",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Kino Zelt/RDR2_kdsYIzvI9v.jpg"
+    },
+    {
+      "folder": "Kino Zelt",
+      "file": "RDR2_MnZAhKfD03.png",
+      "width": 227,
+      "height": 327,
+      "sha256": "a2cbe6673df9b2ad7efb554ae00de18c228eebfa7f04754bd3c7d1785e81e451",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Kino Zelt/RDR2_MnZAhKfD03.png"
+    },
+    {
+      "folder": "Kino Zelt",
+      "file": "RDR2_W3KKKZvAeJ.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "3485502e1882a9861a29ce73ce39bbc257db046378e948e95a526b3430711ef1",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Kino Zelt/RDR2_W3KKKZvAeJ.jpg"
+    },
+    {
+      "folder": "Kino Zelt",
+      "file": "RDR2_zbboC6IsOm.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "e0401e086125b3fbf175a03ccc6aaed43dd3344675a71973c14cb4d7f1abb73c",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Kino Zelt/RDR2_zbboC6IsOm.jpg"
+    }
+  ],
+  "status": "reviewed-unbound-reference",
+  "runtimeBuildingId": null
+}

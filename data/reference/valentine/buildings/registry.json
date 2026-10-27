@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "status": "runtime-connected-two-ground-floor-pilots",
+  "status": "runtime-connected-thirty-three-buildings",
   "sourceInventory": "data/reference/valentine/interior-rollout-inventory.json",
-  "coverageNote": "31 candidate/review records, not final number of houses. Supporting placements and additional screenshot buildings remain to be reconciled.",
+  "coverageNote": "33 playable human-scale buildings, 38 explicit floors and five connected upper floors. Two retained exterior-only source records are not separate intact human-scale rooms. Fresh acceptance recorded in docs/planning/Valentine-Gesamtfertigstellung-2026-10-24.md.",
   "buildings": [
     {
       "id": "station",
@@ -127,6 +127,22 @@
     {
       "id": "second-saloon",
       "file": "second-saloon/building.json"
+    },
+    {
+      "id": "val-05-res-a",
+      "file": "val-05-res-a/building.json"
+    },
+    {
+      "id": "val-05-res-c",
+      "file": "val-05-res-c/building.json"
+    },
+    {
+      "id": "shipping-stand",
+      "file": "shipping-stand/building.json"
+    },
+    {
+      "id": "val-05-pigpen-a",
+      "file": "val-05-pigpen-a/building.json"
     }
   ]
 }

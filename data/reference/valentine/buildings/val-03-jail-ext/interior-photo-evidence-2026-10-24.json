@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "buildingId": "val-03-jail-ext",
+  "observations": [
+    "Schreibtisch mit Stuhl, Ofen, Wandmöbel und einfache Wartebank.",
+    "Büro-/Zellenorganisation im Kartenplan erkennbar. Zuordnung zum bestehenden Gefängnis-Spielraum ist funktional; kein Beweis eines originalen Assetnamens."
+  ],
+  "images": [
+    {
+      "folder": "Sheriff Office",
+      "file": "RDR2_95S2buHDmY.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "215b83ca635a6ab6a5fb25b6edefa9f6dacb7c37805585bf7e9e65735ac269b4",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Sheriff Office/RDR2_95S2buHDmY.jpg"
+    },
+    {
+      "folder": "Sheriff Office",
+      "file": "RDR2_J9KxGA9t91.png",
+      "width": 215,
+      "height": 214,
+      "sha256": "de1b1248d2a5a4a62133c6bf9ae156ac813c845d96b3dd1e41a45520c67f8145",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Sheriff Office/RDR2_J9KxGA9t91.png"
+    },
+    {
+      "folder": "Sheriff Office",
+      "file": "RDR2_Y1D6p7aUgR.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "e8d1b426aef7a4a2b4e523db9a5c7c0a6e739b9390b88f2520f0d2b411e9e45e",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Sheriff Office/RDR2_Y1D6p7aUgR.jpg"
+    }
+  ],
+  "interpretation": "User gameplay references; own furniture/layout adaptations are authored-gameplay, not recovered original meshes or metric MLO plans.",
+  "status": "reviewed-reference-adaptation-in-progress"
+}

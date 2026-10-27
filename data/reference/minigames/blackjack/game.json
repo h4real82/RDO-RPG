@@ -2,14 +2,21 @@
   "schemaVersion": 1,
   "id": "blackjack",
   "name": "Blackjack",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "implementationStatus": "runtime-connected-with-coins",
+  "rulesVersion": "valentine-blackjack-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "valentine-blackjack-table",
+      "file": "variants/valentine-blackjack-table.json"
+    }
+  ],
   "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
@@ -19,5 +26,5 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Classic Saloon Blackjack against Dealer Doc Holliday; wagers player Coins via WalletService with authentic Hit, Stand, Double Down, and 3:2 Blackjack payouts."
 }

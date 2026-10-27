@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Livery · Pferdehändler und Boxengasse",
+  "status": "built-pilot",
+  "layout": {
+    "x": -369.1,
+    "z": -789.4,
+    "width": 19,
+    "depth": 15,
+    "floorY": 115.6,
+    "front": -781.9,
+    "doorX": -369.1,
+    "doorWidth": 3.8,
+    "rampStart": -776.9,
+    "frontDirection": 1,
+    "yaw": 1.6406094968746698,
+    "wallHeight": 4.5,
+    "rampLow": 115.25625958786802,
+    "fixtures": [
+      {
+        "id": "dealer-counter",
+        "kind": "desk",
+        "position": {
+          "x": -374.1,
+          "y": 115.6,
+          "z": -785.4
+        },
+        "size": {
+          "x": 3,
+          "y": 0.95,
+          "z": 1.2
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "horse-dealer",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -374.1,
+          "y": 115.6,
+          "z": -786.5
+        },
+        "size": {
+          "x": 0.65,
+          "y": 1.8,
+          "z": 0.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": false
+      },
+      {
+        "id": "tack-cabinet",
+        "kind": "goods-shelf",
+        "position": {
+          "x": -376.1,
+          "y": 115.6,
+          "z": -794.4
+        },
+        "size": {
+          "x": 2.5,
+          "y": 2.3,
+          "z": 0.8
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "feed-crates",
+        "kind": "crate-stack",
+        "position": {
+          "x": -362.1,
+          "y": 115.6,
+          "z": -794.4
+        },
+        "size": {
+          "x": 2,
+          "y": 1.4,
+          "z": 1.8
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall--1-0",
+        "kind": "stall-divider",
+        "position": {
+          "x": -375.1,
+          "y": 115.6,
+          "z": -793.4
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough--1-0",
+        "kind": "trough",
+        "position": {
+          "x": -377.1,
+          "y": 115.6,
+          "z": -792.3
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall--1-1",
+        "kind": "stall-divider",
+        "position": {
+          "x": -375.1,
+          "y": 115.6,
+          "z": -789.9
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough--1-1",
+        "kind": "trough",
+        "position": {
+          "x": -377.1,
+          "y": 115.6,
+          "z": -788.8
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall--1-2",
+        "kind": "stall-divider",
+        "position": {
+          "x": -375.1,
+          "y": 115.6,
+          "z": -786.4
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough--1-2",
+        "kind": "trough",
+        "position": {
+          "x": -377.1,
+          "y": 115.6,
+          "z": -785.3
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall-1-0",
+        "kind": "stall-divider",
+        "position": {
+          "x": -363.1,
+          "y": 115.6,
+          "z": -793.4
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough-1-0",
+        "kind": "trough",
+        "position": {
+          "x": -361.1,
+          "y": 115.6,
+          "z": -792.3
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall-1-1",
+        "kind": "stall-divider",
+        "position": {
+          "x": -363.1,
+          "y": 115.6,
+          "z": -789.9
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough-1-1",
+        "kind": "trough",
+        "position": {
+          "x": -361.1,
+          "y": 115.6,
+          "z": -788.8
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "stall-1-2",
+        "kind": "stall-divider",
+        "position": {
+          "x": -363.1,
+          "y": 115.6,
+          "z": -786.4
+        },
+        "size": {
+          "x": 5,
+          "y": 1.6,
+          "z": 0.16
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      },
+      {
+        "id": "trough-1-2",
+        "kind": "trough",
+        "position": {
+          "x": -361.1,
+          "y": 115.6,
+          "z": -785.3
+        },
+        "size": {
+          "x": 1,
+          "y": 0.7,
+          "z": 1.6
+        },
+        "yaw": 0,
+        "color": "#9a8060",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png",
+          "repeat": [
+            14,
+            12
+          ]
+        },
+        "wood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "classification": "authored-gameplay",
+    "source": "rollout-source-measurements.json#val-03-stable-ext",
+    "note": "Simplified source-bounded barn. East entrance adapted toward measured street; not an original interior claim.",
+    "terrainFoot": {
+      "x": -356.6304493717522,
+      "z": -790.2719559218016
+    }
+  },
+  "designStatus": "Textured barn, six stall divisions, troughs, tack and feed storage, dealer; central entrance/aisle clear."
+}

@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "id": "upper",
+  "label": "Telegraphenbüro & Frachtarchiv",
+  "status": "built-pilot",
+  "layout": {
+    "x": -177.0218,
+    "z": -633.8562,
+    "width": 9.6,
+    "depth": 8.0,
+    "floorY": 122.8,
+    "front": -637.8562,
+    "doorX": -177.0218,
+    "doorWidth": 1.6,
+    "rampStart": -640.8562,
+    "rampLow": 122.0,
+    "frontDirection": -1,
+    "yaw": 0.95993,
+    "porch": {
+      "x": -177.0218,
+      "z": -638.8562,
+      "width": 10.4,
+      "depth": 2.0,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -177.0218,
+            "y": 122.0,
+            "z": -640.8562
+          },
+          "to": {
+            "x": -177.0218,
+            "y": 122.8,
+            "z": -639.8562
+          },
+          "width": 1.6
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "telegraph-desk",
+        "kind": "table",
+        "position": {
+          "x": -179.0,
+          "y": 122.8,
+          "z": -634.5
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.9,
+          "z": 1.2
+        },
+        "color": "#523720",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "archive-shelf",
+        "kind": "backbar",
+        "position": {
+          "x": -180.2,
+          "y": 122.8,
+          "z": -634.5
+        },
+        "size": {
+          "x": 0.5,
+          "y": 2.2,
+          "z": 3.2
+        },
+        "color": "#452b18",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "dispatch-clerk-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -179.0,
+          "y": 122.8,
+          "z": -635.5
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ebd4ba",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "station-safe",
+        "kind": "table",
+        "position": {
+          "x": -174.5,
+          "y": 122.8,
+          "z": -632.0
+        },
+        "size": {
+          "x": 1.0,
+          "y": 1.2,
+          "z": 1.0
+        },
+        "color": "#2b2b2b",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            2
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 0,
+    "note": "Train station upper office aligned to val_01_trainstn_ext.glb at [-177.0218, 119.26, -633.8562] with upper floor at 122.8m."
+  },
+  "designStatus": "Authored upper telegraph and dispatch archive with telegraph operator desk, document shelves, station safe and dispatch clerk."
+}

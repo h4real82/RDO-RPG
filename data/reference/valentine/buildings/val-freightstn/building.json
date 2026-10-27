@@ -20,8 +20,14 @@
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ],
+    "notes": "Authored provisional single-room wood interior, source-aligned entrance and floor level; no recovered original interior or upper-floor coverage claimed."
   },
   "actions": []
 }

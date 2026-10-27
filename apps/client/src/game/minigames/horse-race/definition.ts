@@ -1,0 +1,52 @@
+import{VenueDialog,text}from'../../venues/VenueDialog';
+import type{Venue}from'../types';
+import courseData from '../../../../../../data/reference/minigames/horse-race/course.json';
+import{makeCourse,parseRaceVariant,RaceSimulation,type RaceInput}from'./RaceSimulation';
+import{RaceView}from'./RaceView';import{RaceSound}from'./RaceSound';import'./Race.css';
+import sprint from '../../../../../../data/reference/minigames/horse-race/variants/circuit-sprint.json';
+import arcade from '../../../../../../data/reference/minigames/horse-race/variants/valentine-kart.json';
+const clock=(seconds:number)=>`${Math.floor(seconds/60)}:${(seconds%60).toFixed(2).padStart(5,'0')}`;
+export function create(parent:HTMLElement,raw:unknown,venue:Venue){
+ if((raw as {kind?:string}|null)?.kind!=='stable-menu')return createRace(parent,raw,venue);
+ let menu:VenueDialog|undefined,game:ReturnType<typeof createRace>|undefined;
+ return{get isOpen(){return Boolean(menu?.isOpen||game?.isOpen);},open(){menu=new VenueDialog(parent,'Livery · Pferdehändler');const d=menu;text('p','Die Pferde sind gesattelt. Welchen Ritt möchtest du wagen?',d.content);
+  for(const [variant,description]of [[sprint,'Eine Runde gegen die Uhr. Teile dir die Ausdauer ein und verbessere deine persönliche Bestzeit.'],[arcade,'Drei Runden gegen Copper, Sundance und Calamity. Sichere dir Satteltaschen und nutze den Kurvenritt für einen Galoppschub.']] as const){const card=text('div','',d.content);card.className='rdo-race__choice';text('h3',variant.name,card);text('p',description,card);d.button(variant.name,()=>{menu?.close();game=createRace(parent,variant,venue);game.open();},card);}
+  text('small','Kostenloses lokales Übungsrennen · keine Einsätze',d.content);
+ },dispose(){menu?.close();game?.dispose();menu=undefined;game=undefined;}};
+}
+function createRace(parent:HTMLElement,raw:unknown,_venue:Venue){
+ const config=parseRaceVariant(raw),sim=new RaceSimulation(makeCourse(courseData.points),config),sound=new RaceSound(),held=new Set<string>();
+ let dialog:VenueDialog|undefined,view:RaceView|undefined,frame=0,disposed=false,ready=false,last=0,accumulator=0,lastEvent=-1,lastCount=-1,hudClock=0,best:number|undefined;
+ let hud:HTMLElement,notice:HTMLElement,count:HTMLElement,result:HTMLElement,start:HTMLButtonElement,pause:HTMLButtonElement,minimap:HTMLCanvasElement,loading:HTMLElement;
+ const recordKey=`rdo-race:v2:${courseData.id}:${config.mode}:${config.laps}`;
+ try{const saved=Number(localStorage.getItem(recordKey));if(Number.isFinite(saved)&&saved>0)best=saved;}catch{/* Optional storage. */}
+ const controls:RaceInput={throttle:0,steer:0,brake:false,gallop:false,drift:false,item:false};
+ const input=():RaceInput=>Object.assign(controls,{throttle:held.has('w')||held.has('arrowup')?1:0,steer:(held.has('d')||held.has('arrowright')?1:0)-(held.has('a')||held.has('arrowleft')?1:0),brake:held.has('s')||held.has('arrowdown'),gallop:held.has(' '),drift:held.has('shift'),item:held.has('e')});
+ const stop=()=>{if(disposed)return;disposed=true;held.clear();cancelAnimationFrame(frame);view?.dispose();view=undefined;sound.dispose();};
+ const pauseRace=()=>{held.clear();if(sim.phase==='paused')sim.resume();else sim.pause();};
+ const map=()=>{const ctx=minimap.getContext('2d');if(!ctx)return;const pts=sim.course.points,minX=Math.min(...pts.map(p=>p.x)),minZ=Math.min(...pts.map(p=>p.z)),maxX=Math.max(...pts.map(p=>p.x)),maxZ=Math.max(...pts.map(p=>p.z)),scale=Math.min(125/(maxX-minX),130/(maxZ-minZ)),project=(x:number,z:number)=>[12+(x-minX)*scale,12+(z-minZ)*scale];ctx.clearRect(0,0,150,160);ctx.strokeStyle='#c4ac79';ctx.lineWidth=3;ctx.beginPath();for(const[i,p]of pts.entries()){const[x,y]=project(p.x,p.z);if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.closePath();ctx.stroke();const gate=sim.course.at((sim.player.gates+1)*sim.course.gateSpacing),[gx,gy]=project(gate.x,gate.z);ctx.strokeStyle='#fff0b0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(gx,gy,6,0,Math.PI*2);ctx.stroke();sim.riders.forEach((r,i)=>{const[x,y]=project(r.x,r.z);ctx.fillStyle=i?'#c3694b':'#fff2bd';ctx.beginPath();ctx.arc(x,y,i?3:4,0,Math.PI*2);ctx.fill();});};
+ const renderHUD=()=>{
+  if(dialog){dialog.panel.dataset.raceState=JSON.stringify({phase:sim.phase,x:sim.player.x,z:sim.player.z,y:sim.player.y,heading:sim.player.heading,speed:sim.player.speed,progress:sim.player.progress,gates:sim.player.gates,penalty:sim.player.penalty,time:sim.elapsed});}
+  const p=sim.player,lap=Math.min(config.laps,Math.floor(p.gates/sim.course.gateCount)+1),rank=sim.ranking.indexOf(p)+1;
+  hud.textContent=`${config.mode==='arcade'?`Platz ${rank}/${sim.riders.length} · `:''}Runde ${lap}/${config.laps} · Tor ${p.gates%sim.course.gateCount+1}/${sim.course.gateCount} · ${clock(sim.elapsed+p.penalty)} · ${Math.round(p.speed*3.6)} km/h`;
+  notice.textContent=`Ausdauer ${Math.round(p.stamina)}%${p.item?' · '+({horseshoe:'Glückshufeisen',oil:'Ölspur',tonic:'Pferdetonikum'}[p.item])+' · E einsetzen':''}${p.driftCharge>.7?' · Kurvenschub bereit':''}`;
+  count.textContent=sim.phase==='countdown'?String(Math.max(1,Math.ceil(sim.countdown))):sim.phase==='paused'?'Pause':'';pause.textContent=sim.phase==='paused'?'Weiter':'Pause';
+  start.textContent=sim.phase==='ready'?'Aufsitzen & starten':'Rennen neu starten';start.disabled=!ready;
+  if(sim.phase==='finished'&&!result.textContent){const time=p.finish!;if(best===undefined||time<best){best=time;try{localStorage.setItem(recordKey,String(time));}catch{/* Optional personal record. */}}result.textContent=`Ziel! ${clock(time)} · ${p.penalty?`${p.penalty}s Strafzeit · `:''}Bestzeit ${clock(best)}${config.mode==='arcade'?` · Platz ${rank}/${sim.riders.length}`:''}`;result.hidden=false;sound.cue(true);}
+  if(sim.eventSerial!==lastEvent){lastEvent=sim.eventSerial;loading.textContent=sim.message;if(sim.phase==='racing')sound.cue(true);}const countdown=Math.ceil(sim.countdown);if(sim.phase==='countdown'&&countdown!==lastCount){lastCount=countdown;sound.cue();}map();
+ };
+ const tick=(now:number)=>{if(disposed||!dialog?.isOpen)return;try{const dt=last?Math.min(.1,(now-last)/1000):0;last=now;view?.update(dt);if(ready){accumulator+=dt;for(let steps=0;accumulator>=1/60&&steps<6;steps++,accumulator-=1/60)sim.step(input(),1/60);if(sim.phase==='racing')sound.hoof(sim.elapsed,sim.player.speed);hudClock+=dt;if(hudClock>=.1){hudClock=0;renderHUD();}}}catch(error){sim.pause();held.clear();loading.textContent='Rennansicht angehalten. Neu starten oder zum Stall zurückkehren.';console.error('Race frame failed.',error);}frame=requestAnimationFrame(tick);};
+ return{get isOpen(){return Boolean(dialog?.isOpen);},open(){
+  dialog=new VenueDialog(parent,config.name,stop);const d=dialog;d.panel.classList.add('rdo-race');
+  const stage=text('div','',d.content);stage.className='rdo-race__stage';const viewport=text('div','',stage);viewport.className='rdo-race__viewport';hud=text('div','',stage);hud.className='rdo-race__hud';notice=text('div','',stage);notice.className='rdo-race__notice';count=text('div','',stage);count.className='rdo-race__count';result=text('div','',stage);result.className='rdo-race__result';result.hidden=true;minimap=document.createElement('canvas');minimap.width=150;minimap.height=160;minimap.className='rdo-race__map';minimap.setAttribute('aria-label','Streckenkarte und Rennpositionen');stage.append(minimap);
+  loading=text('p','Rennstrecke laden …',d.content);loading.setAttribute('role','status');
+  start=d.button('Pferde satteln …',async()=>{if(!ready)return;held.clear();result.textContent='';result.hidden=true;lastCount=-1;sim.start();await sound.enable();});start.disabled=true;
+  pause=d.button('Pause',pauseRace);d.button('Zur letzten Passage (+5s)',()=>{if(sim.phase==='racing'){held.clear();sim.recover();}});const audio=d.button('Ton aus',()=>{sound.toggle();audio.textContent=sound.muted?'Ton an':'Ton aus';});
+  const help=text('details','',d.content);text('summary','Steuerung & Rennregeln',help);text('p','W / ↑ antreiben · A/D / ←/→ lenken · S / ↓ bremsen · Leertaste Galopp · Shift Kurvenritt (Arcade) · E Satteltasche · P Pause. Holzportale in Reihenfolge durchreiten. Abseits der Strecke wirst du langsamer; Rücksetzen kostet 5 Sekunden. Bei Fokusverlust pausiert das Rennen.',help);
+  text('p','Lokales 3D-Übungsrennen auf einer angepassten Valentine-Straßenrunde. Keine Einsätze oder Online-Wertung. Pferd: Ayan · Cowboy: human being · CC BY 4.0; Quellen unter Projektstand → Modellnachweise.',help);
+  const touch=text('div','',stage);touch.className='rdo-race__touch';for(const[label,key]of[['◀','a'],['▶','d'],['Antreiben','w'],['Galopp',' '],['Bremsen','s'],['Satteltasche','e']]){const b=d.button(label,()=>{},touch);b.setAttribute('aria-label',label);d.listen(b,'pointerdown',event=>{const e=event as PointerEvent;e.preventDefault();if(!e.currentTarget)return;held.add(key);b.setPointerCapture(e.pointerId);});for(const name of ['pointerup','pointercancel','lostpointercapture'])d.listen(b,name,()=>held.delete(key));}
+  d.listen(window,'keydown',event=>{const e=event as KeyboardEvent;if(!e||e.repeat||!d.isOpen)return;const key=e.key.toLowerCase();if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright',' ','shift','e','p'].includes(key)){e.preventDefault();e.stopImmediatePropagation();if(key==='p')pauseRace();else held.add(key);}});
+  d.listen(window,'keyup',event=>{const e=event as KeyboardEvent;if(e)held.delete(e.key.toLowerCase());});d.listen(window,'blur',()=>{held.clear();sim.pause();});d.listen(document,'visibilitychange',()=>{if(document.hidden){held.clear();sim.pause();}});
+  try{view=new RaceView(viewport,sim,matchMedia('(prefers-reduced-motion: reduce)').matches);d.listen(view.canvas,'webglcontextlost',event=>{event.preventDefault();sim.pause();ready=false;loading.textContent='Grafikkontext verloren. Zum Stall zurückkehren und Rennen erneut öffnen.';});void view.load(message=>{if(!disposed)loading.textContent=message;}).then(()=>{if(!disposed){ready=true;loading.textContent='Bereit am Livery-Stall · alle Passagen in Reihenfolge';renderHUD();}}).catch(error=>{if(!disposed){loading.textContent=error instanceof Error?error.message:'Rennansicht nicht verfügbar.';start.disabled=true;}});frame=requestAnimationFrame(tick);}catch(error){loading.textContent='3D-Rennansicht konnte nicht gestartet werden. Zum Stall zurückkehren.';console.error(error);}
+ },dispose(){dialog?.close();stop();dialog=undefined;}};
+}

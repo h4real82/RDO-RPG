@@ -1,4 +1,4 @@
-import { Box3, Group, Mesh, Raycaster, Triangle, Vector3 } from 'three';
+import { Box3, Group, Mesh, Raycaster, Triangle, Vector3,type Intersection } from 'three';
 import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 import { Octree } from 'three/examples/jsm/math/Octree.js';
 import { isPhysicalSourceMesh } from './SourceMeshRoles';
@@ -10,7 +10,12 @@ type Candidate = { bounds: Box3; meshes: { mesh: Mesh; bounds: Box3 }[] };
 export class VisibleMeshCollision {
   private readonly candidates = new Map<Group, Candidate>();
   private readonly ray = new Raycaster();
+  private readonly origin=new Vector3();private readonly forward=new Vector3();private readonly backward=new Vector3();private readonly hits:Intersection[]=[];
+  private sourceMask?: (from:Position,to:Position)=>boolean;
   lastHit: { asset: string; mesh: string } | undefined;
+
+  constructor(){Object.assign(this.ray,{firstHitOnly:true});}
+  setAuthoredSourceMask(mask:(from:Position,to:Position)=>boolean):void{this.sourceMask=mask;}
 
   add(instance: Group): void {
     instance.updateWorldMatrix(true, true);
@@ -38,7 +43,9 @@ export class VisibleMeshCollision {
     const bodyBounds = new Box3(new Vector3(position.x - 0.25, position.y + 0.35, position.z - 0.25),
       new Vector3(position.x + 0.25, position.y + 1.55, position.z + 0.25));
     const tester = new Octree(), triangle = new Triangle(), reverse = new Triangle();
+    const sourceOwned=this.sourceMask?.(position,position);
     for (const [instance, { bounds, meshes }] of this.candidates) {
+      if(sourceOwned&&String(instance.userData.sourceAsset??'').startsWith('models/valentine/'))continue;
       if (!bodyBounds.intersectsBox(bounds)) continue;
       for (const { mesh, bounds: part } of meshes) {
         if (!bodyBounds.intersectsBox(part)) continue;
@@ -77,10 +84,12 @@ export class VisibleMeshCollision {
     if (!Number.isFinite(length) || horizontalLength < 1e-8) return false;
     // Sweep the body along the resolved height transition too. Horizontal rays
     // at only the starting height miss low walls when descending from a ledge.
-    const direction = new Vector3(dx / length, dy / length, dz / length);
+    const direction = this.forward.set(dx / length, dy / length, dz / length);this.backward.copy(direction).negate();
     const sideX = -dz / horizontalLength * 0.25, sideZ = dx / horizontalLength * 0.25;
     this.ray.far = length;
+    const sourceOwned=this.sourceMask?.(from,to);
     for (const [instance, { bounds, meshes }] of this.candidates) {
+      if(sourceOwned&&String(instance.userData.sourceAsset??'').startsWith('models/valentine/'))continue;
       if (bounds.max.y < Math.min(from.y, to.y) + 0.35 || bounds.min.y > Math.max(from.y, to.y) + 1.55) continue;
       if (Math.max(from.x, to.x) + 0.25 < bounds.min.x || Math.min(from.x, to.x) - 0.25 > bounds.max.x
         || Math.max(from.z, to.z) + 0.25 < bounds.min.z || Math.min(from.z, to.z) - 0.25 > bounds.max.z) continue;
@@ -90,10 +99,10 @@ export class VisibleMeshCollision {
           || Math.max(from.z, to.z) + 0.25 < part.min.z || Math.min(from.z, to.z) - 0.25 > part.max.z) continue;
         for (const side of [-1, 0, 1]) {
           for (const elevation of [0.4, 1.4]) {
-            this.ray.set(new Vector3(from.x + side * sideX, from.y + elevation, from.z + side * sideZ), direction);
-            const forwardHit = this.ray.intersectObject(mesh, false).length > 0;
-            this.ray.set(new Vector3(to.x + side * sideX, to.y + elevation, to.z + side * sideZ), direction.clone().negate());
-            const reverseHit = this.ray.intersectObject(mesh, false).length > 0;
+            this.ray.set(this.origin.set(from.x + side * sideX, from.y + elevation, from.z + side * sideZ), direction);this.hits.length=0;
+            const forwardHit = this.ray.intersectObject(mesh, false,this.hits).length > 0;
+            this.ray.set(this.origin.set(to.x + side * sideX, to.y + elevation, to.z + side * sideZ),this.backward);this.hits.length=0;
+            const reverseHit = this.ray.intersectObject(mesh, false,this.hits).length > 0;this.hits.length=0;
             if (forwardHit || reverseHit) {
               this.lastHit = { asset: String(instance.userData.sourceAsset ?? ''), mesh: mesh.name };
               return true;

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "wettsaufen",
+  "name": "Wettsaufen am Tresen",
+  "implementationStatus": "runtime-connected-with-coins",
+  "rulesVersion": "valentine-wettsaufen-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
+  "plannedModes": [
+    "private-session"
+  ],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "counter-duel",
+      "file": "variants/counter-duel.json"
+    }
+  ],
+  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "lifecycleContract": [
+    "available",
+    "joining",
+    "active",
+    "leaving",
+    "closed",
+    "error"
+  ],
+  "notes": "Saloon counter drinking duel with alcohol consumption, stamina depletion, intoxication lag, and Coin betting via WalletService."
+}

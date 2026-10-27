@@ -1,0 +1,3339 @@
+{
+  "appearance": {
+    "provenance": "authored-gameplay: selected original texture on custom road geometry, not a recovered original road material",
+    "road": {
+      "width": 5.5,
+      "lift": 0.035,
+      "edgeFade": 0.8,
+      "texture": "hea_val_dirt_straw_01_abte.png"
+    }
+  },
+  "boundaryFile": "data\\reference\\valentine\\playable-boundary.json",
+  "boundarySha256": "5d2973e7945bd32f185aaa2e9bb4a5f958a8b4469a548dc2fe670ef071bd7e76",
+  "coordinateSpace": "three-right-handed",
+  "method": "Linear source segment intersections with actual playable-boundary polygon; no Catmull-Rom or manual control points.",
+  "sourceBoundaryUncertaintyMetres": 8.286,
+  "traceFile": "data\\runtime\\valentine\\local-preview\\ground-truth-traces.json",
+  "traceSha256": "fdf327376671b83f879ebaf4962324de4851289469399c5a95a93ab9f869919d",
+  "traces": [
+    {
+      "id": "valentine:rail:0002:clip:0",
+      "kind": "rail",
+      "lengthMetres": 180.46,
+      "points": [
+        {
+          "x": -130.369448,
+          "z": -665.723388
+        },
+        {
+          "x": -140.5042,
+          "z": -659.3307
+        },
+        {
+          "x": -164.1631,
+          "z": -627.6176
+        },
+        {
+          "x": -178.2579,
+          "z": -608.489
+        },
+        {
+          "x": -189.8357,
+          "z": -593.3876
+        },
+        {
+          "x": -197.3864,
+          "z": -577.2793
+        },
+        {
+          "x": -200.4067,
+          "z": -555.1305
+        },
+        {
+          "x": -197.3864,
+          "z": -535.4986
+        },
+        {
+          "x": -179.368661,
+          "z": -516.594711
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 2,
+        "path": "railroads.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.6902572426931858,
+          "sourceSegmentIndex": 81,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 82,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 83,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 84,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 85,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 86,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 87,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 88,
+          "toFraction": 0.5867766106270862
+        }
+      ],
+      "sourceTrace": "valentine:rail:0002"
+    },
+    {
+      "id": "valentine:road:0036:clip:0",
+      "kind": "road",
+      "lengthMetres": 305.019,
+      "points": [
+        {
+          "x": -450.074524,
+          "z": -561.35515
+        },
+        {
+          "x": -430.956,
+          "z": -566.7083
+        },
+        {
+          "x": -423.9086,
+          "z": -568.9735
+        },
+        {
+          "x": -420.3849,
+          "z": -570.1061
+        },
+        {
+          "x": -418.6231,
+          "z": -570.6724
+        },
+        {
+          "x": -416.8613,
+          "z": -571.2387
+        },
+        {
+          "x": -415.0994,
+          "z": -571.9309
+        },
+        {
+          "x": -413.3376,
+          "z": -572.6231
+        },
+        {
+          "x": -409.8139,
+          "z": -574.0073
+        },
+        {
+          "x": -402.7666,
+          "z": -576.776
+        },
+        {
+          "x": -383.1347,
+          "z": -582.8166
+        },
+        {
+          "x": -366.523,
+          "z": -586.3402
+        },
+        {
+          "x": -349.9114,
+          "z": -583.3199
+        },
+        {
+          "x": -345.4439,
+          "z": -581.7468
+        },
+        {
+          "x": -340.9764,
+          "z": -580.1738
+        },
+        {
+          "x": -337.6257,
+          "z": -578.8052
+        },
+        {
+          "x": -334.2751,
+          "z": -577.4366
+        },
+        {
+          "x": -327.5738,
+          "z": -574.6995
+        },
+        {
+          "x": -314.1712,
+          "z": -569.2252
+        },
+        {
+          "x": -296.0494,
+          "z": -567.2117
+        },
+        {
+          "x": -286.9885,
+          "z": -567.7151
+        },
+        {
+          "x": -282.4581,
+          "z": -567.9668
+        },
+        {
+          "x": -277.9276,
+          "z": -568.2184
+        },
+        {
+          "x": -273.7747,
+          "z": -569.8544
+        },
+        {
+          "x": -269.6218,
+          "z": -571.4905
+        },
+        {
+          "x": -261.316,
+          "z": -574.7624
+        },
+        {
+          "x": -242.6909,
+          "z": -578.7895
+        },
+        {
+          "x": -220.0387,
+          "z": -580.2996
+        },
+        {
+          "x": -210.7261,
+          "z": -579.6704
+        },
+        {
+          "x": -206.0698,
+          "z": -579.3558
+        },
+        {
+          "x": -201.4135,
+          "z": -579.0412
+        },
+        {
+          "x": -198.0157,
+          "z": -578.6322
+        },
+        {
+          "x": -194.6178,
+          "z": -578.2232
+        },
+        {
+          "x": -187.8222,
+          "z": -577.4052
+        },
+        {
+          "x": -174.2308,
+          "z": -575.7692
+        },
+        {
+          "x": -169.4486,
+          "z": -577.4995
+        },
+        {
+          "x": -164.6665,
+          "z": -579.23
+        },
+        {
+          "x": -159.8844,
+          "z": -580.9603
+        },
+        {
+          "x": -155.1023,
+          "z": -582.6907
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 36,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.24039697881536923,
+          "sourceSegmentIndex": 96,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 97,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 98,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 99,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 100,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 101,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 102,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 103,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 104,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 105,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 106,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 107,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 108,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 109,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 110,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 111,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 112,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 113,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 114,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 115,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 116,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 117,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 118,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 119,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 120,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 121,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 122,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 123,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 124,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 125,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 126,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 127,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 128,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 129,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 130,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 131,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 132,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 133,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0036"
+    },
+    {
+      "id": "valentine:road:0037:clip:0",
+      "kind": "road",
+      "lengthMetres": 29.685,
+      "points": [
+        {
+          "x": -155.1023,
+          "z": -582.8166
+        },
+        {
+          "x": -148.5582,
+          "z": -582.3132
+        },
+        {
+          "x": -142.0143,
+          "z": -581.8098
+        },
+        {
+          "x": -135.4703,
+          "z": -581.3064
+        },
+        {
+          "x": -132.1983,
+          "z": -581.0547
+        },
+        {
+          "x": -128.9264,
+          "z": -580.803
+        },
+        {
+          "x": -126.0948,
+          "z": -581.0547
+        },
+        {
+          "x": -125.508193,
+          "z": -581.106845
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 37,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 0.2071718198709335
+        }
+      ],
+      "sourceTrace": "valentine:road:0037"
+    },
+    {
+      "id": "valentine:road:0039:clip:0",
+      "kind": "road",
+      "lengthMetres": 18.197,
+      "points": [
+        {
+          "x": -128.9264,
+          "z": -580.803
+        },
+        {
+          "x": -129.1151,
+          "z": -577.9715
+        },
+        {
+          "x": -129.3039,
+          "z": -575.1399
+        },
+        {
+          "x": -129.6814,
+          "z": -569.4769
+        },
+        {
+          "x": -130.1368,
+          "z": -562.646145
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 39,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 0.6030986147185605
+        }
+      ],
+      "sourceTrace": "valentine:road:0039"
+    },
+    {
+      "id": "valentine:road:0051:clip:0",
+      "kind": "road",
+      "lengthMetres": 107.229,
+      "points": [
+        {
+          "x": -450.819835,
+          "z": -752.13442
+        },
+        {
+          "x": -446.5609,
+          "z": -751.9532
+        },
+        {
+          "x": -421.8951,
+          "z": -749.9396
+        },
+        {
+          "x": -412.8342,
+          "z": -749.4363
+        },
+        {
+          "x": -408.3037,
+          "z": -749.1845
+        },
+        {
+          "x": -406.0385,
+          "z": -749.0587
+        },
+        {
+          "x": -403.7733,
+          "z": -748.9329
+        },
+        {
+          "x": -400.3755,
+          "z": -750.1913
+        },
+        {
+          "x": -396.9776,
+          "z": -751.4498
+        },
+        {
+          "x": -390.182,
+          "z": -753.9667
+        },
+        {
+          "x": -371.0535,
+          "z": -757.4903
+        },
+        {
+          "x": -357.4621,
+          "z": -759.5039
+        },
+        {
+          "x": -351.2957,
+          "z": -760.0702
+        },
+        {
+          "x": -348.2125,
+          "z": -760.3534
+        },
+        {
+          "x": -345.1293,
+          "z": -760.6365
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 51,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.819985938538793,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 23,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 24,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 25,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 26,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 27,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 28,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 29,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 30,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 31,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 32,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 33,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0051"
+    },
+    {
+      "id": "valentine:road:0052:clip:0",
+      "kind": "road",
+      "lengthMetres": 150.604,
+      "points": [
+        {
+          "x": -514.990151,
+          "z": -655.639976
+        },
+        {
+          "x": -498.9127,
+          "z": -659.8341
+        },
+        {
+          "x": -479.7841,
+          "z": -676.9491
+        },
+        {
+          "x": -464.1793,
+          "z": -685.5066
+        },
+        {
+          "x": -442.5338,
+          "z": -697.0844
+        },
+        {
+          "x": -431.4594,
+          "z": -717.2197
+        },
+        {
+          "x": -424.412,
+          "z": -730.3077
+        },
+        {
+          "x": -415.3512,
+          "z": -741.3821
+        },
+        {
+          "x": -409.5622,
+          "z": -745.1575
+        },
+        {
+          "x": -406.6678,
+          "z": -747.0452
+        },
+        {
+          "x": -405.2206,
+          "z": -747.989
+        },
+        {
+          "x": -403.7733,
+          "z": -748.9329
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 52,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.30567764563001115,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 16,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 17,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 18,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 19,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0052"
+    },
+    {
+      "id": "valentine:road:0053:clip:0",
+      "kind": "road",
+      "lengthMetres": 19.465,
+      "points": [
+        {
+          "x": -514.105447,
+          "z": -651.231136
+        },
+        {
+          "x": -513.0074,
+          "z": -652.7867
+        },
+        {
+          "x": -497.4025,
+          "z": -660.8409
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 53,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.9091110595280054,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0053"
+    },
+    {
+      "id": "valentine:road:0054:clip:0",
+      "kind": "road",
+      "lengthMetres": 65.473,
+      "points": [
+        {
+          "x": -416.8613,
+          "z": -571.2387
+        },
+        {
+          "x": -416.6096,
+          "z": -573.6927
+        },
+        {
+          "x": -416.3579,
+          "z": -576.1467
+        },
+        {
+          "x": -415.8545,
+          "z": -581.0547
+        },
+        {
+          "x": -414.8477,
+          "z": -590.8707
+        },
+        {
+          "x": -418.3715,
+          "z": -611.006
+        },
+        {
+          "x": -419.8816,
+          "z": -624.5973
+        },
+        {
+          "x": -416.3579,
+          "z": -635.6717
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 54,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0054"
+    },
+    {
+      "id": "valentine:road:0057:clip:0",
+      "kind": "road",
+      "lengthMetres": 35.063,
+      "points": [
+        {
+          "x": -295.628018,
+          "z": -520.07649
+        },
+        {
+          "x": -282.9615,
+          "z": -524.9275
+        },
+        {
+          "x": -273.3343,
+          "z": -529.7097
+        },
+        {
+          "x": -268.5207,
+          "z": -532.1007
+        },
+        {
+          "x": -263.7071,
+          "z": -534.4918
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 57,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0.46462157524208947,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0057"
+    },
+    {
+      "id": "valentine:road:0058:clip:0",
+      "kind": "road",
+      "lengthMetres": 64.941,
+      "points": [
+        {
+          "x": -340.8505,
+          "z": -580.2996
+        },
+        {
+          "x": -336.32,
+          "z": -584.5784
+        },
+        {
+          "x": -331.7896,
+          "z": -588.8572
+        },
+        {
+          "x": -315.6814,
+          "z": -603.9586
+        },
+        {
+          "x": -302.09,
+          "z": -617.5499
+        },
+        {
+          "x": -298.818,
+          "z": -622.0804
+        },
+        {
+          "x": -297.182,
+          "z": -624.3456
+        },
+        {
+          "x": -295.5461,
+          "z": -626.6108
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 58,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0058"
+    },
+    {
+      "id": "valentine:road:0059:clip:0",
+      "kind": "road",
+      "lengthMetres": 248.69,
+      "points": [
+        {
+          "x": -295.5461,
+          "z": -626.6108
+        },
+        {
+          "x": -296.1753,
+          "z": -629.3165
+        },
+        {
+          "x": -296.8045,
+          "z": -632.0222
+        },
+        {
+          "x": -298.063,
+          "z": -637.4336
+        },
+        {
+          "x": -300.5799,
+          "z": -648.2563
+        },
+        {
+          "x": -307.1238,
+          "z": -673.9288
+        },
+        {
+          "x": -315.6814,
+          "z": -698.5946
+        },
+        {
+          "x": -325.2456,
+          "z": -717.2197
+        },
+        {
+          "x": -337.8302,
+          "z": -741.8855
+        },
+        {
+          "x": -341.3539,
+          "z": -751.1981
+        },
+        {
+          "x": -343.1157,
+          "z": -755.8544
+        },
+        {
+          "x": -343.9966,
+          "z": -758.1825
+        },
+        {
+          "x": -344.8776,
+          "z": -760.5106
+        },
+        {
+          "x": -344.6259,
+          "z": -764.4119
+        },
+        {
+          "x": -344.3742,
+          "z": -768.3131
+        },
+        {
+          "x": -343.8708,
+          "z": -776.1155
+        },
+        {
+          "x": -339.3403,
+          "z": -783.1629
+        },
+        {
+          "x": -325.2456,
+          "z": -787.6933
+        },
+        {
+          "x": -310.1441,
+          "z": -788.7001
+        },
+        {
+          "x": -289.5055,
+          "z": -791.217
+        },
+        {
+          "x": -270.8803,
+          "z": -794.7407
+        },
+        {
+          "x": -265.0914,
+          "z": -794.2373
+        },
+        {
+          "x": -262.197,
+          "z": -793.9856
+        },
+        {
+          "x": -259.3025,
+          "z": -793.7339
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 59,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 16,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 17,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 18,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 19,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0059"
+    },
+    {
+      "id": "valentine:road:0060:clip:0",
+      "kind": "road",
+      "lengthMetres": 105.552,
+      "points": [
+        {
+          "x": -201.4135,
+          "z": -579.0412
+        },
+        {
+          "x": -206.6361,
+          "z": -582.1873
+        },
+        {
+          "x": -211.8587,
+          "z": -585.3334
+        },
+        {
+          "x": -220.7937,
+          "z": -590.3673
+        },
+        {
+          "x": -229.7287,
+          "z": -595.4011
+        },
+        {
+          "x": -234.1963,
+          "z": -597.918
+        },
+        {
+          "x": -238.6638,
+          "z": -600.4349
+        },
+        {
+          "x": -243.9493,
+          "z": -603.0777
+        },
+        {
+          "x": -249.2348,
+          "z": -605.7205
+        },
+        {
+          "x": -259.8059,
+          "z": -611.006
+        },
+        {
+          "x": -276.4175,
+          "z": -618.5567
+        },
+        {
+          "x": -285.9818,
+          "z": -622.5209
+        },
+        {
+          "x": -290.7639,
+          "z": -624.5029
+        },
+        {
+          "x": -295.5461,
+          "z": -626.485
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 60,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0060"
+    },
+    {
+      "id": "valentine:road:0061:clip:0",
+      "kind": "road",
+      "lengthMetres": 74.531,
+      "points": [
+        {
+          "x": -155.1023,
+          "z": -582.8166
+        },
+        {
+          "x": -156.9899,
+          "z": -586.4661
+        },
+        {
+          "x": -158.8776,
+          "z": -590.1156
+        },
+        {
+          "x": -162.653,
+          "z": -597.4146
+        },
+        {
+          "x": -178.2579,
+          "z": -608.489
+        },
+        {
+          "x": -199.9034,
+          "z": -621.0736
+        },
+        {
+          "x": -205.1889,
+          "z": -625.6041
+        },
+        {
+          "x": -207.8316,
+          "z": -627.8693
+        },
+        {
+          "x": -210.4744,
+          "z": -630.1345
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 61,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0061"
+    },
+    {
+      "id": "valentine:road:0062:clip:0",
+      "kind": "road",
+      "lengthMetres": 373.603,
+      "points": [
+        {
+          "x": -238.6638,
+          "z": -600.4349
+        },
+        {
+          "x": -236.1468,
+          "z": -603.7069
+        },
+        {
+          "x": -233.63,
+          "z": -606.9789
+        },
+        {
+          "x": -228.5961,
+          "z": -613.5229
+        },
+        {
+          "x": -219.5352,
+          "z": -621.8287
+        },
+        {
+          "x": -215.0048,
+          "z": -625.9816
+        },
+        {
+          "x": -212.7396,
+          "z": -628.0581
+        },
+        {
+          "x": -210.4744,
+          "z": -630.1345
+        },
+        {
+          "x": -208.0519,
+          "z": -634.2874
+        },
+        {
+          "x": -205.5035,
+          "z": -638.4403
+        },
+        {
+          "x": -202.9551,
+          "z": -642.5932
+        },
+        {
+          "x": -201.6809,
+          "z": -644.6697
+        },
+        {
+          "x": -200.4067,
+          "z": -646.7461
+        },
+        {
+          "x": -200.155,
+          "z": -649.0743
+        },
+        {
+          "x": -199.9033,
+          "z": -651.4024
+        },
+        {
+          "x": -199.3999,
+          "z": -656.0588
+        },
+        {
+          "x": -198.3932,
+          "z": -665.3713
+        },
+        {
+          "x": -209.4676,
+          "z": -689.0303
+        },
+        {
+          "x": -225.0725,
+          "z": -708.6622
+        },
+        {
+          "x": -238.1604,
+          "z": -730.8111
+        },
+        {
+          "x": -247.7247,
+          "z": -747.9261
+        },
+        {
+          "x": -253.2619,
+          "z": -768.5648
+        },
+        {
+          "x": -256.2822,
+          "z": -781.1494
+        },
+        {
+          "x": -257.7923,
+          "z": -787.4416
+        },
+        {
+          "x": -258.5474,
+          "z": -790.5878
+        },
+        {
+          "x": -259.3025,
+          "z": -793.7339
+        },
+        {
+          "x": -259.9947,
+          "z": -796.062
+        },
+        {
+          "x": -260.6868,
+          "z": -798.3902
+        },
+        {
+          "x": -262.0711,
+          "z": -803.0465
+        },
+        {
+          "x": -264.8397,
+          "z": -812.3591
+        },
+        {
+          "x": -267.2937,
+          "z": -820.2244
+        },
+        {
+          "x": -268.5207,
+          "z": -824.1571
+        },
+        {
+          "x": -269.1342,
+          "z": -826.1235
+        },
+        {
+          "x": -269.7477,
+          "z": -828.0898
+        },
+        {
+          "x": -270.3298,
+          "z": -830.6539
+        },
+        {
+          "x": -270.9118,
+          "z": -833.218
+        },
+        {
+          "x": -272.0758,
+          "z": -838.3462
+        },
+        {
+          "x": -274.404,
+          "z": -848.6026
+        },
+        {
+          "x": -274.5298,
+          "z": -852.8814
+        },
+        {
+          "x": -274.6557,
+          "z": -857.1601
+        },
+        {
+          "x": -274.8445,
+          "z": -859.9287
+        },
+        {
+          "x": -275.0332,
+          "z": -862.6974
+        },
+        {
+          "x": -275.4108,
+          "z": -868.2345
+        },
+        {
+          "x": -269.3702,
+          "z": -883.336
+        },
+        {
+          "x": -256.7856,
+          "z": -888.1182
+        },
+        {
+          "x": -250.4933,
+          "z": -890.5092
+        },
+        {
+          "x": -247.3472,
+          "z": -891.7048
+        },
+        {
+          "x": -244.201,
+          "z": -892.9003
+        },
+        {
+          "x": -242.3369,
+          "z": -893.3722
+        },
+        {
+          "x": -240.4729,
+          "z": -893.8441
+        },
+        {
+          "x": -236.7447,
+          "z": -894.788
+        },
+        {
+          "x": -229.2883,
+          "z": -896.6756
+        },
+        {
+          "x": -221.832,
+          "z": -898.5633
+        },
+        {
+          "x": -218.1038,
+          "z": -899.5072
+        },
+        {
+          "x": -214.3756,
+          "z": -900.451
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 62,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 16,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 17,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 18,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 19,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 23,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 24,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 25,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 26,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 27,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 28,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 29,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 30,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 31,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 32,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 33,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 34,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 35,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 36,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 37,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 38,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 39,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 40,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 41,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 42,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 43,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 44,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 45,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 46,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 47,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 48,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 49,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 50,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 51,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 52,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 53,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0062"
+    },
+    {
+      "id": "valentine:road:0063:clip:0",
+      "kind": "road",
+      "lengthMetres": 240.873,
+      "points": [
+        {
+          "x": -269.8735,
+          "z": -827.9639
+        },
+        {
+          "x": -267.1049,
+          "z": -828.9078
+        },
+        {
+          "x": -264.3363,
+          "z": -829.8516
+        },
+        {
+          "x": -258.7991,
+          "z": -831.7393
+        },
+        {
+          "x": -247.7247,
+          "z": -835.5147
+        },
+        {
+          "x": -230.1063,
+          "z": -856.1534
+        },
+        {
+          "x": -221.0454,
+          "z": -882.3293
+        },
+        {
+          "x": -217.7734,
+          "z": -891.3901
+        },
+        {
+          "x": -216.1374,
+          "z": -895.9206
+        },
+        {
+          "x": -214.5014,
+          "z": -900.451
+        },
+        {
+          "x": -214.1239,
+          "z": -904.7298
+        },
+        {
+          "x": -213.7463,
+          "z": -909.0086
+        },
+        {
+          "x": -212.9913,
+          "z": -917.566
+        },
+        {
+          "x": -215.5082,
+          "z": -937.198
+        },
+        {
+          "x": -224.0657,
+          "z": -951.7961
+        },
+        {
+          "x": -224.0657,
+          "z": -954.9422
+        },
+        {
+          "x": -224.0657,
+          "z": -958.0884
+        },
+        {
+          "x": -224.0657,
+          "z": -961.2345
+        },
+        {
+          "x": -224.0657,
+          "z": -964.3807
+        },
+        {
+          "x": -213.9981,
+          "z": -975.9584
+        },
+        {
+          "x": -197.3864,
+          "z": -986.0261
+        },
+        {
+          "x": -189.3323,
+          "z": -994.0802
+        },
+        {
+          "x": -173.7274,
+          "z": -1000.6242
+        },
+        {
+          "x": -161.441942,
+          "z": -1006.932988
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 63,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 16,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 17,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 18,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 19,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 0.6596183870358888
+        }
+      ],
+      "sourceTrace": "valentine:road:0063"
+    },
+    {
+      "id": "valentine:road:0065:clip:0",
+      "kind": "road",
+      "lengthMetres": 73.596,
+      "points": [
+        {
+          "x": -277.9276,
+          "z": -568.2184
+        },
+        {
+          "x": -276.795,
+          "z": -564.0655
+        },
+        {
+          "x": -275.6624,
+          "z": -559.9126
+        },
+        {
+          "x": -273.3972,
+          "z": -551.6068
+        },
+        {
+          "x": -265.3431,
+          "z": -541.5392
+        },
+        {
+          "x": -264.588,
+          "z": -538.0155
+        },
+        {
+          "x": -263.8329,
+          "z": -534.4918
+        },
+        {
+          "x": -261.5677,
+          "z": -529.9614
+        },
+        {
+          "x": -259.3024,
+          "z": -525.4309
+        },
+        {
+          "x": -254.772,
+          "z": -516.37
+        },
+        {
+          "x": -247.070792,
+          "z": -502.326415
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 65,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 0.8999471568009564
+        }
+      ],
+      "sourceTrace": "valentine:road:0065"
+    },
+    {
+      "id": "valentine:road:0070:clip:0",
+      "kind": "road",
+      "lengthMetres": 246.252,
+      "points": [
+        {
+          "x": -274.9073,
+          "z": -857.1601
+        },
+        {
+          "x": -278.0535,
+          "z": -857.3489
+        },
+        {
+          "x": -281.1996,
+          "z": -857.5377
+        },
+        {
+          "x": -287.4919,
+          "z": -857.9152
+        },
+        {
+          "x": -300.0765,
+          "z": -858.6703
+        },
+        {
+          "x": -303.0968,
+          "z": -872.765
+        },
+        {
+          "x": -316.6881,
+          "z": -874.5269
+        },
+        {
+          "x": -323.4838,
+          "z": -875.4077
+        },
+        {
+          "x": -326.8816,
+          "z": -875.8482
+        },
+        {
+          "x": -330.2794,
+          "z": -876.2887
+        },
+        {
+          "x": -329.3041,
+          "z": -878.5224
+        },
+        {
+          "x": -328.3289,
+          "z": -880.7562
+        },
+        {
+          "x": -326.3782,
+          "z": -885.2237
+        },
+        {
+          "x": -322.477,
+          "z": -894.1588
+        },
+        {
+          "x": -318.5758,
+          "z": -903.0938
+        },
+        {
+          "x": -316.6252,
+          "z": -907.5613
+        },
+        {
+          "x": -315.6499,
+          "z": -909.7951
+        },
+        {
+          "x": -314.6746,
+          "z": -912.0289
+        },
+        {
+          "x": -313.0386,
+          "z": -914.6716
+        },
+        {
+          "x": -311.4026,
+          "z": -917.3144
+        },
+        {
+          "x": -308.1306,
+          "z": -922.5999
+        },
+        {
+          "x": -301.5867,
+          "z": -933.1709
+        },
+        {
+          "x": -294.2876,
+          "z": -945.5668
+        },
+        {
+          "x": -290.6381,
+          "z": -951.7646
+        },
+        {
+          "x": -288.8133,
+          "z": -954.8635
+        },
+        {
+          "x": -286.9885,
+          "z": -957.9625
+        },
+        {
+          "x": -286.2964,
+          "z": -960.9671
+        },
+        {
+          "x": -285.6043,
+          "z": -963.9716
+        },
+        {
+          "x": -284.22,
+          "z": -969.9808
+        },
+        {
+          "x": -281.4514,
+          "z": -981.999
+        },
+        {
+          "x": -275.6624,
+          "z": -994.5836
+        },
+        {
+          "x": -269.8735,
+          "z": -1007.1682
+        },
+        {
+          "x": -267.6083,
+          "z": -1018.746
+        },
+        {
+          "x": -265.3431,
+          "z": -1030.3238
+        },
+        {
+          "x": -261.715871,
+          "z": -1040.298691
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 70,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 16,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 17,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 18,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 19,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 20,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 21,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 22,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 23,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 24,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 25,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 26,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 27,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 28,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 29,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 30,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 31,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 32,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 33,
+          "toFraction": 0.4503580884336703
+        }
+      ],
+      "sourceTrace": "valentine:road:0070"
+    },
+    {
+      "id": "valentine:road:0071:clip:0",
+      "kind": "road",
+      "lengthMetres": 79.098,
+      "points": [
+        {
+          "x": -244.201,
+          "z": -892.9003
+        },
+        {
+          "x": -246.2146,
+          "z": -895.9206
+        },
+        {
+          "x": -248.2281,
+          "z": -898.9409
+        },
+        {
+          "x": -252.2552,
+          "z": -904.9815
+        },
+        {
+          "x": -263.8329,
+          "z": -912.5322
+        },
+        {
+          "x": -287.9953,
+          "z": -911.5255
+        },
+        {
+          "x": -304.1035,
+          "z": -911.5255
+        },
+        {
+          "x": -309.3262,
+          "z": -911.8401
+        },
+        {
+          "x": -311.9374,
+          "z": -911.9974
+        },
+        {
+          "x": -314.5488,
+          "z": -912.1547
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 71,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0071"
+    },
+    {
+      "id": "valentine:road:0072:clip:0",
+      "kind": "road",
+      "lengthMetres": 168.954,
+      "points": [
+        {
+          "x": -330.1536,
+          "z": -876.1628
+        },
+        {
+          "x": -332.938,
+          "z": -877.9404
+        },
+        {
+          "x": -335.7223,
+          "z": -879.718
+        },
+        {
+          "x": -341.291,
+          "z": -883.2731
+        },
+        {
+          "x": -352.4283,
+          "z": -890.3834
+        },
+        {
+          "x": -377.0941,
+          "z": -886.8597
+        },
+        {
+          "x": -385.1482,
+          "z": -886.1046
+        },
+        {
+          "x": -389.1753,
+          "z": -885.7271
+        },
+        {
+          "x": -393.2023,
+          "z": -885.3495
+        },
+        {
+          "x": -393.8945,
+          "z": -882.7068
+        },
+        {
+          "x": -394.5866,
+          "z": -880.064
+        },
+        {
+          "x": -395.9709,
+          "z": -874.7785
+        },
+        {
+          "x": -398.7395,
+          "z": -864.2075
+        },
+        {
+          "x": -399.7463,
+          "z": -840.0451
+        },
+        {
+          "x": -406.2903,
+          "z": -819.9098
+        },
+        {
+          "x": -385.1482,
+          "z": -807.3253
+        },
+        {
+          "x": -378.1008,
+          "z": -800.7812
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 72,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 9,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 10,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 11,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 12,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 13,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 14,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 15,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0072"
+    },
+    {
+      "id": "valentine:road:0073:clip:0",
+      "kind": "road",
+      "lengthMetres": 40.829,
+      "points": [
+        {
+          "x": -393.2023,
+          "z": -885.3495
+        },
+        {
+          "x": -394.2248,
+          "z": -888.6372
+        },
+        {
+          "x": -395.3731,
+          "z": -892.0508
+        },
+        {
+          "x": -397.6698,
+          "z": -898.878
+        },
+        {
+          "x": -402.2632,
+          "z": -912.5322
+        },
+        {
+          "x": -391.6921,
+          "z": -918.5728
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 73,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0073"
+    },
+    {
+      "id": "valentine:road:0077:clip:0",
+      "kind": "road",
+      "lengthMetres": 66.176,
+      "points": [
+        {
+          "x": -286.9885,
+          "z": -957.8367
+        },
+        {
+          "x": -284.2829,
+          "z": -958.5288
+        },
+        {
+          "x": -281.5772,
+          "z": -959.221
+        },
+        {
+          "x": -276.1658,
+          "z": -960.6053
+        },
+        {
+          "x": -265.3431,
+          "z": -963.3739
+        },
+        {
+          "x": -243.6976,
+          "z": -953.3062
+        },
+        {
+          "x": -234.0075,
+          "z": -955.6973
+        },
+        {
+          "x": -229.1624,
+          "z": -956.8928
+        },
+        {
+          "x": -226.7399,
+          "z": -957.4906
+        },
+        {
+          "x": -224.3174,
+          "z": -958.0883
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 77,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 5,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 6,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 7,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 8,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0077"
+    },
+    {
+      "id": "valentine:road:0168:clip:0",
+      "kind": "road",
+      "lengthMetres": 15.512,
+      "points": [
+        {
+          "x": -416.8613,
+          "z": -571.2387
+        },
+        {
+          "x": -417.1759,
+          "z": -569.351
+        },
+        {
+          "x": -417.4905,
+          "z": -567.4633
+        },
+        {
+          "x": -418.1198,
+          "z": -563.688
+        },
+        {
+          "x": -419.3782,
+          "z": -556.1372
+        },
+        {
+          "x": -419.343529,
+          "z": -555.937838
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 168,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 4,
+          "toFraction": 0.017219456464919795
+        }
+      ],
+      "sourceTrace": "valentine:road:0168"
+    },
+    {
+      "id": "valentine:road:0169:clip:0",
+      "kind": "road",
+      "lengthMetres": 13.127,
+      "points": [
+        {
+          "x": -200.4067,
+          "z": -646.7461
+        },
+        {
+          "x": -197.1347,
+          "z": -646.4945
+        },
+        {
+          "x": -193.8628,
+          "z": -646.2428
+        },
+        {
+          "x": -190.5908,
+          "z": -645.991
+        },
+        {
+          "x": -187.3188,
+          "z": -645.7394
+        }
+      ],
+      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "renderable": false,
+      "source": {
+        "crs": "jean-ropke-v1",
+        "featureIndex": 169,
+        "path": "road_new_hanover.json"
+      },
+      "sourceSegments": [
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 0,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 1,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 2,
+          "toFraction": 1
+        },
+        {
+          "fromFraction": 0,
+          "sourceSegmentIndex": 3,
+          "toFraction": 1
+        }
+      ],
+      "sourceTrace": "valentine:road:0169"
+    }
+  ],
+  "version": 1
+}

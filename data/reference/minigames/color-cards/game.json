@@ -1,15 +1,22 @@
 {
   "schemaVersion": 1,
   "id": "color-cards",
-  "name": "Farbkartenspiel",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "name": "Western UNO",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-color-cards-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "western-uno",
+      "file": "variants/western-uno.json"
+    }
+  ],
   "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
@@ -19,5 +26,6 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Western card shedding game with action cards and draw duels.",
+  "runtimeModule": "apps/client/src/game/minigames/color-cards/definition.ts"
 }

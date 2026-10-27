@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "provenance": "authored-gameplay",
+  "note": "Explicit visual substitutions for locally absent decoded diffuse references. Existing original albedos, UVs, raw files and missing-source status stay preserved. Donors are textures already embedded in the same source model; no native binding or color fidelity is claimed.",
+  "materials": [
+    {
+      "asset": "models/valentine/val_hotel_ext.glb",
+      "material": "shader_0_0xbcf03fc1",
+      "shader": "0xbcf03fc1",
+      "missingOriginalTexture": "val_wt_wood01_ab",
+      "donorTexture": "val_ew_wallwood62_ab"
+    },
+    {
+      "asset": "models/valentine/val_01_trainstn_ext.glb",
+      "material": "shader_3_0x512937b5",
+      "shader": "0x512937b5",
+      "missingOriginalTexture": "rho_be_paintwood_ab",
+      "donorTexture": "nbx_wall_woodpaintedoverlap_02_ab"
+    },
+    {
+      "asset": "models/valentine/val_01_trainstn_ext.glb",
+      "material": "shader_4_0x512937b5",
+      "shader": "0x512937b5",
+      "missingOriginalTexture": "rho_cs_depottrim_ab",
+      "donorTexture": "val_cs_trim_02_ab"
+    }
+  ]
+}

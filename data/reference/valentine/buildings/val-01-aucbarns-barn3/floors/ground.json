@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Viehstall & Gehege",
+  "status": "built-pilot",
+  "layout": {
+    "x": -221.38628185854702,
+    "z": -673.6330066664678,
+    "width": 24,
+    "depth": 11.8,
+    "floorY": 112.4,
+    "front": -667.7330066664679,
+    "doorX": -215.22628185854703,
+    "doorWidth": 2.4,
+    "rampStart": -662.2330066664679,
+    "rampLow": 112.63013539561,
+    "frontDirection": 1,
+    "yaw": 2.443460952792061,
+    "openPerimeter": true,
+    "porch": {
+      "x": -215.22628185854703,
+      "z": -666.6330066664678,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -215.22628185854703,
+            "y": 112.63013539561,
+            "z": -662.2330066664679
+          },
+          "to": {
+            "x": -215.22628185854703,
+            "y": 112.4,
+            "z": -665.5330066664678
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "cattle-pen-left",
+        "kind": "bar",
+        "position": {
+          "x": -227.98121935854704,
+          "y": 112.4,
+          "z": -674.0251735630196
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.2,
+          "z": 5
+        },
+        "color": "#4a331f",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "cattle-pen-right",
+        "kind": "bar",
+        "position": {
+          "x": -214.85621935854704,
+          "y": 112.4,
+          "z": -674.0251735630196
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.2,
+          "z": 5
+        },
+        "color": "#4a331f",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "water-trough",
+        "position": {
+          "x": -221.38628185854702,
+          "y": 112.4,
+          "z": -676.8734494250886
+        },
+        "size": {
+          "x": 2.2,
+          "y": 0.7,
+          "z": 1
+        },
+        "color": "#38291c",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    },
+    "stairs": [
+      {
+        "id": "main-stair",
+        "from": {
+          "x": -221.38628185854702,
+          "y": 112.4,
+          "z": -670.7847308043989
+        },
+        "to": {
+          "x": -221.38628185854702,
+          "y": 115.75,
+          "z": -676.4812825285368
+        },
+        "width": 1.6,
+        "toFloorId": "upper"
+      }
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 140,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -218.77733687773338,
+      "z": -686.3254849936932,
+      "y": 112.63013539561
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored auction barn 3 holding floor with wooden cattle pens and livestock water troughs.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim"
+}

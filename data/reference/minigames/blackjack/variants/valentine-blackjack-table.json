@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "valentine-blackjack-table",
+  "gameId": "blackjack",
+  "rulesVersion": "valentine-blackjack-v1",
+  "status": "runtime-loaded",
+  "minBet": 10,
+  "maxBet": 250,
+  "dealerStandsOn": 17,
+  "blackjackPayout": 1.5
+}
+

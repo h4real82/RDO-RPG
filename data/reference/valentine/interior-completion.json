@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "classification": "authored-gameplay",
+  "note": "Own playable outlines/doorways and two explicit authored lofts; no original MLO/entry/floor identity claim. Source placements and original GLBs retained.",
+  "buildings": [
+    {
+      "id": "val-01-aucyard-stable2",
+      "width": 7.2,
+      "depth": 15,
+      "yawDeg": 35,
+      "floorY": 112.55,
+      "doorWidth": 3.4,
+      "upperY": 115.75,
+      "label": "Stallgang & Futterlager",
+      "furniture": "stable"
+    },
+    {
+      "id": "val-01-aucyard-shed",
+      "width": 3.2,
+      "depth": 4.5,
+      "yawDeg": 50,
+      "floorY": 112.5,
+      "doorWidth": 1.6,
+      "label": "Geräteschuppen",
+      "furniture": "shed"
+    },
+    {
+      "id": "val-01-aucyard-chkcoop",
+      "width": 5.2,
+      "depth": 5.2,
+      "yawDeg": 51,
+      "floorY": 113.1,
+      "doorWidth": 1.9,
+      "label": "Hühnerhaus & Futterkammer",
+      "furniture": "coop"
+    },
+    {
+      "id": "val-07-magic-ticketbooth",
+      "width": 2.4,
+      "depth": 2.6,
+      "yawDeg": 62,
+      "floorY": 116.05,
+      "doorWidth": 1.4,
+      "rampLength": 2.6,
+      "label": "Kinokasse",
+      "furniture": "tickets"
+    },
+    {
+      "id": "val-07-magiclantern-ext",
+      "width": 19,
+      "depth": 8.2,
+      "yawDeg": 40,
+      "floorY": 116.05,
+      "doorWidth": 2.4,
+      "doorOffset": 7,
+      "label": "Vorführraum & Sitzreihen",
+      "furniture": "cinema"
+    },
+    {
+      "id": "val-06-auchouseb-ext",
+      "width": 11,
+      "depth": 10,
+      "yawDeg": 0,
+      "floorY": 117.5,
+      "doorWidth": 2.4,
+      "upperY": 120.5,
+      "label": "Wohnstube & Lager",
+      "furniture": "house"
+    },
+    {
+      "id": "shipping-stand",
+      "width": 3.8,
+      "depth": 2.6,
+      "yawDeg": 55,
+      "floorY": 112.6,
+      "doorWidth": 1.6,
+      "rampLength": 2.5,
+      "label": "Versandschalter",
+      "furniture": "shipping",
+      "frontDirection": -1
+    },
+    {
+      "id": "val-05-pigpen-a",
+      "width": 6,
+      "depth": 8.8,
+      "yawDeg": 0,
+      "floorY": 119.1,
+      "doorWidth": 2.4,
+      "label": "Futtergang & Unterstand",
+      "furniture": "pigpen"
+    }
+  ]
+}

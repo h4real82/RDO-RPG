@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss (Spielraum-Pilot)",
+  "status": "built-pilot",
+  "provenance": "authored-gameplay",
+  "layout": {
+    "x": -290.6944150431293,
+    "z": -778.3007443743843,
+    "width": 7.2,
+    "depth": 10.6,
+    "floorY": 118.3,
+    "front": -773.0007443743843,
+    "doorX": -288.5744150431293,
+    "doorWidth": 1.7,
+    "rampStart": -769.2007443743844,
+    "rampLow": 117.75498124759777,
+    "frontDirection": 1,
+    "yaw": 0.17453292519943295,
+    "fixtures": [],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay adapted footprint; source door-plane candidate and dominant floor plane",
+    "sourceMeasurement": "data/reference/valentine/buildings/rollout-source-measurements.json#law-office",
+    "sourceModelDoorCandidateLocal": {
+      "x": 2.42,
+      "z": 6.6,
+      "floorY": 118.3
+    },
+    "limits": "Source door plane is geometric evidence, not proof of original access. Simplified single room, no recovered MLO."
+  },
+  "accessNotes": {
+    "terrainAtRampFoot": 117.78998124759777,
+    "sampleDate": "2026-10-23",
+    "source": "browser TerrainGround.sampleGround without structural floors",
+    "notes": "Ramp foot 0.035m under sampled terrain for a continuous approach. Texture selection, UV tiling and room outline authored; original access unknown."
+  },
+  "acceptance": "Configured pilot awaiting dedicated real-input entrance/exit and visual checks. No original interior or upper-floor coverage claimed."
+}

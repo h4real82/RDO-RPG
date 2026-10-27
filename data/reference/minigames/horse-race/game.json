@@ -1,15 +1,30 @@
 {
   "schemaVersion": 1,
   "id": "horse-race",
-  "name": "Pferderennen",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "name": "Valentine Pferderennen",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-horse-race-v2",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "stable-menu",
+      "file": "variants/stable-menu.json"
+    },
+    {
+      "id": "circuit-sprint",
+      "file": "variants/circuit-sprint.json"
+    },
+    {
+      "id": "valentine-kart",
+      "file": "variants/valentine-kart.json"
+    }
+  ],
   "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
@@ -19,5 +34,6 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Local 3D mounted practice: source-street adapted circuit, countdown, steering, ordered gates, stamina, restart/pause. Arcade variant adds rivals, pickups and drift; no wallet or server authority.",
+  "runtimeModule": "apps/client/src/game/minigames/horse-race/definition.ts"
 }

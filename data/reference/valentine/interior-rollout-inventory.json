@@ -5,10 +5,10 @@
   "sourceManifestSha256": "4823c2651fb5715573fa3582807734f07abf36186113731a77a99cc7def43be8",
   "counts": {
     "supporting-placement": 72,
-    "building-candidate": 28,
+    "building-candidate": 32,
     "classification-required": 3
   },
-  "coverage": "All 103 buildings-layer placements recorded. 28 shell candidates and 3 special reviews are not an approved final house count. 2 ground-floor pilots; no complete floor coverage claimed.",
+  "coverage": "Current runtime: 33 playable human-scale buildings, 38 floors, five connected upper floors. Full fresh acceptance tracked separately from original-source accessibility and archival classification.",
   "placements": [
     {
       "placementId": "source:1d7a4419399c58d0",
@@ -34,9 +34,10 @@
       },
       "classification": "building-candidate",
       "label": "Bahnhof",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "station"
     },
     {
       "placementId": "source:3d36f17249ef5a21",
@@ -48,9 +49,10 @@
       },
       "classification": "building-candidate",
       "label": "Viehmarkt-Stall",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucyard-stables"
     },
     {
       "placementId": "source:42030fab922b6c61",
@@ -62,9 +64,10 @@
       },
       "classification": "building-candidate",
       "label": "Auktionsscheune 3",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucbarns-barn3"
     },
     {
       "placementId": "source:453738749a7497c7",
@@ -89,10 +92,11 @@
         "z": -674.5961
       },
       "classification": "classification-required",
-      "label": "Kleintierbau: menschliche Begehbarkeit und Zuordnung prüfen",
-      "interiorStatus": "review",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "label": "Kleintierbau: menschliche Begehbarkeit und Zuordnung prÃ¼fen",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucyard-chkcoop"
     },
     {
       "placementId": "source:6559b152288c756a",
@@ -118,9 +122,10 @@
       },
       "classification": "building-candidate",
       "label": "Viehmarkt-Stall 2",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucyard-stable2"
     },
     {
       "placementId": "source:6f1907a25c9b8012",
@@ -132,9 +137,10 @@
       },
       "classification": "building-candidate",
       "label": "Auktionsscheune 2",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucbarns-barn2"
     },
     {
       "placementId": "source:74a1d93ad5eb3bc0",
@@ -146,9 +152,10 @@
       },
       "classification": "building-candidate",
       "label": "Viehmarkt-Schuppen",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucyard-shed"
     },
     {
       "placementId": "source:85b1c8d53603c18e",
@@ -216,9 +223,10 @@
       },
       "classification": "building-candidate",
       "label": "Viehmarkt-Scheune",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-01-aucyard-barn"
     },
     {
       "placementId": "source:d0bb16dbc2fa6e0b",
@@ -244,9 +252,10 @@
       },
       "classification": "building-candidate",
       "label": "Kirche",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "church"
     },
     {
       "placementId": "source:f8c55e8f4fa43385",
@@ -272,9 +281,10 @@
       },
       "classification": "building-candidate",
       "label": "Wohnhaus F",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-07-resf-ext"
     },
     {
       "placementId": "valentine:02b94d3957f53059",
@@ -425,10 +435,11 @@
         "z": -705.8861
       },
       "classification": "building-candidate",
-      "label": "Kassenhäuschen",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "label": "KassenhÃ¤uschen",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-07-magic-ticketbooth"
     },
     {
       "placementId": "valentine:285038be82adc909",
@@ -440,9 +451,10 @@
       },
       "classification": "building-candidate",
       "label": "Livery-Stall",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-03-stable-ext"
     },
     {
       "placementId": "valentine:2997b4644809fbae",
@@ -510,9 +522,10 @@
       },
       "classification": "building-candidate",
       "label": "General Store",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "general-store"
     },
     {
       "placementId": "valentine:434da3e471c89552",
@@ -538,9 +551,10 @@
       },
       "classification": "building-candidate",
       "label": "Wohnhaus E",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-05-res-e"
     },
     {
       "placementId": "valentine:47508410ee74f2ff",
@@ -552,9 +566,10 @@
       },
       "classification": "building-candidate",
       "label": "Wohnhaus D",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-05-res-d"
     },
     {
       "placementId": "valentine:4a1ac9ae93ce4ad9",
@@ -608,9 +623,10 @@
       },
       "classification": "building-candidate",
       "label": "Kinozelt",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-07-magiclantern-ext"
     },
     {
       "placementId": "valentine:57a3efb964daa498",
@@ -621,10 +637,11 @@
         "z": -806.7511
       },
       "classification": "building-candidate",
-      "label": "Gefängnis-Hülle",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "label": "GefÃ¤ngnis-HÃ¼lle",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-03-jail-ext"
     },
     {
       "placementId": "valentine:57f7de2949c92791",
@@ -705,10 +722,11 @@
         "z": -782.0623
       },
       "classification": "building-candidate",
-      "label": "Büchsenmacher",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "label": "BÃ¼chsenmacher",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "gunsmith"
     },
     {
       "placementId": "valentine:6d4672cf966268e0",
@@ -720,9 +738,10 @@
       },
       "classification": "building-candidate",
       "label": "Bank",
-      "interiorStatus": "ground-floor-pilot",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "bank"
     },
     {
       "placementId": "valentine:6e9498442fd73563",
@@ -748,9 +767,10 @@
       },
       "classification": "supporting-placement",
       "label": "val_hotel_ext_prch",
-      "interiorStatus": "not-a-separate-approved-building",
-      "floorCount": null,
-      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume.",
+      "runtimeBuildingId": "hotel"
     },
     {
       "placementId": "valentine:707dfd297328323e",
@@ -762,9 +782,10 @@
       },
       "classification": "building-candidate",
       "label": "Frachtstation",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-freightstn"
     },
     {
       "placementId": "valentine:70ead86b8af996e6",
@@ -776,9 +797,10 @@
       },
       "classification": "building-candidate",
       "label": "Law Office",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "law-office"
     },
     {
       "placementId": "valentine:714a10d6278bec94",
@@ -803,10 +825,11 @@
         "z": -807.5872
       },
       "classification": "building-candidate",
-      "label": "Smithfield’s Saloon",
-      "interiorStatus": "ground-floor-pilot",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "label": "Smithfieldâ€™s Saloon",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "smithfields-saloon"
     },
     {
       "placementId": "valentine:7d6cbda6803aced9",
@@ -846,9 +869,10 @@
       },
       "classification": "building-candidate",
       "label": "Auktionshaus",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-auchouse-ext"
     },
     {
       "placementId": "valentine:86925af7fd5c6a1b",
@@ -1014,9 +1038,10 @@
       },
       "classification": "building-candidate",
       "label": "Auktionshaus B",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-06-auchouseb-ext"
     },
     {
       "placementId": "valentine:afc8293ebe4d851f",
@@ -1083,7 +1108,7 @@
         "z": -804.9147
       },
       "classification": "classification-required",
-      "label": "Zusammenhang mit Gefängnis/Sheriff-Hüllen prüfen; nicht doppelt als Haus zählen",
+      "label": "Zusammenhang mit GefÃ¤ngnis/Sheriff-HÃ¼llen prÃ¼fen; nicht doppelt als Haus zÃ¤hlen",
       "interiorStatus": "review",
       "floorCount": null,
       "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
@@ -1154,9 +1179,10 @@
       },
       "classification": "building-candidate",
       "label": "Hotel",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 2,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "hotel"
     },
     {
       "placementId": "valentine:d0d0cef1fb83c531",
@@ -1182,9 +1208,10 @@
       },
       "classification": "building-candidate",
       "label": "Sheriff-Haus",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "sheriff-house"
     },
     {
       "placementId": "valentine:d40850ed728aec29",
@@ -1251,7 +1278,7 @@
         "z": -768.1857
       },
       "classification": "classification-required",
-      "label": "Ruine: sinnvolle zugängliche Restfläche statt geschlossener Hülle festlegen",
+      "label": "Ruine: sinnvolle zugÃ¤ngliche RestflÃ¤che statt geschlossener HÃ¼lle festlegen",
       "interiorStatus": "review",
       "floorCount": null,
       "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
@@ -1266,9 +1293,10 @@
       },
       "classification": "building-candidate",
       "label": "Schmiede",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "smithy"
     },
     {
       "placementId": "valentine:dddcbc4ae5b717d1",
@@ -1280,9 +1308,10 @@
       },
       "classification": "supporting-placement",
       "label": "val_05_res_e_veg",
-      "interiorStatus": "not-a-separate-approved-building",
-      "floorCount": null,
-      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume.",
+      "runtimeBuildingId": "val-05-res-e"
     },
     {
       "placementId": "valentine:de064691074f853e",
@@ -1308,9 +1337,10 @@
       },
       "classification": "building-candidate",
       "label": "Arzt",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "doctor"
     },
     {
       "placementId": "valentine:ea95816258ff5ff1",
@@ -1378,9 +1408,10 @@
       },
       "classification": "building-candidate",
       "label": "Zweiter Saloon",
-      "interiorStatus": "planned",
-      "floorCount": null,
-      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed."
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "second-saloon"
     },
     {
       "placementId": "valentine:f0e2149972acaa83",
@@ -1451,6 +1482,67 @@
       "interiorStatus": "not-a-separate-approved-building",
       "floorCount": null,
       "notes": "Detail/prop/overlay disposition must be reviewed; not automatically an indoor volume."
+    },
+    {
+      "placementId": "source:735f6ec5898228fc",
+      "asset": "models/valentine/val_05_pigpen_a.glb",
+      "sourcePosition": {
+        "x": -293.6426,
+        "y": 120.7691,
+        "z": -842.509
+      },
+      "classification": "building-candidate",
+      "label": "Schweinestall A",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "val-05-pigpen-a"
+    },
+    {
+      "placementId": "source:777d5c9eae7269f0",
+      "asset": "models/valentine/val_05_res_a.glb",
+      "sourcePosition": {
+        "x": -288.9156,
+        "y": 124.6053,
+        "z": -870.5844
+      },
+      "classification": "building-candidate",
+      "label": "Wohnhaus A",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "Valentine residential hillside cottage north of church; accessible domestic home with fireplace and living quarters.",
+      "runtimeBuildingId": "val-05-res-a"
+    },
+    {
+      "placementId": "source:73d34ec005966b97",
+      "asset": "models/valentine/val_05_res_c.glb",
+      "sourcePosition": {
+        "x": -259.3584,
+        "y": 124.2778,
+        "z": -845.5386
+      },
+      "classification": "building-candidate",
+      "label": "Wohnhaus C",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "Valentine hillside residence C on hill path; accessible cottage with porch and living quarters.",
+      "runtimeBuildingId": "val-05-res-c"
+    },
+    {
+      "placementId": "source:a643c53723eeab3f",
+      "asset": "models/valentine/val_01_shippingstand.glb",
+      "sourcePosition": {
+        "x": -178.1698,
+        "y": 113.8712,
+        "z": -647.2196
+      },
+      "classification": "building-candidate",
+      "label": "Versandstand",
+      "interiorStatus": "runtime-built-authored",
+      "floorCount": 1,
+      "notes": "[FLAG: Data Missing] Floor count/door association not approved; own simplified design allowed.",
+      "runtimeBuildingId": "shipping-stand"
     }
-  ]
+  ],
+  "historicalInventoryNote": "Original source-placement inventory retained; current playable coverage comes from buildings/registry.json, not the original candidate count."
 }

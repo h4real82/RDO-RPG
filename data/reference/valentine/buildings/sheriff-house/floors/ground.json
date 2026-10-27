@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss (Spielraum-Pilot)",
+  "status": "built-pilot",
+  "provenance": "authored-gameplay",
+  "layout": {
+    "x": -260.24759207859694,
+    "z": -740.0691136740503,
+    "width": 10.6,
+    "depth": 8.6,
+    "floorY": 117.1,
+    "front": -735.7691136740503,
+    "doorX": -260.54759207859695,
+    "doorWidth": 1.7,
+    "rampStart": -731.9691136740504,
+    "rampLow": 116.0939715574111,
+    "frontDirection": 1,
+    "yaw": 1.9198621771937625,
+    "fixtures": [],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay adapted footprint; source door-plane candidate and dominant floor plane",
+    "sourceMeasurement": "data/reference/valentine/buildings/rollout-source-measurements.json#sheriff-house",
+    "sourceModelDoorCandidateLocal": {
+      "x": 2.7,
+      "z": 1.1,
+      "floorY": 117.1
+    },
+    "limits": "Source door plane is geometric evidence, not proof of original access. Simplified single room, no recovered MLO."
+  },
+  "accessNotes": {
+    "terrainAtRampFoot": 116.12897155741109,
+    "sampleDate": "2026-10-23",
+    "source": "browser TerrainGround.sampleGround without structural floors",
+    "notes": "Ramp foot 0.035m under sampled terrain for a continuous approach. Texture selection, UV tiling and room outline authored; original access unknown."
+  },
+  "acceptance": "Configured pilot awaiting dedicated real-input entrance/exit and visual checks. No original interior or upper-floor coverage claimed."
+}

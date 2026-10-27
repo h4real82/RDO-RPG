@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Erdgeschoss (Spielraum-Pilot)",
+  "status": "built-pilot",
+  "provenance": "authored-gameplay",
+  "layout": {
+    "x": -268.32630353382285,
+    "z": -757.3268135281002,
+    "width": 13.6,
+    "depth": 10.47,
+    "floorY": 117.2,
+    "front": -752.0918135281001,
+    "doorX": -264.9863035338229,
+    "doorWidth": 1.7,
+    "rampStart": -748.2918135281002,
+    "rampLow": 116.26043454022243,
+    "frontDirection": 1,
+    "yaw": 1.832595714594046,
+    "fixtures": [],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            4,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay simplified room; source vertical plane and measured floor",
+    "sourceMeasurement": "data/reference/valentine/buildings/rollout-source-measurements.json#val-auchouse-ext",
+    "sourceDoorPlaneLocal": {
+      "x": 3.53,
+      "z": -3.34,
+      "floorY": 117.2
+    },
+    "note": "Door-sized triangle evidence guides authored entry, not proof of original access. Main room adapted; no original MLO or full upper-floor coverage claimed."
+  },
+  "accessNotes": {
+    "terrainAtRampFoot": 116.29543454022243,
+    "sampleDate": "2026-10-24",
+    "source": "actual browser TerrainGround.sampleGround without structural floors",
+    "notes": "Ramp foot 0.035m under measured terrain; entrance remains inside the user-defined playable boundary."
+  },
+  "acceptance": "Authored single-room pilot; original access unknown and no upper floor claimed. Requires real-input entry/exit check."
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "schnautz-31",
+  "gameId": "schwimmen",
+  "rulesVersion": "valentine-schwimmen-v2",
+  "status": "runtime-loaded",
+  "name": "Schnautz31 · Keane’s Saloon",
+  "houseRules": {
+    "startingLives": 3,
+    "opponents": [
+      {
+        "id": "doc",
+        "name": "Doc Morgan",
+        "knockAt": 28
+      },
+      {
+        "id": "rose",
+        "name": "Rose Callahan",
+        "knockAt": 25
+      }
+    ]
+  },
+  "rulesText": "32 Karten (7 bis Ass). Ass zählt 11, Bilder und 10 zählen 10. Es zählt deine beste Farbsumme. Ein Drilling zählt 30½; drei Asse zählen in dieser Hausvariante 33. Tausche eine oder alle drei Karten, schiebe oder klopfe. Nach Klopfen hat jeder andere Gast noch genau einen Zug. 31 oder 33 beenden die Runde sofort. Alle niedrigsten Hände verlieren je eine Holzmarke; Gleichstand kann mehrere Gäste treffen. Wenn alle aktiven Gäste nacheinander schieben, gibt es eine neue Tischmitte. Mit null Marken bist du ausgeschieden. Doc und Rose sind lokale KI-Gäste."
+}

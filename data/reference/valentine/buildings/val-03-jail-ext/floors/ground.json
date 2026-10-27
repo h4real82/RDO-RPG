@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Sheriffsbüro & Arrestzellen",
+  "status": "built-pilot",
+  "layout": {
+    "x": -276.2529970523868,
+    "z": -807.2632000315663,
+    "width": 9.4,
+    "depth": 9.4,
+    "floorY": 118.4,
+    "front": -811.9632000315663,
+    "doorX": -276.5429970523868,
+    "doorWidth": 1.8,
+    "rampStart": -817.4632000315663,
+    "rampLow": 118.12513755275583,
+    "frontDirection": -1,
+    "yaw": 0.17453292519943295,
+    "porch": {
+      "x": -276.5429970523868,
+      "z": -813.0632000315663,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -276.5429970523868,
+            "y": 118.12513755275583,
+            "z": -817.4632000315663
+          },
+          "to": {
+            "x": -276.5429970523868,
+            "y": 118.4,
+            "z": -814.1632000315664
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "sheriff-desk",
+        "kind": "desk",
+        "position": {
+          "x": -278.0529970523868,
+          "y": 118.4,
+          "z": -806.6632000315662
+        },
+        "size": {
+          "x": 2.1,
+          "y": 0.9,
+          "z": 1.2
+        },
+        "color": "#452c1a",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "sheriff-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -278.09440282161756,
+          "y": 118.4,
+          "z": -807.6207983366511
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#edd7be",
+        "collision": false,
+        "yaw": 0
+      },
+      {
+        "id": "gun-cabinet",
+        "kind": "rifle-rack",
+        "position": {
+          "x": -280.2529970523868,
+          "y": 118.4,
+          "z": -806.6632000315662
+        },
+        "size": {
+          "x": 2.5,
+          "y": 2.15,
+          "z": 0.45
+        },
+        "color": "#332114",
+        "collision": true,
+        "yaw": 1.5707963268
+      },
+      {
+        "id": "jail-cell-bars",
+        "kind": "cell-bars",
+        "position": {
+          "x": -273.15299705238675,
+          "y": 118.4,
+          "z": -807.0632000315662
+        },
+        "size": {
+          "x": 4.5,
+          "y": 2.6,
+          "z": 0.16
+        },
+        "color": "#262626",
+        "collision": true,
+        "yaw": 1.5707963268
+      },
+      {
+        "id": "jail-cot",
+        "kind": "exam-cot",
+        "position": {
+          "x": -272.2529970523868,
+          "y": 118.4,
+          "z": -807.7632000315663
+        },
+        "size": {
+          "x": 0.9,
+          "y": 0.7,
+          "z": 2.1
+        },
+        "color": "#6e5a47",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "office-stove",
+        "kind": "stove",
+        "size": {
+          "x": 0.65,
+          "y": 2,
+          "z": 0.65
+        },
+        "position": {
+          "x": -279.8529970523868,
+          "y": 118.4,
+          "z": -803.7632000315663
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      },
+      {
+        "id": "office-chair",
+        "kind": "chair",
+        "size": {
+          "x": 0.65,
+          "y": 1.15,
+          "z": 0.65
+        },
+        "position": {
+          "x": -277.95299705238676,
+          "y": 118.4,
+          "z": -805.2632000315663
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 10,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -278.30980271296306,
+      "z": -817.2578811407674,
+      "y": 118.12513755275583
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored sheriff office with lawman desk, wanted board area, rifle locker, iron bar cell, cot and sheriff NPC.",
+  "furnitureEvidence": "data/reference/valentine/buildings/val-03-jail-ext/interior-photo-evidence-2026-10-24.json"
+}

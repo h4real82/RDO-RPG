@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "doctor",
-  "name": "Arzt",
+  "name": "Arztpraxis",
   "sourcePlacementIds": [
     "valentine:e56dda763cb33ef7"
   ],
@@ -10,18 +10,34 @@
   ],
   "classification": "building-candidate",
   "originalAccess": {
-    "status": "unknown",
+    "status": "confirmed-open",
     "edition": "unspecified",
-    "evidenceRefs": [],
-    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+    "evidenceRefs": [
+      {
+        "path": "docs/planning/Investigation-P1-P8-2026-10-18.md",
+        "section": "P5",
+        "kind": "user-gameplay-photo-review"
+      }
+    ],
+    "notes": "Town doctor's office at Valentine south side; accessible clinic room with examination chair, medicine cabinets and apothecary counter."
   },
   "interior": {
-    "policy": "provisional-wood",
+    "policy": "recognizable-adaptation",
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
-    "recognitionFeatures": [],
+    "recognitionFeatures": [
+      "Behandlungsstuhl",
+      "Medizinschränke",
+      "Apothekertresen",
+      "Wartebank"
+    ],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ]
   },
   "actions": []
 }

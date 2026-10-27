@@ -1,4 +1,84 @@
-.rdo-venue{position:absolute;inset:0;z-index:70;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;background:#0d1215bf;padding:clamp(12px,3vw,40px);box-sizing:border-box;color:#eae5d5;font:16px/1.5 Georgia,serif}
+.rdo-venue[role="dialog"]{max-width:none;border:0;border-radius:0;margin:0;position:fixed;inset:0;z-index:10001;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;background:#0d1215f0;padding:clamp(12px,3vw,40px);box-sizing:border-box;color:#eae5d5;font:16px/1.5 Georgia,serif}
 .rdo-venue__paper{box-sizing:border-box;width:min(760px,100%);max-height:100%;min-height:0;overflow:auto;padding:clamp(18px,3vw,32px);background:linear-gradient(135deg,#23332d,#131c1b);border:1px solid #8c754c;box-shadow:0 14px 60px #0008}
 .rdo-venue h2{font-size:clamp(24px,4vw,36px);margin:8px 0 18px}.rdo-venue small{color:#c6b78d;display:block}.rdo-venue button{font:inherit;color:#f3ebda;background:#452d26;border:1px solid #93754c;padding:10px 16px;margin:6px 8px 6px 0;cursor:pointer;min-height:44px}.rdo-venue button:hover{background:#663f30}.rdo-venue button:disabled{opacity:.5;cursor:wait}.rdo-venue :focus-visible{outline:2px solid #e4bd67;outline-offset:3px}
-.rdo-venue label{display:block;margin:12px 0}.rdo-venue input{box-sizing:border-box;display:block;width:100%;font:inherit;color:#eee5ce;background:#101716;border:1px solid #8c754c;padding:10px}.rdo-venue__inventory>div{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px solid #766443;padding:8px 0}.rdo-poker__cards{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 20px}.rdo-poker__card{background:#f3ecdb;color:#172c30;display:grid;grid-template-rows:minmax(0,1fr);place-items:center;width:52px;height:76px;border-radius:5px;box-shadow:0 3px 6px #0006;font-size:25px;font-weight:bold}.rdo-poker__card[data-red=true]{color:#a1272a}
+.rdo-venue label{display:block;margin:12px 0}.rdo-venue input{box-sizing:border-box;display:block;width:100%;font:inherit;color:#eee5ce;background:#101716;border:1px solid #8c754c;padding:10px}.rdo-venue__inventory>div{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-top:1px solid #766443;padding:8px 0}.rdo-poker__cards{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 20px}.rdo-poker__card{background:#f3ecdb;color:#172c30;display:grid;place-items:center;width:52px;height:76px;border-radius:5px;box-shadow:0 3px 6px #0006;font-size:25px;font-weight:bold}.rdo-poker__card[data-red=true]{color:#a1272a}
+
+.rdo-poker__card{transition:transform .15s ease,box-shadow .15s ease;user-select:none}
+.rdo-poker__card:hover{transform:translateY(-2px);box-shadow:0 6px 12px #0008}
+.rdo-poker__lobby-wallet{transition:border-color .2s ease}
+
+/* Saloon Bar Styles */
+.rdo-venue__bar-header{margin-bottom:16px;border-bottom:1px solid #766443;padding-bottom:12px}
+.rdo-venue__balance-pill{display:inline-block;background:#101716;border:1px solid #e4bd67;color:#e4bd67;padding:6px 14px;border-radius:4px;font-weight:bold;font-size:17px;margin-bottom:8px}
+.rdo-venue__categories{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.rdo-venue__category--active{background:#663f30 !important;border-color:#e4bd67 !important;color:#fff !important;font-weight:bold}
+.rdo-venue__drinks-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:14px;max-height:55vh;overflow-y:auto;padding-right:6px}
+.rdo-venue__drink-card{background:#172321;border:1px solid #6b5736;padding:12px;border-radius:3px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s ease}
+.rdo-venue__drink-card:hover{border-color:#e4bd67}
+.rdo-venue__drink-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rdo-venue__drink-title{font-size:18px;color:#f3ebda}
+.rdo-venue__drink-tag{font-size:11px;text-transform:uppercase;background:#2a3d37;color:#c6b78d;padding:2px 6px;border-radius:3px;border:1px solid #4a635a}
+.rdo-venue__drink-price{font-weight:bold;color:#e4bd67;font-size:14px;white-space:nowrap}
+.rdo-venue__drink-desc{font-size:13px;line-height:1.4;color:#d0c6ad;margin:2px 0}
+.rdo-venue__drink-effect{color:#9ec297;font-size:12px;font-style:italic;margin-bottom:4px}
+.rdo-venue__order-btn{margin-top:auto !important;width:100%;text-align:center}
+
+/* Cinema / Magic Lantern Theater Styles */
+.rdo-cinema__seats{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 16px}
+.rdo-cinema__seat-btn{background:#172321;border:1px solid #6b5736;color:#c6b78d;padding:8px 14px;border-radius:3px;cursor:pointer;transition:border-color .15s ease}
+.rdo-cinema__seat-btn--active{background:#663f30 !important;border-color:#e4bd67 !important;color:#fff !important;font-weight:bold}
+.rdo-cinema__stage{position:relative;width:100%;aspect-ratio:16/9;background:#080b0c;border:2px solid #8c754c;border-radius:4px;overflow:hidden;box-shadow:inset 0 0 40px #000, 0 8px 32px #000a;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:14px 0}
+.rdo-cinema__curtain{position:absolute;inset:0;background:radial-gradient(circle at center, #2e1418 0%, #15090b 80%, #0a0304 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;border:4px solid #4a191f;box-sizing:border-box}
+.rdo-cinema__curtain h3{font-size:22px;color:#e4bd67;margin:0;text-shadow:0 2px 8px #000}
+.rdo-cinema__curtain p{color:#c6b78d;max-width:480px;margin:0;font-size:14px}
+.rdo-cinema__frame{width:100%;height:100%;border:0}
+.rdo-cinema__video{width:100%;height:100%;background:#000;object-fit:contain}
+.rdo-cinema__movies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:14px 0}
+.rdo-cinema__movie-card{background:#172321;border:1px solid #6b5736;padding:12px;border-radius:3px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s ease}
+.rdo-cinema__movie-card:hover{border-color:#e4bd67}
+.rdo-cinema__movie-card--active{border-color:#e4bd67 !important;background:#23342f !important}
+.rdo-cinema__movie-title{color:#f3ebda;font-size:16px;font-weight:bold}
+.rdo-cinema__movie-meta{font-size:12px;color:#c6b78d}
+.rdo-cinema__movie-desc{font-size:13px;color:#d0c6ad;line-height:1.4;margin:2px 0 6px}
+
+/* Memorial Room & Trophy Showcase Styles */
+.rdo-memorial__notes-section, .rdo-memorial__trophies-section {display:flex;flex-direction:column;gap:16px;margin-top:14px}
+.rdo-memorial__creator {background:#172321;border:1px solid #6b5736;border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.rdo-memorial__textarea {box-sizing:border-box;width:100%;min-height:80px;background:#101716;border:1px solid #8c754c;color:#eee5ce;font:inherit;padding:10px;border-radius:3px;resize:vertical}
+.rdo-memorial__colors {display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rdo-memorial__color-btn {padding:4px 10px !important;font-size:13px !important;border-radius:3px !important;margin:0 !important;min-height:36px !important}
+.rdo-memorial__color-btn--gelb {background:#594e22 !important;color:#ffe680 !important}
+.rdo-memorial__color-btn--rosa {background:#5c2c3e !important;color:#ffb3d1 !important}
+.rdo-memorial__color-btn--blau {background:#264257 !important;color:#a6dbff !important}
+.rdo-memorial__color-btn--gruen {background:#264a2f !important;color:#a8f0b7 !important}
+.rdo-memorial__color-btn--pergament {background:#4a3e2e !important;color:#e6d3b3 !important}
+.rdo-memorial__color-btn--active {outline:2px solid #e4bd67 !important;outline-offset:2px}
+
+.rdo-memorial__board {display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:18px;background:radial-gradient(circle,#2d2015 0%,#17100b 100%);border:3px solid #61462b;border-radius:4px;box-shadow:inset 0 0 20px #000a;max-height:50vh;overflow-y:auto}
+.rdo-memorial__note {position:relative;padding:16px 14px 14px;border-radius:2px;box-shadow:2px 4px 12px #0009;display:flex;flex-direction:column;gap:8px;color:#1a150e;font-family:Georgia,serif;transform:rotate(-1deg);transition:transform .15s ease}
+.rdo-memorial__note:nth-child(even) {transform:rotate(1.5deg)}
+.rdo-memorial__note:hover {transform:scale(1.03) rotate(0deg);z-index:5}
+.rdo-memorial__note--gelb {background:#fff59d}
+.rdo-memorial__note--rosa {background:#ffcdd2}
+.rdo-memorial__note--blau {background:#bbdefb}
+.rdo-memorial__note--gruen {background:#c8e6c9}
+.rdo-memorial__note--pergament {background:#e0d2bc}
+
+.rdo-memorial__pin {position:absolute;top:4px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff4d4d,#990000);box-shadow:0 2px 4px #0008}
+.rdo-memorial__note-header {display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed #0004;padding-bottom:4px;font-size:13px}
+.rdo-memorial__note-author {font-weight:bold}
+.rdo-memorial__note-date {font-size:11px;opacity:.75}
+.rdo-memorial__note-text {font-size:14px;line-height:1.4;margin:0;white-space:pre-wrap}
+.rdo-memorial__note-del-btn {align-self:flex-end;background:transparent !important;border:0 !important;color:#8b0000 !important;cursor:pointer;padding:2px 4px !important;font-size:12px !important;margin:0 !important;min-height:auto !important}
+
+/* Trophy Showcase */
+.rdo-trophy__case {background:radial-gradient(circle,#1a080c 0%,#0c0406 100%);border:3px solid #8c754c;border-radius:4px;padding:18px;box-shadow:inset 0 0 24px #000;max-height:50vh;overflow-y:auto}
+.rdo-trophy__grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.rdo-trophy__card {background:#1e1315;border:1px solid #7d5930;border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px #0008}
+.rdo-trophy__icon-box {font-size:36px;text-align:center;padding:6px 0;background:#140b0d;border-radius:3px;border:1px solid #573a21}
+.rdo-trophy__title {color:#f3ebda;font-size:16px}
+.rdo-trophy__desc {color:#c6b78d;font-size:13px;line-height:1.35;margin:0}
+.rdo-trophy__plaque {background:#2b1f13;border:1px solid #b89758;border-radius:2px;padding:6px 10px;color:#eeddbb;font-style:italic;font-size:12px}
+.rdo-trophy__footer {display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px}
+
+

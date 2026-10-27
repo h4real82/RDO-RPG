@@ -2,6 +2,12 @@ import { BoxGeometry, Group, Mesh, MeshBasicMaterial, PlaneGeometry } from 'thre
 import { expect, it } from 'vitest';
 import { VisibleMeshCollision } from './VisibleMeshCollision';
 
+it('uses authored collision ownership instead of an invisible imported interior, retaining authored walls',()=>{
+ const collision=new VisibleMeshCollision(),legacy=new Group();legacy.userData.sourceAsset='models/valentine/val_06_auction_int.glb';legacy.add(box(0,1,0,.2,2,4));collision.add(legacy);
+ const from={x:-1,y:0,z:0},to={x:1,y:0,z:0};expect(collision.blocksTransition(from,to)).toBe(true);collision.setAuthoredSourceMask(()=>true);expect(collision.blocksTransition(from,to)).toBe(false);expect(collision.overlapsBody({x:0,y:0,z:0})).toBe(false);
+ const authored=new Group();authored.userData.sourceAsset='authored-gameplay/house-ground';authored.add(box(0,1,0,.2,2,4));collision.add(authored);expect(collision.blocksTransition(from,to)).toBe(true);collision.remove(authored);collision.setAuthoredSourceMask(()=>false);expect(collision.blocksTransition(from,to)).toBe(true);
+});
+
 it('checks a stationary body against actual wall triangles, not the enclosing building box', () => {
   const collision = new VisibleMeshCollision();
   const building = new Group();

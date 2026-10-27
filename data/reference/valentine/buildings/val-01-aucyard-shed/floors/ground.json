@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Geräteschuppen",
+  "status": "built-authored",
+  "layout": {
+    "x": -251.72160000000002,
+    "z": -650.885,
+    "width": 3.2,
+    "depth": 4.5,
+    "floorY": 112.5,
+    "front": -648.635,
+    "doorX": -251.72160000000002,
+    "doorWidth": 1.6,
+    "rampStart": -644.635,
+    "rampLow": 112.32760973974833,
+    "frontDirection": 1,
+    "yaw": 0.8726646259971648,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "tools-and-crates",
+        "kind": "crate-stack",
+        "position": {
+          "x": -252.4216,
+          "y": 112.5,
+          "z": -651.885
+        },
+        "size": {
+          "x": 1,
+          "y": 1.1,
+          "z": 0.8
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

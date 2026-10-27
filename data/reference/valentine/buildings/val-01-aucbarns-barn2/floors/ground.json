@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Stallbereich & Viehbuchten",
+  "status": "built-pilot",
+  "layout": {
+    "x": -257.156218141453,
+    "z": -634.6964933335322,
+    "width": 24,
+    "depth": 11.8,
+    "floorY": 112.4,
+    "front": -640.5964933335322,
+    "doorX": -263.316218141453,
+    "doorWidth": 2.6,
+    "rampStart": -646.0964933335322,
+    "rampLow": 112.17166553030198,
+    "frontDirection": -1,
+    "yaw": 2.443460952792061,
+    "openPerimeter": true,
+    "porch": {
+      "x": -263.316218141453,
+      "z": -641.6964933335322,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -263.316218141453,
+            "y": 112.17166553030198,
+            "z": -646.0964933335322
+          },
+          "to": {
+            "x": -263.316218141453,
+            "y": 112.4,
+            "z": -642.7964933335322
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "feed-trough-1",
+        "kind": "bar",
+        "position": {
+          "x": -264.161018141453,
+          "y": 112.4,
+          "z": -634.855456190675
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.85,
+          "z": 4.5
+        },
+        "color": "#4d3521",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "feed-trough-2",
+        "kind": "bar",
+        "position": {
+          "x": -249.93879591923078,
+          "y": 112.4,
+          "z": -634.855456190675
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.85,
+          "z": 4.5
+        },
+        "color": "#4d3521",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "hay-stack",
+        "position": {
+          "x": -248.156218141453,
+          "y": 112.4,
+          "z": -636.6964933335322
+        },
+        "size": {
+          "x": 2.4,
+          "y": 1.4,
+          "z": 2.4
+        },
+        "color": "#947b3b",
+        "collision": true,
+        "yaw": 0.2
+      },
+      {
+        "id": "barn-hand-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -253.95621814145298,
+          "y": 112.4,
+          "z": -632.1679219049607
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#e0cbb2",
+        "collision": false,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    },
+    "stairs": [
+      {
+        "id": "main-stair",
+        "from": {
+          "x": -257.156218141453,
+          "y": 112.4,
+          "z": -631.7464933335322
+        },
+        "to": {
+          "x": -257.156218141453,
+          "y": 115.75,
+          "z": -637.6464933335322
+        },
+        "width": 1.6,
+        "toFloorId": "upper"
+      }
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 140,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -259.7651631222666,
+      "z": -622.0040150063069,
+      "y": 112.17166553030198
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored auction barn ground floor with open cattle pens, feed mangers, hay bales and stable hand.",
+  "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim"
+}

@@ -3,10 +3,12 @@
   "id": "hotel",
   "name": "Hotel",
   "sourcePlacementIds": [
-    "valentine:cb03cea32867a99b"
+    "valentine:cb03cea32867a99b",
+    "valentine:6ebd826b625bcb3b"
   ],
   "sourceAssets": [
-    "models/valentine/val_hotel_ext.glb"
+    "models/valentine/val_hotel_ext.glb",
+    "models/valentine/val_hotel_ext_prch.glb"
   ],
   "classification": "building-candidate",
   "originalAccess": {
@@ -30,8 +32,36 @@
       "Zimmerflur und einfache Zimmer"
     ],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      },
+      {
+        "id": "upper",
+        "file": "floors/upper.json"
+      }
+    ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "hotel-memorial-lounge",
+      "kind": "memorial",
+      "label": "Erinnerungsraum: Pinnwand & Trophäenvitrine",
+      "floorId": "ground",
+      "position": {
+        "x": -326.5,
+        "y": 117.8,
+        "z": -765.2
+      },
+      "interactionPosition": {
+        "x": -325.2,
+        "y": 117.1,
+        "z": -765.2
+      },
+      "radius": 3,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

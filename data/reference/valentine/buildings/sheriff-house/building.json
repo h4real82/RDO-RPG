@@ -20,8 +20,14 @@
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ],
+    "notes": "Authored empty wood-floor pilot aligned to source-sized vertical plane and measured floor height; unknown original access retained. Source details not reconstructed. Dedicated browser route validation required."
   },
   "actions": []
 }

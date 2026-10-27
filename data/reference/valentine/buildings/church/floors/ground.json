@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Kirchenschiff & Altarraum",
+  "status": "built-pilot",
+  "layout": {
+    "x": -225.30784904894685,
+    "z": -804.7749571123651,
+    "width": 10.8,
+    "depth": 18.68,
+    "floorY": 123.7,
+    "front": -814.1149571123651,
+    "doorX": -229.05784904894685,
+    "doorWidth": 2.2,
+    "rampStart": -817.3149571123652,
+    "rampLow": 121.31855809210369,
+    "frontDirection": -1,
+    "yaw": 2.111848394913139,
+    "porch": {
+      "x": -229.05784904894685,
+      "z": -814.6149571123651,
+      "width": 2.8,
+      "depth": 1,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -229.05784904894685,
+            "y": 121.31855809210369,
+            "z": -817.3149571123652
+          },
+          "to": {
+            "x": -229.05784904894685,
+            "y": 123.7,
+            "z": -815.1149571123651
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "altar",
+        "kind": "table",
+        "position": {
+          "x": -225.30784904894685,
+          "y": 123.70000000000003,
+          "z": -798.4302143963157
+        },
+        "size": {
+          "x": 2.6,
+          "y": 1,
+          "z": 1.4
+        },
+        "color": "#523722",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pulpit",
+        "kind": "table",
+        "position": {
+          "x": -227.71424904894684,
+          "y": 123.70000000000003,
+          "z": -799.5833008160688
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.4,
+          "z": 1.2
+        },
+        "color": "#452b18",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-left-1",
+        "kind": "table",
+        "position": {
+          "x": -227.51424904894685,
+          "y": 123.70000000000003,
+          "z": -803.0425600753281
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-left-2",
+        "kind": "table",
+        "position": {
+          "x": -227.51424904894685,
+          "y": 123.70000000000003,
+          "z": -805.9252761247108
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-left-3",
+        "kind": "table",
+        "position": {
+          "x": -227.51424904894685,
+          "y": 123.70000000000003,
+          "z": -808.8079921740936
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-right-1",
+        "kind": "table",
+        "position": {
+          "x": -223.11424904894685,
+          "y": 123.70000000000003,
+          "z": -803.0425600753281
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-right-2",
+        "kind": "table",
+        "position": {
+          "x": -223.11424904894685,
+          "y": 123.70000000000003,
+          "z": -805.9252761247108
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pew-right-3",
+        "kind": "table",
+        "position": {
+          "x": -223.11424904894685,
+          "y": 123.70000000000003,
+          "z": -808.8079921740936
+        },
+        "size": {
+          "x": 2.4,
+          "y": 0.85,
+          "z": 0.8
+        },
+        "color": "#5c3c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "church-cross",
+        "kind": "table",
+        "position": {
+          "x": -225.30784904894685,
+          "y": 123.70000000000003,
+          "z": -796.4699674827355
+        },
+        "size": {
+          "x": 0.8,
+          "y": 2.8,
+          "z": 0.3
+        },
+        "color": "#2e2118",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "graveyard-headstone-cluster",
+        "kind": "table",
+        "position": {
+          "x": -232.71424904894684,
+          "y": 116.60000000000001,
+          "z": -818.6092267419948
+        },
+        "size": {
+          "x": 4.5,
+          "y": 0.9,
+          "z": 3
+        },
+        "color": "#5c5750",
+        "collision": true,
+        "yaw": 0.15
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            5
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 121,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -234.1253342188387,
+      "z": -795.1020022753601,
+      "y": 121.31855809210369
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored chapel nave with wooden altar, preacher pulpit, congregational pews, church cross and grounded hillside entrance stairs connecting to graveyard slope."
+}

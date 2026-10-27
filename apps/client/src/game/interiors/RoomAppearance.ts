@@ -1,11 +1,13 @@
 import {Box3,Group,Mesh,MeshStandardMaterial,RepeatWrapping,SRGBColorSpace,Texture,Vector3} from 'three';
 import type {RoomAppearance} from '../buildings/BuildingTypes';
+import {batchAuthoredFurniture} from './FurnitureBatch';
 type Lease={instance:Group;dispose():void};
 
 /** Decoration has no collision authority. Missing originals leave the playable fallback in place. */
 export async function installRoomAppearance(room:{support:Group;interior:Group;floorY?:number},appearance:RoomAppearance,
  loadModel:(url:string)=>Promise<Lease>,loadTexture:(url:string)=>Promise<Texture>) {
  const missing:string[]=[],undo:(()=>void)[]=[],materials=new Set<MeshStandardMaterial>(),textures=new Set<Texture>();
+ const materialCache=new Map<MeshStandardMaterial,Map<string,MeshStandardMaterial>>(),mapCache=new Map<string,Texture>();
  const textureEntries=Object.entries(appearance.textures??{});
  const loaded=await Promise.allSettled(textureEntries.map(([,entry])=>loadTexture(entry.url)));
  const byRole=new Map<string,{texture:Texture;repeat?:[number,number];offset?:[number,number]}>();
@@ -16,6 +18,9 @@ export async function installRoomAppearance(room:{support:Group;interior:Group;f
    byRole.set(role,{texture,repeat:entry.repeat,offset:entry.offset});
   }else missing.push(entry.url);
  });
+ // Existing room files predate the more specific furniture material role.
+ // Their verified wood donor remains the fallback; explicit furniture maps win.
+ if(!byRole.has('furnitureWood')&&byRole.has('wood'))byRole.set('furnitureWood',byRole.get('wood')!);
  for(const root of [room.support,room.interior])root.traverse(object=>{
   if(!(object instanceof Mesh))return;
   if((object.name==='plank-seam' && byRole.has('floor') || object.name==='picture-hills' && byRole.has('art')) && object.material instanceof MeshStandardMaterial){
@@ -25,18 +30,22 @@ export async function installRoomAppearance(room:{support:Group;interior:Group;f
   const replacements=items.map(material=>{
    if(!(material instanceof MeshStandardMaterial))return material;
    const role=material.userData.interiorRole,entry=byRole.get(role);if(!entry)return material;
-   const replacement=material.clone(),map=entry.texture.clone();textures.add(map);materials.add(replacement);
-   if(entry.repeat)map.repeat.set(...entry.repeat);
-   if(entry.offset)map.offset.set(...entry.offset);
+   let repeat=entry.repeat;
    if(role==='wallpaper'){
     object.geometry.computeBoundingBox();const extent=object.geometry.boundingBox?.getSize(new Vector3());
-    if(extent)map.repeat.set(Math.max(extent.x,extent.z)/1.8,extent.y/1.8);
+    if(extent)repeat=[Math.max(extent.x,extent.z)/1.8,extent.y/1.8];
    }
    if(role==='art'){
     const own=object.userData.ownArtwork,source=object.userData.sourceArtwork;object.userData.ownArtwork=false;object.userData.sourceArtwork=appearance.textures?.art.url;
     undo.push(()=>{object.userData.ownArtwork=own;object.userData.sourceArtwork=source;});
    }
-   replacement.map=map;replacement.color.set('#ffffff');replacement.roughness=.82;replacement.needsUpdate=true;changed=true;return replacement;
+   const binding=JSON.stringify([role,repeat,entry.offset]);
+   let map=mapCache.get(binding);
+   if(!map){map=entry.texture.clone();if(repeat)map.repeat.set(...repeat);if(entry.offset)map.offset.set(...entry.offset);mapCache.set(binding,map);textures.add(map);}
+   let variants=materialCache.get(material);if(!variants){variants=new Map();materialCache.set(material,variants);}
+   let replacement=variants.get(binding);
+   if(!replacement){replacement=material.clone();replacement.map=map;replacement.color.set('#ffffff');replacement.roughness=.82;replacement.needsUpdate=true;variants.set(binding,replacement);materials.add(replacement);}
+   changed=true;return replacement;
   });
   if(changed){object.material=Array.isArray(base)?replacements:replacements[0];undo.push(()=>{object.material=base;});}
  });
@@ -56,6 +65,8 @@ export async function installRoomAppearance(room:{support:Group;interior:Group;f
   hidden.forEach(({child})=>{child.visible=false;});room.interior.add(wrapper);
   undo.push(()=>{room.interior.remove(wrapper);wrapper.remove(object);lease.dispose();hidden.forEach(({child,visible})=>{child.visible=visible;});});
  });
+ const batch=batchAuthoredFurniture(room.interior),stairs=batchAuthoredFurniture(room.support);
+ undo.push(()=>{stairs.dispose();batch.dispose();});
  let disposed=false;
  return {missing,dispose(){if(disposed)return;disposed=true;for(const release of undo.reverse())release();materials.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());}};
 }

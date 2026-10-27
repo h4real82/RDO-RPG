@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Wohnraum & Hangblick",
+  "status": "built-pilot",
+  "layout": {
+    "x": -246.7453403876506,
+    "z": -962.9034824088834,
+    "width": 10,
+    "depth": 5.4,
+    "floorY": 137.5,
+    "front": -965.6034824088835,
+    "doorX": -244.3053403876506,
+    "doorWidth": 1.8,
+    "rampStart": -971.1034824088835,
+    "rampLow": 136.2306178465908,
+    "frontDirection": -1,
+    "yaw": 1.3962634015954636,
+    "porch": {
+      "x": -244.3053403876506,
+      "z": -966.7034824088835,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -244.3053403876506,
+            "y": 136.2306178465908,
+            "z": -971.1034824088835
+          },
+          "to": {
+            "x": -244.3053403876506,
+            "y": 137.5,
+            "z": -967.8034824088835
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "stone-fireplace",
+        "kind": "bar",
+        "position": {
+          "x": -249.98445803470943,
+          "y": 137.5,
+          "z": -962.0059455667781
+        },
+        "size": {
+          "x": 1.8,
+          "y": 1.5,
+          "z": 1.4
+        },
+        "color": "#362a22",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "writing-desk",
+        "kind": "table",
+        "position": {
+          "x": -244.10210509353294,
+          "y": 137.5,
+          "z": -963.6638403036202
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.85,
+          "z": 1.2
+        },
+        "color": "#4a321f",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "double-bed",
+        "kind": "table",
+        "position": {
+          "x": -244.10210509353294,
+          "y": 137.5,
+          "z": -961.2954192509886
+        },
+        "size": {
+          "x": 2.2,
+          "y": 0.8,
+          "z": 2
+        },
+        "color": "#5e422b",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 80,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -254.39706240884345,
+      "z": -966.730328383102,
+      "y": 136.2306178465908
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored residential overlook home with stone fireplace, writing desk and double bed."
+}

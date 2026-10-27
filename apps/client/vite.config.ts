@@ -25,6 +25,7 @@ function installLocalRuntime(server: Pick<ViteDevServer, 'middlewares'>): void {
   mount('/runtime/valentine/verified-scene','../../data/runtime/valentine/verified-scene');
   mount('/runtime/valentine/local-preview','../../data/runtime/valentine/local-preview');
   mount('/runtime/valentine/frontier-ui','../../data/runtime/valentine/frontier-ui');
+  mount('/runtime/player-models','../../data/runtime/player-models');
   const file=(url: string,path: string): void=> {
     server.middlewares.use(url,(request,response)=> {
       try {
@@ -64,7 +65,8 @@ export default defineConfig({
     }
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    rollupOptions:{input:{app:resolve(__dirname,'index.html'),map:resolve(__dirname,'map-preview.html')}}
   }
   ,preview:{proxy:{'/api':{target:'http://127.0.0.1:2567',changeOrigin:true}}}
 });

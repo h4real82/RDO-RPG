@@ -1,15 +1,22 @@
 {
   "schemaVersion": 1,
   "id": "mini-golf",
-  "name": "Minigolf",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "name": "Valentine Cross Golf",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-mini-golf-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "cross-golf",
+      "file": "variants/cross-golf.json"
+    }
+  ],
   "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
@@ -19,5 +26,6 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Valentine cross country golf arcade with clubs and obstacle terrain.",
+  "runtimeModule": "apps/client/src/game/minigames/mini-golf/definition.ts"
 }

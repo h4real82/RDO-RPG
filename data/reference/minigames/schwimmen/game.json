@@ -1,15 +1,22 @@
 {
   "schemaVersion": 1,
   "id": "schwimmen",
-  "name": "Schwimmen / Schnauz",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "name": "Schnautz / Schwimmen 31",
+  "implementationStatus": "local-prototype",
+  "rulesVersion": "valentine-schwimmen-v2",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "schnautz-31",
+      "file": "variants/schnautz-31.json"
+    }
+  ],
   "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
@@ -19,5 +26,6 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Complete local practice match against two AI guests, real exchanges/market/knocking/last turns/lives. Explicit retained house scoring: trips30.5, three aces33. No wallet or online authority.",
+  "runtimeModule": "apps/client/src/game/minigames/schwimmen/definition.ts"
 }

@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-24T18:43:26.524Z",
+  "classification": "authored-gameplay",
+  "built": [
+    {
+      "id": "val-01-aucyard-stable2",
+      "x": -276.1919,
+      "z": -656.0513000000001,
+      "yaw": 0.6108652381980153,
+      "floorY": 112.55,
+      "rampLow": 112.42849595335399,
+      "floors": 2
+    },
+    {
+      "id": "val-01-aucyard-shed",
+      "x": -251.72160000000002,
+      "z": -650.885,
+      "yaw": 0.8726646259971648,
+      "floorY": 112.5,
+      "rampLow": 112.32760973974833,
+      "floors": 1
+    },
+    {
+      "id": "val-01-aucyard-chkcoop",
+      "x": -248.2465,
+      "z": -674.4566,
+      "yaw": 0.890117918517108,
+      "floorY": 113.1,
+      "rampLow": 112.2955366037489,
+      "floors": 1
+    },
+    {
+      "id": "val-07-magic-ticketbooth",
+      "x": -355.511540195965,
+      "z": -705.3833202591758,
+      "yaw": 1.0821041362364843,
+      "floorY": 116.05,
+      "rampLow": 115.93132515346268,
+      "floors": 1
+    },
+    {
+      "id": "val-07-magiclantern-ext",
+      "x": -347.65459999999996,
+      "z": -698.5768,
+      "yaw": 0.6981317007977318,
+      "floorY": 116.05,
+      "rampLow": 116.05550229058315,
+      "floors": 1
+    },
+    {
+      "id": "val-06-auchouseb-ext",
+      "x": -378.7713,
+      "z": -920.1426,
+      "yaw": 0,
+      "floorY": 117.5,
+      "rampLow": 116.39940370757355,
+      "floors": 2
+    },
+    {
+      "id": "shipping-stand",
+      "x": -179.1613,
+      "z": -647.3991,
+      "yaw": 0.9599310885968813,
+      "floorY": 112.6,
+      "rampLow": 112.47158413325016,
+      "floors": 1
+    },
+    {
+      "id": "val-05-pigpen-a",
+      "x": -297.82660000000004,
+      "z": -841.7905000000001,
+      "yaw": 0,
+      "floorY": 119.1,
+      "rampLow": 119.0695271681075,
+      "floors": 1
+    }
+  ],
+  "exteriorOnly": [
+    "val-03-default-jail",
+    "val-butcher-collapsed"
+  ],
+  "sourceModelsAndAccessStatusPreserved": true
+}

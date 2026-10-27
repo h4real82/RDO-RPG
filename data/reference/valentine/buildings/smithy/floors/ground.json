@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Werkstatt & Esse",
+  "status": "built-pilot",
+  "layout": {
+    "x": -369.8,
+    "z": -812,
+    "width": 10.8,
+    "depth": 10.8,
+    "floorY": 115.35,
+    "front": -806.6,
+    "doorX": -369.8,
+    "doorWidth": 3,
+    "rampStart": -802.6,
+    "rampLow": 114.9939055276704,
+    "frontDirection": 1,
+    "yaw": 1.5707963267948966,
+    "fixtures": [
+      {
+        "id": "forge-hearth",
+        "kind": "forge",
+        "position": {
+          "x": -372.70869999999996,
+          "y": 115.35,
+          "z": -814.3742
+        },
+        "size": {
+          "x": 2.2,
+          "y": 1.4,
+          "z": 2.2
+        },
+        "color": "#2e2825",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "anvil",
+        "kind": "anvil",
+        "position": {
+          "x": -370.70869999999996,
+          "y": 115.35,
+          "z": -812.8742
+        },
+        "size": {
+          "x": 0.9,
+          "y": 0.95,
+          "z": 1.4
+        },
+        "color": "#1a1a1a",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "blacksmith-bench",
+        "kind": "workbench",
+        "position": {
+          "x": -366.70869999999996,
+          "y": 115.35,
+          "z": -813.8742
+        },
+        "size": {
+          "x": 1.2,
+          "y": 0.95,
+          "z": 3.2
+        },
+        "color": "#4a3220",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "blacksmith-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -370.70869999999996,
+          "y": 115.35,
+          "z": -814.0742
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#e8d2b7",
+        "collision": false,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "stone": {
+          "url": "textures/terrain/hea_dirt_stones_je_02_abte.png",
+          "repeat": [
+            2,
+            2
+          ]
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay annex reflow",
+    "source": "docs/planning/Valentine-Gesamtfertigstellung-2026-10-24.md",
+    "note": "Own smithy annex south of stable, because prior gameplay rooms overlapped. Original interior GLB/placement retained unchanged, own facade replaces its presentation. Entrance east toward yard; native ramp foot114.9939m."
+  },
+  "designStatus": "Authored blacksmith shop with brick forge hearth, iron anvil, heavy tool bench and smith NPC.",
+  "accessNotes": "Authored annex with independent non-overlapping footprint, east-facing3m opening and4m ramp. No original-door claim."
+}

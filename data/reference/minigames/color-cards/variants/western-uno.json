@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "id": "western-uno",
+  "gameId": "color-cards",
+  "rulesVersion": "valentine-color-cards-v1",
+  "status": "runtime-loaded"
+}

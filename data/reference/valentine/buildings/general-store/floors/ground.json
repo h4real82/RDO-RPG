@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Verkaufsraum & Lager",
+  "status": "built-pilot",
+  "layout": {
+    "x": -323.0455,
+    "z": -799.5194,
+    "width": 12.5,
+    "depth": 15.0,
+    "floorY": 116.9,
+    "front": -792.0194,
+    "doorX": -323.0455,
+    "doorWidth": 2.2,
+    "rampStart": -787.8194,
+    "rampLow": 116.3,
+    "frontDirection": 1,
+    "yaw": 0.17453292519943295,
+    "porch": {
+      "x": -323.0455,
+      "z": -790.6694,
+      "width": 13.8,
+      "depth": 2.7,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -323.0455,
+            "y": 116.3,
+            "z": -787.8194
+          },
+          "to": {
+            "x": -323.0455,
+            "y": 116.9,
+            "z": -789.3194
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "store-counter",
+        "kind": "bar",
+        "position": {
+          "x": -325.2,
+          "y": 116.9,
+          "z": -801.0
+        },
+        "size": {
+          "x": 1.4,
+          "y": 1.15,
+          "z": 4.8
+        },
+        "color": "#63452b",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "grocery-shelf",
+        "kind": "goods-shelf",
+        "position": {
+          "x": -328.4455,
+          "y": 116.9,
+          "z": -801.0194
+        },
+        "size": {
+          "x": 5.2,
+          "y": 2.5,
+          "z": 0.6
+        },
+        "color": "#4a3320",
+        "collision": true,
+        "yaw": 1.5707963268
+      },
+      {
+        "id": "storekeeper-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -325.9,
+          "y": 116.9,
+          "z": -801.0
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#ead8ba",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "display-table",
+        "kind": "plain-table",
+        "position": {
+          "x": -320.4955,
+          "y": 116.9,
+          "z": -798.4994
+        },
+        "size": {
+          "x": 2.2,
+          "y": 0.85,
+          "z": 1.4
+        },
+        "color": "#5c4028",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "goods-crate-stack",
+        "kind": "crate-stack",
+        "position": {
+          "x": -319.7955,
+          "y": 116.9,
+          "z": -803.9994
+        },
+        "size": {
+          "x": 1.6,
+          "y": 1.2,
+          "z": 1.6
+        },
+        "color": "#7a5c3d",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "store-register",
+        "kind": "cash-register",
+        "size": {
+          "x": 0.55,
+          "y": 0.5,
+          "z": 0.45
+        },
+        "position": {
+          "x": -325.1455,
+          "y": 118.12,
+          "z": -801.8194
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": false
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            4
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-triangle-planes plus authored simplification",
+    "source": "tools/measure_pilot_geometry.py",
+    "yawDegrees": 10,
+    "note": "General Store aligned to val_genstore_ext.glb at [-323.0455, 120.5974, -799.5194] with verified floor plane at 116.9m."
+  },
+  "designStatus": "Authored general store interior with shop counter, wall shelving, goods crates and clerk.",
+  "furnitureEvidence": "data/reference/valentine/buildings/general-store/interior-photo-evidence-2026-10-24.json"
+}

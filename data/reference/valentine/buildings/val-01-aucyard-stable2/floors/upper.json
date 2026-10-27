@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "upper",
+  "label": "Eigener begehbarer Lagerboden",
+  "status": "built-authored",
+  "layout": {
+    "x": -276.1919,
+    "z": -656.0513000000001,
+    "width": 7.2,
+    "depth": 15,
+    "floorY": 115.75,
+    "front": -648.5513000000001,
+    "doorX": -276.1919,
+    "doorWidth": 3.4,
+    "rampStart": -644.5513000000001,
+    "rampLow": 112.42849595335399,
+    "frontDirection": 1,
+    "yaw": 0.6108652381980153,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "loft-storage",
+        "kind": "crate-stack",
+        "position": {
+          "x": -278.5919,
+          "y": 115.75,
+          "z": -658.4513000000001
+        },
+        "size": {
+          "x": 1.5,
+          "y": 1.1,
+          "z": 1.2
+        },
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    },
+    "exteriorEntrance": false,
+    "floorHoles": [
+      [
+        {
+          "x": -274.64189999999996,
+          "z": -659.1013000000002
+        },
+        {
+          "x": -272.9418999999999,
+          "z": -659.1013000000002
+        },
+        {
+          "x": -272.9418999999999,
+          "z": -653.1513000000001
+        },
+        {
+          "x": -274.64189999999996,
+          "z": -653.1513000000001
+        }
+      ]
+    ]
+  },
+  "designStatus": "Authored gameplay loft, not a verified original upper-floor layout."
+}

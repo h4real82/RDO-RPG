@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "referenceSet": "user-interiors-2026-10-24",
+  "observations": [
+    "Überdachte Viehboxen, Tröge, Heu-/Sacklager und Holzboden im oberen Lager. Mehrere Gebäude; eindeutige Zuordnung je Bild zu den Runtime-Hüllen offen."
+  ],
+  "images": [
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_IHIhLlcXu0.png",
+      "width": 1305,
+      "height": 1186,
+      "sha256": "a72628f28f8b976ede1a3154132addfe5491baad47635d1b983fff3bf46dc752",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_IHIhLlcXu0.png"
+    },
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_NojD29Yz7U.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "1ae2e2f3780edcbf0327f6eabb3f71f4f0ae31e2e9b9c4c76e2eb17fbfe650bc",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_NojD29Yz7U.jpg"
+    },
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_pSH63vLn55.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "bdd2d95655b043a097afbc4beda713534882aedc8befae66c97d49801aa2a763",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_pSH63vLn55.jpg"
+    },
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_te5YjsrVNs.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "ba6d2c2b3ddf6242d92316eeb8701073250367f639d67b530941f889c45d4b6e",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_te5YjsrVNs.jpg"
+    },
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_VoPJZb7dGP.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "7e697f4846fb68f01798a20bd7b7bcd6fe299cfd1f3ed0cc0481fb7721396d04",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_VoPJZb7dGP.jpg"
+    },
+    {
+      "folder": "Auction Yard",
+      "file": "RDR2_xXvkaCnkc5.jpg",
+      "width": 3440,
+      "height": 1440,
+      "sha256": "dd7c7550a6b1db01ddae81c6398910c66593fd580f603d56fceb35f9f528d8fd",
+      "path": "docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Auction Yard/RDR2_xXvkaCnkc5.jpg"
+    }
+  ],
+  "status": "reviewed-unbound-reference",
+  "runtimeBuildingId": null
+}

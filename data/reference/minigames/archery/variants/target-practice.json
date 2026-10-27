@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "target-practice",
+  "gameId": "archery",
+  "rulesVersion": "valentine-archery-v1",
+  "status": "runtime-loaded",
+  "entryFee": 25,
+  "totalArrows": 10,
+  "targetDistance": 30,
+  "goldMinScore": 90,
+  "silverMinScore": 75,
+  "bronzeMinScore": 50,
+  "goldPayout": 120,
+  "silverPayout": 60,
+  "bronzePayout": 35
+}

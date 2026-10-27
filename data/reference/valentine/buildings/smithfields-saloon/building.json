@@ -116,6 +116,46 @@
       },
       "radius": 2.25,
       "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "blackjack",
+      "kind": "game",
+      "label": "Blackjack spielen",
+      "floorId": "ground",
+      "position": {
+        "x": -305.8,
+        "y": 119.14,
+        "z": -808.5
+      },
+      "interactionPosition": {
+        "x": -305.8,
+        "y": 117.99,
+        "z": -807.0
+      },
+      "radius": 2.4,
+      "anchorStatus": "authored-gameplay",
+      "gameId": "blackjack",
+      "variantId": "valentine-blackjack-table"
+    },
+    {
+      "id": "wettsaufen",
+      "kind": "game",
+      "label": "Wettsaufen am Tresen",
+      "floorId": "ground",
+      "position": {
+        "x": -311.20,
+        "y": 119.14,
+        "z": -812.50
+      },
+      "interactionPosition": {
+        "x": -310.40,
+        "y": 117.99,
+        "z": -812.50
+      },
+      "radius": 2.2,
+      "anchorStatus": "authored-gameplay",
+      "gameId": "wettsaufen",
+      "variantId": "counter-duel"
     }
   ]
 }

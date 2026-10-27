@@ -1,0 +1,191 @@
+{
+  "provenance": "authored-gameplay",
+  "evidence": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+  "buildings": {
+    "station": {
+      "floorY": 112.95,
+      "yawDegrees": 55,
+      "center": [
+        -1.65,
+        0.15
+      ],
+      "width": 22.6,
+      "depth": 8.6,
+      "doorX": -1.26,
+      "direction": -1
+    },
+    "doctor": {
+      "floorY": 118.42,
+      "yawDegrees": 10,
+      "center": [
+        1.4,
+        -0.3
+      ],
+      "width": 7.4,
+      "depth": 12,
+      "doorX": 1.12,
+      "direction": 1
+    },
+    "val-03-jail-ext": {
+      "floorY": 118.4,
+      "yawDegrees": 10,
+      "center": [
+        0,
+        -0.52
+      ],
+      "width": 9.4,
+      "depth": 9.4,
+      "doorX": -0.29,
+      "direction": -1
+    },
+    "second-saloon": {
+      "floorY": 117,
+      "yawDegrees": 20,
+      "center": [
+        0,
+        0.06
+      ],
+      "width": 10.8,
+      "depth": 8.8,
+      "doorX": -2.1,
+      "direction": 1,
+      "accessLength": 3.2,
+      "fixturePositions": {
+        "piano": [
+          3,
+          -2
+        ],
+        "saloon-bar": [
+          -3,
+          -1.1
+        ],
+        "bottle-shelf": [
+          -4.3,
+          -1.1
+        ],
+        "bartender-npc": [
+          -3.8,
+          -1.1
+        ]
+      }
+    },
+    "val-05-res-a": {
+      "floorY": 120.25,
+      "yawDegrees": 85,
+      "center": [
+        -1,
+        -0.73
+      ],
+      "width": 12,
+      "depth": 7.5,
+      "doorX": -1.28,
+      "direction": 1
+    },
+    "val-05-res-c": {
+      "floorY": 122.45,
+      "yawDegrees": 15,
+      "center": [
+        0,
+        -0.46
+      ],
+      "width": 10.8,
+      "depth": 9.2,
+      "doorX": 0.02,
+      "direction": -1
+    },
+    "val-05-res-d": {
+      "floorY": 137.5,
+      "yawDegrees": 80,
+      "center": [
+        0,
+        -0.05
+      ],
+      "width": 10,
+      "depth": 5.4,
+      "doorX": 2.44,
+      "direction": -1
+    },
+    "val-05-res-e": {
+      "floorY": 127.2,
+      "yawDegrees": 36,
+      "center": [
+        -1.82,
+        -1.35
+      ],
+      "width": 9.4,
+      "depth": 5.8,
+      "doorX": -3.13,
+      "direction": 1
+    },
+    "church": {
+      "floorY": 123.7,
+      "yawDegrees": 121,
+      "center": [
+        0,
+        1.5
+      ],
+      "width": 10.8,
+      "depth": 18.68,
+      "doorX": -3.75,
+      "direction": -1,
+      "accessLength": 3.2,
+      "porchDepth": 1
+    },
+    "val-01-aucyard-stables": {
+      "floorY": 112.4,
+      "yawDegrees": 145,
+      "center": [
+        3.7,
+        0
+      ],
+      "width": 18.6,
+      "depth": 7.6,
+      "doorX": 11.3,
+      "direction": 1
+    },
+    "val-01-aucbarns-barn2": {
+      "floorY": 112.4,
+      "upperFloorY": 115.75,
+      "yawDegrees": 140,
+      "center": [
+        0,
+        -0.15
+      ],
+      "width": 24,
+      "depth": 11.8,
+      "doorX": -6.16,
+      "direction": -1,
+      "fixturePositions": {
+        "hay-stack": [
+          9,
+          -2
+        ]
+      }
+    },
+    "val-01-aucbarns-barn3": {
+      "floorY": 112.4,
+      "upperFloorY": 115.75,
+      "yawDegrees": 140,
+      "center": [
+        0,
+        0.15
+      ],
+      "width": 24,
+      "depth": 11.8,
+      "doorX": 6.16,
+      "direction": 1
+    },
+    "val-01-aucyard-barn": {
+      "floorY": 112.4,
+      "yawDegrees": 50,
+      "center": [
+        -6,
+        0.6
+      ],
+      "width": 22,
+      "depth": 13,
+      "doorX": -4.63,
+      "direction": 1
+    }
+  }
+}

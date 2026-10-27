@@ -10,18 +10,34 @@
   ],
   "classification": "building-candidate",
   "originalAccess": {
-    "status": "unknown",
+    "status": "confirmed-open",
     "edition": "unspecified",
-    "evidenceRefs": [],
-    "notes": "[FLAG: Data Missing] Original entry/access not yet confirmed; missing model files are not evidence of a closed building."
+    "evidenceRefs": [
+      {
+        "path": "docs/planning/Investigation-P1-P8-2026-10-18.md",
+        "section": "P7",
+        "kind": "user-gameplay-photo-review"
+      }
+    ],
+    "notes": "Valentine wooden church on the north hill; accessible chapel with central nave, wooden pews, altar and pulpit."
   },
   "interior": {
-    "policy": "provisional-wood",
+    "policy": "recognizable-adaptation",
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
-    "recognitionFeatures": [],
+    "recognitionFeatures": [
+      "Kirchenbänke",
+      "Altar",
+      "Kanzel",
+      "Kirchenportal"
+    ],
     "detailBudget": "retain a few defining layout/features; no decorative clutter requirement",
-    "coverage": "planned",
-    "floorDefinitions": []
+    "coverage": "built-pilot",
+    "floorDefinitions": [
+      {
+        "id": "ground",
+        "file": "floors/ground.json"
+      }
+    ]
   },
   "actions": []
 }

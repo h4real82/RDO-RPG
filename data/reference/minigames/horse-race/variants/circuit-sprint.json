@@ -1,0 +1,11 @@
+{
+  "id": "circuit-sprint",
+  "gameId": "horse-race",
+  "rulesVersion": "valentine-horse-race-v2",
+  "status": "runtime-loaded",
+  "name": "Staub & Sekunden",
+  "mode": "time-trial",
+  "laps": 1,
+  "rivals": 0,
+  "halfWidth": 4
+}

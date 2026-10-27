@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Praxis & Behandlungsraum",
+  "status": "built-pilot",
+  "layout": {
+    "x": -285.13806359908295,
+    "z": -809.6235497746374,
+    "width": 7.4,
+    "depth": 12,
+    "floorY": 118.42,
+    "front": -803.6235497746374,
+    "doorX": -285.4180635990829,
+    "doorWidth": 1.8,
+    "rampStart": -798.1235497746374,
+    "rampLow": 117.89740281750339,
+    "frontDirection": 1,
+    "yaw": 0.17453292519943295,
+    "porch": {
+      "x": -285.4180635990829,
+      "z": -802.5235497746373,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -285.4180635990829,
+            "y": 117.89740281750339,
+            "z": -798.1235497746374
+          },
+          "to": {
+            "x": -285.4180635990829,
+            "y": 118.42,
+            "z": -801.4235497746373
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "doctor-counter",
+        "kind": "bar",
+        "position": {
+          "x": -286.8495658718102,
+          "y": 118.42,
+          "z": -810.5701014987752
+        },
+        "size": {
+          "x": 1.2,
+          "y": 1.15,
+          "z": 3.6
+        },
+        "color": "#5c3a21",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "medicine-shelf",
+        "kind": "medicine-cabinet",
+        "position": {
+          "x": -288.38806359908295,
+          "y": 118.42,
+          "z": -810.6235497746374
+        },
+        "size": {
+          "x": 3.4,
+          "y": 2.35,
+          "z": 0.5
+        },
+        "color": "#452b18",
+        "collision": true,
+        "yaw": 1.5707963268
+      },
+      {
+        "id": "doctor-npc",
+        "kind": "npc-clerk",
+        "position": {
+          "x": -287.3541113263557,
+          "y": 118.42,
+          "z": -810.5701014987752
+        },
+        "size": {
+          "x": 0.6,
+          "y": 1.8,
+          "z": 0.5
+        },
+        "color": "#f0dfcb",
+        "collision": false,
+        "yaw": 1.5707963267948966
+      },
+      {
+        "id": "exam-bed",
+        "kind": "exam-cot",
+        "position": {
+          "x": -283.13806359908295,
+          "y": 118.42,
+          "z": -812.1235497746374
+        },
+        "size": {
+          "x": 1.15,
+          "y": 0.9,
+          "z": 2.3
+        },
+        "color": "#705238",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "waiting-bench",
+        "kind": "bench",
+        "position": {
+          "x": -283.238063599083,
+          "y": 118.42,
+          "z": -804.9235497746373
+        },
+        "size": {
+          "x": 2,
+          "y": 0.95,
+          "z": 0.65
+        },
+        "color": "#4e3522",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "doctor-washstand",
+        "kind": "washstand",
+        "size": {
+          "x": 1,
+          "y": 0.9,
+          "z": 0.65
+        },
+        "position": {
+          "x": -283.13806359908295,
+          "y": 118.42,
+          "z": -814.3235497746374
+        },
+        "yaw": 0,
+        "color": "#826d51",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 10,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -283.41685572675664,
+      "z": -798.2496391252502,
+      "y": 117.89740281750339
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored doctor clinic with apothecary counter, medicine cabinet, examination couch, waiting bench and doctor NPC.",
+  "accessNotes": "authored-gameplay: ramp foot adjusted to browser-sampled terrain at registered entrance on 2026-10-23; avoids stepping below raised ramp",
+  "furnitureEvidence": "data/reference/valentine/buildings/doctor/interior-photo-evidence-2026-10-24.json"
+}

@@ -1,16 +1,23 @@
 {
   "schemaVersion": 1,
   "id": "archery",
-  "name": "Bogenschießen",
-  "implementationStatus": "planned",
-  "rulesVersion": null,
-  "implementedModes": [],
+  "name": "Valentine Bogenschießen",
+  "implementationStatus": "runtime-connected-with-coins",
+  "rulesVersion": "valentine-archery-v1",
+  "implementedModes": [
+    "local-practice"
+  ],
   "plannedModes": [
     "private-session"
   ],
-  "runtimeRegistryWired": false,
-  "variants": [],
-  "worldPlacement": "bound through building/floor/action IDs; no embedded world coordinates",
+  "runtimeRegistryWired": true,
+  "variants": [
+    {
+      "id": "target-practice",
+      "file": "variants/target-practice.json"
+    }
+  ],
+  "worldPlacement": "bound through building/floor/action IDs and outdoor POIs; no embedded world coordinates",
   "lifecycleContract": [
     "available",
     "joining",
@@ -19,5 +26,5 @@
     "closed",
     "error"
   ],
-  "notes": "No playable implementation or authoritative rules claimed by this catalog."
+  "notes": "Target archery tournament with draw tension physics, wind drift, target score rings, and Coin prize tiers via WalletService."
 }

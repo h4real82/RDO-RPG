@@ -64,6 +64,22 @@ it('disables unverified terrain vertex-color masks for neutral geometry previews
   material.dispose();
 });
 
+it('preserves authored terrain vertex alpha used to feather road borders',()=>{
+ const instance=new Group(),material=new MeshStandardMaterial({vertexColors:true});
+ material.userData.provenance='authored-gameplay';
+ instance.add(new Mesh(new BoxGeometry(),material));
+ runtime.disableTerrainVertexColorMultiplication(instance);
+ expect(material.vertexColors).toBe(true);
+ instance.traverse(object=>{if(object instanceof Mesh)object.geometry.dispose();});material.dispose();
+});
+
+it('keeps standard authored GLTF opaque materials opaque even when albedo has data alpha',()=>{
+ const instance=new Group(),material=new MeshStandardMaterial({map:new Texture()});
+ instance.add(new Mesh(new BoxGeometry(),material));runtime.prepareDrawableMaterialPreview(instance);
+ expect(material.alphaTest).toBe(0);expect(material.transparent).toBe(false);
+ instance.traverse(o=>{if(o instanceof Mesh)o.geometry.dispose();});material.map?.dispose();material.dispose();
+});
+
 it('keeps decoded mask channels from blackening diffuse-only imported materials', () => {
   const instance = new Group();
   const preview = new MeshBasicMaterial({ vertexColors: true });
@@ -97,6 +113,14 @@ it('keeps verified cpv-only vertex colors and applies source alpha metadata', ()
   expect(decal.transparent).toBe(true);
   expect(decal.depthWrite).toBe(false);
   expect(decal.polygonOffset).toBe(true);
+});
+
+it('preserves opaque source fences even when their texture alpha stores non-cutout data',()=>{
+ const instance=new Group(),material=new MeshStandardMaterial({map:new Texture()}),geometry=new BoxGeometry();
+ material.userData={rdo_alpha_mode:'OPAQUE',rdo_material_status:'source-layer0-only-preview'};
+ instance.add(new Mesh(geometry,material));runtime.prepareDrawableMaterialPreview(instance);
+ expect(material.alphaTest).toBe(0);expect(material.transparent).toBe(false);expect(material.depthWrite).toBe(true);
+ geometry.dispose();material.map?.dispose();material.dispose();
 });
 
 it('does not paint white albedo for source decals with zero albedo-write opacity', () => {

@@ -1,0 +1,133 @@
+{
+  "classification": "authored-gameplay",
+  "references": [
+    "User intake 24-10-26/Innen Pläne/camp photographs",
+    "rollout-source-measurements.json#val-07-magiclantern-ext",
+    "rollout-source-measurements.json#val-03-stable-ext"
+  ],
+  "camp": {
+    "center": [
+      -300,
+      -705
+    ],
+    "tents": [
+      [
+        -6,
+        -7,
+        3.5,
+        4,
+        2.3
+      ],
+      [
+        2,
+        -7,
+        4,
+        4.5,
+        2.5
+      ],
+      [
+        8,
+        6,
+        3.2,
+        3.8,
+        2.1
+      ]
+    ],
+    "wagons": [
+      [
+        -8,
+        3
+      ],
+      [
+        7,
+        -2
+      ]
+    ],
+    "note": "Own recognizable adaptation opposite cinema across measured street; positions not original imports."
+  },
+  "stableYardFenceSegments": [
+    [
+      [
+        -384,
+        -802
+      ],
+      [
+        -390,
+        -802
+      ]
+    ],
+    [
+      [
+        -390,
+        -802
+      ],
+      [
+        -390,
+        -775
+      ]
+    ],
+    [
+      [
+        -390,
+        -775
+      ],
+      [
+        -376,
+        -775
+      ]
+    ],
+    [
+      [
+        -376,
+        -775
+      ],
+      [
+        -376,
+        -769
+      ]
+    ],
+    [
+      [
+        -376,
+        -769
+      ],
+      [
+        -355,
+        -769
+      ]
+    ],
+    [
+      [
+        -355,
+        -769
+      ],
+      [
+        -355,
+        -779
+      ]
+    ]
+  ],
+  "textures": {
+    "wood": {
+      "source": "data/raw/textures/val_sal2_woodplank03_ab.png",
+      "usage": "original albedo on own stable/camp timber"
+    },
+    "trim": {
+      "source": "data/raw/textures/val_jail_woodbeam01_ab.png",
+      "usage": "original albedo on own frame/fence geometry"
+    },
+    "roof": {
+      "source": "data/raw/textures/nbx_roofs_shingle11_ab.png",
+      "usage": "original shingle albedo on simplified own gable"
+    },
+    "canvas": {
+      "source": "data/raw/textures/s_tentcanvas01bx_ab.png",
+      "usage": "original canvas albedo on own tents and covered wagons"
+    },
+    "ground": {
+      "source": "data/raw/terrain/l_09/textures/l_09_base/hea_grass_val_01_abte.png",
+      "usage": "original ground albedo on own tent ground sheets",
+      "url": "textures/terrain/hea_grass_val_01_abte.png"
+    }
+  }
+}

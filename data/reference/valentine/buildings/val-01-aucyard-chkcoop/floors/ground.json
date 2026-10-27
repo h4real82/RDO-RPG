@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Hühnerhaus & Futterkammer",
+  "status": "built-authored",
+  "layout": {
+    "x": -248.2465,
+    "z": -674.4566,
+    "width": 5.2,
+    "depth": 5.2,
+    "floorY": 113.1,
+    "front": -671.8566,
+    "doorX": -248.2465,
+    "doorWidth": 1.9,
+    "rampStart": -667.8566,
+    "rampLow": 112.2955366037489,
+    "frontDirection": 1,
+    "yaw": 0.890117918517108,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "feed-shelf",
+        "kind": "goods-shelf",
+        "position": {
+          "x": -249.8465,
+          "y": 113.1,
+          "z": -675.8566
+        },
+        "size": {
+          "x": 1.4,
+          "y": 1.7,
+          "z": 0.65
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "roost",
+        "kind": "plain-table",
+        "position": {
+          "x": -246.9465,
+          "y": 113.1,
+          "z": -675.8566
+        },
+        "size": {
+          "x": 1.4,
+          "y": 0.65,
+          "z": 0.65
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

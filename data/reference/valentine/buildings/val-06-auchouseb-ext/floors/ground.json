@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Wohnstube & Lager",
+  "status": "built-authored",
+  "layout": {
+    "x": -378.7713,
+    "z": -920.1426,
+    "width": 11,
+    "depth": 10,
+    "floorY": 117.5,
+    "front": -915.1426,
+    "doorX": -378.7713,
+    "doorWidth": 2.4,
+    "rampStart": -911.1426,
+    "rampLow": 116.39940370757355,
+    "frontDirection": 1,
+    "yaw": 0,
+    "wallHeight": 2.7,
+    "fixtures": [
+      {
+        "id": "writing-table",
+        "kind": "desk",
+        "position": {
+          "x": -381.7713,
+          "y": 117.5,
+          "z": -922.9426
+        },
+        "size": {
+          "x": 1.8,
+          "y": 1,
+          "z": 0.8
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "dresser",
+        "kind": "dresser",
+        "position": {
+          "x": -381.7713,
+          "y": 117.5,
+          "z": -917.2426
+        },
+        "size": {
+          "x": 1.6,
+          "y": 1.2,
+          "z": 0.7
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      },
+      {
+        "id": "chair",
+        "kind": "chair",
+        "position": {
+          "x": -380.5713,
+          "y": 117.5,
+          "z": -922.8426000000001
+        },
+        "size": {
+          "x": 0.65,
+          "y": 1.1,
+          "z": 0.65
+        },
+        "yaw": 0,
+        "color": "#70513b",
+        "collision": true
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "furnitureWood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        }
+      }
+    },
+    "stairs": [
+      {
+        "id": "authored-loft-stair",
+        "from": {
+          "x": -374.4713,
+          "y": 117.5,
+          "z": -917.3426000000001
+        },
+        "to": {
+          "x": -374.4713,
+          "y": 120.5,
+          "z": -923.3426000000001
+        },
+        "width": 1.5,
+        "toFloorId": "upper"
+      }
+    ]
+  },
+  "alignmentEvidence": {
+    "kind": "authored-gameplay",
+    "source": "interior-completion.json + preserved source bounds",
+    "note": "Source GLB/placement retained; own simplified room, floor and entry; native ramp-foot height sampled."
+  }
+}

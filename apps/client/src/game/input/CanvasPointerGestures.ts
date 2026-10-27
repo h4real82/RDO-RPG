@@ -2,8 +2,11 @@ export interface CanvasPointerCallbacks {
   onMoveClick(clientX: number, clientY: number): void;
   onContext(clientX: number, clientY: number): void;
   onRotate(deltaRadians: number): void;
+  onTilt?(deltaRadians: number): void;
+  onOrbitStart?(): void;
+  onOrbitEnd?(): void;
   isCaptured(): boolean;
-  onCancel?():void;
+  onCancel?(): void;
 }
 
 interface Gesture {
@@ -12,6 +15,7 @@ interface Gesture {
   startX: number;
   startY: number;
   lastX: number;
+  lastY: number;
   dragged: boolean;
 }
 
@@ -43,9 +47,17 @@ export class CanvasPointerGestures {
   private readonly onDown = (event: PointerEvent): void => {
     try {
       if (!event || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || event.target !== this.canvas || this.blocked() || event.isPrimary === false) { this.cancel(); return; }
-      if (this.gesture || (event.button !== 0 && event.button !== 2)) return;
+      if (this.gesture || (event.button !== 0 && event.button !== 1 && event.button !== 2)) return;
       if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) return;
-      this.gesture = { id: event.pointerId, button: event.button, startX: event.clientX, startY: event.clientY, lastX: event.clientX, dragged: false };
+      this.gesture = {
+        id: event.pointerId,
+        button: event.button,
+        startX: event.clientX,
+        startY: event.clientY,
+        lastX: event.clientX,
+        lastY: event.clientY,
+        dragged: false
+      };
       this.handledContext = event.button === 2;
       this.canvas.setPointerCapture(event.pointerId);
       event.preventDefault();
@@ -57,12 +69,23 @@ export class CanvasPointerGestures {
       if (!event || this.blocked()) { this.cancel(); return; }
       const gesture = this.gesture;
       if (!gesture || gesture.id !== event.pointerId || !Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) return;
-      if (Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY) > 6) gesture.dragged = true;
-      if (gesture.dragged && gesture.button === 2) {
-        this.callbacks.onRotate((event.clientX - gesture.lastX) * 0.008);
+      if (!gesture.dragged && Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY) > 6) {
+        gesture.dragged = true;
+        if (gesture.button === 1 || gesture.button === 2) {
+          this.callbacks.onOrbitStart?.();
+        }
+      }
+      if (gesture.dragged && (gesture.button === 2 || gesture.button === 1)) {
+        const deltaX = event.clientX - gesture.lastX;
+        const deltaY = event.clientY - gesture.lastY;
+        this.callbacks.onRotate(deltaX * 0.008);
+        if (this.callbacks.onTilt && deltaY !== 0) {
+          this.callbacks.onTilt(-deltaY * 0.006);
+        }
         event.preventDefault();
       }
       gesture.lastX = event.clientX;
+      gesture.lastY = event.clientY;
     } catch { this.cancel(); }
   };
 
@@ -71,12 +94,12 @@ export class CanvasPointerGestures {
       if (!event || this.blocked()) { this.cancel(); return; }
       const gesture = this.gesture;
       if (!gesture || gesture.id !== event.pointerId || gesture.button !== event.button) return;
+      const wasDragged = gesture.dragged || Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY) > 6;
       this.cancel();
-      if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY)) return;
-      if (gesture.dragged || Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY) > 6) return;
+      if (!Number.isFinite(event.clientX) || !Number.isFinite(event.clientY) || wasDragged) return;
       event.preventDefault();
       if (gesture.button === 0) this.callbacks.onMoveClick(event.clientX, event.clientY);
-      else this.callbacks.onContext(event.clientX, event.clientY);
+      else if (gesture.button === 2) this.callbacks.onContext(event.clientX, event.clientY);
     } catch { this.cancel(); }
   };
 
@@ -84,8 +107,9 @@ export class CanvasPointerGestures {
     try {
       if (!event) return;
       if ('pointerId' in event && this.gesture && event.pointerId !== this.gesture.id) return;
-      const active=Boolean(this.gesture);this.cancel();
-      if(active || event.type==='pointercancel')this.callbacks.onCancel?.();
+      const active = Boolean(this.gesture);
+      this.cancel();
+      if (active || event.type === 'pointercancel') this.callbacks.onCancel?.();
     } catch { this.cancel(); }
   };
 
@@ -100,6 +124,9 @@ export class CanvasPointerGestures {
   cancel(): void {
     const gesture = this.gesture;
     this.gesture = undefined;
+    if (gesture?.dragged && (gesture.button === 1 || gesture.button === 2)) {
+      this.callbacks.onOrbitEnd?.();
+    }
     try {
       if (gesture && this.canvas.hasPointerCapture(gesture.id)) this.canvas.releasePointerCapture(gesture.id);
     } catch { /* Capture can already have been released by the browser. */ }

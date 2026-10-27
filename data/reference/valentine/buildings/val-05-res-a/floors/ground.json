@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Wohnstube & Schlafecke",
+  "status": "built-pilot",
+  "layout": {
+    "x": -289.7299778723546,
+    "z": -869.651828994114,
+    "width": 12,
+    "depth": 7.5,
+    "floorY": 120.25,
+    "front": -865.901828994114,
+    "doorX": -290.00997787235457,
+    "doorWidth": 1.8,
+    "rampStart": -860.401828994114,
+    "rampLow": 119.83780203789635,
+    "frontDirection": 1,
+    "yaw": 1.4835298641951802,
+    "porch": {
+      "x": -290.00997787235457,
+      "z": -864.801828994114,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -290.00997787235457,
+            "y": 119.83780203789635,
+            "z": -860.401828994114
+          },
+          "to": {
+            "x": -290.00997787235457,
+            "y": 120.25,
+            "z": -863.701828994114
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "hearth-fireplace",
+        "kind": "bar",
+        "position": {
+          "x": -293.4312578723546,
+          "y": 120.25,
+          "z": -868.2560254226854
+        },
+        "size": {
+          "x": 1.8,
+          "y": 1.5,
+          "z": 1.4
+        },
+        "color": "#382c24",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "kitchen-table",
+        "kind": "table",
+        "position": {
+          "x": -286.8312578723546,
+          "y": 120.25,
+          "z": -870.5997754226854
+        },
+        "size": {
+          "x": 1.8,
+          "y": 0.85,
+          "z": 1.2
+        },
+        "color": "#523821",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "wooden-bed",
+        "kind": "table",
+        "position": {
+          "x": -286.2312578723546,
+          "y": 120.25,
+          "z": -867.2515611369712
+        },
+        "size": {
+          "x": 2,
+          "y": 0.75,
+          "z": 1.6
+        },
+        "color": "#634731",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 85,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -280.5395805229753,
+      "z": -868.5667038582326,
+      "y": 119.83780203789635
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored residential cottage with stone fireplace hearth, wood dining table and bed."
+}

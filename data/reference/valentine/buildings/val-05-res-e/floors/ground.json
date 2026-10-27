@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "ground",
+  "label": "Siedlerstube & Vorratskammer",
+  "status": "built-pilot",
+  "layout": {
+    "x": -282.1309210203573,
+    "z": -916.7683037832338,
+    "width": 9.4,
+    "depth": 5.8,
+    "floorY": 127.2,
+    "front": -913.8683037832338,
+    "doorX": -283.4409210203573,
+    "doorWidth": 1.8,
+    "rampStart": -908.3683037832338,
+    "rampLow": 126.88008215008078,
+    "frontDirection": 1,
+    "yaw": 0.6283185307179586,
+    "porch": {
+      "x": -283.4409210203573,
+      "z": -912.7683037832338,
+      "width": 2.8,
+      "depth": 2.2,
+      "stairs": [
+        {
+          "id": "front",
+          "from": {
+            "x": -283.4409210203573,
+            "y": 126.88008215008078,
+            "z": -908.3683037832338
+          },
+          "to": {
+            "x": -283.4409210203573,
+            "y": 127.2,
+            "z": -911.6683037832338
+          },
+          "width": 2.2
+        }
+      ]
+    },
+    "fixtures": [
+      {
+        "id": "settler-stove",
+        "kind": "bar",
+        "position": {
+          "x": -284.6583699999491,
+          "y": 127.19999999999997,
+          "z": -915.8477383286884
+        },
+        "size": {
+          "x": 1.4,
+          "y": 1.2,
+          "z": 1.4
+        },
+        "color": "#292929",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "pantry-shelves",
+        "kind": "backbar",
+        "position": {
+          "x": -285.90530877545933,
+          "y": 127.19999999999997,
+          "z": -917.4295565105066
+        },
+        "size": {
+          "x": 0.5,
+          "y": 2.2,
+          "z": 3
+        },
+        "color": "#473322",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "settler-bed",
+        "kind": "table",
+        "position": {
+          "x": -279.3828597958675,
+          "y": 127.19999999999997,
+          "z": -915.3204656014157
+        },
+        "size": {
+          "x": 1.6,
+          "y": 0.75,
+          "z": 2
+        },
+        "color": "#573d28",
+        "collision": true,
+        "yaw": 0
+      }
+    ],
+    "appearance": {
+      "textures": {
+        "floor": {
+          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "repeat": [
+            3,
+            3
+          ]
+        },
+        "wood": {
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+        },
+        "wallpaper": {
+          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+        }
+      }
+    }
+  },
+  "alignmentEvidence": {
+    "kind": "source-door-plane plus authored-gameplay adaptation",
+    "source": "data/reference/valentine/buildings/entrance-repair.json",
+    "yawDegrees": 36,
+    "note": "Source GLB door-sized vertical planes and floor triangles; gameplay dimensions simplified. Not original portal or accessibility proof.",
+    "terrainFoot": {
+      "x": -278.25333716373166,
+      "z": -909.2025623499811,
+      "y": 126.88008215008078
+    },
+    "supersedes": "Earlier pivot/roof-height layout was not a verified ground-floor plane."
+  },
+  "designStatus": "Authored settler homestead with heating stove, food pantry shelves and timber bed."
+}
