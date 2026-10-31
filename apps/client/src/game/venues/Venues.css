@@ -32,6 +32,10 @@
 .rdo-cinema__curtain h3{font-size:22px;color:#e4bd67;margin:0;text-shadow:0 2px 8px #000}
 .rdo-cinema__curtain p{color:#c6b78d;max-width:480px;margin:0;font-size:14px}
 .rdo-cinema__frame{width:100%;height:100%;border:0}
+.rdo-cinema__stage{min-height:200px}
+.rdo-cinema-projection{background:#000;box-sizing:border-box}
+.rdo-cinema-projection[hidden],.rdo-cinema-projection__stop[hidden]{display:none}
+.rdo-cinema-projection__stop{position:absolute;top:calc(100% + 10px);left:0;border:1px solid #b69a64;background:#21190e;color:#f3e5c7;font:18px Georgia;padding:9px 14px;cursor:pointer;white-space:nowrap}
 .rdo-cinema__video{width:100%;height:100%;background:#000;object-fit:contain}
 .rdo-cinema__movies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:14px 0}
 .rdo-cinema__movie-card{background:#172321;border:1px solid #6b5736;padding:12px;border-radius:3px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s ease}
@@ -80,5 +84,34 @@
 .rdo-trophy__desc {color:#c6b78d;font-size:13px;line-height:1.35;margin:0}
 .rdo-trophy__plaque {background:#2b1f13;border:1px solid #b89758;border-radius:2px;padding:6px 10px;color:#eeddbb;font-style:italic;font-size:12px}
 .rdo-trophy__footer {display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px}
+
+/* Hotel Guest Dialog & Branching Styles */
+.rdo-guest-dialog__options {display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.rdo-guest-dialog__btn {width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:12px 16px !important;border:1px solid #7d5930 !important;background:#182320 !important;border-radius:4px;transition:all .15s ease}
+.rdo-guest-dialog__btn:hover {background:#33423b !important;border-color:#d4af37 !important}
+.rdo-guest-dialog__btn-icon {font-size:22px;flex-shrink:0}
+.rdo-guest-dialog__btn-text {font-weight:bold;color:#f3ebda}
+.rdo-guest-dialog__btn-sub {font-size:12px;color:#c6b78d;display:block;margin-top:2px}
+.rdo-guest-dialog__box {background:#141f1d;border-left:3px solid #d4af37;padding:14px 18px;border-radius:3px;margin:12px 0;line-height:1.5}
+.rdo-guest-dialog__tonic-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:14px 0}
+.rdo-guest-dialog__tonic-card {background:#15221f;border:1px solid #573a21;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px}
+
+/* Censorship Pixelated Overlay */
+.rdo-censorship-overlay {position:fixed;inset:0;z-index:10005;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:rdo-fade-in .35s ease-out forwards}
+.rdo-censorship-mosaic {position:absolute;inset:0;backdrop-filter:blur(32px) contrast(1.6);background:repeating-linear-gradient(0deg,rgba(0,0,0,0.7) 0px,rgba(0,0,0,0.7) 12px,rgba(30,20,15,0.7) 12px,rgba(30,20,15,0.7) 24px);opacity:.95}
+.rdo-censorship-badge {position:relative;z-index:2;border:3px solid #d4af37;padding:18px 32px;background:rgba(18,12,10,0.92);color:#e8d4a2;font-family:Georgia,serif;font-size:20px;text-transform:uppercase;letter-spacing:2px;box-shadow:0 8px 32px rgba(0,0,0,0.9);text-align:center;border-radius:4px}
+.rdo-censorship-sub {font-size:13px;color:#c6b78d;margin-top:6px;display:block;letter-spacing:1px}
+
+/* Ingame Screen Effects */
+.rdo-effect--drunk {filter:blur(2.2px) contrast(1.2) hue-rotate(18deg) !important;transition:filter .8s ease}
+.rdo-effect--psychedelic {animation:rdo-psychedelic-colors 4s infinite linear !important}
+@keyframes rdo-psychedelic-colors {
+  0% {filter:saturate(2.5) hue-rotate(0deg);}
+  50% {filter:saturate(3.2) hue-rotate(180deg) brightness(1.15);}
+  100% {filter:saturate(2.5) hue-rotate(360deg);}
+}
+.rdo-effect--invincible {box-shadow:inset 0 0 90px rgba(212,175,55,0.55) !important}
+.rdo-effect--slow {filter:sepia(0.3) saturate(0.85) !important}
+
 
 

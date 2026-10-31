@@ -158,8 +158,10 @@ describe('VenueActivities Lifecycle & Encapsulation (H4R-64)', () => {
       expect(dialog?.textContent).toContain('Valentine');
 
       // Close button restores world control
-      const closeBtn = dialog?.querySelector<HTMLButtonElement>('button');
-      expect(closeBtn).not.toBeNull();
+      const closeBtn = Array.from(dialog?.querySelectorAll<HTMLButtonElement>('button') ?? []).find(b =>
+        b.textContent?.includes('Zurück zum Raum')
+      );
+      expect(closeBtn).toBeDefined();
       closeBtn?.click();
       expect(activities.isOpen).toBe(false);
     });
@@ -173,8 +175,10 @@ describe('VenueActivities Lifecycle & Encapsulation (H4R-64)', () => {
       expect(dialog?.textContent).toContain('Diese Interaktion ist derzeit nicht verfügbar.');
 
       // Close button restores world control
-      const closeBtn = dialog?.querySelector<HTMLButtonElement>('button');
-      expect(closeBtn).not.toBeNull();
+      const closeBtn = Array.from(dialog?.querySelectorAll<HTMLButtonElement>('button') ?? []).find(b =>
+        b.textContent?.includes('Zurück zum Raum')
+      );
+      expect(closeBtn).toBeDefined();
       closeBtn?.click();
       expect(activities.isOpen).toBe(false);
     });

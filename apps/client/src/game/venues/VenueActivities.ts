@@ -6,6 +6,7 @@ import { CinemaPlayer } from './CinemaPlayer';
 import { MemorialRoom } from './MemorialRoom';
 import { StationDesk } from './StationDesk';
 import { ArtworkViewer } from './ArtworkViewer';
+import { HotelGuestDialog } from './HotelGuestDialog';
 import type{ScreenCorners}from'./CinemaScreen';
 
 export class VenueActivities {
@@ -17,6 +18,7 @@ export class VenueActivities {
   private music: MusicPlayer;
   private station: StationDesk;
   private artwork: ArtworkViewer;
+  private hotelGuest: HotelGuestDialog;
   private saloon = false;
 
   constructor(
@@ -30,6 +32,10 @@ export class VenueActivities {
     this.memorial = new MemorialRoom(changed);
     this.station = new StationDesk(changed);
     this.artwork = new ArtworkViewer();
+    this.hotelGuest = new HotelGuestDialog(parent, {
+      onChanged: changed,
+      onWettsaufen: () => this.open('drinks')
+    });
     this.music = new MusicPlayer(parent, () => {
       try {
         this.dialog?.close();
@@ -46,7 +52,7 @@ export class VenueActivities {
   }
 
   get isOpen() {
-    return Boolean(this.dialog?.isOpen) || this.music.isOpen || this.cinema.isOpen || this.memorial.isOpen || this.artwork.isOpen;
+    return Boolean(this.dialog?.isOpen) || this.music.isOpen || this.cinema.isOpen || this.memorial.isOpen || this.artwork.isOpen || this.hotelGuest.isOpen;
   }
 
   supports(kind?: string) {
@@ -140,15 +146,7 @@ export class VenueActivities {
         return;
       }
       if (kind === 'hotel_guest' || kind === 'hotel_lady') {
-        const d = (this.dialog = new VenueDialog(this.parent, 'Hotel-Gast'));
-        d.panel.dataset.venue = 'hotel_guest';
-        text(
-          'p',
-          '„Guten Tag, Herr. Die Reise mit der Postkutsche über die zerfurchten Straßen nach Valentine war überaus ermüdend, aber dieses Hotel hat eine wunderbare Wärme. Wenn Sie ein ruhiges Zimmer oder ein warmes Bad suchen, fragen Sie den Herrn an der Rezeption.“',
-          d.content
-        );
-        const btn = d.button('Einen angenehmen Aufenthalt wünschen', () => this.close());
-        btn.className = 'rdo-venue__order-btn';
+        this.dialog = this.hotelGuest.open(this.parent);
         return;
       }
       if (kind === 'talk') {
@@ -226,6 +224,11 @@ export class VenueActivities {
       this.artwork.close();
     } catch (err) {
       console.error('[VenueActivities] Error closing artwork viewer:', err);
+    }
+    try {
+      this.hotelGuest.close();
+    } catch (err) {
+      console.error('[VenueActivities] Error closing hotel guest dialog:', err);
     }
     try {
       this.music.collapse();
