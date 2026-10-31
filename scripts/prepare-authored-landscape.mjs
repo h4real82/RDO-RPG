@@ -1,5 +1,7 @@
 /** Own gameplay landscape derived from local ground samples + existing source paths.
  * Never labels interpolated ground, widths or rail geometry as recovered originals. */
+import{createGameplayHeight,meadowWeight}from'./gameplay-terrain.mjs';
+import{applyRoadEndpointFades}from'./road-endpoint-fades.mjs';
 import {readFile,writeFile,mkdir,copyFile,realpath} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';import {pathToFileURL,fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';import {createHash} from 'node:crypto';
@@ -102,23 +104,38 @@ export function sourceSampler(triangles){
   }return y;
  };
 }
+/** Keep small terrain triangles intact; cell meshes permit ordinary frustum culling. */
+export function partitionTerrain(data,size=64){const cells=new Map();for(let i=0;i<data.positions.length;i+=9){const cx=(data.positions[i]+data.positions[i+3]+data.positions[i+6])/3,cz=(data.positions[i+2]+data.positions[i+5]+data.positions[i+8])/3,key=`${Math.floor(cx/size)}:${Math.floor(cz/size)}`;let cell=cells.get(key);if(!cell){cell={positions:[],uv:[],...(data.colors?{colors:[]}: {})};cells.set(key,cell);}cell.positions.push(...data.positions.slice(i,i+9));cell.uv.push(...data.uv.slice(i/3*2,i/3*2+6));if(data.colors)cell.colors.push(...data.colors.slice(i/3*4,i/3*4+12));}return cells;}
 const append=(target,points,uvs)=>{for(let i=0;i<points.length;i++){target.positions.push(points[i].x,points[i].y,points[i].z);target.uv.push(...uvs[i]);}};
 export function makeGroundRibbon(points,width,height,offset=0,lift=.08,edgeFade=0){
  const result={positions:[],uv:[],...(edgeFade>0?{colors:[]}: {})};let distance=0;
+ const tangents=points.slice(1).map((p,i)=>{const dx=p.x-points[i].x,dz=p.z-points[i].z,l=Math.hypot(dx,dz)||1;return{x:dx/l,z:dz/l};});
+ const cross=points.map((_,i)=>{const a=tangents[Math.max(0,i-1)],b=tangents[Math.min(tangents.length-1,i)];if(!a||!b)return{x:0,z:0};const nx=-a.z-b.z,nz=a.x+b.x,l=Math.hypot(nx,nz);if(l<1e-6)return{x:-b.z,z:b.x};const x=nx/l,z=nz/l,scale=Math.min(2,1/Math.max(.05,x*(-b.z)+z*b.x));return{x:x*scale,z:z*scale};});
  for(let i=1;i<points.length;i++){
   const a=points[i-1],b=points[i],dx=b.x-a.x,dz=b.z-a.z,length=Math.hypot(dx,dz);if(length<1e-5)continue;
-  const steps=Math.ceil(length/.8),columns=Math.ceil(width/.8),nx=-dz/length,nz=dx/length;
+  const steps=Math.ceil(length/.8),columns=Math.max(4,Math.ceil(width/.7)),nx=-dz/length,nz=dx/length;
   for(let j=0;j<steps;j++)for(let column=0;column<columns;column++){
    const quad=[];
    const left=column/columns*2-1,right=(column+1)/columns*2-1;
    for(const [t,s]of [[j/steps,left],[(j+1)/steps,left],[(j+1)/steps,right],[j/steps,right]]){
-    const x=a.x+dx*t+nx*(offset+s*width/2),z=a.z+dz*t+nz*(offset+s*width/2);quad.push({x,y:height(x,z)+lift,z});
+    const dAlong=distance+t*length;
+    const lateralWobble=(Math.sin(dAlong*0.12)*0.38+Math.cos(dAlong*0.31)*0.22+Math.sin(dAlong*0.85)*0.12)*Math.abs(s);
+    const sideX=cross[i-1].x*(1-t)+cross[i].x*t,sideZ=cross[i-1].z*(1-t)+cross[i].z*t;
+    const x=a.x+dx*t+sideX*(offset+s*width/2+lateralWobble),z=a.z+dz*t+sideZ*(offset+s*width/2+lateralWobble);
+    const rut=Math.exp(-((Math.abs(s)-0.46)**2)/0.028)*0.048;
+    const hoofprint=(Math.sin(dAlong*2.1+s*6.0)*Math.cos(dAlong*3.4))*0.012;
+    const microBump=(Math.sin(dAlong*0.65)*0.02+Math.cos(dAlong*1.3)*0.012)*(1-Math.abs(s)*0.5);
+    quad.push({x,y:height(x,z)+lift-rut+microBump+hoofprint,z});
    }
    const u0=left*width/6,u1=right*width/6,v0=(distance+j/steps*length)/3,v1=(distance+(j+1)/steps*length)/3;
    append(result,[quad[0],quad[2],quad[1],quad[0],quad[3],quad[2]],[[u0,v0],[u1,v1],[u0,v1],[u0,v0],[u1,v0],[u1,v1]]);
-   if(result.colors)for(const side of [left,right,left,left,right,right]){
-    const t=Math.max(0,Math.min(1,(1-Math.abs(side))*width/2/edgeFade));
-    result.colors.push(1,1,1,t*t*(3-2*t));
+   if(result.colors)for(const [t,s]of [[j/steps,left],[(j+1)/steps,right],[(j+1)/steps,left],[j/steps,left],[j/steps,right],[(j+1)/steps,right]]){
+    const dAlong=distance+t*length;
+    const edgeDist=(1-Math.abs(s))*(width/2);
+    const baseFade=Math.max(0,Math.min(1,edgeDist/edgeFade));
+    const edgeNoise=(Math.sin(dAlong*0.65+s*4.8)*0.16+Math.cos(dAlong*1.4)*0.09+Math.sin(dAlong*2.8)*0.05)*(1-baseFade);
+    const tAlpha=Math.max(0,Math.min(1,baseFade+edgeNoise));
+    result.colors.push(1,1,1,tAlpha*tAlpha*(3-2*tAlpha));
    }
   }distance+=length;
  }return result;
@@ -143,27 +160,29 @@ export async function loadNativeTerrainSurface(io,manifest,live,{minNormalY=1e-6
  }
  return {source:sourceSampler(triangles),triangles,inputs};
 }
+export async function loadGameplayHeight(io,manifest,live){const {source}=await loadNativeTerrainSurface(io,manifest,live),root=resolve(live,'../../../..'),samples=JSON.parse(await readFile(resolve(root,'data/runtime/valentine/area-expansion-2026-10-19/height-samples.json'))),layouts=await gameplayLayouts(root);return createGameplayHeight(makeHeightSampler(samples,source),layouts,JSON.parse(await readFile(resolve(root,'data/reference/valentine/level-design.json'))).terrainGrading??[],JSON.parse(await readFile(resolve(root,'data/reference/valentine/level-design.json'))).terrainSmoothing??[]);}
+async function gameplayLayouts(root){const refs=JSON.parse(await readFile(resolve(root,'data/reference/valentine/buildings/registry.json'))),layouts=[];for(const b of refs.buildings){const folder=resolve(root,'data/reference/valentine/buildings',b.file),d=JSON.parse(await readFile(folder));for(const f of d.interior.floorDefinitions){if(f.id==='ground')layouts.push(JSON.parse(await readFile(resolve(dirname(folder),f.file))).layout);}}return layouts;}
 export async function prepareLandscape(){
  const root=fileURLToPath(new URL('../',import.meta.url)),live=resolve(root,'data/runtime/valentine/verified-scene'),out=resolve(root,'data/runtime/valentine/area-expansion-2026-10-19');
  const require=createRequire(await realpath(resolve(root,'node_modules/@gltf-transform/cli/package.json'))),{NodeIO}=require('@gltf-transform/core');
  const io=new NodeIO(),manifestPath=resolve(live,'rdo_world_manifest.json'),manifestBytes=await readFile(manifestPath),manifest=JSON.parse(manifestBytes);
  const polygonBytes=await readFile(resolve(root,'data/reference/valentine/playable-boundary.json')),polygon=JSON.parse(polygonBytes).polygon.map(([x,z])=>({x,z}));
  const tracesBytes=await readFile(resolve(root,'data/reference/valentine/authored-paths.json')),pathData=JSON.parse(tracesBytes),traces=pathData.traces;
- const road={width:5.5,lift:.035,edgeFade:.8,texture:'hea_val_dirt_pebbles_01_abte.png',...pathData.appearance?.road};
+ const road={width:5.5,lift:.035,edgeFade:.8,endFade:1.6,texture:'hea_val_dirt_pebbles_01_abte.png',...pathData.appearance?.road};
  if(![road.width,road.lift,road.edgeFade].every(Number.isFinite)||road.width<=0||road.lift<0||road.edgeFade<=0||road.edgeFade>road.width/2||!/^[a-z0-9_]+\.png$/.test(road.texture))throw new Error('Invalid authored road appearance');
  const {source,triangles,inputs}=await loadNativeTerrainSurface(io,manifest,live);
  const samples=[];
  const minX=Math.floor(Math.min(...polygon.map(p=>p.x))/4)*4,maxX=Math.max(...polygon.map(p=>p.x)),minZ=Math.floor(Math.min(...polygon.map(p=>p.z))/4)*4,maxZ=Math.max(...polygon.map(p=>p.z));
  for(let x=minX-32;x<=maxX+32;x+=2)for(let z=minZ-32;z<=maxZ+32;z+=2){const y=source(x,z);if(y!==undefined)samples.push({x,y,z});}
- const height=makeHeightSampler(samples,source),surface=makeGapSurface(polygon,source,height,2);
+ const groundZones=JSON.parse(await readFile(resolve(root,'data/reference/valentine/level-design.json'))).groundZones??[],layouts=await gameplayLayouts(root),height=createGameplayHeight(makeHeightSampler(samples,source),layouts,JSON.parse(await readFile(resolve(root,'data/reference/valentine/level-design.json'))).terrainGrading??[],JSON.parse(await readFile(resolve(root,'data/reference/valentine/level-design.json'))).terrainSmoothing??[]),surface=makeGapSurface(polygon,()=>undefined,height,1);surface.colors=[];for(let i=0;i<surface.positions.length;i+=3)surface.colors.push(meadowWeight(layouts,surface.positions[i],surface.positions[i+2],groundZones),0,0,1);
  const Document=require('@gltf-transform/core').Document,doc=new Document(),buffer=doc.createBuffer(),scene=doc.createScene();
  const origin={x:-300,y:0,z:-780};
  const texture=async(name,path)=>{const bytes=await readFile(path);return doc.createTexture(name).setImage(bytes).setMimeType('image/png');};
  const grass=await texture('Original Valentine grass albedo',resolve(live,'textures/terrain/hea_grass_val_01_abte.png'));
  const dirtFile=resolve(live,'textures/terrain',road.texture);
  const dirt=await texture('Original local albedo on authored road surface',dirtFile);
- const grassMaterial=doc.createMaterial('authored-gap-grass').setBaseColorTexture(grass).setBaseColorFactor([.64,.82,.52,1]).setMetallicFactor(0).setRoughnessFactor(1).setExtras({provenance:'authored-gameplay',rdo_preview_limitation:'interpolated-native-height-gap-surface'});
- const roadMaterial=doc.createMaterial('authored-road-dirt').setBaseColorTexture(dirt).setBaseColorFactor([1,1,1,1]).setAlphaMode('BLEND').setMetallicFactor(0).setRoughnessFactor(1).setExtras({provenance:'authored-gameplay',rdo_preview_limitation:'source-centerline-authored-width-elevation-edge-fade',sourceTexture:road.texture});
+ const grassMaterial=doc.createMaterial('authored-continuous-valentine-terrain').setMetallicFactor(0).setRoughnessFactor(1).setExtras({provenance:'authored-gameplay',rdo_material_status:'terrain-four-layer-preview',rdo_terrain_lookup:'l_09_c.png',rdo_terrain_layer0:'hea_grass_val_01_abte.png',rdo_terrain_layer1:road.texture,rdo_terrain_layer2:'hea_grass_val_01_abte.png',rdo_terrain_layer3:road.texture,rdo_terrain_uv_scale_bias:[1,1,0,0],rdo_terrain_uv_set:[1,1,1,1],rdo_preview_limitation:'authored-source-height-remesh-and-yard-meadow-blend'});
+ const roadMaterial=doc.createMaterial('authored-road-dirt').setBaseColorTexture(dirt).setBaseColorFactor([1.58,1.48,1.34,1]).setAlphaMode('BLEND').setMetallicFactor(0).setRoughnessFactor(1).setExtras({provenance:'authored-gameplay',rdo_preview_limitation:'source-centerline-authored-width-elevation-edge-fade',sourceTexture:road.texture});
  const ballast=roadMaterial.clone().setName('authored-rail-ballast').setAlphaMode('OPAQUE').setBaseColorFactor([.35,.38,.35,1]);
  const rail=doc.createMaterial('authored-rail-head').setBaseColorFactor([.26,.3,.32,1]).setMetallicFactor(.75).setRoughnessFactor(.5).setExtras({provenance:'authored-gameplay'});
  const timber=doc.createMaterial('authored-rail-sleepers').setBaseColorFactor([.19,.14,.1,1]).setMetallicFactor(0).setRoughnessFactor(.95).setExtras({provenance:'authored-gameplay'});
@@ -177,7 +196,7 @@ export async function prepareLandscape(){
   if(data.colors?.length)primitive.setAttribute('COLOR_0',doc.createAccessor().setType('VEC4').setArray(new Float32Array(data.colors)).setBuffer(buffer));
   scene.addChild(doc.createNode(name).setMesh(doc.createMesh(name).addPrimitive(primitive)));counts[count]+=positions.length/9;geometry.dispose();
  };
- add('authored terrain gap fill',surface,grassMaterial,'gapTriangles');
+ for(const [cell,data]of partitionTerrain(surface))add('authored terrain gap fill '+cell,data,grassMaterial,'gapTriangles');
  for(const trace of traces){
   if(trace.kind==='road')add(trace.id,makeGroundRibbon(trace.points,road.width,height,0,road.lift,road.edgeFade),roadMaterial,'roadTriangles');
   else if(trace.kind==='rail'){
@@ -193,12 +212,20 @@ export async function prepareLandscape(){
    }add('wooden sleepers '+trace.id,ties,timber,'railTriangles');
   }
  }
- const asset='models/authored/valentine-landscape.glb';await mkdir(dirname(resolve(live,asset)),{recursive:true});
+ let asset='models/authored/valentine-landscape.glb';await mkdir(dirname(resolve(live,asset)),{recursive:true});
  doc.getRoot().setExtras({provenance:'authored-gameplay',sourceHeights:inputs,sourceTracesSha256:hash(tracesBytes),note:'Original sources preserved; interpolated height and custom widths/rails are authored approximations.'});
  console.log(JSON.stringify({counts,samples:samples.length,sourceTriangles:triangles.length,meshes:doc.getRoot().listMeshes().length,textures:doc.getRoot().listTextures().length}));
- await io.write(resolve(live,asset),doc);
+ applyRoadEndpointFades(doc,traces,road);
+ try {
+   await io.write(resolve(live,asset),doc);
+ } catch(err) {
+   if(err.code === 'EPERM') {
+     asset='models/authored/valentine-landscape-v2.glb';
+     await io.write(resolve(live,asset),doc);
+   } else throw err;
+ }
  const placement={id:'authored:valentine-landscape-2026-10-19',asset,position:origin,rotation:{x:0,y:0,z:0},scale:{x:1,y:1,z:1},layer:'terrain',chunkId:'-2:-4',lod:0,tags:['authored-gameplay','role:terrain','collision:none','occlusion:none']};
- const manifestNew={...manifest,placements:[...manifest.placements.filter(p=>p.id!==placement.id),placement]};
+ const manifestNew={...manifest,placements:[...manifest.placements.filter(p=>p.id!==placement.id).map(p=>p.layer==='terrain'&&!p.tags?.includes('authored-gameplay')?{...p,tags:[...new Set([...(p.tags??[]),'terrain:authored-replaced'])]}:p),placement]};
  await writeFile(manifestPath,JSON.stringify(manifestNew,null,2));
  // Keep original import evidence separate from the explicit authored extension.
  const sceneReportPath=resolve(live,'scene-report.json'),sceneReport=JSON.parse(await readFile(sceneReportPath));
@@ -206,7 +233,7 @@ export async function prepareLandscape(){
  sceneReport.layerCounts=Object.fromEntries([...new Set(manifestNew.placements.map(p=>p.layer))].map(layer=>[layer,manifestNew.placements.filter(p=>p.layer===layer).length]));
  sceneReport.authoredPlacements=[{id:placement.id,asset,provenance:'authored-gameplay',generator:'scripts/prepare-authored-landscape.mjs',sha256:hash(await readFile(resolve(live,asset)))}];
  await writeFile(sceneReportPath,JSON.stringify(sceneReport,null,2));
- const report={at:new Date().toISOString(),provenance:'authored-gameplay',sourceManifestSha256:hash(manifestBytes),boundarySha256:hash(polygonBytes),sourceTracesSha256:hash(tracesBytes),inputs,sourceTriangles:triangles.length,sourceHeightSamples:samples.length,gridMetres:2,...counts,placement,limitations:['Terrain missing-source regions interpolated, no original heights claimed','Road width/elevation and rail geometry authored; source2D alignment uncertainty retained','Original native tiles preserved; small edge overlap at2m cell boundaries possible']};
+ const report={at:new Date().toISOString(),provenance:'authored-gameplay',sourceManifestSha256:hash(manifestBytes),boundarySha256:hash(polygonBytes),sourceTracesSha256:hash(tracesBytes),inputs,sourceTriangles:triangles.length,sourceHeightSamples:samples.length,gridMetres:1,...counts,placement,limitations:['Terrain missing-source regions interpolated, no original heights claimed','Road width/elevation and rail geometry authored; source2D alignment uncertainty retained','Original native tiles preserved; 1m authored remesh; original imported terrain retained as source inventory and excluded from duplicate gameplay rendering']};
  await writeFile(resolve(out,'authored-landscape-report.json'),JSON.stringify(report,null,2));
  await writeFile(resolve(out,'height-samples.json'),JSON.stringify(samples));
  console.log(JSON.stringify({...counts,sourceHeightSamples:samples.length,placements:manifestNew.placements.length}));return report;

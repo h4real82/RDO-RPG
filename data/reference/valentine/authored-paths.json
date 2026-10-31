@@ -2,11 +2,13 @@
   "appearance": {
     "provenance": "authored-gameplay: selected original texture on custom road geometry, not a recovered original road material",
     "road": {
-      "width": 5.5,
-      "lift": 0.035,
-      "edgeFade": 0.8,
-      "texture": "hea_val_dirt_straw_01_abte.png"
-    }
+      "width": 6.2,
+      "lift": 0.032,
+      "edgeFade": 2.2,
+      "texture": "hea_val_dirt_pebbles_01_abte.png",
+      "endFade": 1.8
+    },
+    "roadEndpointPolicy": "Authored alpha fade at disconnected source road ends only; connected junctions stay opaque. Geometry, UVs, terrain heights and physical support unchanged."
   },
   "boundaryFile": "data\\reference\\valentine\\playable-boundary.json",
   "boundarySha256": "5d2973e7945bd32f185aaa2e9bb4a5f958a8b4469a548dc2fe670ef071bd7e76",
@@ -2779,7 +2781,7 @@
     {
       "id": "valentine:road:0071:clip:0",
       "kind": "road",
-      "lengthMetres": 79.098,
+      "lengthMetres": 80.72,
       "points": [
         {
           "x": -244.201,
@@ -2802,8 +2804,20 @@
           "z": -912.5322
         },
         {
-          "x": -287.9953,
-          "z": -911.5255
+          "x": -273,
+          "z": -908.6
+        },
+        {
+          "x": -279,
+          "z": -906.8
+        },
+        {
+          "x": -288,
+          "z": -907.8
+        },
+        {
+          "x": -291,
+          "z": -909.2
         },
         {
           "x": -304.1035,
@@ -2822,7 +2836,7 @@
           "z": -912.1547
         }
       ],
-      "reason": "Original source centerline clipped to user outline; width and elevation remain authored gameplay choices.",
+      "reason": "Source-derived route with explicit authored frontage bypass; original reference points retained in gameplayAlignment.",
       "renderable": false,
       "source": {
         "crs": "jean-ropke-v1",
@@ -2876,7 +2890,53 @@
           "toFraction": 1
         }
       ],
-      "sourceTrace": "valentine:road:0071"
+      "sourceTrace": "valentine:road:0071",
+      "gameplayAlignment": {
+        "classification": "authored-gameplay",
+        "reason": "Supplied source-derived centreline intersects val-05-res-e front-left/west walls. Local frontage bypass stays outside house and stair foot; native building, walls, access and raw reference unchanged. sourceSegments describe original reference only.",
+        "sourcePoints": [
+          {
+            "x": -244.201,
+            "z": -892.9003
+          },
+          {
+            "x": -246.2146,
+            "z": -895.9206
+          },
+          {
+            "x": -248.2281,
+            "z": -898.9409
+          },
+          {
+            "x": -252.2552,
+            "z": -904.9815
+          },
+          {
+            "x": -263.8329,
+            "z": -912.5322
+          },
+          {
+            "x": -287.9953,
+            "z": -911.5255
+          },
+          {
+            "x": -304.1035,
+            "z": -911.5255
+          },
+          {
+            "x": -309.3262,
+            "z": -911.8401
+          },
+          {
+            "x": -311.9374,
+            "z": -911.9974
+          },
+          {
+            "x": -314.5488,
+            "z": -912.1547
+          }
+        ]
+      }
     },
     {
       "id": "valentine:road:0072:clip:0",

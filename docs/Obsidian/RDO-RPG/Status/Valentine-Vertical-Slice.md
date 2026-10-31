@@ -21,7 +21,7 @@ Stand: 31.10.2026. Diese Notiz beschreibt den aktuellen verifizierten Entwicklun
 ## Neu identifizierte Anforderungen & Geplante Tickets (31.10.2026)
 
 Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeitspakete in Linear angelegt und bearbeitet:
-- **H4R-119**: *Weg- und Geländerealismus: Wagenspuren, Hufabdrücke, unregelmäßige Ränder und Grasvariationen* (Organische Western-Wege mit Kutschenrillen, weichen Übergängen zum Terrain und höherem Kontrast zur Spielfigur). [Status: Todo]
+- **H4R-119**: *Weg- und Geländerealismus: Wagenspuren, Hufabdrücke, unregelmäßige Ränder und Grasvariationen* (Organische Western-Wege mit Kutschenrillen [4.8cm], unregelmäßigen lateralen Rändern [±0.85m], 2.2m weichem Alpha-Noise-Fading ins Gras und hellem, sonnigem Schotter-Albedo `hea_val_dirt_pebbles_01_abte.png` für starken Cowboy-Kontrast). [Status: In Review]
 - **H4R-120**: *Individuelle Innenraumgestaltung: Detailausbau, interaktive Wandbilder mit Großansicht und Artwork-Wechsel* (Modulare Raumkuratierung, `[E]`-Inspektionsmodal für hochauflösende Gemäldebetrachtung und austauschbare Bilder). [Status: Todo / Erweitert durch H4R-126]
 - **H4R-121**: *Kino-Zelt: First-Person-Sitzmodus auf Leinwand, ausklappbares Videomenü und synchrones Co-Watching* (Automatischer First-Person-Kamerafokus auf die Leinwand beim Platznehmen, ausklappbares Steuer-HUD, synchronisierte Wiedergabe für sitzende Zuschauer). [Status: Todo]
 - **H4R-122**: *Interaktive Ingame-Weltkarte mit Live-Spielermarkern, POI-Wegpunkten und 3D-Bodenwegweiser* (Übersichtskarte auf `M`, Live-Positionen von Mitspielern, Wegpunkt-Setzung mit In-World-Navigationslinie/Kompassführung). [Status: Todo]
