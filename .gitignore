@@ -39,3 +39,41 @@ logs/
 # Caddy & Docker
 caddy_data/
 caddy_config/
+
+# Local assets: raw exports and generated runtime payloads never enter Git
+/data/raw/
+/data/runtime/
+/data/processed/
+/apps/client/public/assets/models/
+/apps/client/public/assets/textures/
+*.glb
+*.gltf
+*.ydr
+*.ybn
+*.ytd
+*.rpf
+*.dds
+*.ktx2
+
+# Local tools/binaries/references; only selected pipeline source is versioned
+/tools/*
+!/tools/rdo_pipeline/
+!/tools/upload-runtime-glbs.mjs
+!/tools/upload-runtime-glbs.test.mjs
+/apps/tools/
+
+# Python pipeline caches and local environments
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
+
+
+# Personal knowledge and local working artifacts
+/docs/Obsidian/
+/docs/local-artifacts/
+/docs/TEMP/
+/.archify/
+/.superpowers/
+/screenshot_*.png
+/apps/client/e2e-*.png
