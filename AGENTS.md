@@ -1,5 +1,9 @@
 # RDO-RPG Project Directives (Antigravity & Gemini Agent Rules)
 
+## Kooperative Editor-/Agentenübergabe
+- Vor Schreibarbeit im betroffenen Checkout `node scripts/gemini-handoff.mjs status` prüfen (Runbook: docs/runbooks/agent-handoff.md). Bei owner=gemini schreibt Codex dort erst nach ausdrücklicher Rückgabe weiter; Gemini analog nur bei eigener Zuständigkeit. Fehlender Marker bedeutet Codex. Defekte Marker klären, nicht still übergehen.
+- Vorbereitung ist keine Aktivierung. Vor Agentenwechsel bisherigen Agenten stoppen; Checkpoint prüfen. Die Markierung ist keine Betriebssystem-Schreibsperre und ersetzt keine Abstimmung mit parallel laufenden Editoren.
+
 ## ThreeJS Guard
 - Dachüberhänge bei Gebäuden dürfen maximal 0.5 Einheiten über die Fassade ragen (historisch bündige Dachtraufen).
 - Bei Verdeckung des Spielers zwischen Kamera und Charakter MUSS das blockierende Material (Dächer, Vordächer, Wände) stufenlos transparent werden (opacity: 0.15, depthWrite = false).

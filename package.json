@@ -13,6 +13,8 @@
     "build:server": "pnpm --filter @rdo-rpg/server build",
     "build:client": "pnpm --filter @rdo-rpg/client build",
     "test:e2e": "node scripts/e2e-check.mjs",
+    "handoff:gemini": "node scripts/gemini-handoff.mjs prepare",
+    "handoff:test": "node --test scripts/gemini-handoff.test.mjs",
     "clean": "pnpm -r exec rm -rf dist node_modules"
   },
   "devDependencies": {
