@@ -13,6 +13,7 @@ Aktuellen Aufgabenstatus führt [Linear](https://linear.app/h4real82/project/rdo
 | Restart-Architektur | [Restart-Design vom 08.10.2026](superpowers/specs/2026-10-08-rdo-rpg-restart-design.md) |
 | Asset-Pipeline | [Runbook im Restart-Branch](https://github.com/h4real82/RDO-RPG/blob/codex/rdo-restart-foundation/docs/runbooks/asset-pipeline.md) |
 | Lokale Runtime-Dateien im Client | [Vite-Konfiguration und Prüfung](runbooks/local-runtime.md) |
+| Sichere Übergabe an VS Code/Gemini und zurück | [Agentenübergabe](runbooks/agent-handoff.md) |
 | Figuren, Stadtleben, Gebäudeaktionen, Pferde und Ausrüstung | [Ausbauplanung vom 31.10.2026](planning/Valentine-Lebendige-Welt-Ausstattung-2026-10-31.md) |
 
 ## Dokumente einordnen
