@@ -1,3 +1,5 @@
+> Historischer Entwurf. Architektur-, Fortschritts- und Agentenangaben unten sind keine aktuelle Funktionszusage. Maßgeblich sind README, ausführbarer Code, aktuelle Benutzerentscheidungen und Linear. Einordnung: 31.10.2026, H4R-50.
+
 Hier ist der vollständige, zusammenhängende Text des gesamten Blueprints aus allen Abschnitten (von 1 bis 8):
 
 ---
