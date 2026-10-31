@@ -13,11 +13,13 @@ Aktuellen Aufgabenstatus führt [Linear](https://linear.app/h4real82/project/rdo
 | Restart-Architektur | [Restart-Design vom 08.10.2026](superpowers/specs/2026-10-08-rdo-rpg-restart-design.md) |
 | Asset-Pipeline | [Runbook im Restart-Branch](https://github.com/h4real82/RDO-RPG/blob/codex/rdo-restart-foundation/docs/runbooks/asset-pipeline.md) |
 | Lokale Runtime-Dateien im Client | [Vite-Konfiguration und Prüfung](runbooks/local-runtime.md) |
+| Figuren, Stadtleben, Gebäudeaktionen, Pferde und Ausrüstung | [Ausbauplanung vom 31.10.2026](planning/Valentine-Lebendige-Welt-Ausstattung-2026-10-31.md) |
 
 ## Dokumente einordnen
 
 - `superpowers/specs/`: Entwurfsentscheidungen; ein Entwurf beweist keine Implementierung.
 - `superpowers/plans/`: Umsetzungspläne mit Datum und nachvollziehbaren Ergebnissen.
+- `planning/`: fachliche Ausbauplanung mit verlinkten Linear-Aufträgen; geplante Funktionen sind keine Verfügbarkeitsmeldung.
 - `screenshots/`: gezielt versionierte Referenz-/Prüfbilder.
 - `Obsidian/`: persönliches lokales Vault, vollständig aus Git ausgeschlossen.
 - `local-artifacts/`: lokale Arbeitsbilder und Prüfausgaben, aus Git ausgeschlossen.
