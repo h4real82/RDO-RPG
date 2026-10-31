@@ -42,7 +42,7 @@
     {
       "id": "darts",
       "gameId": "darts",
-      "variantId": "valentine-saloon-practice",
+      "variantId": "saloon-301",
       "bindingStatus": "registered",
       "runtimeAvailability": "existing-local-pilot",
       "anchorStatus": "authored-gameplay",
@@ -156,6 +156,44 @@
       "anchorStatus": "authored-gameplay",
       "gameId": "wettsaufen",
       "variantId": "counter-duel"
+    },
+    {
+      "id": "maexchen-table",
+      "kind": "game",
+      "label": "Mäxchen · Würfeltisch",
+      "floorId": "ground",
+      "position": {
+        "x": -308.2,
+        "y": 119.14,
+        "z": -805.5
+      },
+      "interactionPosition": {
+        "x": -308.2,
+        "y": 117.99,
+        "z": -804.2
+      },
+      "radius": 2.2,
+      "anchorStatus": "authored-gameplay",
+      "gameId": "maexchen",
+      "variantId": "valentine-maexchen-practice"
+    },
+    {
+      "id": "saloon-art-inspection",
+      "kind": "artwork",
+      "label": "Gemälde betrachten",
+      "floorId": "ground",
+      "position": {
+        "x": -309.3968838354087,
+        "y": 119.99,
+        "z": -819.3720702727412
+      },
+      "interactionPosition": {
+        "x": -309.3968838354087,
+        "y": 117.99,
+        "z": -818.1
+      },
+      "radius": 2.2,
+      "anchorStatus": "authored-gameplay"
     }
   ]
 }

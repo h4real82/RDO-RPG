@@ -41,3 +41,19 @@ reproduzierbare Befehle stehen im versionierten Pipeline-Runbook.
 ```
 
 `--allow-incomplete` ist nur für eine klar gekennzeichnete lokale Vorschau zulässig. Ein regulärer Build verweigert unaufgelöste Modelle. Details: [Versioniertes Pipeline-Runbook](../../../runbooks/asset-pipeline.md).
+
+## 3D Asset-Generierung & Tripo 3D CLI (H4R-123)
+
+Für prozedurale und KI-gestützte 3D-Modellierung (Western-Props, detaillierte NPCs, Pferde, Waffen, Kleidung und Verbrauchsgegenstände) wird die offizielle **Tripo 3D CLI** (`tripo-cli`) eingesetzt:
+- **Status Kling AI**: Kling AI ist formell abgelöst und außer Betrieb genommen (Credits erschöpft; unzureichende 3D-Konsistenz).
+- **Tripo CLI Installation**: `npm install -g tripo-cli`
+- **Authentifizierung**: Globales Profil `default` mit OAuth-Login / API-Key (`~/.tripo/config.json`).
+- **Nutzung**:
+  ```powershell
+  # Text-to-3D Modellierung
+  tripo generate --prompt "authentic 1899 western saloon bartender, rolled up shirt sleeves, waistcoat, apron, mustache" --output-dir public/assets/models/tripo/
+  
+  # Image-to-3D Rekonstruktion
+  tripo image-to-3d --image path/to/reference.png --output-dir public/assets/models/tripo/
+  ```
+Modelle werden im GLB-Format exportiert, über den Dreiecks-Budget-Guard (`webgl-performance-memory-optimization`) validiert und in die Spielwelt eingepflegt.

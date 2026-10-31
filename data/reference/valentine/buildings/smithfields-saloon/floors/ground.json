@@ -11,9 +11,9 @@
     "floorY": 117.99,
     "front": -798.2670702727412,
     "doorX": -309.04688383540866,
-    "doorWidth": 2.3,
-    "rampStart": -794.0670702727411,
-    "rampLow": 117.04,
+    "doorWidth": 2.4,
+    "rampStart": -793.0670702727411,
+    "rampLow": 116.96492693713104,
     "frontDirection": 1,
     "fixtures": [
       {
@@ -52,7 +52,7 @@
       },
       {
         "id": "table-rear",
-        "kind": "table-round",
+        "kind": "table-poker",
         "position": {
           "x": -307.79688383540866,
           "y": 117.99,
@@ -69,7 +69,7 @@
       },
       {
         "id": "table-center",
-        "kind": "table",
+        "kind": "table-blackjack",
         "position": {
           "x": -308.4968838354087,
           "y": 117.99,
@@ -77,6 +77,23 @@
         },
         "size": {
           "x": 1.8,
+          "y": 0.9,
+          "z": 1.4
+        },
+        "color": "#5d4938",
+        "collision": true,
+        "yaw": 0
+      },
+      {
+        "id": "table-maexchen",
+        "kind": "table-maexchen",
+        "position": {
+          "x": -307.79688383540866,
+          "y": 117.99,
+          "z": -803.9
+        },
+        "size": {
+          "x": 1.6,
           "y": 0.9,
           "z": 1.4
         },
@@ -211,35 +228,35 @@
           "id": "front",
           "from": {
             "x": -309.04688383540866,
-            "y": 117.04,
-            "z": -794.0670702727411
+            "y": 116.96492693713104,
+            "z": -793.0670702727411
           },
           "to": {
             "x": -309.04688383540866,
             "y": 117.99,
             "z": -795.4170702727412
           },
-          "width": 2.05
+          "width": 2.4
         },
         {
           "id": "west",
           "from": {
-            "x": -316.8968838354087,
-            "y": 117.04,
-            "z": -796.8420702727412
+            "x": -313.9968838354087,
+            "y": 116.69594407729842,
+            "z": -793.6420702727412
           },
           "to": {
-            "x": -315.4468838354087,
+            "x": -313.9968838354087,
             "y": 117.99,
             "z": -796.8420702727412
           },
-          "width": 1.55
+          "width": 2.4
         },
         {
           "id": "east",
           "from": {
-            "x": -301.8968838354087,
-            "y": 117.04,
+            "x": -300.8968838354087,
+            "y": 117.48374239373993,
             "z": -796.8420702727412
           },
           "to": {
@@ -247,27 +264,31 @@
             "y": 117.99,
             "z": -796.8420702727412
           },
-          "width": 1.55
+          "width": 2.4
         }
       ]
     },
     "appearance": {
       "textures": {
         "floor": {
-          "url": "interiors/smithfields-saloon/textures/val_fl_salwood01_ab.png",
+          "url": "interiors/warm-palette/textures/val_warm_pine_floor_albedo.jpg",
           "repeat": [
             3,
             5
-          ]
+          ],
+          "gain": 1.02
         },
         "wood": {
-          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png"
+          "url": "interiors/smithfields-saloon/textures/val_cs_salwoodtrim00_ab.png",
+          "gain": 1.05
         },
         "wallpaper": {
-          "url": "interiors/smithfields-saloon/textures/val_salwallpaper01_ab.png"
+          "url": "interiors/warm-palette/textures/val_victorian_damask_wallpaper.jpg",
+          "gain": 1.04
         },
         "rug": {
-          "url": "interiors/smithfields-saloon/textures/new_cs_gala_rug08_ab.png"
+          "url": "interiors/warm-palette/textures/val_ornate_saloon_carpet.jpg",
+          "gain": 1.02
         },
         "art": {
           "url": "interiors/smithfields-saloon/textures/val_cs_salpaintings08_ab.png",
@@ -281,7 +302,8 @@
           ]
         },
         "furnitureWood": {
-          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png",
+          "gain": 1.05
         }
       },
       "models": [
@@ -312,5 +334,16 @@
     "yawDegrees": 10,
     "note": "Local coordinate frame rotated around layout centre; no changes to imported transforms. Access supports remain independent from source rendering."
   },
-  "furnitureEvidence": "data/reference/valentine/buildings/smithfields-saloon/interior-photo-evidence-2026-10-24.json"
+  "furnitureEvidence": "data/reference/valentine/buildings/smithfields-saloon/interior-photo-evidence-2026-10-24.json",
+  "accessDesign": {
+    "classification": "authored-gameplay",
+    "rules": "data/reference/valentine/level-design.json",
+    "purpose": "Broad readable entrances and continuous ramps; original model provenance unchanged."
+  },
+  "accessGrounding": {
+    "classification": "authored-gameplay",
+    "generator": "scripts/repair-grounded-access.mjs",
+    "date": "2026-10-29",
+    "source": "actual promoted terrain triangles sampled independently per flight; max grade0.6"
+  }
 }

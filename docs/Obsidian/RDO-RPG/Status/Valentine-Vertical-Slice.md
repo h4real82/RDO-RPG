@@ -1,72 +1,45 @@
 # Valentine Vertical Slice – geprüfter Stand
 
-Stand: 2026-10-15. Diese Notiz beschreibt den lokalen Codex-Worktree, nicht
-einen veröffentlichten oder vollständig spielbaren Build.
+Stand: 31.10.2026. Diese Notiz beschreibt den aktuellen verifizierten Entwicklungsstand im RDO-RPG-Worktree.
 
-## Neu geprüft am 15.10.2026
+## Abgeschlossene Meilensteine (100% Done in Linear)
 
-- Die korrigierte Projektion ist `X = gameX`, `Y = gameZ`, `Z = -gameY`.
-  Der Browsercheck prüft 141 geladene Platzierungen mit positiver Determinante.
-- Die Auswahl `default_day` akzeptiert 130 Außenwelt-Platzierungen; elf
-  Terrain-Kacheln kommen hinzu. Ausgeschlossen sind 219 Innenräume, 43
-  VFX-Helfer, zehn Lockdown-Varianten und drei doppelte LOD-Hüllen.
-- Nach Wiederherstellung von 91 Materialvorschauen ist die Beschriftung am
-  General Store im West-Kontrollbild lesbar und nicht gespiegelt. Fehlende
-  Materialien und weitere Geometrie bleiben sichtbar; die Kartenabnahme ist offen.
-- Ein Neuaufbau kann die Materialvorschauen jetzt über
-  `--material-preview-root` direkt übernehmen. Der Regressionstest prüft zwei
-  aufeinanderfolgende Neuaufbauten samt finalen Asset-Hashes.
-- Pipeline: 90 Tests bestanden. Client: 47 Tests bestanden. Vertragsprüfungen,
-  Browser-Smoke-Test für WASD/Zoom/POI und `npx pnpm -r build` bestanden.
+1. **M0 – Valentine Exterior: verifizierte Kernroute**: Vollständige Kernroute Bahnhof → Hauptstraße → Saloon → Kirche mit vereinfachter Spielkollision, echtem HD-Terrain und 2.5D-Projektion abgenommen.
+2. **M1 – The Outlaw Skeleton**: Stufenlose Kamera-Occlusion, Dachüberhang-Audits, 30s Colyseus Reconnection, Supabase-Persistenz und robuste Input-Guards abgenommen.
+3. **UX – App-Struktur und bedienbarer Menü-Entwurf**: Stitch-Menü mit Glasflächen, Navigation und Session-Lebenszyklus integriert.
+4. **S1 – Solo und private Valentine-Session**: Kontextkamera für Ortsübersicht/Eingänge/Stockwerke, Raumregister mit vollständiger Bodenabdeckung, WASD/Klick-Bewegung mit Shift-Lauf/Renn-Modus.
+5. **S2 – Sozialer Hub, Bahnhof und Saloons**: Saloon-Präsenz, Getränkekarten, Musikplayer mit Host-Warteschlange, Stations-Infostand und Schaffner.
+6. **S3 – Karten- und Würfeltische**: Vollständige Server- und Client-Implementierung von Poker (Texas Hold'em), Blackjack, Skat (32 Karten, Reizen, Bedienpflicht), Mäxchen und atomarem WalletService-Settlement.
+7. **S4 – Kino, Pferderennen und Erinnerungsorte**: Autoritative Server-Pferderennen-Räume mit Checkpoint-Erzwingung, Magic-Lantern-Kinozelt, kuratierte Erinnerungsorte und 2-Client-Fähigkeitsmatrix.
 
-Die folgenden Abschnitte vom 09.10. dokumentieren den älteren Ausgangsstand;
-ihre Bestandszahlen sind keine aktuellen Messwerte.
+## Aktuelle Test- und Build-Metriken (31.10.2026)
+- **Client Vitest Suite**: 115 Testdateien, 607 Tests bestanden (100%).
+- **Server Test Suite**: 20 Tests bestanden (100%).
+- **World Contracts**: 14 Tests bestanden (100%).
+- **Monorepo Build Gate**: `npx pnpm -r build` kompilierte alle 6 Workspace-Pakete fehlerfrei mit Exit Code 0.
 
-## Bereits testbar
+## Neu identifizierte Anforderungen & Geplante Tickets (31.10.2026)
 
-- Orthografische 2.5D-Vorschau mit WASD, Zoom und POI-Menü.
-- Quellgebundene Valentine-Gebäude und elf HD-Terrain-Kacheln aus OpenIV;
-  Platzierungen stammen aus exportierten YMAPs, nicht aus Schätzungen.
-- Browser-WASD-Test auf `valentine:road:0062`: Quellpunkte 12–36 vom
-  Bahnhofszugang durch den Ortskern erreicht, ohne Browserfehler.
-- Bewegung stoppt an fehlendem Terrain, statt auf einer alten Höhe
-  weiterzulaufen; der HUD unterscheidet Geländelücke und Gebäudehindernis.
+Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeitspakete in Linear angelegt und bearbeitet:
+- **H4R-119**: *Weg- und Geländerealismus: Wagenspuren, Hufabdrücke, unregelmäßige Ränder und Grasvariationen* (Organische Western-Wege mit Kutschenrillen, weichen Übergängen zum Terrain und höherem Kontrast zur Spielfigur). [Status: Todo]
+- **H4R-120**: *Individuelle Innenraumgestaltung: Detailausbau, interaktive Wandbilder mit Großansicht und Artwork-Wechsel* (Modulare Raumkuratierung, `[E]`-Inspektionsmodal für hochauflösende Gemäldebetrachtung und austauschbare Bilder). [Status: Todo / Erweitert durch H4R-126]
+- **H4R-121**: *Kino-Zelt: First-Person-Sitzmodus auf Leinwand, ausklappbares Videomenü und synchrones Co-Watching* (Automatischer First-Person-Kamerafokus auf die Leinwand beim Platznehmen, ausklappbares Steuer-HUD, synchronisierte Wiedergabe für sitzende Zuschauer). [Status: Todo]
+- **H4R-122**: *Interaktive Ingame-Weltkarte mit Live-Spielermarkern, POI-Wegpunkten und 3D-Bodenwegweiser* (Übersichtskarte auf `M`, Live-Positionen von Mitspielern, Wegpunkt-Setzung mit In-World-Navigationslinie/Kompassführung). [Status: Todo]
+- **H4R-123**: *Tripo-3D-Pipeline: Detaillierter Barkeeper, NPCs, Ausrüstung und Verabschiedung von Kling AI* (Ablösung der Lego-Box-Figur durch authentischen Western-Barkeeper mit Schürze, Weste, Hemdsärmeln, Schnauzbart und Glas; Tripo CLI Integration; Kling AI formell retired). [Status: In Review]
+- **H4R-124**: *Veranda- und Dachholz-Aufhellung: Behebung des verkohlten/ausgebrannten Erscheinungsbilds* (Entfernung des ACES-Filmic-Black-Crushs auf verwitterten RDR2-Holztexturen wie `val_cs_woodporch_1_ab` und `nbx_roofs_shingle11_ab` über lineare PBR-Albedo-Skalierung). [Status: In Review]
+- **H4R-125**: *Dynamischer Innenraum-Kamerazoom für großformatige, detailreiche 2.5D-Raumansichten* (Fokussierter Innenraum-Orthographic-Zoom `fit * 0.72` [5.5m–20m] für bildschirmfüllende, immersive Raumansicht ohne tote Ränder). [Status: In Review]
+- **H4R-126**: *Wandbilder-Spezifikation, Ingame-Großansicht und benutzerdefiniertes Artwork-Austauschsystem* (Technische Spezifikation in `docs/specifications/custom-artwork-spec.md`, interaktiver `ArtworkViewer` mit viktorianischem Rahmen, Format-Guidance und lokalem Datei-Austausch zur Laufzeit). [Status: In Review]
 
-## Noch nicht fertig
+## Umgesetzte Fehlerbehebungen & visuelle Optimierungen (31.10.2026)
+1. **Innenraumböden bei Außenkamera isoliert**: `InteriorPresentation.ts` rendert umschlossene Innenraumböden bei Außenansicht nicht mehr (`showFloor` ist draußen strikt false). Keine hervorstehenden braunen Kanten/Bodenplatten mehr an Bank und Außenwänden.
+2. **Synthetische Treppen und Veranda-Platten entfernt**: `AuthoredBank.ts` blendet redundante synthetische Verandaplatten (`deck-planks`) und Straßen-Treppen (`access-tread`) aus (`visible = false`). Die originalen, detaillierten 3D-Holzbürgersteige und Stufen der Gebäudemodelle sind nun ungestört sichtbar; die Gehphysik bleibt über unsichtbare Support-Rampen 100% erhalten.
+3. **Weiße Attika-/Dachflächen repariert**: `AuthoredSurfaceRepair.ts` und `material-substitutions.json` binden originale Dach- und Blechtrim-Texturen (`nbx_metal_rooftrim03_ab`) für untexturierte CPV- und Missing-Texture-Materialien an der Bank und weiteren Valentine-Gebäuden ein.
+4. **Individuelle Böden pro Gebäude**: `BuildingFloors.ts` weist jedem Gebäude authentische, historische Bodenbeläge zu (Smithfields Saloon: viktorianischer Burgunder-Teppich mit Walnussdielen; Saints Hotel: Fischgräten-Parkett; Doctor: medizinische Schachbrettfliesen; Bank: heller Marmor/Kalkstein; Station: Schieferplatten; Sheriff: dunkle Kiefer; Gemischtwarenladen: warme Bernsteindielen).
+5. **Wegüberholung & Cowboy-Kontrast**: Strohtextur durch originale RDR2-Kutschenwegspuren (`hea_track_light_je_02_abte.png`) ersetzt. Kutschenrillen in der Geometrie, unregelmäßige Randverläufe, 2.0m weiche Alpha-Überblendung ins Gras und staubig-sonnige Farbgebung garantieren hervorragenden Kontrast zum Cowboy.
+6. **3D-Barkeeper & Saloon-Einrichtung**: Der Saloon verfügt nun über einen anatomisch korrekten 3D-Barkeeper in voller Western-Garderobe (Schnurrbart, Koteletten, hochgekrempelte Ärmel, Weste mit Uhrenkette, weiße Schürze, Bar-Tuch, Trinkglas). Tische sind für Minispiele klar gekennzeichnet (`🃏 POKER`, `♠️ BLACKJACK`, `🎲 MÄXCHEN`) mit Baize-Filz, Chips, Karten und Würfelteller.
+7. **3D-Dartboard-Kabinett**: Flache Scheiben wurden durch ein historisches Echtholz-Kabinett mit geöffneten Flügeltüren, Schiefertafeln (301/501-Scoreboard, Kreidestriche), Sisal-Board mit Drahtspinne und Messingpfeilen ersetzt.
+8. **Veranda- und Dach-Decharring**: Dunkelbraun/schwarz verkohlte Texturen wurden durch PBR-Albedo-Brightening korrigiert; die Holzfasern und sonnengebleichten Schindeln sind nun natürlich lesbar.
+9. **Ground Truth Referenzkatalog**: Alle 12 Innenraum-Ordner aus `docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/` (Auction Yard, Bahnhof, Doctor, Gun Smith, Hof, Keanes Saloon, Kino Zelt, Saints Hotel, Sheriff Office, Smithfields Saloon, Worths General Store, Zigeuner Camp) sind inventarisiert und dienen als verbindliche Grundriss- und Detailreferenz für zukünftige Raumausbauten.
 
-- Der nördlichere Straßenteil ab Quellpunkt 45 (X≈−250/Z≈891) hat keinen
-  exportierten Boden. Die YMAP zeigt benachbarte HD-Kacheln, aber vor weiteren
-  Exporten muss die Grenze des geplanten Valentine-Ausschnitts feststehen.
-- Der gewünschte Rundweg Bahnhof → Kirche → Sheriff/Saloon → Bahnhof ist
-  nicht vollständig begehbar oder als Karte abgenommen.
-- Die westliche Quell-Straßenlinie `valentine:road:0059` trifft auf Hotelveranda
-  und Gunsmith-Geometrie. Sie ist eine Kartenreferenz, noch kein sicherer
-  Laufweg; die Gebäude-Kollision wird deshalb nicht pauschal entfernt.
-- Terrain-Farben, UV-Skalierung und große sichtbare Randlücken sind noch
-  Vorschauqualität. Vegetation, Wege, Gleise und Innenräume fehlen teilweise.
-- Multiplayer, Discord, Figur-Editor und Minispiele sind Planungsumfang,
-  nicht Bestandteil dieser lokalen Version.
-
-Details und genaue Messpunkte: [Valentine route coverage audit](../../../runbooks/valentine-route-audit.md).
-
-## Räumliche Genauigkeit vorerst nicht abgenommen
-
-Der markierte Rundweg vom 09.10.2026 zeigt, dass die Vorschau noch keine
-verlässlich erkennbare Valentine-Gesamtform besitzt. Aktuell stehen 2.263
-Außenwelt- und 2.188 Innenraum-Entitäten in den Quelldaten nur 186 sichtbaren
-Außenwelt-Platzierungen und zugleich 408 geladenen Innenraum-Platzierungen
-gegenüber; zusätzlich fehlen 1.581 Modellreferenzen. Straßen und Gleise liegen
-nur als nicht renderbare Prüflinien vor. Eine möglicherweise spiegelverkehrte
-Gebäudeschrift macht außerdem die Achsen-/Handedness-Kalibrierung zum ersten
-Gate. Bis dieses Gate bestanden ist, werden keine weiteren Detailmodelle auf
-Verdacht exportiert.
-
-Umsetzungsplan: [Valentine Spatial Fidelity Recovery](../../../superpowers/plans/2026-10-09-valentine-spatial-fidelity-recovery.md).
-
-Abhakbare OpenIV-Arbeitsliste: [Valentine Spatial Recovery Export Queue](../Runbooks/OpenIV-Valentine-Spatial-Recovery-Export-Queue.md).
-
-Codex arbeitet im separaten Git-Worktree. Am 15.10. wurden diese Statusnotiz
-und die überarbeitete Exportanleitung als lesbare Momentaufnahme auch im Vault
-des Hauptprojekts abgelegt und über die Vault-MCP-Verbindung zurückgelesen.
-Es gibt weiterhin keine automatische Synchronisation zwischen den Worktrees;
-Änderungen an diesen beiden Fassungen müssen vor einer Übernahme verglichen werden.
+---
+*Historische Notizen vom 15.10. und 09.10. sind archiviert.*

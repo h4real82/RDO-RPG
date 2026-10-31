@@ -1,6 +1,8 @@
-import{Group,Mesh,RepeatWrapping,type Texture}from'three';
+import { Group, Mesh, MeshStandardMaterial, RepeatWrapping, type Texture } from 'three';
+import { applySourceModelVisibility } from './SourceModelVisibility';
 
 export function prepareDrawableMaterialPreview(instance: Group): void {
+  applySourceModelVisibility(instance);
   instance.traverse((object) => {
     if (!(object instanceof Mesh)) return;
     const materials = Array.isArray(object.material) ? object.material : [object.material];
@@ -12,9 +14,28 @@ export function prepareDrawableMaterialPreview(instance: Group): void {
         material.vertexColors = false;
         material.needsUpdate = true;
       }
-            if (!material.map && material.color && (material.color.r > 0.85 && material.color.g > 0.85 && material.color.b > 0.85)) {
+      if (!material.map && material.color && (material.color.r > 0.85 && material.color.g > 0.85 && material.color.b > 0.85)) {
         material.color.set('#524235');
         material.roughness = 0.9;
+      }
+      if (material instanceof MeshStandardMaterial && material.map) {
+        const texName = (material.map.name || (material.map as unknown as { source?: { data?: { name?: string } } }).source?.data?.name || material.name || '').toLowerCase();
+        if (/woodporch|fl_woodplank|woodfloor_ends|cs_woodporch/i.test(texName)) {
+          // Warm sun-bleached weathered pine/cedar for porches, stairs, and boardwalks (replaces charred/black appearance)
+          material.color.setRGB(2.25, 2.0, 1.7);
+          material.roughness = 0.85;
+          material.userData.rdo_charred_wood_repaired = true;
+        } else if (/roofs_shingle|tar_paper|metal_rooftrim|rooftrim/i.test(texName)) {
+          // Weathered roof shingles and trim (replaces pitch-black charred roof look)
+          material.color.setRGB(1.65, 1.55, 1.42);
+          material.roughness = 0.9;
+          material.userData.rdo_charred_wood_repaired = true;
+        } else if (/be_wood01|be_wood06|be_wood30|wallwood62|woodplank32|wood_beampainted/i.test(texName)) {
+          // Warm cedar railings, posts, awnings, and exterior wall planks
+          material.color.setRGB(1.85, 1.65, 1.4);
+          material.roughness = 0.88;
+          material.userData.rdo_charred_wood_repaired = true;
+        }
       }
       if (material.userData.rdo_alpha_mode === 'MASK') {
         material.alphaTest = 0.5; material.transparent = false;
@@ -60,4 +81,3 @@ export function prepareDrawableMaterialPreview(instance: Group): void {
     }
   });
 }
-
