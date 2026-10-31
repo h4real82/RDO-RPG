@@ -13,7 +13,7 @@ Stand: 31.10.2026. Diese Notiz beschreibt den aktuellen verifizierten Entwicklun
 7. **S4 – Kino, Pferderennen und Erinnerungsorte**: Autoritative Server-Pferderennen-Räume mit Checkpoint-Erzwingung, Magic-Lantern-Kinozelt, kuratierte Erinnerungsorte und 2-Client-Fähigkeitsmatrix.
 
 ## Aktuelle Test- und Build-Metriken (31.10.2026)
-- **Client Vitest Suite**: 115 Testdateien, 607 Tests bestanden (100%).
+- **Client Vitest Suite**: 117 Testdateien, 612 Tests bestanden (100%).
 - **Server Test Suite**: 20 Tests bestanden (100%).
 - **World Contracts**: 14 Tests bestanden (100%).
 - **Monorepo Build Gate**: `npx pnpm -r build` kompilierte alle 6 Workspace-Pakete fehlerfrei mit Exit Code 0.
@@ -42,6 +42,7 @@ Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeit
 8. **Veranda- und Dach-Decharring**: Dunkelbraun/schwarz verkohlte Texturen wurden durch PBR-Albedo-Brightening korrigiert; die Holzfasern und sonnengebleichten Schindeln sind nun natürlich lesbar.
 9. **Ground Truth Referenzkatalog**: Alle 12 Innenraum-Ordner aus `docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/` (Auction Yard, Bahnhof, Doctor, Gun Smith, Hof, Keanes Saloon, Kino Zelt, Saints Hotel, Sheriff Office, Smithfields Saloon, Worths General Store, Zigeuner Camp) sind inventarisiert und dienen als verbindliche Grundriss- und Detailreferenz für zukünftige Raumausbauten.
 10. **Dekorative Großobjekte & Lebendige Stadt (Zug, Kutschen, Tiere)**: Auf den Bahnhofsschienen steht die historische 1899 4-4-0 American Dampflokomotive samt Kohletender und Personenwagen mit Kollisionskörpern. Zwei Concord-Postkutschen und drei Fracht- und Planwagen stehen am Saloon, Livery und Güterhof. Fünf gesattelte Pferde mit Zaumzeug sind an den Hitching Posts angebunden, drei Hunde dösen/sitzen an Veranda, Stall und Bahnhof, und sechs Hühner beleben das Gehege am Auction Yard.
+11. **Hotel Lobby & Lebendige Gast-NPC-Dame (Tripo3D Asset)**: Das vom Benutzer in Tripo erstellte Modell der sitzenden Dame im Sessel (`hotel-lobby-woman.glb`) wurde auf 258k Polygone optimiert und nahtlos in die Saints Hotel Lobby integriert (`replaces: ['lobby-armchair']`). Über `InteriorActors.ts` führt sie sanfte Atmungs-Mikrobewegungen aus, dreht bei Annäherung (< 3m) ihren Kopf/Oberkörper dem Spieler zu und bietet eine vollwertige Dialog-Interaktion `[F] Mit Hotel-Gast sprechen` über Postkutschenreise, Kaminwärme und Hotelgeschehen. Der Actor-Controller ist modular für zukünftige NPC-Roaming-Routen ausgelegt.
 
 ---
 *Historische Notizen vom 15.10. und 09.10. sind archiviert.*

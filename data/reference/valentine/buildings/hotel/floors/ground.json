@@ -11,9 +11,9 @@
     "floorY": 117.1,
     "front": -776.9314,
     "doorX": -322.7087,
-    "doorWidth": 2.3,
-    "rampStart": -781.1314,
-    "rampLow": 115.63022179159945,
+    "doorWidth": 2.4,
+    "rampStart": -782.6314,
+    "rampLow": 115.58251867002339,
     "frontDirection": -1,
     "yaw": 0.17453292519943295,
     "porch": {
@@ -26,8 +26,8 @@
           "id": "front",
           "from": {
             "x": -322.7087,
-            "y": 115.63022179159945,
-            "z": -781.1314
+            "y": 115.58251867002339,
+            "z": -782.6314
           },
           "to": {
             "x": -322.7087,
@@ -39,30 +39,30 @@
         {
           "id": "west",
           "from": {
-            "x": -331.80870000000004,
-            "y": 115.20929593745532,
+            "x": -334.30870000000004,
+            "y": 114.96280008971773,
             "z": -778.3564
           },
           "to": {
-            "x": -328.3587,
+            "x": -330.3587,
             "y": 117.1,
             "z": -778.3564
           },
-          "width": 1.6
+          "width": 2.4
         },
         {
           "id": "east",
           "from": {
             "x": -313.6087,
-            "y": 116.42750074928418,
+            "y": 116.38799594285899,
             "z": -778.3564
           },
           "to": {
-            "x": -317.0587,
+            "x": -315.05870000000004,
             "y": 117.1,
             "z": -778.3564
           },
-          "width": 1.6
+          "width": 2.4
         }
       ]
     },
@@ -211,21 +211,45 @@
           "repeat": [
             4,
             5
-          ]
+          ],
+          "gain": 1.02
         },
         "wood": {
-          "url": "interiors/hotel/textures/val_cs_salwoodtrim02_ab.png"
+          "url": "interiors/hotel/textures/val_cs_salwoodtrim02_ab.png",
+          "gain": 1.05
         },
         "wallpaper": {
-          "url": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png"
+          "url": "interiors/hotel/textures/val_cs_hotelwallpaper_03_ab.png",
+          "gain": 1.04
         },
         "rug": {
-          "url": "interiors/hotel/textures/val_hotel_rug_01_ab.png"
+          "url": "interiors/warm-palette/textures/val_ornate_saloon_carpet.jpg",
+          "gain": 1.02
         },
         "furnitureWood": {
-          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png"
+          "url": "interiors/authored-reference/textures/val_sal2_woodplank03_ab.png",
+          "gain": 1.05
         }
-      }
+      },
+      "models": [
+        {
+          "url": "interiors/hotel/hotel-lobby-woman.glb",
+          "replaces": [
+            "lobby-armchair"
+          ],
+          "position": {
+            "x": -4.7,
+            "y": 0,
+            "z": 3.1
+          },
+          "size": {
+            "x": 1.15,
+            "y": 1.3,
+            "z": 1.15
+          },
+          "yaw": 0.35
+        }
+      ]
     },
     "stairs": [
       {
@@ -240,7 +264,7 @@
           "y": 120.6,
           "z": -763.6
         },
-        "width": 1.6,
+        "width": 2,
         "toFloorId": "upper"
       }
     ]
@@ -253,5 +277,16 @@
   },
   "designStatus": "Authored hotel lobby, reception desk, clerk and lounge; shared authentic western wood and wallpaper styling.",
   "connectionNotes": "authored-gameplay: simplified connected stair and loft/upper landing; dimensions and internal route are authored, not an original MLO claim",
-  "furnitureEvidence": "data/reference/valentine/buildings/hotel/interior-photo-evidence-2026-10-24.json"
+  "furnitureEvidence": "data/reference/valentine/buildings/hotel/interior-photo-evidence-2026-10-24.json",
+  "accessDesign": {
+    "classification": "authored-gameplay",
+    "rules": "data/reference/valentine/level-design.json",
+    "purpose": "Broad readable entrances and continuous ramps; original model provenance unchanged."
+  },
+  "accessGrounding": {
+    "classification": "authored-gameplay",
+    "generator": "scripts/repair-grounded-access.mjs",
+    "date": "2026-10-29",
+    "source": "actual promoted terrain triangles sampled independently per flight; max grade0.6"
+  }
 }

@@ -62,6 +62,24 @@
       },
       "radius": 3,
       "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "hotel-guest-lady",
+      "kind": "hotel_guest",
+      "label": "Mit Hotel-Gast sprechen",
+      "floorId": "ground",
+      "position": {
+        "x": -327.4,
+        "y": 117.8,
+        "z": -764.5
+      },
+      "interactionPosition": {
+        "x": -326.4,
+        "y": 117.1,
+        "z": -764.5
+      },
+      "radius": 2.2,
+      "anchorStatus": "authored-gameplay"
     }
   ]
 }

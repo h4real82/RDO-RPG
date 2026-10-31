@@ -39,6 +39,8 @@ Im Rahmen des Spielerfeedbacks zu den Innen- und Außenansichten von Valentine w
 
 ## Konsequenzen
 - Stark verbesserte Raumwirkung und lebendige Atmosphäre im Smithfields Saloon.
+- Erste Tripo-Studio-Integration mit Hotel-Lobby-Gastdame (`hotel-lobby-woman.glb`), optimiertem PBR-Mesh (258k Tris) und prozeduralem `InteriorActors`-Controller für Atmung, Kopfdrehung und Dialog.
 - Saubere, reproduzierbare 3D-Asset-Pipeline mit Tripo 3D.
 - Spieler können Gemälde interaktiv betrachten und anpassen.
-- Build-Gate und Test-Suites bleiben bei 100% grün (607/607 Tests).
+- Build-Gate und Test-Suites bleiben bei 100% grün (612/612 Tests).
+

@@ -1,8 +1,11 @@
-import{planExitRoute,WaypointMovement}from'./interiors/ExitRoute';
+import{CowboyAvatar}from'./player/CowboyAvatar';
+import{planEntryRoute,planExitRoute,WaypointMovement}from'./interiors/ExitRoute';
 import{prepareDrawableMaterialPreview}from'./world/DrawableMaterialPreview';
+import levelDesign from '../../../../data/reference/valentine/level-design.json';
 import {VenueActivities} from './venues/VenueActivities';
+import {cinemaScreenPose} from './venues/CinemaScreen';
 import { WalletService } from './economy/WalletService';
-import { ACESFilmicToneMapping, Box3, Color, DirectionalLight, FogExp2, Group, HemisphereLight, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, SphereGeometry, Texture, TextureLoader, Vector2, Vector3, Vector4, WebGLRenderer } from 'three';
+import { ACESFilmicToneMapping, Box3, Color, DirectionalLight, Group, HemisphereLight, Mesh, MeshStandardMaterial, Raycaster, RepeatWrapping, Scene, Texture, TextureLoader, Vector2, Vector3, Vector4, WebGLRenderer } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { WorldManifest, WorldPlacement } from '@rdo-rpg/world-contracts';
 import { createPlayableBoundary, VALENTINE_BOUNDARY } from '@rdo-rpg/world-contracts';
@@ -13,7 +16,7 @@ import { isDetachedTarget, isEditableTarget } from './input/InputTarget';
 import { OrthographicFollowCamera } from './player/OrthographicFollowCamera';
 import { OcclusionController } from './player/OcclusionController';
 import { prepareSourceRaycasts } from './world/SourceRaycasts';
-import { PlayerController } from './player/PlayerController';
+import { PlayerController,movementFrameDelta } from './player/PlayerController';
 import { RoadRecovery, parseSourceRoadTargets, type RoadRecoveryActions, type RoadRecoveryResult, type RoadTarget } from './player/RoadRecovery';
 import { Hud } from './presentation/Hud';
 import { Minimap } from './presentation/Minimap';
@@ -32,6 +35,7 @@ import { BUILDINGS } from './buildings/BuildingRegistry';
 import { SpatialContextResolver } from './interiors/SpatialContext';
 import {toWorld} from './buildings/RoomTransform';
 import {updateInteriorWalls} from './interiors/InteriorWalls';
+import {InteriorActors} from './interiors/InteriorActors';
 import {pickEntrance} from './interiors/EntrancePicking';
 import {installRoomAppearance} from './interiors/RoomAppearance';
 import {placeActivityPrompt} from './interiors/ActivityPrompt';
@@ -61,8 +65,8 @@ export function placementBlocksPlayerAndCamera(placement: Pick<WorldPlacement, '
   return placement.layer !== 'terrain';
 }
 
-export function isRenderablePlacement(placement: Pick<WorldPlacement, 'asset'>): boolean {
-  return !placement.asset.endsWith('_reflection_proxy.glb') && !placement.asset.includes('road_d_');
+export function isRenderablePlacement(placement: Pick<WorldPlacement, 'asset'|'tags'>): boolean {
+  return !placement.tags?.includes('terrain:authored-replaced') && !placement.asset.endsWith('_reflection_proxy.glb') && !placement.asset.includes('road_d_');
 }
 
 export function disableTerrainVertexColorMultiplication(instance: Group): void {
@@ -85,11 +89,19 @@ export async function prepareTerrainFourLayerPreview(
   loadTexture: (url: string) => Promise<Texture>,
 ): Promise<void> {
   const pending: Promise<void>[] = [];
+  const prepared=new Set<MeshStandardMaterial>();
   instance.traverse((object) => {
-    if (!(object instanceof Mesh) || !object.geometry.getAttribute('uv') || !object.geometry.getAttribute('color_1')) return;
+    if (!(object instanceof Mesh) || !object.geometry.getAttribute('uv')) return;
+    // Sollumz get_color_attr_name(0) -> "Color 1": the source's FIRST
+    // channel, exported as COLOR_0 / Three's color. COLOR_1 is not Color 1.
+    const controlAttribute=object.geometry.getAttribute('color')?'color':object.geometry.getAttribute('color_1')?'color_1':undefined;
+    if(!controlAttribute)return;
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (!(material instanceof MeshStandardMaterial) || material.userData.rdo_material_status !== 'terrain-four-layer-preview') continue;
+      if(prepared.has(material))continue;
+      prepared.add(material);
+      const authoredTerrain=material.userData.provenance==='authored-gameplay';
       const names = ['rdo_terrain_lookup', 'rdo_terrain_layer0', 'rdo_terrain_layer1', 'rdo_terrain_layer2', 'rdo_terrain_layer3']
         .map((key) => material.userData[key]);
       if (!names.every((name): name is string => typeof name === 'string' && name.length > 0)) continue;
@@ -130,18 +142,38 @@ export async function prepareTerrainFourLayerPreview(
             rdoLayer2: { value: textures[3] },
             rdoLayer3: { value: textures[4] },
             rdoUvScaleBias: { value: new Vector4(...scaleBias as [number, number, number, number]) },
+            rdoGrassLayers:{value:new Vector4(...names.slice(1).map(n=>levelDesign.grassAppearance.sourceTextures.includes(n)?1:0) as [number,number,number,number])},
+            rdoGrassGain:{value:new Vector3(...levelDesign.grassAppearance.linearGain as [number,number,number])},
+            rdoGrassLift:{value:new Vector3(...levelDesign.grassAppearance.linearLift as [number,number,number])},
+            rdoTerrainMinimum:{value:new Vector3(...levelDesign.grassAppearance.minimumTerrainLinear as [number,number,number])},
           });
-          shader.vertexShader = `uniform vec4 rdoUvScaleBias;\n${uvDeclarations}\n${layerVaryings}\nattribute vec4 color_1;\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.vertexShader}`
-            .replace('#include <color_vertex>', `#include <color_vertex>\nvRdoColor1 = color_1;\nvRdoUv = uv;\n${layerAssignments}`);
-          shader.fragmentShader = `uniform sampler2D rdoLookup;\nuniform sampler2D rdoLayer0;\nuniform sampler2D rdoLayer1;\nuniform sampler2D rdoLayer2;\nuniform sampler2D rdoLayer3;\n${layerVaryings}\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.fragmentShader}`
+          shader.vertexShader = `uniform vec4 rdoUvScaleBias;\n${uvDeclarations}\n${layerVaryings}\nattribute vec4 ${controlAttribute};\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.vertexShader}`
+            .replace('#include <color_vertex>', `#include <color_vertex>\nvRdoColor1 = ${controlAttribute};\nvRdoUv = uv;\n${layerAssignments}`);
+          shader.fragmentShader = `uniform sampler2D rdoLookup;\nuniform sampler2D rdoLayer0;\nuniform sampler2D rdoLayer1;\nuniform sampler2D rdoLayer2;\nuniform sampler2D rdoLayer3;\nuniform vec4 rdoGrassLayers;\nuniform vec3 rdoGrassGain;\nuniform vec3 rdoGrassLift;\nuniform vec3 rdoTerrainMinimum;\nvec3 rdoAlbedo(sampler2D layer,vec2 uv,float grass){vec3 source=sRGBTransferEOTF(texture2D(layer,uv)).rgb;return mix(source,source*rdoGrassGain+rdoGrassLift,grass);}\n${layerVaryings}\nvarying vec4 vRdoColor1;\nvarying vec2 vRdoUv;\n${shader.fragmentShader}`
             .replace('vec4 diffuseColor = vec4( diffuse, opacity );', `
               vec3 rdoControl = mix(texture2D(rdoLookup, vRdoUv).rgb, vRdoColor1.rgb, vRdoColor1.a);
-              vec3 rdo01 = mix(sRGBTransferEOTF(texture2D(rdoLayer0, vRdoLayerUv0)).rgb, sRGBTransferEOTF(texture2D(rdoLayer1, vRdoLayerUv1)).rgb, 1.0 - rdoControl.r);
-              vec3 rdo23 = mix(sRGBTransferEOTF(texture2D(rdoLayer2, vRdoLayerUv2)).rgb, sRGBTransferEOTF(texture2D(rdoLayer3, vRdoLayerUv3)).rgb, rdoControl.g);
-              vec4 diffuseColor = vec4(mix(rdo01, rdo23, rdoControl.b), opacity);
-            `);
+              vec3 rdo01 = mix(rdoAlbedo(rdoLayer0,vRdoLayerUv0,rdoGrassLayers.x),rdoAlbedo(rdoLayer1,vRdoLayerUv1,rdoGrassLayers.y),1.0-rdoControl.r);
+              vec3 rdo23 = mix(rdoAlbedo(rdoLayer2,vRdoLayerUv2,rdoGrassLayers.z),rdoAlbedo(rdoLayer3,vRdoLayerUv3,rdoGrassLayers.w),rdoControl.g);
+              vec4 diffuseColor = vec4(max(mix(rdo01,rdo23,rdoControl.b),rdoTerrainMinimum),opacity);
+            `)
+            // The custom layer mix already supplies albedo. Multiplying the
+            // standard GLTF map again darkens/tints it a second time.
+            .replace('#include <map_fragment>','');
+          if(authoredTerrain){
+            // Own terrain uses two real albedos. Low-frequency variation breaks
+            // repetition without changing imported building/source materials.
+            shader.fragmentShader=`float rdoHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float rdoMacro(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(rdoHash(i),rdoHash(i+vec2(1.0,0.0)),f.x),mix(rdoHash(i+vec2(0.0,1.0)),rdoHash(i+vec2(1.0)),f.x),f.y);}
+${shader.fragmentShader}`
+              .replace(/vec3 rdo01 =[^;]+;/,`vec3 rdoSoil=rdoAlbedo(rdoLayer1,vRdoLayerUv1,0.0)*vec3(1.20,1.14,0.95)+vec3(0.035,0.028,0.017);
+vec3 rdo01=mix(rdoSoil,rdoAlbedo(rdoLayer0,vRdoLayerUv0,1.0),rdoControl.r);`)
+              .replace(/vec3 rdo23 =[^;]+;/,'')
+              .replace('mix(rdo01,rdo23,rdoControl.b)','rdo01*mix(0.94,1.06,rdoMacro(vRdoLayerUv0*0.09))')
+              .replace('#include <roughnessmap_fragment>','#include <roughnessmap_fragment>\nroughnessFactor=mix(0.94,0.98,rdoControl.r);');
+          }
         };
-        material.customProgramCacheKey = () => `rdo-terrain-four-layer-v2:${uvSets.join(',')}`;
+        material.customProgramCacheKey = () => `rdo-terrain-four-layer-v7:${authoredTerrain}:${controlAttribute}:${uvSets.join(',')}`;
+        material.userData.rdo_terrain_control_attribute=controlAttribute;
         material.userData.rdo_terrain_preview_ready = true;
         material.needsUpdate = true;
       })());
@@ -150,12 +182,12 @@ export async function prepareTerrainFourLayerPreview(
   await Promise.all(pending);
 }
 
-const PLAYER_MARKER_RADIUS = 0.4;
+const PLAYER_VISIBILITY_HEIGHT = 1;
 
 /** Player positions are feet; occlusion protects the centre of the rendered marker. */
 export function createOcclusionRay(cameraPosition: Vector3, playerPosition: Vector3): Raycaster {
   const direction = playerPosition.clone();
-  direction.y += PLAYER_MARKER_RADIUS;
+  direction.y += PLAYER_VISIBILITY_HEIGHT;
   direction.sub(cameraPosition);
   const distance = direction.length();
   return new Raycaster(cameraPosition, direction.normalize(), 0, distance);
@@ -189,10 +221,14 @@ declare global {
       getCollisionHit(): { asset: string; mesh: string } | undefined;
       getInteriorVisuals(): {room:string;models:string[];texturedMeshes:number;missing:string[]}[];
       getLoadedTransforms(): { asset: string; determinant: number }[];
+      getAvatarState():CowboyAvatar['state'];
       getPerformance(): {drawCalls:number;triangles:number;geometries:number;textures:number;programs:number};
       getSceneState(): { manifestUrl: string; placements: WorldPlacement[]; blockedReason?: string; blocked: boolean; boundary: typeof VALENTINE_BOUNDARY };
       sampleGround(x: number, z: number, referenceY?: number): number | undefined;
+      getBuildingLayouts():typeof BUILDINGS.playable;
+      getSupportSurfaces(x:number,z:number):ReturnType<TerrainGround['inspectSupport']>;
       probeClick(x:number,y:number):{point?:{x:number;y:number;z:number};message:string};
+      inspectRenderRay(x:number,y:number):unknown[];
       probeMove(from: { x: number; y: number; z: number }, to: { x: number; y: number; z: number }): {
         allowed: boolean; position: { x: number; y: number; z: number }; reason?: string; hit?: { asset: string; mesh: string };
       };
@@ -248,14 +284,17 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   options.signal?.throwIfAborted();
   const scene = new Scene();
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-  scene.background = new Color('#5c788d');
-  scene.fog = new FogExp2('#9e9484', 0.0022);
-  const skyLight=new HemisphereLight('#b8dcff', '#6e543c', 0.95);
+  const daylight=levelDesign.daylight;
+  renderer.toneMappingExposure = daylight.exposure;
+  scene.background = new Color(daylight.sky);
+  // This bounded 2.5D town uses clear overview framing; distance haze would
+  // wash out the map as the orthographic camera backs away at wide zoom.
+  scene.fog = null;
+  const skyLight=new HemisphereLight(daylight.hemisphereSky, daylight.hemisphereGround, daylight.hemisphereIntensity);
   scene.add(skyLight);
-  const sunlight = new DirectionalLight('#fff5df', 2.2);
+  const sunlight = new DirectionalLight(daylight.sun, daylight.sunIntensity);
   sunlight.position.set(40, 55, 25);
-  const fillLight = new DirectionalLight('#869db3', 0.55);
+  const fillLight = new DirectionalLight(daylight.fill, daylight.fillIntensity);
   fillLight.position.set(-25, 30, -20);
   scene.add(fillLight);
   scene.add(sunlight);
@@ -270,6 +309,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
   const authoredRooms = new Map(BUILDINGS.playable.flatMap(building=>building.floors.map(floor=>[
     `${building.id}/${floor.id}`,{...createAuthoredRoom(floor.layout),floorY:floor.layout.floorY,key:`${building.id}/${floor.id}`},
   ] as const)));
+  const cinemaSurface=authoredRooms.get('val-07-magiclantern-ext/ground')?.interior.getObjectByName('woven-projection-cloth');
   const roomsForPlacement=(id:string)=>{
     const building=BUILDINGS.byPlacement.get(id);
     // Supporting shell/detail aliases share collision ownership but must not
@@ -301,12 +341,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const restricted=spatial.restrictsRunning(position);
     if(restricted)pathMode='walk';
     travelMode=movementMode.resolve(restricted,false,movePath.target?pathMode:undefined);
-    return travelMode==='run'?1.5:1;
+    return restricted?levelDesign.access.restrictedSpeedScale:travelMode==='run'?1.5:1;
   });
-  const playerMarker = new Mesh(new SphereGeometry(PLAYER_MARKER_RADIUS, 16, 12), new MeshStandardMaterial({ color: '#eac573', emissive:'#6e4a16', depthTest:false,transparent:true,depthWrite:false }));
-  playerMarker.renderOrder=1000;
-  playerMarker.position.set(spawn.x, spawn.y + PLAYER_MARKER_RADIUS, spawn.z);
-  scene.add(playerMarker);
+  const avatar=new CowboyAvatar(async url=>(await new GLTFLoader().loadAsync(url)).scene);
+  avatar.setPosition(spawn);scene.add(avatar.root);
+  void avatar.ready.then(()=>{if(!avatar.state.disposed)root.dataset.playerAvatar=avatar.state.sourceLoaded?'cowboy-01':'cowboy-fallback';});
   const cameraController = new OrthographicFollowCamera(Math.max(root.clientWidth, 1) / Math.max(root.clientHeight, 1));
   cameraController.enableSmoothing(!options.reducedMotion?.());
   const loader = new GLTFLoader();
@@ -337,6 +376,9 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     for(const authoredRoom of placementRooms) {
       scene.add(authoredRoom.support,authoredRoom.interior); ground.add(authoredRoom.support,'structure'); collision.add(authoredRoom.walls);
       presentation.registerRoom(authoredRoom.key,authoredRoom);
+      // Interior furniture can obstruct the player just like an exterior wall.
+      // Floor/support remains separate so the walking surface never fades.
+      occluders.push(authoredRoom.interior);
     }
     if (roles.occluder) occluders.push(instance);
     instance.updateWorldMatrix(true, true);
@@ -352,7 +394,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       if (index >= 0) occluders.splice(index, 1);
       collision.remove(instance);
       ground.remove(instance);
-      for(const authoredRoom of placementRooms) {presentation.unregisterRoom(authoredRoom.key);scene.remove(authoredRoom.support,authoredRoom.interior);ground.remove(authoredRoom.support);collision.remove(authoredRoom.walls);}
+      for(const authoredRoom of placementRooms) {const i=occluders.indexOf(authoredRoom.interior);if(i>=0)occluders.splice(i,1);presentation.unregisterRoom(authoredRoom.key);scene.remove(authoredRoom.support,authoredRoom.interior);ground.remove(authoredRoom.support);collision.remove(authoredRoom.walls);}
       lease.dispose();
     } };
   });
@@ -369,17 +411,17 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     options.signal?.throwIfAborted();
     await world.update(player.position.x, player.position.z);
   }
-  catch(error) {world.dispose();releaseAppearances();authoredRooms.forEach(room=>room.dispose());playerMarker.geometry.dispose();playerMarker.material.dispose();throw error;}
+  catch(error) {world.dispose();releaseAppearances();authoredRooms.forEach(room=>room.dispose());avatar.dispose();throw error;}
   finally { options.signal?.removeEventListener('abort',cancelStartup); }
   const spawnGroundHeight = ground.heightAt(player.position.x, player.position.z);
   if (options.signal?.aborted || spawnGroundHeight===undefined) {
-    world.dispose();releaseAppearances();authoredRooms.forEach(room=>room.dispose());playerMarker.geometry.dispose();playerMarker.material.dispose();
+    world.dispose();releaseAppearances();authoredRooms.forEach(room=>room.dispose());avatar.dispose();
     if(options.signal?.aborted) options.signal.throwIfAborted();
     throw new Error('Am Startpunkt fehlt belegtes Terrain. Bitte Quelldaten prüfen.');
   }
   if (spawnGroundHeight !== undefined) {
     player.position.y = spawnGroundHeight;
-    playerMarker.position.y = spawnGroundHeight + PLAYER_MARKER_RADIUS;
+    avatar.setPosition(player.position);
   }
 
   spatial.reset(player.position);presentation.apply(spatial.current,player.position);
@@ -390,10 +432,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
 
   const hud = new Hud(root);
   const venues=new VenueActivities(root,()=>{options.onAccountChanged?.();hud.setWallet(WalletService.getSyncBalance());},()=>{darts.close();menu.close();});
-  options.onInteractionMenu?.({get isOpen(){return menu.isOpen || darts.isOpen || venues.isOpen;},close(){menu.close();darts.close();venues.close();}});
+  options.onInteractionMenu?.({get isOpen(){return menu.isOpen || darts.isOpen || venues.isOpen;},close(){menu.close();darts.close();venues.close(false);}});
 
   hud.setWallet(WalletService.getSyncBalance());
   const minimap = new Minimap();
+  const interiorActors = new InteriorActors();
   const occlusion = new OcclusionController(occluders);
   const indoorPlacements=new Set(BUILDINGS.playable.flatMap(b=>b.sourcePlacementIds));
   const activeHints=()=>resolveProximityHints(spatial.current,player.position,(from,to)=>!collision.blocksTransition(from,to),action=>{
@@ -452,7 +495,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     apply:position=>{
       pressed.clear();movePath.target=undefined;gestures?.cancel();player.setMovement({forward:0,right:0});Object.assign(player.position,position);player.blocked=false;
       blockedReason=undefined;frameFailed=false;menu.close();cameraController.clearReferencePose();
-      playerMarker.position.set(position.x,position.y+PLAYER_MARKER_RADIUS,position.z);
+      avatar.setPosition(position);
       movementMode.cancel();spatial.reset(position);presentation.apply(spatial.current,player.position);
       cameraController.update(position);lastBlock=undefined;
     },
@@ -485,12 +528,25 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     getCollisionHit: () => collision.lastHit,
     getRecoveryState:()=>({result:recoveryResult,lastSafe:recovery.lastSafeTarget,lastBlock,recovering}),
     getOcclusionState:()=>occlusion.getState(),
+    getAvatarState:()=>avatar.state,
     getPerformance:()=>({drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,
       geometries:renderer.info.memory.geometries,textures:renderer.info.memory.textures,programs:renderer.info.programs?.length??0}),
     getSceneState: () => ({ manifestUrl: sceneManifestUrl(), placements: manifest.placements, blockedReason, blocked: player.blocked,
       boundary: VALENTINE_BOUNDARY }),
     sampleGround: (x, z, referenceY) => ground.heightAt(x, z, referenceY),
+    getBuildingLayouts:()=>BUILDINGS.playable,
+    getSupportSurfaces:(x,z)=>ground.inspectSupport(x,z),
     probeClick:(x,y)=>pickDestination(x,y),
+    inspectRenderRay:(x,y)=>{
+      const rect=renderer.domElement.getBoundingClientRect(),ray=new Raycaster();
+      ray.setFromCamera(new Vector2((x-rect.left)/rect.width*2-1,-(y-rect.top)/rect.height*2+1),cameraController.camera);
+      return ray.intersectObjects(occluders,true).filter(hit=>{let o=hit.object;while(o){if(!o.visible)return false;if(!o.parent)break;o=o.parent;}return true;}).slice(0,12).map(hit=>{
+        let owner=hit.object;while(owner.parent&&!owner.userData.sourceAsset)owner=owner.parent;
+        const mesh=hit.object,material=mesh instanceof Mesh?(Array.isArray(mesh.material)?mesh.material[hit.face?.materialIndex??0]:mesh.material):undefined;
+        return {asset:owner.userData.sourceAsset,mesh:mesh.name,point:hit.point,normal:hit.face?.normal,uv:hit.uv,material:material?.name,texture:material instanceof MeshStandardMaterial?material.map?.name:undefined,
+          appearance:material instanceof MeshStandardMaterial?{color:material.color.getHexString(),emissive:material.emissive.getHexString(),vertexColors:material.vertexColors,normalMap:material.normalMap?.name,opacity:material.opacity,...material.userData}:undefined};
+      });
+    },
     probeMove: (from, to) => {
       const candidate = { ...to };
       const allowed = traversal.resolve(from, candidate);
@@ -525,8 +581,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     const rect=renderer.domElement.getBoundingClientRect();
     if(rect.width<=0 || rect.height<=0)return {message:'Die Weltansicht ist noch nicht bereit.'};
     const ray=new Raycaster();ray.setFromCamera(new Vector2((x-rect.left)/rect.width*2-1,1-(y-rect.top)/rect.height*2),cameraController.camera);
-    const entrance=pickEntrance(ray,player.position,BUILDINGS.playable,point=>traversal.resolve(player.position,{...point}));
-    if(entrance){const context=spatial.current,route=context.mode==='indoor'&&context.floor?planExitRoute(context.floor.layout,player.position,(x,z,y)=>ground.heightAt(x,z,y),(from,to)=>traversal.resolve(from,to)):undefined;return {point:entrance,...(route?{route}:{}),message:route?'Der Ausgang führt bis auf das Gelände.':'Der Eingang ist frei.'};}
+    let entryRoute:ReturnType<typeof planEntryRoute>;
+    const entrance=pickEntrance(ray,player.position,BUILDINGS.playable,point=>traversal.resolve(player.position,{...point}),layout=>{
+      entryRoute=planEntryRoute(layout,player.position,(x,z,y)=>ground.heightAt(x,z,y),(from,to)=>traversal.resolve(from,to));return Boolean(entryRoute);
+    });
+    if(entrance){const context=spatial.current,route=context.mode==='indoor'&&context.floor?planExitRoute(context.floor.layout,player.position,(x,z,y)=>ground.heightAt(x,z,y),(from,to)=>traversal.resolve(from,to)):entryRoute;return {point:entrance,...(route?{route}:{}),message:route?'Der Weg führt über den Gebäudezugang.':'Der Eingang ist frei.'};}
     let message='Dort ist kein erreichbarer Boden sichtbar.';
     const point=ground.pick(ray,player.position.y,(hit,surface)=>{
       if(Math.hypot(hit.x-player.position.x,hit.z-player.position.z)>30){message='Bitte wähle ein näheres Ziel (bis 30 Meter).';return false;}
@@ -565,7 +624,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       movePath.target=undefined;pressed.clear();
       const result=pickDestination(x,y), actions:ContextAction[]=[];
       if(result.point){const point={x:result.point.x,y:result.point.y,z:result.point.z};actions.push({label:'LAUFEN',run:()=>{pathMode='walk';if(result.route)movePath.start(result.route);else movePath.target=point;}});
-        if(!spatial.restrictsRunning(player.position) && spatial.current.mode!=='indoor')actions.push({label:'RENNEN',run:()=>{pathMode='run';movePath.target=point;}});}
+        if(!spatial.restrictsRunning(player.position) && spatial.current.mode!=='indoor')actions.push({label:'RENNEN',run:()=>{pathMode='run';if(result.route)movePath.start(result.route);else movePath.target=point;}});}
       const poi=nearbyPoi();
       if(poi)actions.push({label:poi.category==='building-action'?poi.name:`${poi.name}: Interagieren`,run:openPoi});
       menu.open(poi?`${poi.name} · ${result.message}`:result.message,actions);
@@ -580,7 +639,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
         pressed.clear();movementMode.cancel();return;
       }
       if (recovering || darts.isOpen || venues.isOpen || options.isInputCaptured?.()) {
-        pressed.clear();movementMode.cancel();if(event.key==='Escape') {menu.close();darts.close();venues.close();}return;
+        pressed.clear();movementMode.cancel();if(event.key==='Escape') {menu.close();darts.close();venues.close(false);}return;
       }
       if (!menu.isOpen && !event.ctrlKey && !event.metaKey && !event.altKey) {
         if (['+', '=', '-', '0', 'Home'].includes(event.key)) {
@@ -605,7 +664,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     }
   };
   const onKeyUp = (event: KeyboardEvent): void => {
-    try { if(!event)return;pressed.delete(event.key.toLowerCase());if(event.key==='Shift')movementMode.setShift(false); }
+    try { if(!event || typeof event.key !== 'string')return;pressed.delete(event.key.toLowerCase());if(event.key==='Shift')movementMode.setShift(false); }
     catch (error) { console.error('Could not process game keyup.', error); }
   };
   const clearMovement = (): void => {
@@ -640,6 +699,7 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     if (disposed) return;
     try {
       const delta = Math.min((now - previous) / 1000, 0.5);
+      const motionDelta=movementFrameDelta(delta);
       previous = now;
       const captured=inputCaptured() || isEditableTarget(document.activeElement) || frameFailed;
       if(captured) {movementMode.cancel();travelMode='stopped';pressed.clear();movePath.target=undefined;gestures.cancel();}
@@ -648,12 +708,12 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       if(movePath.target && !captured) {
         const dx=movePath.target.x-player.position.x,dz=movePath.target.z-player.position.z,length=Math.hypot(dx,dz);
         if(length<0.12)movePath.advance();
-        else {const speed=Math.min(1,length/Math.max(player.speedPerSecond*delta,0.001));movement={forward:-dz/length*speed,right:dx/length*speed};}
+        else {const speed=Math.min(1,length/Math.max(player.speedPerSecond*motionDelta,0.001));movement={forward:-dz/length*speed,right:dx/length*speed};}
       }
       player.setMovement(captured?{forward:0,right:0}:movement);
       blockedReason = undefined;
       const previousPosition={...player.position};
-      player.update(delta);
+      player.update(motionDelta);
       if(player.blocked)movePath.target=undefined;
       const terrainHeight = ground.heightAt(player.position.x, player.position.z, player.position.y);
       // Floors select presentation and actions; physical support supplies height,
@@ -663,12 +723,12 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       }
       spatial.update(previousPosition,player.position,delta);presentation.apply(spatial.current,player.position);
       const lightingBlend=1-Math.exp(-Math.min(delta,.1)*5),inside=spatial.current.mode==='indoor';
-      skyLight.intensity+=((inside?2.3:.95)-skyLight.intensity)*lightingBlend;
-      renderer.toneMappingExposure+=((inside?1.5:1.15)-renderer.toneMappingExposure)*lightingBlend;
+      skyLight.intensity+=((inside?2.3:daylight.hemisphereIntensity)-skyLight.intensity)*lightingBlend;
+      renderer.toneMappingExposure+=((inside?1.5:daylight.exposure)-renderer.toneMappingExposure)*lightingBlend;
       venues.setBuilding(spatial.current.mode==='indoor'?spatial.current.building?.id:undefined);
       venues.setSystemPaused(Boolean(options.isInputCaptured?.()));
       if(spatial.current.mode==='indoor')pathMode='walk';
-      playerMarker.position.set(player.position.x, player.position.y + PLAYER_MARKER_RADIUS, player.position.z);
+      avatar.update(player.position,delta);
       hud.update(player.position, nearbyPoi()?.name, minimap.project(player.position), missingModelCount, player.blocked ? blockedReason : undefined,spatial.current.mode==='indoor'?`${spatial.current.building?.name} · ${spatial.current.floor?.label}`:undefined);
       if(!recovering) {
         void world.update(player.position.x, player.position.z);
@@ -677,8 +737,11 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       const target = new Vector3(player.position.x, player.position.y, player.position.z);
       const aspect=Math.max(root.clientWidth,1)/Math.max(root.clientHeight,1);
       cameraController.resize(aspect);
-      cameraController.setContextGoal(resolveContextCamera(spatial.current,player.position,aspect,cameraController.yawRadians),options.reducedMotion?.()??false);
+      const cinemaViewport=cinemaSurface instanceof Mesh&&spatial.current.mode==='indoor'&&spatial.current.building?.id==='val-07-magiclantern-ext'?renderer.domElement.getBoundingClientRect():undefined;
+      const cinemaPose=cinemaViewport&&cinemaSurface instanceof Mesh?cinemaScreenPose(cinemaSurface,cameraController.camera,cinemaViewport):undefined;
+      cameraController.setContextGoal(venues.cinemaProjecting&&cinemaPose?cinemaPose.goal:resolveContextCamera(spatial.current,player.position,aspect,cameraController.yawRadians),options.reducedMotion?.()??false);
       cameraController.update(target, delta);
+      venues.updateCinemaProjection(cinemaViewport&&cinemaSurface instanceof Mesh?cinemaScreenPose(cinemaSurface,cameraController.camera,cinemaViewport).corners:undefined);
       const actionHint=nearbyAction(),anchor=actionHint?.hint.position??player.position;
       const activityPoint=new Vector3(anchor.x,anchor.y,anchor.z).project(cameraController.camera);
       dartsPrompt.hidden=captured || !actionHint || Math.abs(activityPoint.x)>.95 || Math.abs(activityPoint.y)>.9 || Math.abs(activityPoint.z)>1;
@@ -693,7 +756,10 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
       for(const room of authoredRooms.values()){
         const stripe=room.support.getObjectByName('entrance-stripe');
         if(stripe){const position=new Vector3();stripe.getWorldPosition(position);stripe.visible=spatial.current.mode==='indoor' && room.interior.visible && position.distanceTo(new Vector3(player.position.x,player.position.y,player.position.z))<3.5;}
-        if(room.interior.visible)updateInteriorWalls(room.interior,cameraController.camera.position,options.reducedMotion?.()?10:delta);
+        if(room.interior.visible){
+          updateInteriorWalls(room.interior,cameraController.camera.position,options.reducedMotion?.()?10:delta);
+          interiorActors.update(room.interior,player.position,delta,now);
+        }
       }
       const ray = createOcclusionRay(cameraController.camera.position, target);
       occlusion.update(ray,target,delta);
@@ -727,12 +793,13 @@ export async function startValentineRuntime(root: HTMLElement, renderer: WebGLRe
     menu.close();
     darts.dispose();venues.dispose();gestures.dispose();releaseNativeContext();
     dartsPrompt.removeEventListener('click',onDartsPrompt);dartsPrompt.remove();exitPrompt.removeEventListener('click',onExitPrompt);exitPrompt.remove();
+    interiorActors.dispose();
     hud.dispose();
     world.dispose();presentation.dispose();
     releaseAppearances();authoredRooms.forEach(room=>room.dispose());
     occlusion.dispose();
-    playerMarker.geometry.dispose();
-    playerMarker.material.dispose();
+    avatar.dispose();
+    delete root.dataset.playerAvatar;
     delete root.dataset.gameReady;
     if (previewApi && window.__rdoPreview === previewApi) delete window.__rdoPreview;
   };

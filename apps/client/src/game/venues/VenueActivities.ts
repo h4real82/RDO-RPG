@@ -65,6 +65,8 @@ export class VenueActivities {
       kind === 'picture' ||
       kind === 'sit' ||
       kind === 'talk' ||
+      kind === 'hotel_guest' ||
+      kind === 'hotel_lady' ||
       kind === 'inspect' ||
       kind === 'read'
     );
@@ -134,6 +136,18 @@ export class VenueActivities {
         `;
         d.content.append(news);
         const btn = d.button('Zeitung weglegen', () => this.close());
+        btn.className = 'rdo-venue__order-btn';
+        return;
+      }
+      if (kind === 'hotel_guest' || kind === 'hotel_lady') {
+        const d = (this.dialog = new VenueDialog(this.parent, 'Hotel-Gast'));
+        d.panel.dataset.venue = 'hotel_guest';
+        text(
+          'p',
+          '„Guten Tag, Herr. Die Reise mit der Postkutsche über die zerfurchten Straßen nach Valentine war überaus ermüdend, aber dieses Hotel hat eine wunderbare Wärme. Wenn Sie ein ruhiges Zimmer oder ein warmes Bad suchen, fragen Sie den Herrn an der Rezeption.“',
+          d.content
+        );
+        const btn = d.button('Einen angenehmen Aufenthalt wünschen', () => this.close());
         btn.className = 'rdo-venue__order-btn';
         return;
       }
