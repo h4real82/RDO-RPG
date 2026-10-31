@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run --environment happy-dom --maxWorkers=2 --minWorkers=1"
   },
   "dependencies": {
     "@discord/embedded-app-sdk": "^1.1.0",
@@ -17,7 +18,9 @@
   "devDependencies": {
     "@types/node": "^20.12.7",
     "@types/three": "^0.186.0",
+    "happy-dom": "21.0.4",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "vitest": "1.6.1"
   }
 }
