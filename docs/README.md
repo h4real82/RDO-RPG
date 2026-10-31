@@ -12,6 +12,7 @@ Aktuellen Aufgabenstatus führt [Linear](https://linear.app/h4real82/project/rdo
 | Quellstand vom 16.10.2026 | [Datierter Projektstatus](Project-Status-2026-10-16.md) |
 | Restart-Architektur | [Restart-Design vom 08.10.2026](superpowers/specs/2026-10-08-rdo-rpg-restart-design.md) |
 | Asset-Pipeline | [Runbook im Restart-Branch](https://github.com/h4real82/RDO-RPG/blob/codex/rdo-restart-foundation/docs/runbooks/asset-pipeline.md) |
+| Lokale Runtime-Dateien im Client | [Vite-Konfiguration und Prüfung](runbooks/local-runtime.md) |
 
 ## Dokumente einordnen
 
