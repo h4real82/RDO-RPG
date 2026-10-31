@@ -29,6 +29,7 @@ Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeit
 - **H4R-124**: *Veranda- und Dachholz-Aufhellung: Behebung des verkohlten/ausgebrannten Erscheinungsbilds* (Entfernung des ACES-Filmic-Black-Crushs auf verwitterten RDR2-Holztexturen wie `val_cs_woodporch_1_ab` und `nbx_roofs_shingle11_ab` über lineare PBR-Albedo-Skalierung). [Status: In Review]
 - **H4R-125**: *Dynamischer Innenraum-Kamerazoom für großformatige, detailreiche 2.5D-Raumansichten* (Fokussierter Innenraum-Orthographic-Zoom `fit * 0.72` [5.5m–20m] für bildschirmfüllende, immersive Raumansicht ohne tote Ränder). [Status: In Review]
 - **H4R-126**: *Wandbilder-Spezifikation, Ingame-Großansicht und benutzerdefiniertes Artwork-Austauschsystem* (Technische Spezifikation in `docs/specifications/custom-artwork-spec.md`, interaktiver `ArtworkViewer` mit viktorianischem Rahmen, Format-Guidance und lokalem Datei-Austausch zur Laufzeit). [Status: In Review]
+- **H4R-127**: *Dekorative Großobjekte: Valentine-Dampfzug, Straßenkutschen und Straßentiere* (Historischer 1899 4-4-0 Dampfzug mit Kohletender und Personenwagen auf den Bahnhofsgleisen, 2 Concord-Postkutschen, 3 Fracht- und Planwagen, 5 angebundene Pferde mit Sattel/Zaumzeug, 3 Straßenhunde und 6 Hühner im Gehege). [Status: In Review]
 
 ## Umgesetzte Fehlerbehebungen & visuelle Optimierungen (31.10.2026)
 1. **Innenraumböden bei Außenkamera isoliert**: `InteriorPresentation.ts` rendert umschlossene Innenraumböden bei Außenansicht nicht mehr (`showFloor` ist draußen strikt false). Keine hervorstehenden braunen Kanten/Bodenplatten mehr an Bank und Außenwänden.
@@ -40,6 +41,7 @@ Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeit
 7. **3D-Dartboard-Kabinett**: Flache Scheiben wurden durch ein historisches Echtholz-Kabinett mit geöffneten Flügeltüren, Schiefertafeln (301/501-Scoreboard, Kreidestriche), Sisal-Board mit Drahtspinne und Messingpfeilen ersetzt.
 8. **Veranda- und Dach-Decharring**: Dunkelbraun/schwarz verkohlte Texturen wurden durch PBR-Albedo-Brightening korrigiert; die Holzfasern und sonnengebleichten Schindeln sind nun natürlich lesbar.
 9. **Ground Truth Referenzkatalog**: Alle 12 Innenraum-Ordner aus `docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/` (Auction Yard, Bahnhof, Doctor, Gun Smith, Hof, Keanes Saloon, Kino Zelt, Saints Hotel, Sheriff Office, Smithfields Saloon, Worths General Store, Zigeuner Camp) sind inventarisiert und dienen als verbindliche Grundriss- und Detailreferenz für zukünftige Raumausbauten.
+10. **Dekorative Großobjekte & Lebendige Stadt (Zug, Kutschen, Tiere)**: Auf den Bahnhofsschienen steht die historische 1899 4-4-0 American Dampflokomotive samt Kohletender und Personenwagen mit Kollisionskörpern. Zwei Concord-Postkutschen und drei Fracht- und Planwagen stehen am Saloon, Livery und Güterhof. Fünf gesattelte Pferde mit Zaumzeug sind an den Hitching Posts angebunden, drei Hunde dösen/sitzen an Veranda, Stall und Bahnhof, und sechs Hühner beleben das Gehege am Auction Yard.
 
 ---
 *Historische Notizen vom 15.10. und 09.10. sind archiviert.*

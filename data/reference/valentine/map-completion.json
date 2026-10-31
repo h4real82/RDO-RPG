@@ -2,184 +2,447 @@
   "schemaVersion": 1,
   "classification": "authored-gameplay",
   "purpose": "Complete active Valentine streets, yards, church grounds, market and station using own geometry; no surveyed original prop claim.",
-  "yardBuildings": [
-    "church",
-    "val-05-res-a",
-    "val-05-res-c",
-    "val-05-res-d",
-    "val-05-res-e",
-    "val-07-resf-ext",
-    "sheriff-house",
-    "val-01-aucyard-barn",
-    "val-01-aucbarns-barn2",
-    "val-01-aucbarns-barn3",
-    "val-01-aucyard-stables",
-    "val-06-auchouseb-ext",
-    "val-05-pigpen-a"
-  ],
+  "yardBuildings": [],
   "yard": {
     "padding": 5,
     "gateWidth": 4.5,
     "panelLength": 2.3,
-    "height": 1.25
+    "height": 1.25,
+    "portalOwners": [
+      "val-01-aucyard-barn"
+    ],
+    "clearanceTails": {
+      "enabled": true,
+      "spacing": 0.08,
+      "minimumLength": 0.7,
+      "guardRadius": 0.28,
+      "classification": "authored-gameplay",
+      "reason": "Restore only conservative safe portions of guarded panels; same span drives visible fence and sole collision",
+      "connectionTolerance": 0.2
+    }
   },
-  "frontages": {
-    "station": [
-      "bench",
-      "cargo",
-      "barrel",
-      "hitch"
-    ],
-    "smithfields-saloon": [
-      "hitch",
-      "trough",
-      "barrel"
-    ],
-    "second-saloon": [
-      "bench",
-      "hitch",
-      "barrel"
-    ],
-    "hotel": [
-      "bench",
-      "planter",
-      "hitch"
-    ],
-    "bank": [
-      "bench",
-      "planter"
-    ],
-    "general-store": [
-      "cargo",
-      "barrel",
-      "bench"
-    ],
-    "gunsmith": [
-      "cargo",
-      "hitch"
-    ],
-    "doctor": [
-      "bench",
-      "planter"
-    ],
-    "law-office": [
-      "bench",
-      "hitch"
-    ],
-    "sheriff-house": [
-      "bench",
-      "woodpile"
-    ],
-    "val-03-jail-ext": [
-      "woodpile",
-      "barrel"
-    ],
-    "val-03-stable-ext": [
-      "trough",
-      "hay",
-      "hitch"
-    ],
-    "smithy": [
-      "woodpile",
-      "cargo",
-      "barrel"
-    ],
-    "val-freightstn": [
-      "cargo",
-      "cargo",
-      "barrel"
-    ],
-    "val-auchouse-ext": [
-      "bench",
-      "barrel"
-    ],
-    "church": [
-      "bench",
-      "bench"
-    ],
-    "val-05-res-a": [
-      "woodpile",
-      "barrel",
-      "planter"
-    ],
-    "val-05-res-c": [
-      "woodpile",
-      "barrel",
-      "planter"
-    ],
-    "val-05-res-d": [
-      "woodpile",
-      "bench",
-      "planter"
-    ],
-    "val-05-res-e": [
-      "woodpile",
-      "barrel",
-      "planter"
-    ],
-    "val-07-resf-ext": [
-      "woodpile",
-      "bench",
-      "barrel"
-    ],
-    "val-01-aucyard-barn": [
-      "hay",
-      "trough",
-      "cargo"
-    ],
-    "val-01-aucbarns-barn2": [
-      "hay",
-      "hay",
-      "trough"
-    ],
-    "val-01-aucbarns-barn3": [
-      "hay",
-      "trough",
-      "barrel"
-    ],
-    "val-01-aucyard-stables": [
-      "hay",
-      "trough",
-      "hitch"
-    ],
-    "val-01-aucyard-stable2": [
-      "hay",
-      "trough"
-    ],
-    "val-01-aucyard-shed": [
-      "cargo"
-    ],
-    "val-01-aucyard-chkcoop": [
-      "barrel",
-      "hay"
-    ],
-    "val-07-magic-ticketbooth": [
-      "planter"
-    ],
-    "val-07-magiclantern-ext": [
-      "bench",
-      "bench",
-      "barrel"
-    ],
-    "val-06-auchouseb-ext": [
-      "woodpile",
-      "bench",
-      "planter"
-    ],
-    "shipping-stand": [
-      "cargo",
-      "barrel"
-    ],
-    "val-05-pigpen-a": [
-      "hay",
-      "trough"
-    ]
-  },
+  "frontages": {},
   "textures": {
-    "wood": "textures/dressing/val_jail_woodbeam01_ab.png",
+    "wood": "textures/dressing/val_sal2_woodplank03_ab.png",
     "barrel": "textures/dressing/p_barrela_1_ab.png",
     "hay": "textures/terrain/hea_grass_val_01_abte.png",
-    "stone": "textures/terrain/hea_dirt_stones_je_02_abte.png"
+    "stone": "textures/terrain/hea_dirt_stones_je_02_abte.png",
+    "fenceWood": "textures/dressing/val_jail_woodbeam01_ab.png",
+    "fenceCorral": "textures/dressing/val_jail_woodbeam01_ab.png"
   },
-  "placementGuards": "Native-ground support, road centerline clearance and rotated building/entrance keepouts. Visual meshes never duplicate collider ownership."
+  "placementGuards": "Road/entry/building clearances plus explicit camp/garden reservations; each fence network retains access gaps. Authored placement adapted from photographs, no complete native prop census claimed.",
+  "gardens": [
+    {
+      "id": "church-north-kitchen-garden",
+      "center": [
+        -268,
+        -867
+      ],
+      "width": 10,
+      "depth": 12,
+      "yaw": 0.2617993877991494,
+      "rows": 6,
+      "reference": "User north-church feedback; Hof photographs vegetable/working yard character; authored placement, not surveyed original"
+    },
+    {
+      "id": "north-farm-garden",
+      "center": [
+        -292,
+        -893
+      ],
+      "width": 12,
+      "depth": 14,
+      "yaw": 0.08726646259971647,
+      "rows": 7,
+      "reference": "Hof photographs and north residential district; authored garden adaptation"
+    },
+    {
+      "id": "upper-farm-garden",
+      "center": [
+        -250,
+        -940
+      ],
+      "width": 9,
+      "depth": 10,
+      "yaw": 0.17453292519943295,
+      "rows": 5,
+      "reference": "Upper residential farm district; authored gameplay dressing"
+    }
+  ],
+  "cemetery": null,
+  "fenceNetworks": [],
+  "districtProps": [],
+  "sourceObjectPolicy": "Use CMapData placements matched against pinned name catalog; authored bodies, inferred fence spans and simplified collision. No original model geometry claim.",
+  "replaceLiveryYardFencesWithSource": true,
+  "textureSources": {
+    "wood": "data/raw/textures/val_sal2_woodplank03_ab.png",
+    "fenceWood": "data/raw/textures/val_jail_woodbeam01_ab.png",
+    "fenceCorral": "data/raw/textures/val_jail_woodbeam01_ab.png"
+  },
+  "materialTints": {
+    "fenceCorral": [
+      0.46,
+      0.3,
+      0.15,
+      1
+    ]
+  },
+  "fenceAppearance": "Authored photo-guided natural brown corral/rail wood; white picket fences remain separate. References: Investigation/18-10-26/P3, original source anchors retained.",
+  "sourceGateAccess": {
+    "width": 2.8,
+    "depth": 4,
+    "classification": "authored-gameplay",
+    "note": "One authored gate for matched near-coincident source component pairs. Visible and physical fence spans share local passage subtraction. Native records/anchors retained; no original gate bounds or component roles claimed."
+  },
+  "sourcePropPlacements": {
+    "source-prop:0xE8E84D21:631": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -396.11147359798383,
+        "z": -937.8169516100807
+      },
+      "clearanceRadius": 1.1,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xE8E84D21:632": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -403.97915029709526,
+        "z": -944.2505385975338
+      },
+      "clearanceRadius": 1.1,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xF96BEEEA:642": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -371.3515,
+        "z": -918.5484
+      },
+      "clearanceRadius": 0.85,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x2203C309:644": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -381.7301958155686,
+        "z": -910.3244563569411
+      },
+      "clearanceRadius": 0.55,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x10AA42A6:645": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -374.4942421036992,
+        "z": -911.5466245543571
+      },
+      "clearanceRadius": 1.2,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x95478324:648": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -397.92226609406725,
+        "z": -933.9855660940673
+      },
+      "clearanceRadius": 0.3,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xD05A82DB:701": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -383.7458784492102,
+        "z": -910.8565190679216
+      },
+      "clearanceRadius": 1.2,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x9F350FBB:718": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -251.18613372946035,
+        "z": -969.9341181300451
+      },
+      "clearanceRadius": 1.2,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x02B93BF8:731": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -242.0840216362105,
+        "z": -960.8971920132778
+      },
+      "clearanceRadius": 1.2,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xC9C22C59:886": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -302.9420484814113,
+        "z": -843.8504838729436
+      },
+      "clearanceRadius": 1,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x9F350FBB:892": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -295.6690484814113,
+        "z": -870.2134838729436
+      },
+      "clearanceRadius": 1.2,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xE8E84D21:907": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -303.0526558412097,
+        "z": -841.2276290339516
+      },
+      "clearanceRadius": 1.1,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0xE8E84D21:908": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -292.6648,
+        "z": -843.2044
+      },
+      "clearanceRadius": 1.1,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    },
+    "source-prop:0x95478324:924": {
+      "classification": "authored-gameplay",
+      "position": {
+        "x": -293.1966215507898,
+        "z": -840.8238190679216
+      },
+      "clearanceRadius": 0.3,
+      "reason": "Nearby exterior adaptation of supplied source prop excluded by simplified room/entrance; preserve walkable access and original source record",
+      "reference": "Supplied source-prop record plus yard material/arrangement reference docs/TEMP/User-Intake/Investigation/24-10-26/Innen Pläne/Hof/RDR2_HuzRIPjVlc.jpg; nearby placement is authored, not original survey"
+    }
+  },
+  "decorativeWorldObjects": {
+    "steamTrain": {
+      "id": "val-station-steam-train",
+      "position": {
+        "x": -171,
+        "z": -618
+      },
+      "yaw": -0.635,
+      "description": "Historic 1899 4-4-0 American Steam Locomotive with coal tender and passenger coach stationed on Valentine rails"
+    },
+    "carriages": [
+      {
+        "id": "stagecoach-saloon-frontage",
+        "kind": "stagecoach",
+        "position": {
+          "x": -303,
+          "z": -772.5
+        },
+        "yaw": -0.12,
+        "description": "Concord passenger stagecoach parked along Main Street outside Smithfields Saloon"
+      },
+      {
+        "id": "stagecoach-livery-approach",
+        "kind": "stagecoach",
+        "position": {
+          "x": -326.5,
+          "z": -709
+        },
+        "yaw": 1.4,
+        "description": "Concord passenger stagecoach parked near Livery Stables approach"
+      },
+      {
+        "id": "freight-wagon-auction-dock",
+        "kind": "freight-wagon",
+        "position": {
+          "x": -247.5,
+          "z": -743
+        },
+        "yaw": -0.38,
+        "covered": false,
+        "description": "Heavy buckboard freight wagon loaded with barrels and cargo crates at Auction Yard loading pen"
+      },
+      {
+        "id": "freight-wagon-freight-station",
+        "kind": "freight-wagon",
+        "position": {
+          "x": -205.5,
+          "z": -646
+        },
+        "yaw": 0.82,
+        "covered": false,
+        "description": "Freight wagon with cargo at Valentine freight station yard"
+      },
+      {
+        "id": "covered-wagon-north-main",
+        "kind": "freight-wagon",
+        "position": {
+          "x": -316.5,
+          "z": -817
+        },
+        "yaw": 2.98,
+        "covered": true,
+        "description": "Covered Conestoga Prairie Schooner wagon parked on North Main Street near General Store"
+      }
+    ],
+    "animals": {
+      "hitchedHorses": [
+        {
+          "id": "horse-saloon-chestnut",
+          "position": {
+            "x": -304.3,
+            "z": -785.6
+          },
+          "yaw": 1.48,
+          "coat": "chestnut",
+          "description": "Chestnut quarter horse hitched at Smithfields Saloon hitching post"
+        },
+        {
+          "id": "horse-saloon-bay",
+          "position": {
+            "x": -302.1,
+            "z": -785.9
+          },
+          "yaw": 1.54,
+          "coat": "bay",
+          "description": "Dark bay thoroughbred hitched at Smithfields Saloon hitching post"
+        },
+        {
+          "id": "horse-sheriff-palomino",
+          "position": {
+            "x": -287.2,
+            "z": -797.4
+          },
+          "yaw": -1.62,
+          "coat": "palomino",
+          "description": "Palomino horse hitched outside Sheriff's Office hitching post"
+        },
+        {
+          "id": "horse-livery-black",
+          "position": {
+            "x": -321.3,
+            "z": -704.6
+          },
+          "yaw": 0.16,
+          "coat": "black",
+          "description": "Black draft horse hitched outside Livery Stables hitching rail"
+        },
+        {
+          "id": "horse-doctor-bay",
+          "position": {
+            "x": -309.1,
+            "z": -828.4
+          },
+          "yaw": 1.44,
+          "coat": "bay",
+          "description": "Bay horse hitched outside Doctor's Office hitching post"
+        }
+      ],
+      "streetDogs": [
+        {
+          "id": "dog-saloon-porch-sleeping",
+          "position": {
+            "x": -306.8,
+            "z": -791.8
+          },
+          "yaw": 0.85,
+          "pose": "sleeping",
+          "description": "Coonhound resting asleep on shaded Smithfields Saloon wooden porch boardwalk"
+        },
+        {
+          "id": "dog-livery-sitting",
+          "position": {
+            "x": -324.5,
+            "z": -711.5
+          },
+          "yaw": -1.35,
+          "pose": "sitting",
+          "description": "Shepherd dog sitting alert by Livery Stables entrance watching Main Street"
+        },
+        {
+          "id": "dog-station-resting",
+          "position": {
+            "x": -174.5,
+            "z": -630.2
+          },
+          "yaw": -0.65,
+          "pose": "sleeping",
+          "description": "Hound resting on Valentine train station platform"
+        }
+      ],
+      "chickens": [
+        {
+          "id": "chicken-coop-pecking-1",
+          "position": {
+            "x": -271.2,
+            "z": -720.1
+          },
+          "yaw": 0.8,
+          "description": "Chicken pecking in Auction Yard chicken coop dirt"
+        },
+        {
+          "id": "chicken-coop-scratching-2",
+          "position": {
+            "x": -272.5,
+            "z": -721.2
+          },
+          "yaw": 2.1,
+          "description": "Chicken scratching in Auction Yard chicken coop"
+        },
+        {
+          "id": "chicken-coop-standing-3",
+          "position": {
+            "x": -270.5,
+            "z": -722
+          },
+          "yaw": -1.1,
+          "description": "Chicken standing by Auction Yard chicken coop door"
+        },
+        {
+          "id": "chicken-coop-hay-4",
+          "position": {
+            "x": -273.2,
+            "z": -719.8
+          },
+          "yaw": 0.3,
+          "description": "Chicken pecking near hay bale in Auction Yard chicken coop"
+        },
+        {
+          "id": "chicken-coop-perched-5",
+          "position": {
+            "x": -271.8,
+            "z": -718.5
+          },
+          "yaw": 1.57,
+          "perchedY": 114.7,
+          "description": "Chicken perched atop coop fence rail"
+        },
+        {
+          "id": "chicken-coop-nesting-6",
+          "position": {
+            "x": -273.7,
+            "z": -721.8
+          },
+          "yaw": -2.4,
+          "description": "Hen resting near chicken coop nesting box"
+        }
+      ]
+    }
+  }
 }

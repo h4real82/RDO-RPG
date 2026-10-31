@@ -61,3 +61,5 @@ tools/rdo_pipeline/.venv/
 __pycache__/
 *.pyc
 *.egg-info/
+
+.linear_key
