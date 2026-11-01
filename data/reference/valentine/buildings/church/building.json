@@ -10,7 +10,7 @@
   ],
   "classification": "building-candidate",
   "originalAccess": {
-    "status": "confirmed-open",
+    "status": "unknown",
     "edition": "unspecified",
     "evidenceRefs": [
       {
@@ -19,10 +19,10 @@
         "kind": "user-gameplay-photo-review"
       }
     ],
-    "notes": "Valentine wooden church on the north hill; accessible chapel with central nave, wooden pews, altar and pulpit."
+    "notes": "Previous confirmed-open assessment cited P7. Those delivered photos show exterior/cemetery/stairs only, without an interior or original door-opening proof. Original access remains unknown; the project chapel is deliberately playable authored-gameplay."
   },
   "interior": {
-    "policy": "recognizable-adaptation",
+    "policy": "provisional-wood",
     "minimum": "walkable-empty-wood-floor-with-safe-exit",
     "recognitionFeatures": [
       "Kirchenbänke",
@@ -39,5 +39,78 @@
       }
     ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "church-reverend",
+      "kind": "reverend",
+      "label": "Reverend Swanson ansprechen",
+      "floorId": "ground",
+      "position": {
+        "x": -228.5,
+        "y": 123.7,
+        "z": -801.0
+      },
+      "interactionPosition": {
+        "x": -227.5,
+        "y": 123.7,
+        "z": -801.0
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "cemetery-graves",
+      "kind": "cemetery",
+      "label": "Friedhofs-Grabsteine lesen",
+      "floorId": "ground",
+      "position": {
+        "x": -224.0,
+        "y": 123.5,
+        "z": -808.0
+      },
+      "interactionPosition": {
+        "x": -224.0,
+        "y": 123.5,
+        "z": -806.5
+      },
+      "radius": 2.5,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "church-pew-sit",
+      "kind": "sit",
+      "label": "Auf Kirchenbank ausruhen",
+      "floorId": "ground",
+      "position": {
+        "x": -227.51,
+        "y": 123.70,
+        "z": -803.04
+      },
+      "interactionPosition": {
+        "x": -226.51,
+        "y": 123.70,
+        "z": -803.04
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "church-bible-read",
+      "kind": "read",
+      "label": "Gemeindebuch & Bibel lesen",
+      "floorId": "ground",
+      "position": {
+        "x": -227.71,
+        "y": 123.70,
+        "z": -799.58
+      },
+      "interactionPosition": {
+        "x": -227.71,
+        "y": 123.70,
+        "z": -800.78
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

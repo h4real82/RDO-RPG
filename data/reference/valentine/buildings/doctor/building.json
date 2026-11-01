@@ -39,5 +39,42 @@
       }
     ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "doctor-consult",
+      "kind": "doctor",
+      "label": "Arzt Dr. Barnes ansprechen",
+      "floorId": "ground",
+      "position": {
+        "x": -287.35,
+        "y": 118.42,
+        "z": -810.57
+      },
+      "interactionPosition": {
+        "x": -286.15,
+        "y": 118.42,
+        "z": -810.57
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "doctor-exam-cot",
+      "kind": "sit",
+      "label": "Auf Behandlungspritsche ausruhen",
+      "floorId": "ground",
+      "position": {
+        "x": -283.14,
+        "y": 118.42,
+        "z": -812.12
+      },
+      "interactionPosition": {
+        "x": -283.14,
+        "y": 118.42,
+        "z": -811.12
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

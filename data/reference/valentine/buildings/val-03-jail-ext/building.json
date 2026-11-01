@@ -39,5 +39,44 @@
       }
     ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "sheriff-office",
+      "kind": "sheriff",
+      "label": "Sheriff Curtis Malloy ansprechen",
+      "floorId": "ground",
+      "position": {
+        "x": -274.5,
+        "y": 118.4,
+        "z": -806.2
+      },
+      "interactionPosition": {
+        "x": -275.5,
+        "y": 118.4,
+        "z": -806.2
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "duel-training",
+      "kind": "game",
+      "label": "Duelltraining · Sheriff",
+      "gameId": "duel",
+      "variantId": "artillery-outlaws",
+      "floorId": "ground",
+      "position": {
+        "x": -276.2529970523868,
+        "y": 119.4,
+        "z": -805.8632000315663
+      },
+      "interactionPosition": {
+        "x": -276.2529970523868,
+        "y": 118.4,
+        "z": -805.8632000315663
+      },
+      "radius": 1.25,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

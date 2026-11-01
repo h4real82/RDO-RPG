@@ -38,5 +38,62 @@
       }
     ]
   },
-  "actions": []
+  "actions": [
+    {
+      "id": "gunsmith-service",
+      "kind": "gunsmith",
+      "label": "Büchsenmacher Arthur ansprechen",
+      "floorId": "ground",
+      "position": {
+        "x": -278.2,
+        "y": 118.5,
+        "z": -784.0
+      },
+      "interactionPosition": {
+        "x": -279.0,
+        "y": 118.5,
+        "z": -784.0
+      },
+      "radius": 2.0,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "gunsmith-shooting-range",
+      "kind": "shooting_range",
+      "label": "Schießstand & Zielübung",
+      "floorId": "ground",
+      "position": {
+        "x": -281.5,
+        "y": 118.5,
+        "z": -786.0
+      },
+      "interactionPosition": {
+        "x": -280.5,
+        "y": 118.5,
+        "z": -786.0
+      },
+      "radius": 2.5,
+      "anchorStatus": "authored-gameplay"
+    },
+    {
+      "id": "archery-training",
+      "kind": "game",
+      "label": "Bogenschießen · Anmeldung",
+      "gameId": "archery",
+      "variantId": "target-practice",
+      "floorId": "ground",
+      "position": {
+        "x": -279.5426,
+        "y": 119.5,
+        "z": -783.4623
+      },
+      "interactionPosition": {
+        "x": -279.5426,
+        "y": 118.5,
+        "z": -783.4623
+      },
+      "radius": 1.25,
+      "anchorStatus": "authored-gameplay"
+    }
+  ]
 }

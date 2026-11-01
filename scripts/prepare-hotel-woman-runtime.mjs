@@ -18,6 +18,7 @@ async function optimizeModel() {
   const src = resolve(root, 'data/runtime/interiors/hotel/Hotel_Lobby_woman.glb');
   const rawDest = resolve(root, 'data/raw/interiors/hotel/Hotel_Lobby_woman.glb');
   const runtimeDest = resolve(root, 'data/runtime/interiors/hotel/hotel-lobby-woman.glb');
+  const verifiedDest = resolve(root, 'data/runtime/valentine/verified-scene/interiors/hotel/hotel-lobby-woman.glb');
 
   await mkdir(resolve(root, 'data/raw/interiors/hotel'), { recursive: true });
   if (!fs.existsSync(rawDest)) {
@@ -77,7 +78,10 @@ async function optimizeModel() {
 
   const outBytes = await io.writeBinary(doc);
   await writeFile(runtimeDest, outBytes);
-  console.log(`Saved optimized runtime GLB: ${runtimeDest} (${(outBytes.byteLength / 1024 / 1024).toFixed(2)} MB)`);
+  await mkdir(resolve(root, 'data/runtime/valentine/verified-scene/interiors/hotel'), { recursive: true });
+  await writeFile(verifiedDest, outBytes);
+  console.log(`Saved optimized runtime GLB: ${runtimeDest} & ${verifiedDest} (${(outBytes.byteLength / 1024 / 1024).toFixed(2)} MB)`);
 }
 
 optimizeModel().catch(console.error);
+

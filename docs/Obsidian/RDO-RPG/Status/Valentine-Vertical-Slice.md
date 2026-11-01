@@ -13,7 +13,7 @@ Stand: 31.10.2026. Diese Notiz beschreibt den aktuellen verifizierten Entwicklun
 7. **S4 – Kino, Pferderennen und Erinnerungsorte**: Autoritative Server-Pferderennen-Räume mit Checkpoint-Erzwingung, Magic-Lantern-Kinozelt, kuratierte Erinnerungsorte und 2-Client-Fähigkeitsmatrix.
 
 ## Aktuelle Test- und Build-Metriken (31.10.2026)
-- **Client Vitest Suite**: 118 Testdateien, 619 Tests bestanden (100%).
+- **Client Vitest Suite**: 121 Testdateien, 627 Tests bestanden (100%).
 - **Server Test Suite**: 20 Tests bestanden (100%).
 - **World Contracts**: 14 Tests bestanden (100%).
 - **Monorepo Build Gate**: `npx pnpm -r build` kompilierte alle 6 Workspace-Pakete fehlerfrei mit Exit Code 0.
@@ -50,6 +50,16 @@ Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeit
    - **Saloon-Herausforderung**: Einladung zum Wettsaufen im Smithfields Saloon.
    - **Schwarzmarkt-Tonika**: 4 historische Stärkungsmittel (Wundertinktur, Starker Schlangenschnaps, Wüstenkraut, Peyote-Traumkaktus) mit Live-Screen-Effects (Verschwommenheit, Farbverschiebung, Leuchten).
    - **Abweisung & Beleidigung**: Unhöfliche Abweisung führt zu abweisender Haltung und Gesprächsabbruch.
+13. **NPC-Rollenregister (Sheriff, Reverend, Doctor, Gunsmith)** (`H4R-129`):
+   - **Sheriff Curtis Malloy** (`val-03-jail-ext`): Interaktives Büro mit Steckbriefwand (Jack Dalton, Barnaby Finch) und Auskunft zu Waffenrecht & Stadtordnung.
+   - **Reverend Swanson** (`church`): Geistlicher Segen mit Vitalitätserneuerung (`ScreenEffects.applyInvincibleEffect`) und Friedhofs-Kunde.
+   - **Dr. Barnes** (`doctor`): Wundbehandlung (-5 Coins) mit vollständiger Vitalitätswiederherstellung und Verkauf von patentiertem Schlangenöl (-8 Coins).
+   - **Büchsenmacher Arthur** (`gunsmith`): Munitionskauf (.45 Colt Bleigeschosse, -4 Coins), Waffen-Katalog (Cattleman, Schofield, Winchester 1873) und Vermittlung zum Schießstand.
+14. **Friedhofs-Kuration, Grabsteininschriften & Secret Spots** (`H4R-128`):
+   - 5 historische Grabsteine an der Valentine Kirche mit authentischen Inschriften und Hintergrund (Jedediah „Lucky“ Finch, Clara Mae Higgins, Unbekannter Reisender, Silas Thorne, Constance Adams).
+   - 3 interaktive Secret Spots in Valentine: Geheimversteck hinter Smithfields Saloon (+15 Coins), Wasserturm-Aussichtspunkt (+5 Coins) und verlassenes Schwarzbrenner-Fass am Waldrand (+10 Coins).
+15. **Western Schießmechanik & Schießstand** (`H4R-130`):
+   - Interaktiver Schießstand (`ShootingRangeModal.ts`) mit 6-Schuss-Cattleman-Revolver, Munitionsanzeige, 5 Zielen (Whiskey-Flaschen, Holz-Zielscheibe, Schnapsglas, Klappscheibe), Treffer-Feedback, Zylinder-Nachladen (`R`) und 10-Coins-Preisgeld bei Vollabräumung.
 
 ---
 *Historische Notizen vom 15.10. und 09.10. sind archiviert.*

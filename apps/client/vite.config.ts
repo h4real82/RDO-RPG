@@ -26,6 +26,10 @@ function installLocalRuntime(server: Pick<ViteDevServer, 'middlewares'>): void {
   mount('/runtime/valentine/local-preview','../../data/runtime/valentine/local-preview');
   mount('/runtime/valentine/frontier-ui','../../data/runtime/valentine/frontier-ui');
   mount('/runtime/player-models','../../data/runtime/player-models');
+  mount('/runtime/tripo','../../data/runtime/tripo');
+  mount('/runtime/interiors','../../data/runtime/interiors');
+  mount('/runtime/minigames/darts','../../data/runtime/minigames/darts');
+  mount('/runtime/minigames/poker','../../data/runtime/minigames/poker');
   const file=(url: string,path: string): void=> {
     server.middlewares.use(url,(request,response)=> {
       try {

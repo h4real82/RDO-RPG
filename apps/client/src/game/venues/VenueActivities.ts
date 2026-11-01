@@ -7,6 +7,9 @@ import { MemorialRoom } from './MemorialRoom';
 import { StationDesk } from './StationDesk';
 import { ArtworkViewer } from './ArtworkViewer';
 import { HotelGuestDialog } from './HotelGuestDialog';
+import { TownNpcs } from '../npcs/TownNpcs';
+import { CemeteryModal } from './CemeteryModal';
+import { ShootingRangeModal } from '../gunplay/ShootingRangeModal';
 import type{ScreenCorners}from'./CinemaScreen';
 
 export class VenueActivities {
@@ -19,6 +22,9 @@ export class VenueActivities {
   private station: StationDesk;
   private artwork: ArtworkViewer;
   private hotelGuest: HotelGuestDialog;
+  private townNpcs: TownNpcs;
+  private cemetery: CemeteryModal;
+  private shootingRange: ShootingRangeModal;
   private saloon = false;
 
   constructor(
@@ -32,6 +38,13 @@ export class VenueActivities {
     this.memorial = new MemorialRoom(changed);
     this.station = new StationDesk(changed);
     this.artwork = new ArtworkViewer();
+    this.cemetery = new CemeteryModal(parent, changed);
+    this.shootingRange = new ShootingRangeModal(parent, changed);
+    this.townNpcs = new TownNpcs(parent, {
+      onChanged: changed,
+      onOpenCemetery: () => this.open('cemetery'),
+      onOpenShootingRange: () => this.open('shooting_range')
+    });
     this.hotelGuest = new HotelGuestDialog(parent, {
       onChanged: changed,
       onWettsaufen: () => this.open('drinks')
@@ -52,7 +65,17 @@ export class VenueActivities {
   }
 
   get isOpen() {
-    return Boolean(this.dialog?.isOpen) || this.music.isOpen || this.cinema.isOpen || this.memorial.isOpen || this.artwork.isOpen || this.hotelGuest.isOpen;
+    return (
+      Boolean(this.dialog?.isOpen) ||
+      this.music.isOpen ||
+      this.cinema.isOpen ||
+      this.memorial.isOpen ||
+      this.artwork.isOpen ||
+      this.hotelGuest.isOpen ||
+      this.townNpcs.isOpen ||
+      this.cemetery.isOpen ||
+      this.shootingRange.isOpen
+    );
   }
 
   supports(kind?: string) {
@@ -74,7 +97,13 @@ export class VenueActivities {
       kind === 'hotel_guest' ||
       kind === 'hotel_lady' ||
       kind === 'inspect' ||
-      kind === 'read'
+      kind === 'read' ||
+      kind === 'sheriff' ||
+      kind === 'reverend' ||
+      kind === 'doctor' ||
+      kind === 'gunsmith' ||
+      kind === 'cemetery' ||
+      kind === 'shooting_range'
     );
   }
 
@@ -147,6 +176,30 @@ export class VenueActivities {
       }
       if (kind === 'hotel_guest' || kind === 'hotel_lady') {
         this.dialog = this.hotelGuest.open(this.parent);
+        return;
+      }
+      if (kind === 'sheriff') {
+        this.dialog = this.townNpcs.openSheriff();
+        return;
+      }
+      if (kind === 'reverend') {
+        this.dialog = this.townNpcs.openReverend();
+        return;
+      }
+      if (kind === 'doctor') {
+        this.dialog = this.townNpcs.openDoctor();
+        return;
+      }
+      if (kind === 'gunsmith') {
+        this.dialog = this.townNpcs.openGunsmith();
+        return;
+      }
+      if (kind === 'cemetery') {
+        this.dialog = this.cemetery.open();
+        return;
+      }
+      if (kind === 'shooting_range') {
+        this.dialog = this.shootingRange.open();
         return;
       }
       if (kind === 'talk') {
@@ -231,6 +284,21 @@ export class VenueActivities {
       console.error('[VenueActivities] Error closing hotel guest dialog:', err);
     }
     try {
+      this.townNpcs.close();
+    } catch (err) {
+      console.error('[VenueActivities] Error closing town NPCs:', err);
+    }
+    try {
+      this.cemetery.close();
+    } catch (err) {
+      console.error('[VenueActivities] Error closing cemetery modal:', err);
+    }
+    try {
+      this.shootingRange.close();
+    } catch (err) {
+      console.error('[VenueActivities] Error closing shooting range:', err);
+    }
+    try {
       this.music.collapse();
     } catch (err) {
       console.error('[VenueActivities] Error collapsing music:', err);
@@ -245,5 +313,8 @@ export class VenueActivities {
     try { this.cinema.dispose(); } catch (err) { console.error('[VenueActivities] Error disposing cinema:', err); }
     try { this.memorial.dispose(); } catch (err) { console.error('[VenueActivities] Error disposing memorial:', err); }
     try { this.station.dispose(); } catch (err) { console.error('[VenueActivities] Error disposing station:', err); }
+    try { this.townNpcs.close(); } catch (err) { console.error('[VenueActivities] Error closing town NPCs:', err); }
+    try { this.cemetery.close(); } catch (err) { console.error('[VenueActivities] Error closing cemetery modal:', err); }
+    try { this.shootingRange.close(); } catch (err) { console.error('[VenueActivities] Error closing shooting range:', err); }
   }
 }
