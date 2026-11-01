@@ -46,4 +46,16 @@ describe('Authored Decorative Large Objects & Animals (H4R-127)', () => {
     expect(animals.chickens?.length).toBe(6);
     expect(animals.chickens.some((c: any) => typeof c.perchedY === 'number')).toBe(true);
   });
+
+  it('defines cemetery monument statue between tombstones facing southwest towards Saints Hotel', () => {
+    const statue = (mapCompletion.decorativeWorldObjects as any)?.cemeteryStatue;
+    expect(statue).toBeDefined();
+    expect(statue.id).toBe('cemetery-statue-monument');
+    expect(statue.position.x).toBeCloseTo(-224.0, 1);
+    expect(statue.position.z).toBeCloseTo(-808.0, 1);
+    expect(statue.yaw).toBeCloseTo(-1.175, 2);
+    expect(statue.scale[0]).toBeGreaterThanOrEqual(1.8);
+    expect(statue.model).toBe('interiors/church/friedhof-statue.glb');
+  });
 });
+

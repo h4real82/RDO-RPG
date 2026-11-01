@@ -651,3 +651,40 @@ export function buildChicken(ctx, { x, z, yaw, perchedY = null }) {
 
   return true;
 }
+
+export function buildCemeteryStatue(ctx, { x, z, yaw = -1.175, scale = 1.9 }) {
+  const y = ctx.height(x, z);
+  if (y === undefined) return false;
+
+  const local = (lx, lz) => ({
+    x: x + Math.cos(yaw) * lx + Math.sin(yaw) * lz,
+    z: z - Math.sin(yaw) * lx + Math.cos(yaw) * lz
+  });
+
+  // Two-tiered stone pedestal plinth
+  const p1 = local(0, 0);
+  ctx.box('stone', p1.x, y + 0.15, p1.z, 1.4, 0.3, 1.4, yaw);
+  ctx.box('stone', p1.x, y + 0.40, p1.z, 1.1, 0.2, 1.1, yaw);
+
+  // Inscribed bronze/brass dedication plaque facing hotel
+  const plaquePos = local(0, 0.56);
+  ctx.box('brass', plaquePos.x, y + 0.40, plaquePos.z, 0.6, 0.14, 0.04, yaw);
+
+  // Weathered carved stone monument body (Buddha / contemplative guardian figure)
+  // Robed lower body / crossed legs
+  ctx.box('stone', p1.x, y + 0.70, p1.z, 0.85 * (scale / 1.9), 0.45, 0.75 * (scale / 1.9), yaw);
+  // Torso
+  ctx.cylinder('stone', p1.x, y + 1.20, p1.z, 0.34 * (scale / 1.9), 0.55, yaw);
+  // Shoulders & draped mantle
+  ctx.box('stone', p1.x, y + 1.35, p1.z, 0.72 * (scale / 1.9), 0.25, 0.40 * (scale / 1.9), yaw);
+  // Head & topknot
+  const headPos = local(0, 0);
+  const head = new SphereGeometry(0.20 * (scale / 1.9), 12, 10);
+  ctx.add('stone', head, headPos.x, y + 1.65, headPos.z, yaw);
+  const ushnisha = new SphereGeometry(0.08 * (scale / 1.9), 8, 6);
+  ctx.add('stone', ushnisha, headPos.x, y + 1.88, headPos.z, yaw);
+
+  return true;
+}
+
+

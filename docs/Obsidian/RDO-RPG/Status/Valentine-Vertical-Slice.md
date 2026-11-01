@@ -60,6 +60,11 @@ Auf Basis der jüngsten Spieltests und visuellen Analysen wurden folgende Arbeit
    - 3 interaktive Secret Spots in Valentine: Geheimversteck hinter Smithfields Saloon (+15 Coins), Wasserturm-Aussichtspunkt (+5 Coins) und verlassenes Schwarzbrenner-Fass am Waldrand (+10 Coins).
 15. **Western Schießmechanik & Schießstand** (`H4R-130`):
    - Interaktiver Schießstand (`ShootingRangeModal.ts`) mit 6-Schuss-Cattleman-Revolver, Munitionsanzeige, 5 Zielen (Whiskey-Flaschen, Holz-Zielscheibe, Schnapsglas, Klappscheibe), Treffer-Feedback, Zylinder-Nachladen (`R`) und 10-Coins-Preisgeld bei Vollabräumung.
+16. **Friedhofs-Monument & Tripo-Asset-Decimation-Pipeline** (`H4R-128` & `H4R-127`):
+   - Die vom Benutzer gelieferte rohe 66.9 MB Buddha-Statue (`Buddah_Statue.glb`, 821k Dreiecke, untexturiert) wurde über eine automatisierte Meshopt-Sloppy- und Sharp-Pipeline auf **1.16 MB und 41.262 Dreiecke** dezimiert.
+   - Prozedurale zylindrische UVs ($u = \frac{\text{atan2}(x, z)}{2\pi} + 0.5$, $v = y \cdot 2.0$) versehen die Statue mit einer authentischen RDR2-Geländestein-Textur (`hea_dirt_stones_je_02_abte.png`) und PBR-Materialeigenschaften (`roughness: 0.88`, `metalness: 0.04`).
+   - Auf einem zweistufigen Sandstein-Plinth mit bronzener Gedenktafel zentral zwischen den Grabsteinreihen des Valentine-Friedhofs (`x: -224.0, y: 123.5, z: -808.0`) platziert, blickt sie im präzisen Yaw-Winkel (-1.175 rad) nach Südwesten in Richtung des Saints Hotel und ist mit ~1.85m–2.0m Gesamthöhe etwas größer als die umgebenden Grabsteine (~0.9m–1.1m).
+   - Parallel wurden 7 Wild-/Haustiere (Elk, Wolf, Pferd, Dobermann, Schäferhund, Katze, Igel) und 5 NPCs (Gunslinger, Waitress, Archer, Outlaw, Shaman) von ihren 40MB–78MB Rohfassungen auf jeweils 1.5MB–3.0MB und 20k–47k Dreiecke optimiert und als sofort einsatzbereite WebGL-Modelle unter `data/runtime/tripo/` bereitgestellt.
 
 ---
 *Historische Notizen vom 15.10. und 09.10. sind archiviert.*

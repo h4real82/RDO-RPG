@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import valentineData from './data/valentineLayout.json';
 import { TextureGenerator } from './TextureGenerator';
 import { WoodMaterials } from './materials/WoodMaterials';
@@ -1617,6 +1618,70 @@ export class ValentineCity {
       g.rotation.x = cfg.tiltX;
       cemGroup.add(g);
     });
+
+    // 4. FRIEDHOFS-STATUE / MONUMENT (Facing towards the Saints Hotel, positioned between gravestones)
+    const statueGroup = new THREE.Group();
+    statueGroup.name = 'CemeteryMonumentStatue';
+    // Positioned in the central open area between gravestone rows
+    statueGroup.position.set(0.0, 0.22, 0.9);
+    // Facing southwest towards Saints Hotel: atan2(-37, 40) ≈ -0.75 rad
+    statueGroup.rotation.y = -0.75;
+
+    // Two-tiered carved stone plinth pedestal
+    const plinthLower = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.24, 1.2), stoneMat);
+    plinthLower.position.set(0, 0.12, 0);
+    plinthLower.castShadow = true;
+    plinthLower.receiveShadow = true;
+
+    const plinthUpper = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.20, 0.9), stoneMat);
+    plinthUpper.position.set(0, 0.34, 0);
+    plinthUpper.castShadow = true;
+    plinthUpper.receiveShadow = true;
+
+    // Inscribed brass memorial plaque on front of plinth facing hotel
+    const plaqueMat = new THREE.MeshStandardMaterial({ color: 0x8a7248, roughness: 0.45, metalness: 0.8 });
+    const plaque = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.12, 0.02), plaqueMat);
+    plaque.position.set(0, 0.34, 0.46);
+    statueGroup.add(plinthLower, plinthUpper, plaque);
+
+    // Weathered stone statue figure (slightly larger than gravestones: ~1.85m total height)
+    // Synchronous carved figure provides instant rendering & reliable collision box in tests
+    const fallbackFigure = new THREE.Group();
+    fallbackFigure.name = 'StatueFigure';
+    const bodyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.42, 0.85, 12), stoneMat);
+    bodyMesh.position.set(0, 0.86, 0);
+    bodyMesh.castShadow = true;
+    const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 10), stoneMat);
+    headMesh.position.set(0, 1.42, 0);
+    headMesh.castShadow = true;
+    fallbackFigure.add(bodyMesh, headMesh);
+    statueGroup.add(fallbackFigure);
+
+    // Asynchronously load the runtime textured Tripo statue GLB when in browser
+    try {
+      if (typeof window !== 'undefined') {
+        const loader = new GLTFLoader();
+        loader.load(
+          '/models/friedhof-statue.glb',
+          (gltf) => {
+            const model = gltf.scene;
+            model.scale.set(1.65, 1.65, 1.65);
+            model.position.set(0, 0.44, 0);
+            fallbackFigure.visible = false;
+            statueGroup.add(model);
+          },
+          undefined,
+          () => {
+            // Keep fallback figure
+          }
+        );
+      }
+    } catch {
+      // Keep fallback figure
+    }
+
+    cemGroup.add(statueGroup);
+    this.obstacleBoxes.push(new THREE.Box3().setFromObject(plinthLower));
 
     this.scene.add(cemGroup);
 

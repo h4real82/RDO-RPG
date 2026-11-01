@@ -246,6 +246,22 @@
       "yaw": -0.635,
       "description": "Historic 1899 4-4-0 American Steam Locomotive with coal tender and passenger coach stationed on Valentine rails"
     },
+    "cemeteryStatue": {
+      "id": "cemetery-statue-monument",
+      "model": "interiors/church/friedhof-statue.glb",
+      "position": {
+        "x": -224.0,
+        "z": -808.0
+      },
+      "yaw": -1.175,
+      "scale": [
+        1.9,
+        1.9,
+        1.9
+      ],
+      "facing": "Saints Hotel (-326.5, 117.8, -765.2)",
+      "description": "Weathered stone cemetery monument positioned between the gravestones facing southwest towards the Saints Hotel"
+    },
     "carriages": [
       {
         "id": "stagecoach-saloon-frontage",

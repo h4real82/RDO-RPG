@@ -4,7 +4,7 @@ import{loadGameplayHeight,loadNativeTerrainSurface}from'./prepare-authored-lands
 import{sourceGateAssemblies}from'./source-gate-assemblies.mjs';import{gateClearSpans}from'./gate-access.mjs';
 import{sourcePropPlacement}from'./source-prop-placement.mjs';
 import{safeFenceSpans,connectedFenceSpans}from'./fence-clearance-spans.mjs';
-import{initDecorationMaterials,buildSteamTrain,buildStagecoach,buildFreightWagon,buildHitchedHorse,buildStreetDog,buildChicken}from'./authored-world-decorations.mjs';
+import{initDecorationMaterials,buildSteamTrain,buildStagecoach,buildFreightWagon,buildHitchedHorse,buildStreetDog,buildChicken,buildCemeteryStatue}from'./authored-world-decorations.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),live=resolve(root,'data/runtime/valentine/verified-scene'),require=createRequire(await realpath(resolve(root,'node_modules/@gltf-transform/cli/package.json'))),{Document,NodeIO}=require('@gltf-transform/core'),io=new NodeIO();
 const{BoxGeometry,CylinderGeometry,PlaneGeometry,SphereGeometry,Shape,ExtrudeGeometry,Vector3,Quaternion,Euler,Matrix4}=createRequire(new URL('../apps/client/package.json',import.meta.url))('three');
 const config=JSON.parse(await readFile(resolve(root,'data/reference/valentine/map-completion.json'))),dressing=JSON.parse(await readFile(resolve(root,'data/reference/valentine/environment-dressing.json'))),manifestFile=resolve(live,'rdo_world_manifest.json'),manifest=JSON.parse(await readFile(manifestFile)),polygon=JSON.parse(await readFile(resolve(root,'data/reference/valentine/playable-boundary.json'))).polygon,height=await loadGameplayHeight(io,manifest,live);
@@ -97,6 +97,10 @@ if(config.decorativeWorldObjects){
   const ok=buildSteamTrain(decCtx,{x:dwo.steamTrain.position.x,z:dwo.steamTrain.position.z,yaw:dwo.steamTrain.yaw});
   if(ok)placed.push({kind:'steam-train',owner:dwo.steamTrain.id,...dwo.steamTrain.position});
  }
+  if(dwo.cemeteryStatue){
+   const ok=buildCemeteryStatue(decCtx,{x:dwo.cemeteryStatue.position.x,z:dwo.cemeteryStatue.position.z,yaw:dwo.cemeteryStatue.yaw,scale:dwo.cemeteryStatue.scale?.[0]??1.9});
+   if(ok)placed.push({kind:'cemetery-statue',owner:dwo.cemeteryStatue.id,...dwo.cemeteryStatue.position});
+  }
  for(const c of dwo.carriages??[]){
   let ok=false;
   if(c.kind==='stagecoach')ok=buildStagecoach(decCtx,{x:c.position.x,z:c.position.z,yaw:c.yaw});
